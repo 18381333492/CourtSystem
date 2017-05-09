@@ -11,6 +11,8 @@ namespace Sevices
     public  class ServiceBase
     {
   
+
+
         protected ExcuteBase excute = new ExcuteBase();
        
         protected QueryBase query = new QueryBase();
