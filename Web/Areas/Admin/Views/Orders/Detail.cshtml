@@ -1,0 +1,193 @@
+﻿
+<!--订单详情视图-->
+@using EFModel;
+@model Orders
+@{ string[] iStateName = { "待付款", "待发货", "待收货", "待评价", "已完成" }; }
+<style type="text/css">
+    .style1 {
+        width: 850px;
+        height: 300px;
+        border-style: solid;
+        border-width: 1px;
+        background-color: #C0C0C0;
+        margin-top: 10px;
+        margin-left: 5px;
+    }
+
+    .style9 {
+        width: 418px;
+        height: 40px;
+        background-color: #FFFFFF;
+    }
+
+    .style10 {
+        width: 426px;
+        height: 40px;
+        background-color: #FFFFFF;
+    }
+
+    .style11 {
+        width: 383px;
+        height: 40px;
+        background-color: #FFFFFF;
+    }
+
+    .style12 {
+        width: 494px;
+        height: 40px;
+        background-color: #FFFFFF;
+    }
+
+    .style14 {
+        width: 396px;
+        height: 40px;
+        background-color: #FFFFFF;
+    }
+
+    .style15 {
+        width: 396px;
+        text-align: center;
+        height: 24px;
+        background-color: #CC99FF;
+    }
+
+    .style16 {
+        width: 418px;
+        text-align: center;
+        height: 24px;
+        background-color: #CC99FF;
+    }
+
+    .style17 {
+        width: 426px;
+        text-align: center;
+        height: 24px;
+        background-color: #CC99FF;
+    }
+
+    .style18 {
+        width: 383px;
+        text-align: center;
+        height: 24px;
+        background-color: #CC99FF;
+    }
+
+    .style19 {
+        width: 494px;
+        text-align: center;
+        height: 24px;
+        background-color: #CC99FF;
+    }
+
+    .style22 {
+        height: 26px;
+        background-color: #FFFFFF;
+        text-align: left;
+    }
+
+    .style24 {
+        height: 24px;
+        background-color: #FFFFFF;
+        text-align: left;
+    }
+
+    table td {
+        font-size: 14px;
+        font-weight: 500;
+    }
+</style>
+<div style="height: 300px;text-align:center">
+    <table cellpadding="0" cellspacing="0" class="style1">
+        <tr>
+            <td class="style22" colspan="2">
+                订单编号：@Model.sOrderNo
+            </td>
+            <td class="style22">
+                订单状态 ：<span style="color:red">@iStateName[Model.iState]</span> 
+            </td>
+            <td class="style22" colspan="2">
+                <span style="color:blueviolet">是否取消：</span>@if (Model.bIsDeleted)
+                {
+                    <span style="color:red">已取消</span>
+                }
+                else
+                {
+                    <span>--</span>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td class="style22" colspan="2">
+                下单时间：@Model.dBookTime.ToString("yyyy-MM-dd HH:mm:ss")
+            </td>
+            <td class="style22" colspan="3">
+                @if (Model.iState > 0)
+                {
+                <span>支付时间：@Model.dBookTime.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                }
+                else
+                {
+                    <span>支付时间:---------</span>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td class="style15">
+                商品图片
+            </td>
+            <td class="style16">
+                商品单价
+            </td>
+            <td class="style17">
+                数量
+            </td>
+            <td class="style18">
+                规格
+            </td>
+            <td class="style19">
+                订单总价
+            </td>
+        </tr>
+        <tr>
+            <td class="style14" style="border:solid #CACACA 1px">
+                <img src="@Model.sGoodsPicture" style="width:100px;height:100px;" />
+                <p style="text-align:center">@Model.sGoodName</p>
+            </td>
+            <td class="style9" style="border:solid #CACACA 1px">
+                @Model.dSinglePrices
+            </td>
+            <td class="style10" style="border:solid #CACACA 1px">
+                x@(Model.iGoodsCount)
+            </td>
+            <td class="style11" style="border:solid #CACACA 1px">
+                @Model.sGoodsInfo
+            </td>
+            <td class="style12" style="border:solid #CACACA 1px">
+                <span>订单总价：@Model.dTotalPrices</span><br />
+                <span>支付金额：@Model.dPrices</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="style24" colspan="2">
+                收货人：@Model.sReceiver
+            </td>
+            <td class="style24" colspan="3">
+                电话：@Model.sPhone
+            </td>
+        </tr>
+        <tr>
+            <td class="style24" colspan="5">
+                收货地址:@Model.sAddress
+            </td>
+        </tr>
+        <tr>
+            <td class="style24" colspan="5">
+                物流信息:@Model.sWuliuCompany  &nbsp; 快递单号：@Model.sWuliuNumber
+            </td>
+        </tr><tr>
+            <td class="style24" colspan="5">
+                备注：@Model.sOrderRemark
+            </td>
+        </tr>
+    </table>
+</div>

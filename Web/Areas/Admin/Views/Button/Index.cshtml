@@ -1,0 +1,102 @@
+﻿
+@{
+    ViewBag.Title = "菜单按钮";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<div style="margin:10px;">
+     <ul id="Button" oncontextmenu="return false"></ul>  
+  </div>
+   <!--右键菜单-->
+  <div id="mm" class="easyui-menu" style="width:120px;">
+        <div class="add" data-options="iconCls:'icon-add'">新增按钮</div>
+        <div class="edit" data-options="iconCls:'icon-edit'">编辑按钮</div>
+        <div class="cancel" data-options="iconCls:'icon-remove'">删除按钮</div>
+        <div class="menu-sep"></div>
+        <div>Exit</div>
+  </div>
+<script type="text/javascript">
+    $(function () {
+        var f = new eui();
+        var button = f.config("Admin", "Button");
+        var menuId;
+        var buttonId;
+  
+        /*!
+        * method:树形菜单按钮数据绑定
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        button.grid.tree({
+            url: button.route('List'),
+            animate: true,
+            onContextMenu: function (e, row) {
+                if (row.iconCls == "") {
+                    menuId = row.id;
+                    //二级菜单
+                    $('#mm .add').show();
+                    $('#mm .edit').hide();
+                    $('#mm .cancel').hide();
+                    $('#mm').menu('show', {
+                        left: e.clientX,
+                        top: e.clientY
+                    });
+                    return;
+                }
+                if (row.iconCls != undefined && row.iconCls.length > 0) {
+                    buttonId = row.id;
+                    $('#mm .add').hide();
+                    $('#mm .edit').show();
+                    $('#mm .cancel').show();
+                    $('#mm').menu('show', {
+                        left: e.clientX,
+                        top: e.clientY
+                    });
+                }
+            }
+        });
+
+        /*!
+        * method:菜单鼠标右键的单击菜单事件监听
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        $('#mm').menu({
+            onClick: function (item) {
+                if (item.text == "新增按钮") {
+                    var dialog = f.dialog(button.route('Add') ,'添加按钮', function () {
+                        if ($(button.form.add).form('validate'))
+                        {
+                            var data = $(button.form.add).serialize() + '&sToMenuId=' + menuId;
+                            f.post(button.route('Insert'), data, function (res) {
+                                dialog.dialog('close');
+                                button.grid.tree('reload');
+                            });
+                        }
+                    },400,300);
+                    return;
+                }
+                /*编辑按钮*/
+                if (item.text == "编辑按钮") {
+                    var dialog = f.dialog(button.route('Edit')+'?ID=' + buttonId, '编辑按钮', function () {
+                        if ($(button.form.edit).form('validate')) {
+                            var data = $(button.form.edit).serialize() + '&sToMenuId=' + menuId;
+                            f.post(button.route('Update'), data, function (res) {
+                                dialog.dialog('close');
+                                button.grid.tree('reload');
+                            });
+                        }
+                    },400,300);
+                   return;
+                }
+                /*删除按钮*/
+                if (item.text == "删除按钮") {
+                    f.post(button.route("Cancel"), { Ids: "'" + buttonId + "'" },
+                        function (res) {
+                            f.alert("删除成功!")
+                            button.grid.tree('reload');
+                        });
+                }
+            }
+        });
+    })
+</script>

@@ -1,0 +1,151 @@
+﻿@{
+    ViewBag.Title = "角色管理";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<table id="Role"></table>
+<div id="Role_toolbar" style="padding:5px"> 
+    <form id="search">
+        @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var f = new eui();
+        var d = new extend();
+        var role = f.config("Admin", "Role");
+
+        $().un
+   
+        /*!
+        * method:添加角色
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        role.Insert.handle = function () {
+            var dialog = f.dialog(role.route("Add"), '添加角色',
+                function () {
+                    if ($(role.form.add).form("validate")) {
+                        role.button.disable();
+                        var param=$(role.form.add).serialize();
+                        f.post(role.route("Insert"), param, function (res) {
+                            f.alert(res.info);
+                            dialog.dialog("close");
+                            role.grid.datagrid("reload");
+                        });
+                    }
+                }, 300, 150);
+        }
+
+        /*!
+        * method:编辑角色
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        role.Update.handle = function () {
+            var select = role.grid.datagrid('getSelections');
+            if (select.length == 1) {
+                var dialog = f.dialog(role.route("Edit") + "?ID=" + select[0].ID, '编辑角色',
+                    function () {
+                        if ($(role.form.edit).form("validate")) {
+                            role.button.disable();
+                            var param = $(role.form.edit).serialize();
+                            f.post(role.route("Update"), param, function (res) {
+                                f.alert(res.info);
+                                dialog.dialog("close");
+                                role.grid.datagrid("reload");
+                            });
+                        }
+                    }, 300, 150);
+            }
+            else {
+                f.alert("请选择一条数据进行操作!");
+            }
+        }
+
+        /*!
+        * method:删除角色
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        role.Cancel.handle = function () {
+            var select = role.grid.datagrid('getSelections');
+            if (select.length > 0) {
+                $.messager.confirm('确认', '您确认想要删除所选择的数据？', function (r) {
+                    if (r) {
+                        f.post(role.route("Cancel"), { Ids: d.GetIds(select) },
+                            function (res) {
+                                role.grid.datagrid('reload');
+                                role.grid.datagrid('clearSelections');
+                            }, function (r) {
+                                f.alert(r.info);
+                            });
+                    }
+                });
+            }
+            else {
+                f.alert("请选择数据进行操作!");
+            }
+        }
+
+        /*!
+        * method:分配权限
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        role.Power = function () {
+            var select = role.grid.datagrid('getSelections');
+            if (select.length==1) {
+                var dialog = f.dialog(role.route("Power") + "?ID=" + select[0].ID, '分配权限',
+                  function ()
+                  {
+                      role.button.disable();
+                      var array = $('#power .menuId:checked');
+                      var sPower = d.GetValue(array);
+                      array = $('#power .buttonId:checked');
+                      sPower = sPower + "|" + d.GetValue(array);
+                      param = { sPower: sPower, ID: select[0].ID }
+                      f.post(role.route("SetPower"), param,
+                          function (res) {
+                              f.alert('操作成功!');
+                              dialog.dialog('close');
+                          });
+                  });
+            }
+            else {
+                f.alert("请选择一条数据进行操作!");
+            }
+        }
+      
+        /*!
+        * method:绑定角色按钮事件
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        $(role.toolbar)
+                .on('click', 'a[data-name=role_add]', role.Insert.handle)
+                .on('click', 'a[data-name=role_edit]', role.Update.handle)
+                .on('click', 'a[data-name=role_cancel]', role.Cancel.handle)
+                .on('click', 'a[data-name=role_power]', role.Power)
+
+        /*!
+        * method:角色数据列表(datagrid)的绑定
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        role.grid.datagrid({
+            fit:true,
+            url: role.route('List'),
+            toolbar: role.toolbar,
+            rownumbers: true,
+            striped: true,
+            pagination: true,
+            loadMsg: "正在加载...",
+            columns: [[
+                { field: '', checkbox: true, },
+                { field: 'sRoleName', title: '角色名称', align: 'center', width: 150 },
+                //{ field: 'sPower', title: '权限等级', align: 'center', width: 180 },
+                { field: 'sInsertTime', title: '添加时间', align: 'center', width: 200}
+            ]],
+        });
+    });
+</script>

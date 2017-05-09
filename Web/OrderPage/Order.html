@@ -1,0 +1,251 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>订单确认</title>
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<!--分享使用-->
+	<meta itemprop="name" content="" />
+	<meta itemprop="description" name="description" content="" />
+	<meta itemprop="image" content="img_url" />
+	<meta name="format-detection" content="telephone=no" />
+    <link rel="stylesheet" type="text/css" href="css/global.css">
+    <link rel="stylesheet" type="text/css" href="css/mobilebone.css" />
+    <link rel="stylesheet" type="text/css" href="css/weui.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="lib/jquery-2.1.4.min.js"></script>
+    <script src="lib/mobilebone.js"></script>
+    <style>
+        .page{height:auto !important;}
+         html, body, .page{box-sizing:border-box}
+    </style>
+</head>
+<body class="has-head t-p-b t-bg-f6 adress">
+    <!--订单页-->
+    <div class="page in" id="js_address_list"  style="padding-bottom:1.4rem;">
+        <div class="main  mb-content">
+        <section>
+            <a href="#js_address_add" class="t-active t-address-Box t-bg-ff">
+                <i class="t-icon-arrow-left"></i>
+                <i class="t-icon-arrow-right"></i>
+                <ul style="background: url(img/location-border.jpg) repeat-x left bottom;background-size: 100%">
+                    <li >
+                        <h4>收货人：<span id="sName"></span><span class="t-m-lr"></span></h4>
+                    </li>
+                    <li class="t-c-9 sAddress"></li>
+                    <li id="address_hide" style="display:none">
+                        <h3 style="font-size:18px;color: #df5179;line-height: 93px;">亲,请选择收货地址</h3>
+                    </li>
+                </ul>
+            </a>
+        </section>
+        <!--商品清单-->
+        <section>
+             <div class="t-general-listing t-bg-ff t-m-t t-b-t t-b-b">
+                    <div class="t-listing-Box clearfix">
+                        <i class="t-picture"></i>
+                        <div class="t-listing-right">
+                            <h3 class="sGoodName"></h3>
+                            <p class="t-size"></p>
+                            <p class="t-listing-money">&yen; <span class="dSinglePrices">0.00</span></p>
+                            <span class="t-number">&times;<span class="iGoodsCount"></span></span>
+                        </div>
+                    </div>
+             </div>
+        </section>
+        <section>
+            <div class="t-b-t t-bg-ff  t-m-t t-b-b " style="padding:0 0.3rem 0.3rem 0.3rem">
+
+                <div class="t-orders-Box t-l-h t-b-dashed">
+                    <span>运费：</span>
+                    <span class="pull-right">&yen; 0.00</span>
+                </div>
+                <div class="t-orders-Box t-l-h-one t-b-dashed">
+                    <span>商品金额：</span>
+                    <span class="pull-right">&yen; <span class="dTotalPrices">0.00</span></span>
+                </div>
+                <textarea class="t-text" style="margin-top:10px;font-size: 13px" placeholder="买家留言"></textarea>
+            </div>
+        </section>
+    </div>
+    </div>
+
+    <!--新增地址-->
+    <div class="page out" id="js_address_add" data-title="选择地址">
+        <div class="main mb-content">
+            <div class="weui_cells weui_cells_form address-add no-mt">
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label">收件人</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input sReceiver" type="text" placeholder="请输入收件人姓名">
+                    </div>
+                </div>
+                <div class="weui_cell" style="position:relative;">
+                    <div class="weui_cell_hd"><label class="weui_label">联系方式</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input sPhone" type="text" placeholder="请输入联系方式">
+                    </div>
+                    <b style="position:absolute;width:calc(100% - 15px);height:1px;background-color:#d9d9d9;bottom:0;right:0;-webkit-transform: scaleY(.5);transform: scaleY(.5);"></b>
+                </div>
+                <!--城市选择控件-->
+                <div id="area"></div>
+                <div class="weui_cell">
+                    <div class="weui_cell_hd"><label class="weui_label width-auto">详细地址</label></div>
+                    <div class="weui_cell_bd weui_cell_primary">
+                        <input class="weui_input addressDetail" type="text" placeholder="请输入详细地址">
+                    </div>
+                </div>
+            </div>
+            <a class="public-button m-t-10" id="js_sure">确定</a>
+        </div>
+    </div>
+
+    <footer class="t-bg-ff t-h  t-footer">
+        <div class="t-balance-Box t-p-l t-pay-btn flex-wrap">
+            <div class="t-footer-money">
+                <span class="t-f-14">支付金额：</span>
+                <span  class="t-f-14 t-b-money">&yen; <b class="dPrices">0.00</b></span>
+            </div>
+            <a id="OrderConfrim" class="flex-item-1 t-pay-btn">确认下单</a>
+        </div>
+    </footer>
+</body>
+</html>
+<script src="../Scripts/plug-in/cityselect/jquery.cityselect.js"></script>
+<script src="../Scripts/mylib/common.client.js"></script>
+<script src="../Areas/Mobile/js/OrderConfrim.js"></script>
+<script type="text/javascript">
+    $(function () {
+        domin.initPage();
+        domin.bingEvent();
+    });
+    var domin = function (obj) { return obj; }(new function () {
+
+        var order = new orderConfrim().orders;
+        var state = true;//是否选择了收货地址标识
+        
+        //页面的初始化
+        function initPage() {
+            order = client.localStorage.getStorage("order") || order;
+            var address = client.localStorage.getStorage("receiver_address");//收货地址
+            if (address) {
+                $('#address_hide').hide();
+                $('.t-m-lr').text(address.sPhone);
+                $('.sAddress').text(address.sAddress);
+                $('#sName').text(address.sReceiver);
+                order.sReceiver = address.sReceiver;
+                order.sPhone = address.sPhone;
+                order.sAddress = address.sAddress; 
+                state = true;
+            }
+            else {
+                $('#address_hide').show().siblings().hide();
+                state =false;
+            }
+           
+            //订单信息的展示
+            $('.t-picture').attr("style", "background-image: url(" + order.sGoodsPicture + ")")
+            $('.sGoodName').text(order.sGoodName);
+            $('.t-size').text(order.sGoodsInfo);
+            $('.iGoodsCount').text(order.iGoodsCount);
+            $('.dTotalPrices').text(order.dTotalPrices.toFixed(2));
+            $('.dPrices').text(order.dPrices.toFixed(2));
+            $('.dSinglePrices').text(order.dSinglePrices);
+
+        }
+
+        //选择地址
+        function selectAddress() {
+            var sReceiver = $('.sReceiver').val();
+            var sPhone = $('.sPhone').val();
+            var prov = $('.prov').val();
+            var city = $('.city').val();
+            var dist = $('.dist').val();
+            var addressDetail = $('.addressDetail').val();
+
+            if (client.string.isEmpty(sReceiver))
+                return dialog.tip("亲,请输入收件人姓名!");
+            if (client.string.isEmpty(sPhone))
+                return dialog.tip("亲,请输入手机号码!");
+            if (!client.regex.isPhone(sPhone))
+                return dialog.tip("亲,手机号码格式不对!");
+            if (client.string.isEmpty(addressDetail))
+                return dialog.tip("亲,收货详细地址还没填写呢!");
+            order.sReceiver = sReceiver;
+            order.sPhone = sPhone;
+            order.sAddress = prov + city + dist + addressDetail;
+
+            //设置显示
+            $('.t-m-lr').text(order.sPhone);
+            $('.sAddress').text(order.sAddress);
+            $('#sName').text(order.sReceiver);
+            var address = client.localStorage.getStorage("receiver_address") || {}//缓存收货地址
+            address.sPhone = order.sPhone;
+            address.sReceiver = order.sReceiver;
+            address.sAddress = order.sAddress;
+            address.addressDetail = addressDetail;
+            address.prov = prov;
+            address.city = city;
+            address.dist = dist;
+            client.localStorage.setStorage("receiver_address", address);
+            state = true;
+            $('#address_hide').hide().siblings().show();
+            history.back();
+        }
+
+        //提交订单
+        function commitOrder() {
+            if (state) {
+                var object = new orderConfrim();
+                for (var name in object.orders) {
+                    object.orders[name] = order[name]
+                }
+                object.orderCommit();
+            }
+            else
+                dialog.tip("亲,请选择收货地址!");
+        }
+
+        //事件的绑定
+        function bingEvent() {
+            //城市控件的绑定
+            var address = client.localStorage.getStorage("receiver_address");//收货地址
+            if (address) {
+                $("#area").citySelect({ type: 2, prov: address.prov, city: address.city, dist: address.dist });
+            }
+            else
+                $("#area").citySelect({ type: 2 });
+
+            $('#js_sure').on("click", selectAddress);
+
+            $('#OrderConfrim').on("click", commitOrder);
+
+            Mobilebone.callback = function (page_in, page_out) {
+                var id_in = page_in.id;
+                var id_out = page_out == null ? "" : page_out.id;
+                if (id_in == "js_address_list") {
+                    $('.t-footer').show();
+                } else {
+                    $('.t-footer').hide();
+                    //收货地址的显示
+                    var address = client.localStorage.getStorage("receiver_address");//收货地址
+                    if (address) {
+                        $('.sReceiver').val(address.sReceiver);
+                        $('.sPhone').val(address.sPhone);
+                        $('.addressDetail').val(address.addressDetail);
+
+                        //城市选择控件的赋值   
+                        $('.prov').val(address.prov);
+                        $('.city').val(address.city);
+                        $('.dist').val(address.dist);
+                    }
+                }
+            }
+        }
+        return {
+            bingEvent: bingEvent,
+            initPage: initPage
+        }
+    });
+</script>

@@ -1,0 +1,28 @@
+﻿
+<!--编辑商品视图-->
+
+
+@using EFModel;
+@model Goods
+<form id="edit_form">
+    <input type="hidden" name="ID" value="@Model.ID">
+    <input type="hidden" name="sGoodNo" value="@Model.sGoodNo">
+    <input type="hidden" name="dInsertTime" value="@Model.dInsertTime">
+    <input type="hidden" name="bShelves" value="@Model.bShelves">
+    <table class="gridtable">
+        <tr>
+            <td>商品名称</td>
+            <td>
+                <input class="easyui-textbox" name="sGoodsName" value="@Model.sGoodsName"
+                       data-options="width:300,validType:['length[1,50]'],invalidMessage:'商品名称在50个字符以内'" />
+            </td>
+        </tr>
+        <tr>
+            <td>商品图片</td>
+            <td>
+                <div id="sGoodsPicture"></div>
+                <input type="hidden" name="sGoodsPicture" value="@Model.sGoodsPicture" />
+            </td>
+        </tr>
+    </table>
+</form>

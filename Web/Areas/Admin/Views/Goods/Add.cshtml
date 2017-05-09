@@ -1,0 +1,21 @@
+﻿
+<!--新增商品视图-->
+
+<form id="add_form">
+    <table class="gridtable">
+        <tr>
+            <td>商品名称</td>
+            <td>
+                <input class="easyui-textbox"  name="sGoodsName"
+                       data-options="width:300,validType:['length[1,50]'],invalidMessage:'商品名称在50个字符以内'"/>
+            </td>
+        </tr>
+        <tr>
+            <td>商品图片</td>
+            <td>
+               <div id="sGoodsPicture"></div>
+                <input type="hidden" name="sGoodsPicture" />
+            </td>
+        </tr>
+    </table>
+</form>

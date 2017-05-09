@@ -1,0 +1,23 @@
+﻿<!--添加物流信息视图-->
+@using EFModel;
+@model Orders
+<form id="wuliu_form">
+    <input type="hidden" name="sOrderId" value="@Model.ID" />
+    <table class="gridtable">
+        <tr>
+            <td>快递公司</td>
+            <td>
+                <input class="easyui-textbox" name="sWuliuCompany" data-options="prompt:'快递公司'" value="@Model.sWuliuCompany"/>
+            </td>
+        </tr>
+        <tr>
+            <td>快递单号</td>
+            <td>
+                <input class="easyui-textbox" name="sWuliuNumber"
+                       data-options="prompt:'快递单号'" value="@Model.sWuliuNumber" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+

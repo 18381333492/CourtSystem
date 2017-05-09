@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "菜单列表";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+ <form id="search_form" style="height:100%">
+    <table id="Menus" oncontextmenu="return(false)"></table>
+     <div id="Menus_toolbar" style="padding:5px">  
+        @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+       </div> 
+ </form>
+<script type="text/javascript">
+    $(function () {
+        var f = new eui();
+        var d = new extend();
+        var menus = f.config("Admin", "Menus");
+
+        /*!
+        * method:添加菜单
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        menus.Insert.handle = function () {
+            var dialog = f.dialog(menus.route('Add'), '添加菜单', function () {
+                if ($(menus.form.add).form('validate'))
+                {
+                    menus.button.disable();
+                    var data = $(menus.form.add).serialize();
+                    f.post(menus.route('Insert'), data, function (res) {
+                        dialog.dialog('close');
+                        menus.grid.treegrid('reload');
+                    });
+                }
+            },450,300);
+        }
+
+        /*!
+        * method:编辑菜单
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        menus.Update.handle = function () {
+            var select = menus.grid.datagrid('getSelections');
+            if (select.length) {
+                var dialog = f.dialog(menus.route('Edit') + "?ID=" + select[0].ID, '编辑菜单',
+                    function () {
+                        if ($(menus.form.edit).form('validate')) {
+                            menus.button.disable();
+                            var data = $(menus.form.edit).serialize();
+                            f.post(menus.route('Update'), data, function (res) {
+                                dialog.dialog('close');
+                                menus.grid.treegrid('reload');
+                            });
+                        }
+                    }, 450, 300);
+            }
+            else {
+                f.alert("请选择一条数据进行操作!");
+            }
+        }
+
+        /*!
+        * method:删除菜单
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        menus.Cancel.handle = function () {
+            var select = menus.grid.datagrid('getSelections');
+            if (select.length > 0) {
+                $.messager.confirm('确认', '您确认想要删除所选择的数据？', function (r) {
+                    if (r) {
+                        f.post(menus.route("Cancel"), { Ids: d.GetIds(select) },
+                            function (res) {
+                                menus.grid.treegrid('reload');
+                                menus.grid.datagrid('clearSelections');
+                            });
+                    }
+                });
+            }
+            else {
+                f.alert("请选择数据进行操作!");
+            }
+        }
+
+
+        /*!
+        * method:绑定菜单按钮事件
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        $(menus.toolbar)
+                .on('click', 'a[data-name=menu_add]', menus.Insert.handle)
+                .on('click', 'a[data-name=menu_edit]', menus.Update.handle)
+                .on('click', 'a[data-name=menu_cancel]', menus.Cancel.handle)
+
+
+        /*!
+        * method:菜单数据列表(datagrid)的绑定
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        menus.grid.treegrid({
+            url: menus.route('List'),
+            toolbar: menus.toolbar,
+            idField: "ID",//必需的
+            treeField: "sMenuName",
+            striped: true,
+            singleSelect: true,
+            loadMsg: "正在加载...",
+            columns: [[
+                { field: 'sMenuName', title: '菜单名称', align: 'center', width: 250 },// formatter: sModuleName },
+                { field: 'sMenuUrl', title: '菜单地址', align: 'center', width: 250 },
+                { field: 'iOrder', title: '排序ID', align: 'center', width: 80 },
+                { field: 'dInsertTime', title: '添加时间', align: 'center', width: 200 }
+            ]],
+        });
+    });
+</script>

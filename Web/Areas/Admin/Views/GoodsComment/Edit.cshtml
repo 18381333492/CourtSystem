@@ -1,0 +1,40 @@
+﻿<!--编辑商品评论视图-->
+
+@using EFModel;
+@model GoodsComment
+<form id="edit_form">
+    <input type="hidden" name="ID" value="@Model.ID" />
+    <input type="hidden" name="dCommentTime" value="@Model.dCommentTime" />
+    <table class="gridtable">
+        <tr>
+            <td>商品编号</td>
+            <td>
+                <input class="easyui-textbox" name="sGoodNo" value="@Model.sGoodNo" data-options="prompt:'商品编号'" />
+            </td>
+        </tr>
+        <tr>
+            <td>评论人</td>
+            <td>
+                <input class="easyui-textbox" name="sCommentPerson" value="@Model.sCommentPerson"
+                       data-options="validType:['isPhone'],prompt:'手机号码'" />
+            </td>
+        </tr>
+        <tr>
+            <td>评论分数</td>
+            <td>
+                <div id="iScore"></div>
+                <input type="hidden" name="iScore" value="@Model.iScore" />
+            </td>
+        </tr>
+        <tr>
+            <td>评论内容</td>
+            <td>
+                <input class="easyui-textbox" name="sCommentContent" value="@Model.sCommentContent"
+                       data-options="validType:['length[1,100]'],invalidMessage:'商品名称在100个字符以内',
+                       multiline:true,height:80,width:300,prompt:'评论内容在100字以内'" />
+            </td>
+        </tr>
+    </table>
+</form>
+
+

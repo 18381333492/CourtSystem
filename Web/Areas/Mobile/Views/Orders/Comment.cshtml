@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>商品评论</title>
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!--分享使用-->
+    <meta itemprop="name" content="" />
+    <meta itemprop="description" name="description" content="" />
+    <meta itemprop="image" content="img_url" />
+    <meta name="format-detection" content="telephone=no" />
+    <link href="~/OrderPage/css/global.css" rel="stylesheet" />
+    <link href="~/OrderPage/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/OrderPage/style.css" rel="stylesheet" />
+    <script src="~/OrderPage/lib/jquery-2.1.4.min.js"></script>
+    <script src="~/OrderPage/lib/judge.js"></script>
+    <script src="~/OrderPage/script/common.js"></script>
+</head>
+@using EFModel;
+@model Orders
+<body class="has-head t-p-b">
+    <div class="main">
+        <section>
+            <div class="t-general-listing t-bg-ff  t-b-c t-b-t-c">
+                <div class="t-listing-Box clearfix t-order-bg">
+                    <i class="t-picture" style="background-image: url('@Model.sGoodsPicture')"></i>
+                    <div class="t-listing-right">
+                        <h3>@Model.sGoodName</h3>
+                        <p class="t-size"></p>
+                        <p class="t-listing-money">&yen; @Model.dSinglePrices</p>
+                        <span class="t-number"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div class="t-address-one t-bg-ff t-b-c" style="height:1.2rem">
+                <span class="t-details-title-one" style="line-height:1.2rem;height:1.2rem">分数评价：</span>
+                <p id="comment" class="t-c" style="margin-left:0px;float:left;"></p>
+                <p id="comment-hint" style="height:45px;margin-left:0px;float:left;color:#e05179"></p>
+            </div>
+     
+            <div class="t-address-one t-bg-ff t-b-c clearfix" style="clear:both">
+                <span class="t-details-title-one">评价内容：</span>
+                 <div>
+                    <textarea id="sCommentContent"  style="width:250px;height:155px;margin-top:6px;margin-bottom:15px;padding:4px 4px;border:1px solid #cccccc;float:left;line-height:0.6rem;font-size:14px"
+                               placeholder="亲，是不是对我们的产品爱不释手呢，我们在这里等你哦!"></textarea>
+                </div>
+            </div>
+        </section>
+        <a class="public-button m-t-10" id="comment_commit">确定</a>
+    </div>
+</body>
+</html>
+<script src="~/Scripts/mylib/common.client.js"></script>
+<script src="~/Scripts/plug-in/starsScore/starComment.js"></script>
+<script type="text/javascript">
+    $(function () {
+        domin.bingEvent();
+    });
+
+    var domin = function (obj) { return obj; }(new function () {
+
+        var GoodsComment=
+        {
+            sCommentContent:"",
+            sGoodNo:"@Model.sGoodNo",
+            sCommentPerson: "@Model.sPhone",
+            iScore: 0,
+            sOrderId:'@Model.ID'
+         };
+        var star = new starComment();
+
+        //商品评论
+        function goodComment() {
+            GoodsComment.sCommentContent = $('#sCommentContent').val();
+            GoodsComment.iScore = $('#comment input').val();
+            GoodsComment.iScore = client.regex.isEmpty(GoodsComment.iScore) ? 0 :parseInt(GoodsComment.iScore);
+            if (GoodsComment.iScore == 0) return dialog.tip("亲,你还没有评价呢！");
+            if (client.regex.isEmpty(GoodsComment.sCommentContent)) return dialog.tip("亲,请输入评价内容！");
+
+            client.ajax.ajaxRequest("/Mobile/Orders/GoodsComment", GoodsComment, function (r) {
+                dialog.tip("评论成功");
+                setTimeout(function () {
+                    location.href = "/OrderPage/MyOrder.html";
+                }, 1500);
+            });
+        }
+
+
+        //事件绑定
+        function bingEvent() {
+            star.starCreate("comment", 5, true);
+            $('#comment img').css({ "vertical-align": "middle" });
+
+            $('#comment_commit').on("click", goodComment);
+
+        }
+
+        return {
+            bingEvent: bingEvent
+        }
+
+    });
+</script>

@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "后台用户";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+ <table id="User"></table>
+  <div id="User_toolbar" style="padding:5px;">
+     <form id="search">
+          @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+     </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var f = new eui();
+        var d = new extend();
+        var user = f.config("Admin","User");
+        
+        /*!
+        * method:新增后台用户
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        user.Insert.handle = function () {
+            var dialog = f.dialog(user.route("Add"), "新增用户", function () {
+                if ($(user.form.add).form("validate")) {
+                    user.button.disable();
+                    var param = $(user.form.add).serialize();
+                    f.post(user.route("Insert"), param, function (res) {
+                        dialog.dialog("close");
+                        user.grid.datagrid("reload");
+                    },
+                    function (r) {
+                        f.alert(r.info);
+                        user.button.enable();
+                    });
+                }
+            },380,280);
+        }
+
+        /*!
+        * method:冻结/解冻后台用户
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        user.Freeze = function () {
+            var select = user.grid.datagrid('getSelections');
+            if (select.length == 1) {
+                var name = select[0].bState == true ? "冻结" : "解冻";
+                $.messager.confirm('确认', '您确认想要'+name+'该用户？', function (r) {
+                    if (r) {
+                        f.post(user.route("Freeze"),
+                            { Ids: d.AddQuote(select[0].ID), bState: select[0].bState },
+                            function (res) {
+                                user.grid.datagrid("reload");
+                            });
+                    }
+                });
+            }
+            else {
+                f.alert("请选择一条数据进行操作!");
+            }
+
+        }
+
+        /*!
+        * method:删除后台用户
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        user.Cancel.handle = function () {
+            var select = user.grid.datagrid('getSelections');
+            if (select.length>0) {
+                $.messager.confirm('确认', '您确认想要删除所选择的数据？', function (r) {
+                    if (r) {
+                        f.post(user.route("Cancel"), { Ids: d.GetIds(select) },
+                            function (res) {
+                                f.alert(res.info);
+                                user.grid.datagrid("reload");
+                                user.grid.datagrid('clearSelections');
+                            });
+                    }
+                });
+            }
+            else {
+                f.alert("请选择数据进行操作!");
+            }
+        }
+
+
+
+
+
+        /*!
+        * method:绑定用户按钮事件
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        $(user.toolbar)
+                .on('click', 'a[data-name=user_add]', user.Insert.handle)
+                .on('click', 'a[data-name=user_freeze]', user.Freeze)
+                .on('click', 'a[data-name=user_cancel]', user.Cancel.handle)
+
+
+        /*!
+        * method:用户数据列表(datagrid)的绑定
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        user.grid.datagrid({
+            fit:true,
+            url: user.route('List'),
+            toolbar: user.toolbar,
+            rownumbers:true,
+            striped: true,
+            pagination: true,
+            loadMsg: "正在加载...",
+            columns: [[
+                { field: '', checkbox: true, },
+                { field: 'sUserName', title: '登录名', align: 'center', width: 150 },
+                { field: 'sPhone', title: '电话', align: 'center', width: 150 },
+                { field: 'sRoleName', title: '角色名称', align: 'center', width: 80 },
+                {
+                    field: 'bState', title: '状态', align: 'center', width: 80, formatter: function (value) {
+                        if (value == true) return "<span style='color:green'>正常<span>";
+                        else return "<span style='color:red'>锁定<span>";
+                    }
+                },
+                { field: 'dInsertTime', title: '添加时间', align: 'center', width: 200}
+            ]],
+        });
+    });
+
+</script>

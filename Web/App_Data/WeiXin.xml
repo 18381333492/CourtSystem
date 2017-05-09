@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<appSettings>
+  <!--微信公众号相关配置-->
+
+  <!--微信公众号配置的token-->
+  <add key="token" value="nw9IDMfzt9UdBdUsXCjZ" />
+  
+</appSettings>

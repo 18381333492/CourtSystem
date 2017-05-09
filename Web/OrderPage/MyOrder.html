@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>我的订单</title>
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<!--分享使用-->
+	<meta itemprop="name" content="" />
+	<meta itemprop="description" name="description" content="" />
+	<meta itemprop="image" content="img_url" />
+	<meta name="format-detection" content="telephone=no" />
+
+    <link href="css/global.css" rel="stylesheet" />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+    <script src="lib/jquery-2.1.4.min.js"></script>
+	<script src="lib/judge.js"></script>
+	<script src="script/common.js"></script>
+    <style>
+        body.has-head {
+            padding-top: 1.25rem;
+        }
+    </style>
+</head>
+<body class="has-head">
+    <header>
+        <div class="head-wrap clearfix">
+            <i></i>
+            <div>
+                <div>
+                    <input class="search_phone" placeholder="请输入手机号码查询订单" /><span id="search"></span>
+                </div>
+            </div>
+        </div>
+    </header>
+        <div class="main">
+            <section>
+                <div class="t-order-title t-b-b t-bg-ff">
+                    <a href="javascript:;" class="t-active t-active-on" data-iState="-1">全部</a>
+                    <a href="javascript:;" class="t-active " data-iState="0">待付款</a>
+                    <a href="javascript:;" class="t-active" data-iState="1">待发货</a>
+                    <a href="javascript:;" class="t-active" data-iState="2">待收货</a>
+                    <a href="javascript:;" class="t-active" data-iState="3">待评价</a>
+                </div>
+            </section>
+            <div id="orderlist">
+                <!--<div class="payment-Box">
+                    <section style="height:50px;background-color:white">-->
+                        <!--<div class="t-general-listing t-bg-ff t-m-t t-b-t-c t-b-c">-->
+                            <!--<a href="javascript:;" class="t-active">-->
+                                <!--<h3 class="t-listing-title t-b-c t-c-82">-->
+                                    <!--<span> 订单号：1234567890123</span>
+                                    <span class="pull-right t-c">待付款</span>-->
+                                <!--</h3>-->
+                                <!--<div class="t-listing-Box clearfix t-order-bg t-b-c">
+                                    <i class="t-picture" style="background-image: url('img/t-icon-picture.png')"></i>
+                                    <div class="t-listing-right">
+                                        <h3>钻戒钻戒钻戒钻戒钻戒钻戒钻戒钻戒钻戒钻戒钻戒钻戒钻戒钻戒钻戒钻戒</h3>
+                                        <p class="t-size">净度：VS3</p>
+                                        <p class="t-listing-money">&yen; 119.00</p>
+                                        <span class="t-number">&times;1</span>
+                                    </div>
+                                </div>-->
+                            <!--</a>-->
+                            <!--<div class="t-payment-btn clearfix">
+                                <span class="t-total">合计：<span class="t-c">&yen; 119.00</span></span>
+                                <a href="javascript:;" class="t-payment">付款</a>
+                                <a href="javascript:;" class="t-active">取消订单</a>
+                            </div>-->
+                        <!--</div>-->
+                    <!--</section>
+                </div>-->
+            </div>
+            <p style="height:40px;background-color:white;text-align:center;line-height:40px;display:none">
+            <img src="img/loading.gif" style="vertical-align: middle; margin-right: 5px;display: inline-block" /> 
+             数据在加载中...</p>
+        </div>
+</body>
+</html>
+<script src="../Scripts/mylib/common.client.js"></script>
+<script type="text/javascript">
+    $(function () {
+        domin.initPage();
+        dialog.loading("亲,数据加载中..");
+        domin.loadData();
+        domin.bingEvent();
+    });
+
+    var domin = function (obj) { return obj; }(new function () {
+
+        var stateName = ["待付款", "待发货", "卖家已发货", "交易完成", "交易完成"];
+        var buttonName = ["付 款", "提醒发货", "确认收货", "评 价","已完成"];
+       
+        var defaults = {
+            url: '/Mobile/Orders/List',//请求的路径
+            page: 1,//页面
+            rows: 8,//每页的数量
+            state: true,//是否请求的标识
+            sPhone: '',//要查询的订单的号码,
+            iState:-1  //订单默认状态
+        }
+
+        //页面的初始化
+        function initPage() {
+            defaults.sPhone = client.localStorage.getStorage("search_phone");
+            defaults.sPhone = defaults.sPhone || "";
+            $('.search_phone').val(defaults.sPhone);
+        }
+
+        //查询订单
+        function searchOrder() {
+            var phone = $('.search_phone').val();
+            if (client.regex.isEmpty(phone))
+                return dialog.tip("亲,请输入手机号码查询订单");
+            if (!client.regex.isPhone(phone))
+                return dialog.tip("亲,输入手机号码格式错误");
+            //存入缓存
+            client.localStorage.setStorage("search_phone", phone);
+            defaults.sPhone = phone;
+            defaults.iState = parseInt($('.t-active-on').attr("data-iState"));
+            defaults.state = true;
+            defaults.page = 1;
+            $('#orderlist').html('');
+            dialog.loading("亲,数据加载中..");
+            loadData();
+        }
+
+        //加载数据
+        function loadData() {
+            client.ajax.ajaxRequest(defaults.url,
+                                    defaults,
+                                    function (res) {
+                                        if (res.rows.length > 0) {
+                                            var html = [];
+                                            $(res.rows).each(function () {
+                                                html.push('<div class="payment-Box">');
+                                                html.push('<section>');
+                                                html.push('<div class="t-general-listing t-bg-ff t-m-t t-b-t-c t-b-c">');
+                                                html.push('<a href="/Mobile/Orders/Detail?sOrderId=' + this.ID + '" class="t-active">');
+                                                html.push('<h3 class="t-listing-title t-b-c t-c-82">');
+                                                html.push('<span> 订单号：' + this.sOrderNo + '</span>');
+                                                html.push('<span class="pull-right t-c">' + stateName[this.iState] + '</span>');
+                                                html.push('</h3>');
+                                                html.push('<div class="t-listing-Box clearfix t-order-bg t-b-c">');
+                                                html.push('<i class="t-picture" style="background-image: url(' + this.sGoodsPicture + ')"></i>');
+                                                html.push('<div class="t-listing-right">');
+                                                html.push('<h3>' + this.sGoodName + '</h3>');
+                                                html.push('<p class="t-size">' + this.sGoodsInfo + '</p>');
+                                                html.push('<p class="t-listing-money">&yen;' + this.dSinglePrices.toFixed(2) + '</p>');
+                                                html.push('<span class="t-number">&times;' + this.iGoodsCount + '</span>');
+                                                html.push('</div>');
+                                                html.push('</div>');
+                                                html.push('</a>');
+                                                html.push('<div class="t-payment-btn clearfix">');
+                                                html.push('<span class="t-total">合计：<span class="t-c">&yen; ' + this.dPrices.toFixed(2) + '</span></span>');
+                                                html.push('<a class="t-payment operate"  data-iState=' + this.iState + ' data-id=' + this.ID + ' >' + buttonName[this.iState] + '</a>');
+                                                if (this.iState == 0)
+                                                    html.push('<a class="t-active cancel" data-id=' + this.ID + '>取消订单</a>');
+                                                html.push('</div>');
+                                                html.push('</div>');
+                                                html.push('</section>');
+                                                html.push('</div>');
+                                            });
+                                            $('#orderlist').next().hide();
+                                            $('#orderlist').append(html.join(''));
+                                            defaults.state = res.total <= defaults.rows*defaults.page? false : true;
+                                            //绑定按钮事件
+                                            $('.cancel').on("click", function () { cancelOrder($(this)) });
+                                            $('.operate').on("click", function () { operateOrder($(this)) });
+                                        }
+                                        dialog.closeLoading();//关闭loading效果
+                                        //没有数据的提示
+                                        if ($('#orderlist div').length == 0) {
+                                            $('#orderlist').html("<p style='text-align:center'>暂时没有数据!</p>");
+                                        }
+                                    },null,true);
+        }
+    
+        //订单的相关操作
+        function operateOrder(element) {
+            //0-待支付 1-待发货 2-待收货 3-待评价 
+            var sOrderId = $(element).attr("data-id");
+            var iState = parseInt($(element).attr("data-iState"));//订单状态
+            switch (iState) {
+                case 0: orderPay(sOrderId); break;
+                case 1: orderTip(sOrderId); break;
+                case 2: confrim(sOrderId, element); break;
+                case 3: location.href = "/Mobile/Orders/Comment?sOrderId=" + sOrderId;break;
+                default: break;
+            }
+        }
+
+        //提醒卖家发货
+        function orderTip(sOrderId) {
+            client.ajax.ajaxRequest("/Mobile/Orders/OrderTip",
+                                                 "sOrderId=" + sOrderId,
+                                                  function (r) {
+                                                      dialog.tip(r.info);
+                                                  });
+        }
+
+        //确认收货
+        function confrim(sOrderId, element) {
+            client.ajax.ajaxRequest("/Mobile/Orders/Confirm",
+                                     "sOrderId=" + sOrderId,
+                                      function (r) {
+                                          dialog.tip("收货成功");
+                                          location.href = "/Mobile/Orders/Comment?sOrderId=" + sOrderId;
+                                      });
+        }
+
+        //订单支付
+        function orderPay(sOrderId) {
+            dialog.loading("亲,正在跳转支付...");
+            client.ajax.ajaxRequest("/Mobile/Orders/Pay",
+                                    "sOrderId=" + sOrderId,
+                                     function (r) {
+                                         location.href = r.data;
+                                     });
+        }
+
+
+        //取消订单
+        function cancelOrder(element) {
+            dialog.confrim("亲,您确认要取消该订单？",
+                {
+                    "text": "确定", fn: function () {
+                        client.ajax.ajaxRequest("/Mobile/Orders/CancelOrder",
+                                                 "sOrderId=" + $(element).attr("data-id"),
+                                                 function (r) {
+                                                     dialog.tip("取消成功");
+                                                     $(element).parents('.payment-Box').remove();
+                                                 })
+                    }
+                });
+        }
+
+        //事件的绑定
+        function bingEvent() {
+
+            //订单的查询事件绑定
+            $('#search').on("click", searchOrder);
+
+            //订单选项卡的切换
+            $('.t-order-title').on("click", "a", function () {
+                $('#orderlist').html('');
+                $(this).addClass("t-active-on").siblings().removeClass("t-active-on");
+                defaults.iState = parseInt($(this).attr("data-iState"));
+                //清空数据
+                defaults.state = true;
+                defaults.page = 1;
+                dialog.loading("亲,数据加载中..");
+                loadData();
+            })
+
+            ////绑定滚动事件
+            $(window).scroll(function () {
+                if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                    if (defaults.state) {
+                        $('#orderlist').next().show();
+                        defaults.page = defaults.page + 1;
+                        loadData();
+                    }
+                }
+            });
+        }
+
+        return {
+            initPage: initPage,
+            loadData:loadData,
+            bingEvent: bingEvent,
+        }
+
+    });
+</script>

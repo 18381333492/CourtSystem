@@ -1,0 +1,15 @@
+﻿
+
+@using EFModel;
+@model Role
+<form id="edit_form">
+    <input type="hidden" name="ID" value="@Model.ID" />
+<table class="gridtable">
+    <tr>
+        <td>角色名称</td>
+        <td>
+            <input class="easyui-textbox" name="sRoleName" value="@Model.sRoleName" />
+        </td>
+    </tr>
+</table>
+</form>

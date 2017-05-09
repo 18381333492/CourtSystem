@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <script src="~/Areas/Admin/Content/easyui/jquery.min.js"></script>
+    <script src="~/Areas/Admin/Content/easyui/jquery.easyui.min.js"></script>
+    @*<link href="~/Areas/Admin/Content/easyui/themes/gray/easyui.css" rel="stylesheet" />*@
+    @*<link href="~/Areas/Admin/Content/easyui/themes/bootstrap/easyui.css" rel="stylesheet" />*@
+    <link href="~/Areas/Admin/Content/easyui/themes/material/easyui.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/easyui/themes/icon.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/Index/css/tablestyle.css" rel="stylesheet" />
+
+    <script type="text/javascript">
+        ///*关闭loading效果*/
+        window.closeloading = function () {
+            var s = window.parent;
+            $(s.document).find('.opacity').remove();
+        }
+    </script>
+
+    <script src="~/Scripts/mylib/extend.js"></script>
+    <script src="~/Scripts/mylib/defaults.js"></script>
+    <script src="~/Scripts/mylib/eui.js"></script>
+
+    <title>@ViewBag.Title</title>
+</head>
+<body style="margin:2px;">
+    @RenderBody()
+</body>
+</html>

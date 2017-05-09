@@ -1,0 +1,41 @@
+﻿
+<!--商品评论详情视图-->
+
+@using EFModel;
+@model GoodsComment
+
+<table class="gridtable">
+    <tr>
+        <td>商品编号</td>
+        <td>
+            @Model.sGoodNo
+        </td>
+    </tr>
+    <tr>
+        <td>评论人</td>
+        <td>
+            @Model.sCommentPerson
+        </td>
+    </tr>
+    <tr>
+        <td>评论分数</td>
+        <td>
+           <div style="cursor: pointer;">
+            @for (int i = 0; i < Model.iScore; i++)
+            {
+                <img style="vertical-align: middle" src="/Scripts/plug-in/starsScore/images/star-on.png">
+            }
+         </div>
+       </td>
+    </tr>
+    <tr>
+        <td>评论内容</td>
+        <td>
+           @Model.sCommentContent
+        </td>
+    </tr>
+</table>
+
+
+
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="39d18b2100cd41ea93b349128ddd7200" Name="Diagram1">
+        <EntityTypeShape EntityType="EF_ProjectBaseModel.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EF_ProjectBaseModel.Menus" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EF_ProjectBaseModel.Button" Width="1.5" PointX="0.75" PointY="5.375" />
+        <EntityTypeShape EntityType="EF_ProjectBaseModel.Role" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="EF_ProjectBaseModel.OperateLog" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EF_ProjectBaseModel.Goods" Width="1.5" PointX="5.375" PointY="3.75" />
+        <EntityTypeShape EntityType="EF_ProjectBaseModel.GoodsComment" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="EF_ProjectBaseModel.Orders" Width="1.5" PointX="7.375" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

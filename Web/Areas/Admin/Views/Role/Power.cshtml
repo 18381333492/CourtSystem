@@ -1,0 +1,68 @@
+﻿
+
+<form id="power_form">
+<table class="gridtable" id="power">
+   
+</table>
+<input id="RoleId" type="hidden" value="@ViewBag.ID"/>
+</form>
+<script type="text/javascript">
+    $(function () {
+        var f = new eui();
+        var role = f.config("Admin", "Role");
+
+        /*!
+        * method:获取所有的菜单下面的按钮并显示
+        * author:[汤台]
+        * version:[1.0.0]
+         */
+        f.post(role.route("GetPowerList") + "?ID=" + $('#RoleId').val(), null,
+           function (res) {
+            var data =JSON.parse(res.data);
+            var menu = data.menu;
+            var childMenu = data.childMenu;
+            var button = data.button;
+            var html = [];
+            for (i = 0; i < menu.length; i++)
+            {
+                html.push('<tr><td colspan="2" style="text-align:center;color:red">' + menu[i].sMenuName + '</td></tr>')
+                for (j = 0; j < childMenu.length; j++) {
+                    if (menu[i].ID == childMenu[j].sParentMenuId)
+                    {
+                        html.push('<tr>')
+                        html.push('<td>' + childMenu[j].sMenuName + '</td>');
+                        html.push('<td>');
+                        html.push('<label>浏览<input  class="menuId"  type="checkbox" value="' + childMenu[j].ID + '"/></label>');
+                        for(k=0;k<button.length;k++)
+                        {
+                            if (button[k].sToMenuId == childMenu[j].ID)
+                            {
+                                html.push('<label>' + button[k].sButtonName + '<input class="buttonId" type="checkbox" value="' + button[k].ID + '"/></label>');
+                            }
+                        }
+                        html.push('</td>');
+                        html.push('</tr>');
+                    }    
+                }
+            }
+            $('#power').append(html.join(''));
+            
+            //绑定角色的选择的按纽
+            var power = data.power;
+            var array = power.split('|');
+            var menuId = array[0].split(',');
+            var buttonId;
+            if (array.length > 1 && array[1]!="") {
+                buttonId = array[1].split(',');
+                $(buttonId).each(function () {
+                    $('#power .buttonId[value=' + this + ']').prop("checked", true);
+                });
+            }
+            $(menuId).each(function () {
+                $('#power .menuId[value=' + this + ']').prop("checked", true);
+            });
+        });
+    });
+
+
+</script>

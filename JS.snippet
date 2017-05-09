@@ -1,0 +1,179 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+
+
+  <!--js注释代码-->
+  <CodeSnippet Format="1.0.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <Header>
+      <Title>note</Title>
+      <Author>汤台</Author>
+      <Shortcut>note</Shortcut>
+      <Description>js注释代码</Description>
+      <SnippetTypes>
+        <SnippetType>SurroundsWith</SnippetType>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>名称</ID>
+          <Default>值</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="HTML">
+        <![CDATA[
+      /*!
+    * method:
+    * author:[汤台]
+    * version:[1.0.0]
+    */
+      ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+
+  <!--js添加的事件处理代码-->
+  <CodeSnippet Format="1.0.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <Header>
+      <Title>insertHandle</Title>
+      <Author>汤台</Author>
+      <Shortcut>add</Shortcut>
+      <Description>js添加的事件处理代码</Description>
+      <SnippetTypes>
+        <SnippetType>SurroundsWith</SnippetType>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>名称</ID>
+          <Default>值</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="HTML">
+        <![CDATA[
+      /*!
+    * method:添加NAME
+    * author:[汤台]
+    * version:[1.0.0]
+    */
+       xxx.Insert.handle = function () {
+            var dialog = f.dialog(xxx.route('Add'), '添加NAME', function () {
+                if ($$(xxx.form.add).form('validate'))
+                {
+                    xxx.button.disable();
+                    var data = $$(xxx.form.add).serialize();
+                    f.post(xxx.route('Insert'), data, function (res) {
+                        dialog.dialog('close');
+                        xxx.grid.datagrid('reload');
+                    });
+                }
+            });
+        }
+      ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+
+  <!--js删除事件处理代码-->
+  <CodeSnippet Format="1.0.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <Header>
+      <Title>cancelHandle</Title>
+      <Author>汤台</Author>
+      <Shortcut>cancel</Shortcut>
+      <Description>js删除事件处理代码</Description>
+      <SnippetTypes>
+        <SnippetType>SurroundsWith</SnippetType>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>名称</ID>
+          <Default>值</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="HTML">
+        <![CDATA[
+      /*!
+    * method:删除NAME
+    * author:[汤台]
+    * version:[1.0.0]
+    */
+       xxx.Cancel.handle = function () {
+            var select = xxx.grid.datagrid('getSelections');
+            if (select.length > 0) {
+                $$.messager.confirm('确认', '您确认想要删除所选择的数据？', function (r) {
+                    if (r) {
+                        f.post(xxx.route("Cancel"), { Ids: d.GetIds(select) },
+                            function (res) {
+                                xxx.grid.treegrid('reload');
+                                xxx.grid.datagrid('clearSelections');
+                            });
+                    }
+                });
+            }
+            else {
+                f.alert("请选择数据进行操作!");
+            }
+        }
+      ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+
+  <!--datagrid列表数据绑定js代码-->
+  <CodeSnippet Format="1.0.0" xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+    <Header>
+      <Title>datagrid</Title>
+      <Author>汤台</Author>
+      <Shortcut>list</Shortcut>
+      <Description>datagrid列表数据绑定js代码</Description>
+      <SnippetTypes>
+        <SnippetType>SurroundsWith</SnippetType>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal>
+          <ID>名称</ID>
+          <Default>值</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="HTML">
+        <![CDATA[
+      /*!
+        * method:NAME数据列表(datagrid)的绑定
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+      xxx.grid.datagrid({
+            fit:true,
+            url: xxx.route('List'),
+            toolbar: xxx.toolbar,
+            rownumbers: true,
+            striped: true,
+            pagination: true,
+            loadMsg: "正在加载...",
+            columns: [[
+                { field: '', checkbox: true, },
+                { field: 'sRoleName', title: '角色名称', align: 'center', width: 150 },
+                { field: 'sPower', title: '权限等级', align: 'center', width: 180 },
+                { field: 'sInsertTime', title: '添加时间', align: 'center', width: 200}
+            ]],
+        });
+      ]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+
+
+</CodeSnippets>

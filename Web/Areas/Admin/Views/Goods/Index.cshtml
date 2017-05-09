@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewBag.Title = "商品列表数据";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/plug-in/picture/upload.js"></script>
+<table id="Goods"></table>
+<div id="Goods_toolbar" style="padding:5px;">
+    <form id="search">
+        <div style="margin-bottom:5px">
+            <span>添加时间</span>
+            <input type="text" name="Sta" class="easyui-datebox" data-options="width:120,editable:false">--<input name="End" type="text" class="easyui-datebox" data-options="width:120,editable:false">
+            <span>模糊查询</span>
+            <input class="easyui-textbox" name="searchText" data-options="width:180,height:22,required:false,prompt:'商品编号/商品名称'">
+            <a data-name="goods_search" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查 询</a>
+        </div>
+    </form>
+    @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+</div>
+<script type="text/javascript">
+    $(function () {
+        var f = new eui();
+        var d = new extend();
+        var goods = f.config("Admin", "Goods");
+        goods.picture = new upload();
+    
+        /*!
+        * method:条件查询商品
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        goods.Search = function () {
+            var param = $('#search').serializeArray().toObject();
+            goods.grid.datagrid({
+                queryParams: param
+            });
+        }
+
+        /*!
+        * method:添加商品
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        goods.Insert.handle = function () {
+            var dialog = f.dialog(goods.route('Add'), '添加商品', function () {
+                if ($(goods.form.add).form('validate')) {
+                    goods.button.disable();
+                    var data = $(goods.form.add).serialize();
+                    f.post(goods.route('Insert'), data, function (res) {
+                        f.alert(res.info);
+                        dialog.dialog('close');
+                        goods.grid.datagrid('reload');
+                    });
+                }
+            }, 500, 300, function () {
+                goods.picture.create("sGoodsPicture");
+            });
+        }
+
+        /*!
+        * method:编辑商品
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        goods.Update.handle = function () {
+            var select = goods.grid.datagrid('getSelections');
+            if (select.length == 1) {
+                var dialog = f.dialog(goods.route('Edit') + "?sGoodsId=" + select[0].ID, '编辑商品', function () {
+                    if ($(goods.form.add).form('validate')) {
+                        goods.button.disable();
+                        var data = $(goods.form.edit).serialize();
+                        f.post(goods.route('Update'), data, function (res) {
+                            f.alert(res.info);
+                            dialog.dialog('close');
+                            goods.grid.datagrid('reload');
+                        });
+                    }
+                }, 500, 300, function () {
+                    goods.picture.create("sGoodsPicture");
+                });
+            }
+            else {
+                f.alert("请选择一条数据进行编辑!");
+            }
+        }
+        
+        /*!
+        * method:上/下架商品
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        goods.AlterShelves = function () {
+            var select = goods.grid.datagrid('getSelections');
+            if (select.length > 0) {
+                $.messager.confirm('确认', '您确认想要上/下架所选择的商品？', function (r) {
+                    if (r) {
+                        f.post(goods.route("AlterShelves"), { Ids: d.ArrayID(select) },
+                            function (res) {
+                                f.alert(res.info);
+                                goods.grid.datagrid('reload');
+                                goods.grid.datagrid('clearSelections');
+                            });
+                    }
+                });
+            }
+            else {
+                f.alert("请选择数据进行操作!");
+            }
+        }
+
+
+        /*!
+        * method:绑定商品按钮事件
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        $(goods.toolbar)
+                .on('click', 'a[data-name=goods_add]', goods.Insert.handle)
+                .on('click', 'a[data-name=goods_edit]', goods.Update.handle)
+                .on('click', 'a[data-name=goods_bshelves]', goods.AlterShelves)
+                .on('click', 'a[data-name=goods_search]', goods.Search)
+
+        /*!
+        * method:商品数据列表(datagrid)的绑定
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        goods.grid.datagrid({
+            fit: true,
+            url:goods.route('List'),
+            singleSelect:false,
+            toolbar: goods.toolbar,
+            rownumbers:true,
+            striped: true,
+            pagination: true,
+            loadMsg: "正在加载...",
+            columns: [[
+                { field: '', checkbox: true, },
+                { field: 'sGoodsName', title: '商品名字', align: 'center', width:300 },
+                { field: 'sGoodNo', title: '商品编号', align: 'center', width: 100 },
+                {
+                    field: 'sGoodsPicture', title: '商品图片', align: 'center', width: 120, formatter: function (value) {
+                        return '<img style="width:60px;height:60px;vertical-align:middle;margin:3px" src=' + value + '>';
+                    }},
+                { field: 'dInsertTime', title: '添加时间', align: 'center', width: 200 },
+                {
+                    field: 'bShelves', title: '上/下架', align: 'center', width: 80, formatter: function (value) {
+                        if (value)  return  '<span style="color:green">上架<span>';
+                        else return '<span style="color:red">下架<span>';
+                    }
+                }
+            ]],
+        });
+    });
+
+</script>

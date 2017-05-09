@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.title = "怡佳之城登录系统";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="~/Areas/Admin/Content/Login/js/jquery-1.8.2.min.js"></script>
+    <script src="~/Areas/Admin/Content/easyui/jquery.easyui.min.js"></script>
+    <link href="~/Areas/Admin/Content/easyui/themes/material/easyui.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/easyui/themes/icon.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/Login/css/Login.css" rel="stylesheet" />
+    <script src="~/Scripts/mylib/eui.js"></script>
+    <script src="~/Areas/Admin/js/Home/Login.js"></script>
+    <title>@ViewBag.Title</title>
+</head>
+    <body>
+        <div class="login-box">
+            <h1>怡佳之城后台登录</h1>
+            <div class="name">
+                <label>管理员账号：</label>
+                <input type="text" tabindex="1" maxlength="25" autocomplete="off" />
+            </div>
+            <div class="password">
+                <label>密  码：</label>
+                <input type="password" tabindex="2" />
+            </div>
+            <div class="code">
+                <label>验证码：</label>
+                <input id="code" type="text" name="sImgCode" maxlength="5" tabindex="3" />
+                <div class="codeImg">
+                    <img src="/Admin/Home/GetImgCode" />
+                </div>
+            </div>
+            <div class="remember">
+                <input type="checkbox" tabindex="4" value="true">
+                <label>记住账号</label>
+            </div>
+            <div class="login">
+                <input type="button" tabindex="5" value="登 录">
+            </div>
+        </div>
+        <div class="bottom">
+            ©2014 Leting <a href="javascript:;" target="_blank">关于</a>
+            <span>京ICP证030173号</span>
+            <img width="13" height="16" src="/Areas/Admin/Content/Login/images/copy_rignt_24.png" />
+        </div>
+        <div class="screenbg">
+            <ul>
+                <li><a href="javascript:;"><img src="/Areas/Admin/Content/Login/images/1.jpg" style="width:100%"></a></li>
+            </ul>
+        </div>
+    </body>
+</html>
+
+
+

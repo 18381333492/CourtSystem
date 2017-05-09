@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "自动回复";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<h4 style="text-align:left;color:green;">
+    <span style="vertical-align:central;display:inline-block">自动回复功能:</span><input id="switchbutton">
+</h4>
+<script type="text/javascript">
+  $(function(){
+      $('#switchbutton').switchbutton({
+          width: 80,
+          height: 30,
+          onText: '启 用',
+          offText:'禁 用',
+          checked: true,
+      });
+  })
+</script>

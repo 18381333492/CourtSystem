@@ -1,0 +1,120 @@
+﻿@{
+    ViewBag.Title = "怡佳之城管理系统";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <script src="~/Areas/Admin/Content/easyui/jquery.min.js"></script>
+    <script src="~/Areas/Admin/Content/easyui/jquery.easyui.min.js"></script>
+    @*<link href="~/Areas/Admin/Content/easyui/themes/gray/easyui.css" rel="stylesheet" />*@
+    @*<link href="~/Areas/Admin/Content/easyui/themes/bootstrap/easyui.css" rel="stylesheet" />*@
+    <link href="~/Areas/Admin/Content/easyui/themes/material/easyui.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/easyui/themes/icon.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/Index/css/tablestyle.css" rel="stylesheet" />
+    <link href="~/Areas/Admin/Content/loading/css/spinners.css" rel="stylesheet" />
+
+    <script src="~/Scripts/mylib/defaults.js"></script>
+    <title>@ViewBag.Title</title>
+    <link href="/Areas/Admin/Content/Index/css/css.css" rel="stylesheet" />
+    <script src="/Areas/Admin/Content/Index/js/sdmenu.js"></script>
+    <script type=text/javascript src="/Areas/Admin/Content/Index/js/clock.js"></script>
+
+    <script src="~/Scripts/mylib/eui.js"></script>
+    <script src="~/Areas/Admin/js/Home/Index.js"></script>
+    
+    <style>
+        .panel-header,
+        .panel-body {
+            border-width: 0px;
+        }
+    </style>
+</head>
+<body >
+    <div class="easyui-layout" data-options="fit:'true',border:'false'">
+        <!--header-->
+        <div data-options="region:'north',border:'false'" style="height:98px;">
+            <div style="overflow-x:hidden;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="header">
+                    <tr>
+                        <td rowspan="2" align="left" valign="top" id="logo"><img src="/Areas/Admin/Content/Index/images/main/logo.jpg" width="74" height="64"></td>
+                        <td align="left" valign="bottom">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="left" valign="bottom" id="header-name">怡佳之城</td>
+                                    <td align="right" valign="top" id="header-right">
+                                        <a  style="cursor:pointer" onFocus="this.blur()" class="admin-out">安全退出</a>
+                                        <a  style="cursor:pointer" onFocus="this.blur()" class="admin-home">管理首页</a>
+                                        <a  href="/Admin/Home/Index"  style="cursor:pointer" onFocus="this.blur()" class="admin-index">网站首页</a>
+                                        <span>
+                                            <!-- 日历 -->
+                                            <script type=text/javascript>showcal();</script>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" valign="bottom">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td align="left" valign="top" id="header-admin">管理系统</td>
+                                    <td>
+                                     您的位置：<span id="Address">首页</span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!--Left-->
+        <div data-options="region:'west',border:false" style="width:194px;">
+            <div class="MenuStyle">
+                <div id="left-top">
+                    <div><img src="/Areas/Admin/Content/Index/images/main/member.gif" width="44" height="44" /></div>
+                    <span>用户：@ViewBag.sUserName<br>角色：@ViewBag.sRoleName</span>
+                </div>
+                <div style="float:left" id="my_menu" class="sdmenu">
+                    <!--
+                    菜单列表
+                    -->
+                </div>
+            </div>
+        </div>
+
+        <!--Center-->
+        <div data-options="region:'center'">
+                <div id="tabs" class="easyui-tabs" data-options="fit:'true',tabHeight:35">
+                    <div title="首页" style="padding:10px;">
+                        <p>欢迎!</p> 
+                        <p><span style="color:red">当前在线人数:</span>@ViewBag.Online</p>
+                        <p><span style="color:green">今日访问量:</span>@ViewBag.Visits</p>
+                    </div>
+                    @*<div title="图片上传测试" style="padding:10px;">
+                      
+                    </div>
+                    <div title="html视频测试" style="padding:10px;">
+                     
+                    </div>*@            
+                 </div>
+        </div>
+
+        <!--bottom-->
+        <div data-options="region:'south',border:false" style="height:32px;">
+            <div style="overflow-x:hidden; background:url(/Areas/Admin/Content/Index/images/main/bottombg.jpg) repeat-x top left;">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0" id="footer">
+                    <tr>
+                        <td align="left" style="text-align:center" valign="middle" class="footer_pad">COPYRIGHT©2012    版权所有 TT发展有限公司 </td>
+                        <td align="right" valign="middle" class="footer_pad"><img src="/Areas/Admin/Content/Index/images/main/why.gif" width="12" height="12" alt="疑问图标" align="absmiddle">&nbsp;&nbsp;如有疑问请您联系TEL：18381333492</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

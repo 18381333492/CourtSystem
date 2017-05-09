@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{98A8BEFF-8246-4EEE-AAF4-E45D49692E9D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WeiXin.Base</RootNamespace>
+    <AssemblyName>WeiXin.Base</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Developer.cs" />
+    <Compile Include="Message\BaseMessage.cs" />
+    <Compile Include="Message\EventModels\UnSubscribeEvent.cs" />
+    <Compile Include="Message\EventModels\SubscribeEvent.cs" />
+    <Compile Include="Message\HandleMessage.cs" />
+    <Compile Include="Message\IBaseAction.cs" />
+    <Compile Include="Message\MessageHelper.cs" />
+    <Compile Include="Message\ReceiveModels\ImageMessage.cs" />
+    <Compile Include="Message\SendModels\CDATAAttribute.cs" />
+    <Compile Include="Message\SendModels\SendBaseMessage.cs" />
+    <Compile Include="Message\SendModels\SendNewsMessage.cs" />
+    <Compile Include="Message\SendModels\SendTextMessage.cs" />
+    <Compile Include="Message\ReceiveModels\VoiceMessage.cs" />
+    <Compile Include="Message\ReceiveModels\VideoMessage.cs" />
+    <Compile Include="Message\ReceiveModels\LocationMessage.cs" />
+    <Compile Include="Message\ReceiveModels\LinkMessage.cs" />
+    <Compile Include="Message\ReceiveModels\TextMessage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{f78e3ce0-6aaf-4139-a0cf-f3a1e29cf990}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WeiXin.Tool\WeiXin.Tool.csproj">
+      <Project>{407029d4-2d18-46f2-8690-ee7ddde8c429}</Project>
+      <Name>WeiXin.Tool</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

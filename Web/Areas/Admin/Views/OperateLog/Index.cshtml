@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "后台操作日志";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<table id="OperateLog"></table>
+<div id="OperateLog_toolbar" style="padding:5px">
+    @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+</div>
+<script type="text/javascript">
+    $(function () {
+        var f = new eui();
+        var d = new extend();
+        var operatelog = f.config("Admin", "OperateLog");
+
+
+        /*!
+        * method:删除操作日志数据
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        operatelog.Cancel.handle = function () {
+            var select = operatelog.grid.datagrid('getSelections');
+            if (select.length > 0) {
+                $.messager.confirm('确认', '您确认想要删除所选择的数据？', function (r) {
+                    if (r) {
+                        f.post(operatelog.route("Cancel"), { Ids: d.GetIds(select) },
+                            function (res) {
+                                f.alert(res.info);
+                                operatelog.grid.datagrid("reload");
+                                operatelog.grid.datagrid('clearSelections');
+                            });
+                    }
+                });
+            }
+            else {
+                f.alert("请选择数据进行操作!");
+            }
+        }
+
+        /*!
+        * method:绑定操作日志按钮事件
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        $(operatelog.toolbar)
+                .on('click', 'a[data-name=log_cancel]', operatelog.Cancel.handle)
+
+
+        /*!
+        * method:操作日志数据列表(datagrid)的绑定
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        operatelog.grid.datagrid({
+            fit: true,
+            url: operatelog.route('List'),
+            toolbar: operatelog.toolbar,
+           // fitColumns:true,
+            rownumbers: true,
+            striped: true,
+            pagination: true,
+            loadMsg: "正在加载...",
+            columns: [[
+                { field: '', checkbox: true, },
+                { field: 'sUserName', title: '操作人', align: 'center', width: 100 },
+                { field: 'sContent', title: '操作内容', align: 'center', width: 150 },
+                { field: 'dInsertTime', title: '操作时间', align: 'center', width: 200 },
+                { field: 'sIpAddress', title: 'IP地址', align: 'center', width: 200 }
+            ]],
+        });
+    });
+</script>
