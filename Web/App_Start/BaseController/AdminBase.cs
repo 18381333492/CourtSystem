@@ -63,5 +63,15 @@ namespace Web.App_Start.BaseController
                 }
             }
         }
+
+        /// <summary>
+        /// 在Action之后调用
+        /// 主要处理返回的数据
+        /// </summary>
+        /// <param name="filterContext"></param>
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            base.OnActionExecuted(filterContext);
+        }
     }
 }
