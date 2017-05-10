@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using EFModel;
+using EFModels;
 
 namespace Sevices.Interface
 {
-    public abstract class IUser: BaseBll
+    public abstract class IAdminUser: BaseBll
     {
         #region 查询
 
@@ -17,7 +17,7 @@ namespace Sevices.Interface
         /// <param name="sUserName">用户名</param>
         /// <param name="sPassWord">登录密码</param>
         /// <returns></returns>
-        public abstract User ValidateLogin(string sUserName, string sPassWord);
+        public abstract CDELINK_AdminUser ValidateLogin(string sUserName, string sPassWord);
 
 
         /// <summary>
@@ -25,7 +25,7 @@ namespace Sevices.Interface
         /// </summary>
         /// <param name="sUserId"></param>
         /// <returns></returns>
-        public abstract User GetById(string sUserId);
+        public abstract CDELINK_AdminUser GetById(string sUserId);
 
         #endregion
 

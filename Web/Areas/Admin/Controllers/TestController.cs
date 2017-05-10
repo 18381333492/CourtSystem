@@ -14,8 +14,8 @@ namespace Web.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            UserServices ss = new UserServices();
-            ss.ValidateLogin("", "");
+          //  UserServices ss = new UserServices();
+          //  ss.ValidateLogin("", "");
             return Content("");
         }
 

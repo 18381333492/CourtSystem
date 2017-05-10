@@ -53,9 +53,9 @@
     <Compile Include="Excute\RoleExcute.cs" />
     <Compile Include="Excute\OrderExcute.cs" />
     <Compile Include="Excute\UserExcute.cs" />
-    <Compile Include="ImplementWrite\UserServices.cs" />
+    <Compile Include="ImplementWrite\AdminUserServices.cs" />
     <Compile Include="Interface\BaseBll.cs" />
-    <Compile Include="Interface\IUser.cs" />
+    <Compile Include="Interface\IAdminUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QueryBase.cs" />
     <Compile Include="Query\GoodsCommentQuery.cs" />
@@ -68,7 +68,7 @@
     <Compile Include="Query\UserQuery.cs" />
     <Compile Include="ExcuteBase.cs" />
     <Compile Include="ServiceBase.cs" />
-    <Compile Include="ImplementRead\UserServices.cs" />
+    <Compile Include="ImplementRead\AdminUserServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -78,6 +78,14 @@
     <ProjectReference Include="..\DapperHelper\DapperHelper.csproj">
       <Project>{15ae0127-6ec4-4de5-bc01-7f58dd5bb4e9}</Project>
       <Name>DapperHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EFBaseHelper\EFBaseHelper.csproj">
+      <Project>{528c2045-24ed-409d-b92e-5595a3de18c0}</Project>
+      <Name>EFBaseHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EFModels\EFModels.csproj">
+      <Project>{20ad8766-e146-40a7-905c-fec996ad65fd}</Project>
+      <Name>EFModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\EFModel\EFModel.csproj">
       <Project>{0988fb43-c26d-459c-b5e6-35271e6717d0}</Project>

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Sevices
 {
-    public partial class UserServices
+    public partial class AdminUserServices
     {
+        public void fd()
+        {
+          
+        }
     }
 }

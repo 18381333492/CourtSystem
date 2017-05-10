@@ -32,6 +32,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeiXin.Tool", "WeiXin.Tool\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity", "Unity\Unity.csproj", "{5A05DE7A-EA2B-40D8-95E7-040606F8C9FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFBaseHelper", "EFBaseHelper\EFBaseHelper.csproj", "{528C2045-24ED-409D-B92E-5595A3DE18C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EFModels", "EFModels\EFModels.csproj", "{20AD8766-E146-40A7-905C-FEC996AD65FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +82,14 @@ Global
 		{5A05DE7A-EA2B-40D8-95E7-040606F8C9FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A05DE7A-EA2B-40D8-95E7-040606F8C9FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5A05DE7A-EA2B-40D8-95E7-040606F8C9FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{528C2045-24ED-409D-B92E-5595A3DE18C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{528C2045-24ED-409D-B92E-5595A3DE18C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{528C2045-24ED-409D-B92E-5595A3DE18C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{528C2045-24ED-409D-B92E-5595A3DE18C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20AD8766-E146-40A7-905C-FEC996AD65FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20AD8766-E146-40A7-905C-FEC996AD65FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20AD8766-E146-40A7-905C-FEC996AD65FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20AD8766-E146-40A7-905C-FEC996AD65FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,250 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CourtSystemDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CDELINK_AdminRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sRoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="sPowerIds" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CDELINK_AdminUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sLoginAccout" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sPassWord" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="sPhone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sHeadPicture" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sRoleId" Type="nvarchar" MaxLength="50" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="dLastLoginTime" Type="datetime" />
+          <Property Name="iState" Type="int" Nullable="false" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="bIsSuper" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CDELINK_Button">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sButtonName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sButtonIcon" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sMenuId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="iOrder" Type="int" Nullable="false" />
+          <Property Name="sButtonSign" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CDELINK_Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sPhone" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sPassWord" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sCourtId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="iState" Type="int" Nullable="false" />
+          <Property Name="dPrices" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dRegisterTime" Type="datetime" Nullable="false" />
+          <Property Name="sNickName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CDELINK_Menu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sMenuName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sParentMenuId" Type="varchar" MaxLength="50" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="sMenuUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="iOrder" Type="int" Nullable="false" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="CourtSystemDatabaseModelStoreContainer">
+          <EntitySet Name="CDELINK_AdminRole" EntityType="Self.CDELINK_AdminRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CDELINK_AdminUser" EntityType="Self.CDELINK_AdminUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CDELINK_Button" EntityType="Self.CDELINK_Button" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CDELINK_Client" EntityType="Self.CDELINK_Client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CDELINK_Menu" EntityType="Self.CDELINK_Menu" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CourtSystemDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CDELINK_AdminRole">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sRoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="sPowerIds" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CDELINK_AdminUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sLoginAccout" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sPassWord" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sHeadPicture" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sRoleId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dLastLoginTime" Type="DateTime" Precision="3" />
+          <Property Name="iState" Type="Int32" Nullable="false" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="bIsSuper" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CDELINK_Button">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sButtonName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sButtonIcon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sMenuId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="sButtonSign" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CDELINK_Client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sPassWord" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sCourtId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="iState" Type="Int32" Nullable="false" />
+          <Property Name="dPrices" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dRegisterTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sNickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CDELINK_Menu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sMenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sParentMenuId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sMenuUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="CourtEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CDELINK_AdminRole" EntityType="Self.CDELINK_AdminRole" />
+          <EntitySet Name="CDELINK_AdminUser" EntityType="Self.CDELINK_AdminUser" />
+          <EntitySet Name="CDELINK_Button" EntityType="Self.CDELINK_Button" />
+          <EntitySet Name="CDELINK_Client" EntityType="Self.CDELINK_Client" />
+          <EntitySet Name="CDELINK_Menu" EntityType="Self.CDELINK_Menu" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CourtSystemDatabaseModelStoreContainer" CdmEntityContainer="CourtEntities">
+          <EntitySetMapping Name="CDELINK_AdminRole">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_AdminRole">
+              <MappingFragment StoreEntitySet="CDELINK_AdminRole">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sRoleName" ColumnName="sRoleName" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="sPowerIds" ColumnName="sPowerIds" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CDELINK_AdminUser">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_AdminUser">
+              <MappingFragment StoreEntitySet="CDELINK_AdminUser">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sLoginAccout" ColumnName="sLoginAccout" />
+                <ScalarProperty Name="sPassWord" ColumnName="sPassWord" />
+                <ScalarProperty Name="sPhone" ColumnName="sPhone" />
+                <ScalarProperty Name="sName" ColumnName="sName" />
+                <ScalarProperty Name="sHeadPicture" ColumnName="sHeadPicture" />
+                <ScalarProperty Name="sRoleId" ColumnName="sRoleId" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="dLastLoginTime" ColumnName="dLastLoginTime" />
+                <ScalarProperty Name="iState" ColumnName="iState" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="bIsSuper" ColumnName="bIsSuper" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CDELINK_Button">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_Button">
+              <MappingFragment StoreEntitySet="CDELINK_Button">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sButtonName" ColumnName="sButtonName" />
+                <ScalarProperty Name="sButtonIcon" ColumnName="sButtonIcon" />
+                <ScalarProperty Name="sMenuId" ColumnName="sMenuId" />
+                <ScalarProperty Name="iOrder" ColumnName="iOrder" />
+                <ScalarProperty Name="sButtonSign" ColumnName="sButtonSign" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CDELINK_Client">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_Client">
+              <MappingFragment StoreEntitySet="CDELINK_Client">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sPhone" ColumnName="sPhone" />
+                <ScalarProperty Name="sPassWord" ColumnName="sPassWord" />
+                <ScalarProperty Name="sCourtId" ColumnName="sCourtId" />
+                <ScalarProperty Name="iState" ColumnName="iState" />
+                <ScalarProperty Name="dPrices" ColumnName="dPrices" />
+                <ScalarProperty Name="dRegisterTime" ColumnName="dRegisterTime" />
+                <ScalarProperty Name="sNickName" ColumnName="sNickName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CDELINK_Menu">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_Menu">
+              <MappingFragment StoreEntitySet="CDELINK_Menu">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="sMenuName" ColumnName="sMenuName" />
+                <ScalarProperty Name="sParentMenuId" ColumnName="sParentMenuId" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="sMenuUrl" ColumnName="sMenuUrl" />
+                <ScalarProperty Name="iOrder" ColumnName="iOrder" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

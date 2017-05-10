@@ -126,6 +126,7 @@
   <ItemGroup>
     <Compile Include="App_Start\ActionFilter\AuthorizeClientLogin.cs" />
     <Compile Include="App_Start\ActionFilter\AuthorizeUserLogin.cs" />
+    <Compile Include="App_Start\BaseController\AdminBase.cs" />
     <Compile Include="App_Start\MobileBaseController.cs" />
     <Compile Include="App_Start\AdminBaseController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -145,7 +146,10 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenusController.cs" />
     <Compile Include="Areas\Admin\Controllers\TestController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
+    <Compile Include="Areas\CourtAdmin\CourtAdminAreaRegistration.cs" />
+    <Compile Include="Areas\CourtMobile\CourtMobileAreaRegistration.cs" />
     <Compile Include="Areas\Mobile\Controllers\GoodsCommentController.cs" />
     <Compile Include="Areas\Mobile\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Mobile\Controllers\PayController.cs" />
@@ -1131,6 +1135,8 @@
     <Content Include="Areas\Admin\Content\easyui\themes\material\images\Thumbs.db" />
     <Content Include="Areas\Admin\Content\Login\images\Thumbs.db" />
     <Content Include="Areas\Admin\Views\Orders\Wuliu.cshtml" />
+    <Content Include="Areas\CourtAdmin\Views\Web.config" />
+    <Content Include="Areas\CourtMobile\Views\Web.config" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="OrderPage\img\loading.gif" />
@@ -1265,9 +1271,17 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
-    <Content Include="Unity.config" />
+    <Content Include="Unity.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Areas\CourtAdmin\Controllers\" />
+    <Folder Include="Areas\CourtAdmin\Models\" />
+    <Folder Include="Areas\CourtAdmin\Views\Shared\" />
+    <Folder Include="Areas\CourtMobile\Controllers\" />
+    <Folder Include="Areas\CourtMobile\Models\" />
+    <Folder Include="Areas\CourtMobile\Views\Shared\" />
     <Folder Include="Areas\Mobile\Views\Shared\" />
     <Folder Include="Areas\Pays\Controllers\" />
     <Folder Include="Areas\Pays\Views\Shared\" />
@@ -1283,6 +1297,10 @@
       <Project>{f78e3ce0-6aaf-4139-a0cf-f3a1e29cf990}</Project>
       <Name>Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\EFModels\EFModels.csproj">
+      <Project>{20ad8766-e146-40a7-905c-fec996ad65fd}</Project>
+      <Name>EFModels</Name>
+    </ProjectReference>
     <ProjectReference Include="..\EFModel\EFModel.csproj">
       <Project>{0988fb43-c26d-459c-b5e6-35271e6717d0}</Project>
       <Name>EFModel</Name>
@@ -1294,6 +1312,10 @@
     <ProjectReference Include="..\Sevices\Sevices.csproj">
       <Project>{efe8ce4c-d0a4-46f1-9b1e-7dbf5167f936}</Project>
       <Name>Sevices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Unity\Unity.csproj">
+      <Project>{5a05de7a-ea2b-40d8-95e7-040606f8c9fd}</Project>
+      <Name>Unity</Name>
     </ProjectReference>
     <ProjectReference Include="..\WeiXin.Base\WeiXin.Base.csproj">
       <Project>{98a8beff-8246-4eee-aaf4-e45d49692e9d}</Project>
