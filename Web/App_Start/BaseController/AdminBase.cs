@@ -45,13 +45,13 @@ namespace Web.App_Start.BaseController
         {
             if (!(filterContext.ActionDescriptor.GetCustomAttributes(typeof(NoLogin), true).Length == 1))
             {//有NoLogin属性;不判断登录
-                if (null == null)
+                if (SESSION.AdminUser== null)
                 {
                     /*登录过时,session过期*/
                     if (filterContext.HttpContext.Request.HttpMethod.ToUpper() == "GET")
                     {
                         /*跳转到登录过期提示页面*/
-                        filterContext.Result = new RedirectResult("/Admin/Home/Login");
+                        filterContext.Result = new RedirectResult("/Admin/AdminUser/Login");
                     }
                     else
                     {

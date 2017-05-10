@@ -127,6 +127,7 @@
     <Compile Include="App_Start\ActionFilter\AuthorizeClientLogin.cs" />
     <Compile Include="App_Start\ActionFilter\AuthorizeUserLogin.cs" />
     <Compile Include="App_Start\BaseController\AdminBase.cs" />
+    <Compile Include="App_Start\BaseController\SESSION.cs" />
     <Compile Include="App_Start\MobileBaseController.cs" />
     <Compile Include="App_Start\AdminBaseController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
