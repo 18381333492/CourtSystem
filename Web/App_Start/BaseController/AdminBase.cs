@@ -35,5 +35,33 @@ namespace Web.App_Start.BaseController
         {
             return DIEntity.GetInstance().GetImpl<M>();
         }
+
+        /// <summary>
+        /// 在Action之前调用
+        /// tip:主要来验证用户登录
+        /// </summary>
+        /// <param name="filterContext"></param>
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (!(filterContext.ActionDescriptor.GetCustomAttributes(typeof(NoLogin), true).Length == 1))
+            {//有NoLogin属性;不判断登录
+                if (null == null)
+                {
+                    /*登录过时,session过期*/
+                    if (filterContext.HttpContext.Request.HttpMethod.ToUpper() == "GET")
+                    {
+                        /*跳转到登录过期提示页面*/
+                        filterContext.Result = new RedirectResult("/Admin/Home/Login");
+                    }
+                    else
+                    {
+                        result.over = true;//登录过时
+                        ContentResult res = new ContentResult();
+                        res.Content = result.toJson();
+                        filterContext.Result = res;
+                    }
+                }
+            }
+        }
     }
 }
