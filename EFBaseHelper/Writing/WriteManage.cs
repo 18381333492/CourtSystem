@@ -1,4 +1,4 @@
-﻿using EFModel;
+﻿using EFModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -6,28 +6,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFBaseHelper.Writing
+namespace EFBaseHelper
 {
-    /// <summary>
+    /// <summary
     /// EF 读写操作相关
     /// </summary>
     public class WriteManage: IWriting
     {
 
-        public Entities db;
+        public CourtEntities db;
 
         /// <summary>
         /// 初始化构造函数
         /// </summary>
         public WriteManage()
         {
-            db = new Entities();
+            db = new CourtEntities();
         }
 
         /// <summary>
         /// EF上下文
         /// </summary>
-        Entities IWriting.Context
+        CourtEntities IWriting.Context
         {
             get
             {

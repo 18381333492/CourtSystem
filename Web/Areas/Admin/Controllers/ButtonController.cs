@@ -1,4 +1,4 @@
-﻿using EFModel;
+﻿using EFModels;
 using Sevices;
 using System;
 using System.Collections.Generic;
@@ -7,43 +7,42 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using Web.App_Start;
+using Web.App_Start.BaseController;
 
 namespace Web.Areas.Admin.Controllers
 {
-    public class ButtonController : AdminBaseController<ButtonService>
+    public class ButtonController : AdminBase<IButton>
     {
         //
         // GET: /Admin/Button/
 
-        #region 菜单按钮视图
+        #region 按钮相关视图
 
         public ActionResult Index()
         {
             return View();
         }
 
-
         public ActionResult Add()
         {
             return View();
         }
 
-        public ActionResult Edit(Guid ID)
+        public ActionResult Edit(string sButtonId)
         {
-            var button = _server.Get(ID) != null ? _server.Get(ID) : new Button();
-            return View(button);
+            return View(manage.GetById(sButtonId));
         }
 
         #endregion
 
+
         /// <summary>
-        /// 获取菜单按钮数据
+        /// 获取按钮数据列表
         /// </summary>
         /// <returns></returns>
         public ActionResult List()
         {
-            string res = _server.GetList();
-            return Content(res);
+            return Content(string.Empty);
         }
 
         /// <summary>
@@ -51,10 +50,9 @@ namespace Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public void Insert(Button button)
+        public void Insert(CDELINK_Button button)
         {
-            int res = _server.Add(button);
-            if (res > 0)
+            if (manage.Insert(button) > 0)
                 result.success = true;
         }
 
@@ -64,27 +62,10 @@ namespace Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public void Update(Button button)
+        public void Update(CDELINK_Button button)
         {
-            int res = _server.Edit(button);
-            if (res > 0)
-            {
+            if (manage.Update(button) > 0)
                 result.success = true;
-            }
         }
-
-        /// <summary>
-        /// 删除菜单下面的按钮
-        /// </summary>
-        /// <param name="Ids"></param>
-        public void  Cancel(string Ids)
-        {
-            int res = _server.Cancel(Ids);
-            if (res > 0)
-            {
-                result.success = true;
-            }
-        }
-
     }
 }

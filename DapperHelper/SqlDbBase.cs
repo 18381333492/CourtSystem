@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Common;
 using DapperHelper.Reading;
-using EFModel.MyModels;
+using EFModels.MyModels;
 
 namespace DapperHelper
 {

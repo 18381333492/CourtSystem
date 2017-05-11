@@ -19,6 +19,15 @@ namespace EFModels.MyModels
             set;
         }
 
+        /// <summary>
+        /// 后台用户状态标识 0-冻结 1-正常
+        /// </summary>
+        public int iState
+        {
+            get;
+            set;
+        }
+
         public string sUserName
         {
             get;

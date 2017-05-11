@@ -1,18 +1,18 @@
-﻿using EFModel;
+﻿using EFModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EFBaseHelper.Writing
+namespace EFBaseHelper
 {
     /// <summary>
     /// EF写操作的接口
     /// </summary>
     public interface IWriting
     {
-        Entities Context
+        CourtEntities Context
         {
             get;
         }

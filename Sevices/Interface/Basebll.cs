@@ -1,12 +1,12 @@
 ﻿using DapperHelper;
-using EFBaseHelper.Writing;
+using EFBaseHelper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sevices.Interface
+namespace Sevices
 {
     public class BaseBll
     {

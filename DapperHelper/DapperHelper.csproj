@@ -45,9 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExcuteHelper\ExcuteBase.cs" />
-    <Compile Include="QueryHelper\IQuery.cs" />
-    <Compile Include="QueryHelper\QueryBase.cs" />
     <Compile Include="Reading\IReading.cs" />
     <Compile Include="Reading\ReadManage.cs" />
     <Compile Include="SqlDbBase.cs" />
@@ -61,9 +58,9 @@
       <Project>{f78e3ce0-6aaf-4139-a0cf-f3a1e29cf990}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EFModel\EFModel.csproj">
-      <Project>{0988fb43-c26d-459c-b5e6-35271e6717d0}</Project>
-      <Name>EFModel</Name>
+    <ProjectReference Include="..\EFModels\EFModels.csproj">
+      <Project>{20ad8766-e146-40a7-905c-fec996ad65fd}</Project>
+      <Name>EFModels</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logs\Logs.csproj">
       <Project>{bc3d8507-da98-449b-8839-63d44d5fc839}</Project>

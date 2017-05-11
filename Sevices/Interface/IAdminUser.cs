@@ -4,12 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EFModels;
+using EFModels.MyModels;
 
-namespace Sevices.Interface
+namespace Sevices
 {
     public abstract class IAdminUser: BaseBll
     {
         #region 查询
+
+
+        /// <summary>
+        /// 分页获取后台用户数据列表
+        /// </summary>
+        /// <param name="Info">分页参数</param>
+        /// <param name="searchText">搜索的文本</param>
+        /// <param name="iState">会员状态(默认全部)</param>
+        /// <returns></returns>
+        public abstract string PageList(PageInfo Info, string searchText, int iState);
+
 
         /// <summary>
         /// 验证公司后台管理员登录
@@ -35,6 +47,21 @@ namespace Sevices.Interface
 
 
         #region 操作
+
+        /// <summary>
+        /// 添加后台用户
+        /// </summary>
+        /// <param name="adminUser"></param>
+        /// <returns></returns>
+        public abstract int Insert(CDELINK_AdminUser adminUser);
+
+        /// <summary>
+        /// 编辑后台用户
+        /// </summary>
+        /// <param name="adminUser"></param>
+        /// <returns></returns>
+        public abstract int Update(CDELINK_AdminUser adminUser);
+
 
         #endregion
 

@@ -7,8 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Diagnostics;
 namespace EFModels
 {
+    using Common;
+    using System.Data.Entity.Validation;
+    using System.Text;
+    
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
@@ -18,8 +23,10 @@ namespace EFModels
         public CourtEntities()
             : base("name=CourtEntities")
         {
-        }
+    		//开启数据库脚本跟踪
+            this.Database.Log = s => Debug.WriteLine(s);
     
+        }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();

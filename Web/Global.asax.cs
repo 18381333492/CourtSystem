@@ -9,7 +9,6 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Common;
 using System.Threading;
-using EFModel;
 
 namespace Web
 {
@@ -80,10 +79,7 @@ namespace Web
         /// </summary>
         private void VisitsCount(object a)
         {
-            using (var db=new Entities())
-            {
-               
-            }
+           
         }
     }
 }

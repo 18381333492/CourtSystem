@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "后台用户";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<table id="User" style="height:100%;width:100%"></table>
+<div id="User_toolbar" style="padding:2px;">
+    <form id="search">
+     
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var f = new eui();
+        var d = new extend();
+        var user = f.config("Admin", "AdminUser");
+
+        /*!
+        * method:用户数据列表(datagrid)的绑定
+        * author:[汤台]
+        * version:[1.0.0]
+        */
+        $('#User').datagrid({
+            fit:true,
+            url: user.route('List'),
+            toolbar: user.toolbar,
+            rownumbers:true,
+            striped: true,
+            pagination: true,
+            loadMsg: "正在加载...",
+            columns: [[
+                { field: '', checkbox: true, },
+                { field: 'sUserName', title: '登录账户', align: 'center', width: 150 },
+                { field: 'sPhone', title: '电话', align: 'center', width: 150 },
+                { field: 'sRoleName', title: '角色名称', align: 'center', width: 80 },
+                {
+                    field: 'iState', title: '状态', align: 'center', width: 80, formatter: function (value) {
+                        if (value == true) return "<span style='color:green'>正常<span>";
+                        else return "<span style='color:red'>锁定<span>";
+                    }
+                },
+                { field: 'dInsertTime', title: '添加时间', align: 'center', width: 200}
+            ]],
+            onLoadSuccess: function () {
+                $('#User').datagrid('resize');
+            }
+        });
+    });
+
+</script>
