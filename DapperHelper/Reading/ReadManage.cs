@@ -113,7 +113,7 @@ namespace DapperHelper.Reading
             if (ret.Count > 0)
             {
                 //随意抽一条做最大条数记录
-                result.total = ret[0]["MaxCount"].toInt32();
+                result.total = ret[0]["MaxRows"].toInt32();
                 //如果泛型类型是字典，分页结果里面的泛型集合就是字典集合，否则就是设定的泛型类型集合
                 var interfaceType = typeof(T).GetInterface("IDictionary");
                 if (typeof(T).Name.IndexOf("IDictionary") >= 0 || interfaceType != null)

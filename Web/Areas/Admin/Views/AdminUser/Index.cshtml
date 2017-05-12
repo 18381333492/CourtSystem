@@ -1,12 +1,31 @@
 ﻿@{
     ViewBag.Title = "后台用户";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
 }
+<script src="~/Areas/Admin/Content/assets/js/bootstrap.min.js"></script>
 <table id="User" style="height:100%;width:100%"></table>
-<div id="User_toolbar" style="padding:2px;">
+<div id="User_toolbar" style="padding:8px;">
     <form id="search">
-     
+        <button type="button" class="btn btn-success btn-sm adminUser_add" >新增用户</button>
+        <button type="button" class="btn btn-info    btn-sm">编辑用户</button>
+        <button type="button" class="btn btn-warning btn-sm">冻结用户</button>
+        <button type="button" class="btn btn-danger  btn-sm">删除用户</button>
     </form>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">模态框（Modal）标题</h4>
+            </div>
+            <div class="modal-body">在这里添加一些文本</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">提交更改</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
 </div>
 <script type="text/javascript">
     $(function () {
@@ -14,28 +33,30 @@
         var d = new extend();
         var user = f.config("Admin", "AdminUser");
 
+        $('.adminUser_add').on("click", function () {
+            $('#myModal').modal();
+        });
+
         /*!
         * method:用户数据列表(datagrid)的绑定
-        * author:[汤台]
-        * version:[1.0.0]
         */
         $('#User').datagrid({
             fit:true,
             url: user.route('List'),
-            toolbar: user.toolbar,
+            toolbar: $('#User_toolbar'),
             rownumbers:true,
             striped: true,
             pagination: true,
             loadMsg: "正在加载...",
             columns: [[
                 { field: '', checkbox: true, },
-                { field: 'sUserName', title: '登录账户', align: 'center', width: 150 },
+                { field: 'sLoginAccout', title: '登录账户', align: 'center', width: 150 },
                 { field: 'sPhone', title: '电话', align: 'center', width: 150 },
-                { field: 'sRoleName', title: '角色名称', align: 'center', width: 80 },
+                //{ field: 'sRoleName', title: '角色名称', align: 'center', width: 80 },
                 {
                     field: 'iState', title: '状态', align: 'center', width: 80, formatter: function (value) {
-                        if (value == true) return "<span style='color:green'>正常<span>";
-                        else return "<span style='color:red'>锁定<span>";
+                        if (value == 1) return "<span style='color:green'>正常<span>";
+                        else return "<span style='color:red'>冻结<span>";
                     }
                 },
                 { field: 'dInsertTime', title: '添加时间', align: 'center', width: 200}

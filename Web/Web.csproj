@@ -136,6 +136,7 @@
     <Compile Include="Areas\Admin\Controllers\ButtonController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminUserController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
     <Compile Include="Areas\CourtAdmin\CourtAdminAreaRegistration.cs" />
     <Compile Include="Areas\CourtMobile\CourtMobileAreaRegistration.cs" />
     <Compile Include="Areas\Mobile\MobileAreaRegistration.cs" />
@@ -1036,7 +1037,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Areas\Admin\Views\Web.config" />
-    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout_EuiAndBoot.cshtml" />
     <Content Include="Areas\Mobile\Views\Web.config" />
     <Content Include="Areas\WeiXin\Views\Web.config" />
     <Content Include="Areas\Pays\Views\Web.config" />
@@ -1069,6 +1070,8 @@
     <Content Include="Areas\Admin\Content\assets\avatars\Thumbs.db" />
     <Content Include="Areas\Admin\Content\assets\css\images\Thumbs.db" />
     <Content Include="Areas\Admin\Content\assets\font\fontawesome-webfont.woff" />
+    <Content Include="Areas\Admin\Views\Menu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout_Eui.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
