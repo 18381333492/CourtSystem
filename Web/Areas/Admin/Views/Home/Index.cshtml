@@ -1,10 +1,14 @@
-﻿<!DOCTYPE html>
+﻿ @{   string[] weekdays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+    string week = weekdays[Convert.ToInt32(DateTime.Now.DayOfWeek)];
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>成都宜联后台管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
     <!--bootstrap引用-->
+    @*<link href="~/Areas/Admin/Content/bootstrapValidator/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />*@
     <link href="~/Areas/Admin/Content/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Content/assets/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Content/assets/css/ace.min.css" rel="stylesheet" />
@@ -15,28 +19,15 @@
     <link href="~/Areas/Admin/Content/easyui/themes/icon.css" rel="stylesheet" />
     <script src="~/Areas/Admin/Content/easyui/jquery.easyui.min.js"></script>
     <style>
-        /*.easyui-tabs {
-            height: 865px;
-        }
-
-        .tabs-panels {
-            height: 865px;
-        }*/
-        body{
-            height:100%;
-        }
-        html{
-            height:100px;
-        }
-    </style>
-    
+       html  {height:100%;}  body {height:100%;}
+    </style> 
 </head>
 <body>
     <!--header-->
     <div class="navbar navbar-default" id="navbar">
         <div class="navbar-container" id="navbar-container">
             <div class="navbar-header pull-left">
-                <a href="#" class="navbar-brand">
+                <a class="navbar-brand">
                     <small>
                         <i class="icon-leaf"></i>
                         成都宜联后台管理系统
@@ -45,41 +36,48 @@
             </div>
             <div class="navbar-header pull-right" role="navigation">
                 <ul class="nav ace-nav">
-                    <li class="grey">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="icon-tasks"></i>
-                            <span class="badge badge-grey">4</span>
-                        </a>
+                    <li style="margin-right:10px;">
+                        <span style="color:white">@DateTime.Now.ToString("yyyy年MM月dd日") @week</span>
                     </li>
-                    <li class="purple">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="icon-bell-alt icon-animated-bell"></i>
-                            <span class="badge badge-important">8</span>
-                        </a>         
-                    </li>
-                    <li class="green">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <i class="icon-envelope icon-animated-vertical"></i>
-                            <span class="badge badge-success">5</span>
-                        </a>     
-                    </li>
-                    <li class="light-blue">
-                        <a data-toggle="dropdown" href="#" class="dropdown-toggle">
+                    <li class="light-blue" style="border:none">
+                        <a data-toggle="dropdown"  class="dropdown-toggle" style="cursor:pointer">
                             <img class="nav-user-photo" src="~/Areas/Admin/Content/assets/avatars/user.jpg" alt="Jason's Photo" />
                             <span class="user-info">
-                                <small>Welcome,</small>
-                                Jason
+                                <small>欢迎光临</small>
+                                 SuperMan
                             </span>
                             <i class="icon-caret-down"></i>
-                        </a>    
+                        </a>
+                        <ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close"
+                            style="top:100%">
+                            <li>
+                                <a href="#">
+                                    <i class="icon-cog"></i>
+                                    设置
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <i class="icon-user"></i>
+                                    个人资料
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#" class="quit">
+                                    <i class="icon-off"></i>
+                                    退出
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
     <!--Content-->
-    <div class="main-container" id="main-container" style="height:100%">
-        <div class="main-container-inner" style="height:100%">
+    <div class="main-container" id="main-container" style="height:92%">
+        <div class="main-container-inner" style="height:100%;";>
             <a class="menu-toggler" id="menu-toggler" href="#">
                 <span class="menu-text"></span>
             </a>
@@ -388,60 +386,50 @@
             </div>
 
             <!--内容区域-->
-            <div class="main-content" style="height:100%">
-                <!--栏目导航栏-->
-                <div class="breadcrumbs" id="breadcrumbs">
-                    <ul class="breadcrumb">
-                        <li>
-                            <i class="icon-home home-icon"></i>
-                            <a href="javascript:history.go(0);">Home</a>
-                        </li>
-                    </ul>
-                    <div class="nav-search" id="nav-search">
-                        <form class="form-search">
-                            <span class="input-icon">
-                                <input type="text" placeholder="Search ..." class="nav-search-input" id="nav-search-input" autocomplete="off" />
-                                <i class="icon-search nav-search-icon"></i>
-                            </span>
-                        </form>
-                    </div><!-- #nav-search -->
-                </div>
-
+            <div class="main-content" style="height:100%;">
                 <!--栏目内容区域-->
-                <div class="page-content" style="height:100%">
+                <div class="page-content" style="height:100%;width:100%">
                     <div id="tabs" class="easyui-tabs" data-options="fit:'true',tabHeight:35">
                         <div title="首页" style="padding:10px;">
-                            <p>
-                                欢迎!
-                                欢迎!
-                                欢迎!
-                                欢迎!
-                                欢迎!
+                            <button type="button" class="btn btn-success btn-sm">测试按钮</button> &nbsp;
+                            <button type="button" class="btn btn-danger  btn-sm ">测试按钮</button>&nbsp;
+                            <button type="button" class="btn btn-default  btn-sm ">测试按钮</button>&nbsp;
+                            <button type="button" class="btn btn-primary  btn-sm ">测试按钮</button>&nbsp;
+                            <button type="button" class="btn btn-info  btn-sm ">测试按钮</button>&nbsp;
+                            <button type="button" class="btn btn-cart  btn-sm ">测试按钮</button>&nbsp;
+                            <button type="button" class="btn btn-lg  btn-sm ">测试按钮</button>&nbsp;
+                            <button type="button" class="btn btn-link btn-sm ">测试按钮</button>&nbsp;
                         </div>
-                        <div title="后台用户管理" style="padding:10px;" data-options="closable:true">
+                       @* <div title="后台用户管理" style="padding:10px;" data-options="closable:true">
                             广泛发动过
-                        </div>
+                        </div>*@
                     </div>
                 </div>
             </div>
             <!--内容区域-->
         </div>
     </div>
+    <!--footer-->
+    <div style="text-align:center;position: relative; background: white; width: 100%;height:3%;padding-top:2px">
+        <div>&copy;2008-@DateTime.Now.Year <a href="http://www.cdelink.net" target="_blank" title="宜联科技">www.cdelink.net</a>, Inc. All rights reserved. 成都宜联科技有限责任公司</div>
+    </div>
 </body>
 </html>
 <script type="text/javascript">
     $(function () {
-        $('#tabs').tabs('add', {
-            title: "fdsfsf",
-            content: '<iframe scrolling="auto" frameborder="0"  src="/Admin/AdminUser/Index" width="100%" height="100%";></iframe>',
-            closable: true,
-            //tools: [{
-            //    iconCls: 'icon-mini-refresh',
-            //    handler: function () {
-            //        alert('refresh');
-            //    }
-            //}]
-        });
+      
+        domin.bingEvent();
+        //$('#tabs').tabs('add', {
+        //    title: "fdsfsf",
+        //    content: '<iframe scrolling="auto" frameborder="0"  src="/Admin/AdminUser/Index" width="100%" height="100%";></iframe>',
+        //    closable: true,
+        //    //tools: [{
+        //    //    iconCls: 'icon-mini-refresh',
+        //    //    handler: function () {
+        //    //        alert('refresh');
+        //    //    }
+        //    //}]
+        //});
 
         ////绑定菜单单击事件
         //$(".nav-list a").bind("click", function () {
@@ -456,6 +444,34 @@
     });
 
     var domin = function (obj) { return obj; }(new function () {
+        
+        //事件的绑定
+        function bingEvent() {
 
+            //调整窗口大小
+            window.onresize = function () {
+                $('#tabs').tabs('resize');
+            }
+
+            //绑定头像下拉菜单
+            $('.icon-caret-down').parent().on("click", function () {
+                $(this).next().toggle();
+            });
+
+
+            //绑定导航栏的控制
+            $('#sidebar-collapse').on("click", function () {
+                event.stopPropagation();
+                if ($('#sidebar').hasClass('menu-min'))
+                    $('#sidebar').removeClass('menu-min');
+                else
+                    $('#sidebar').addClass('menu-min');
+                $('#tabs').tabs('resize');
+            });
+        }
+
+        return {
+            bingEvent: bingEvent
+        }
     });
 </script>
