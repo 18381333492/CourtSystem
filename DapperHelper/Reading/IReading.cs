@@ -12,6 +12,15 @@ namespace DapperHelper
     /// </summary>
     public interface IReading
     {
+
+        /// <summary>
+        /// 根据主键ID查询实体
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        T Find<T>(Guid ID) where T : new();
+
         /// <summary>
         /// 查询一条数据
         /// </summary>

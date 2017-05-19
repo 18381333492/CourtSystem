@@ -1,15 +1,14 @@
 ﻿@{
-    ViewBag.Title = "后台用户";
+    ViewBag.Title = "角色管理";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
 }
-<table id="AdminUser" style="height:100%;width:100%"></table>
-<div id="AdminUser_toolbar" style="padding:8px;">
+<table id="Role" style="height:100%;width:100%"></table>
+<div id="Role_toolbar" style="padding:8px;">
     <form id="search">
-        <button type="button" class="btn btn-success btn-sm adminUser_add" >新增用户</button>
-        <button type="button" class="btn btn-danger  btn-sm">删除用户</button>
+        <button type="button" class="btn btn-success btn-sm Role_add">新增角色</button>
+        <button type="button" class="btn btn-success btn-sm Role_add">编辑角色</button>
+        <button type="button" class="btn btn-danger  btn-sm">删除角色</button>
         &nbsp; &nbsp; &nbsp;
-        <span>状态:</span>
-        <text></text>
         <span>模糊查询:</span><input type="text" class="form-control" placeholder="姓名/手机号码/账号"
                                  style="width:200px;height:30px;vertical-align:bottom;display:inline-block">
         <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
@@ -19,20 +18,20 @@
     $(function () {
         var admin = new adminPackage();
         //注册路由
-        admin.routeRegister("Admin", "AdminUser");
+        admin.routeRegister("Admin", "Role");
 
         //新增用户
-        $('.adminUser_add').on("click", function () {
+        $('.Role_add').on("click", function () {
             admin.creatModal(admin.route("Add"));
         });
 
         /*!
         * method:数据列表(datagrid)的绑定
         */
-        $('#AdminUser').datagrid({
+        $('#Role').datagrid({
             fit:true,
             url: admin.route('List'),
-            toolbar: $('#AdminUser_toolbar'),
+            toolbar: $('#Role_toolbar'),
             fitColumns:true,
             rownumbers:true,
             striped: true,
@@ -40,12 +39,7 @@
             pageSize:20,
             loadMsg: "正在加载...",
             columns: [[
-                { field: 'sLoginAccout', title: '账号', align: 'center', sortable: true, width: 100 },
-                { field: 'sName', title: '姓名', align: 'center', sortable: true, width: 80 },
-                { field: 'sPhone', title: '手机号码', align: 'center', sortable: true, width: 120 },
-                { field: 'iState', title: '状态', align: 'center', sortable: true, width: 80 },
-                { field: 'dInsertTime', title: '添加时间', align: 'center', sortable: true, width: 120 },
-                { field: 'dLastLoginTime', title: '上一次登录时间', align: 'center', sortable: true, width: 120 },
+                { field: 'sRoleName', title: '角色名称', align: 'center', sortable: true, width: 100 },
                 {
                     field: 'ID', title: '操作', align: 'center', width: 150, formatter: function (value) {
                         var html = [];

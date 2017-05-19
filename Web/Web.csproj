@@ -137,6 +137,7 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Mobile\MobileAreaRegistration.cs" />
     <Compile Include="Areas\Pays\PaysAreaRegistration.cs" />
     <Compile Include="Areas\WeiXin\Controllers\AutoMenuController.cs" />
@@ -1119,6 +1120,11 @@
     <Content Include="Areas\Admin\Content\bootstrapValidator\vendor\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Areas\Admin\Content\bootstrapValidator\vendor\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Areas\Admin\Content\bootstrapValidator\vendor\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Areas\Admin\Views\AdminUser\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\Test\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Test\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminUser\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
@@ -1195,7 +1201,9 @@
     <Folder Include="Scripts\skins\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -1210,10 +1218,6 @@
       <Project>{bc3d8507-da98-449b-8839-63d44d5fc839}</Project>
       <Name>Logs</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Sevices\Sevices.csproj">
-      <Project>{efe8ce4c-d0a4-46f1-9b1e-7dbf5167f936}</Project>
-      <Name>Sevices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Unity\Unity.csproj">
       <Project>{5a05de7a-ea2b-40d8-95e7-040606f8c9fd}</Project>
       <Name>Unity</Name>
@@ -1225,6 +1229,14 @@
     <ProjectReference Include="..\WeiXin.Tool\WeiXin.Tool.csproj">
       <Project>{407029d4-2d18-46f2-8690-ee7ddde8c429}</Project>
       <Name>WeiXin.Tool</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\功能接口\CMS系统接口\SystemInterface\SystemInterface.csproj">
+      <Project>{4dbc02e5-ae9a-45ce-ba79-7ab92febd590}</Project>
+      <Name>SystemInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\功能模块\系统设置模块\SystemModel\SystemModel.csproj">
+      <Project>{5436ce6d-636b-430a-9738-a48cc715de96}</Project>
+      <Name>SystemModel</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

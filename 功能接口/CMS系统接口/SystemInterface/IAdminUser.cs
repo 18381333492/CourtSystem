@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using EFModels;
 using EFModels.MyModels;
 
-namespace Sevices
+namespace SystemInterface
 {
     public abstract class IAdminUser: BaseBll
     {

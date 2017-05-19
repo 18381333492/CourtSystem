@@ -7,8 +7,8 @@ using System.Web.Mvc;
 using Web.App_Start.BaseController;
 using EFModels;
 using EFModels.MyModels;
-using Sevices;
 using Web.App_Start;
+using SystemInterface;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -19,12 +19,12 @@ namespace Web.Areas.Admin.Controllers
         // GET: /Admin/AdminUser/
 
         #region 后台用户相关视图
-        [NoLogin]
+    
         public ActionResult Index()
         {
             return View();
         }
-
+ 
         public ActionResult Add()
         {
             return View();

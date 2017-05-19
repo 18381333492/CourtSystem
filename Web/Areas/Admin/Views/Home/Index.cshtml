@@ -1,5 +1,6 @@
-﻿ @{   string[] weekdays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
-    string week = weekdays[Convert.ToInt32(DateTime.Now.DayOfWeek)];
+﻿ @{  
+     string[] weekdays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+     string week = weekdays[Convert.ToInt32(DateTime.Now.DayOfWeek)];
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,6 @@
     <title>成都宜联后台管理系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
     <!--bootstrap引用-->
-    @*<link href="~/Areas/Admin/Content/bootstrapValidator/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />*@
     <link href="~/Areas/Admin/Content/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Content/assets/css/font-awesome.min.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Content/assets/css/ace.min.css" rel="stylesheet" />
@@ -20,6 +20,7 @@
     <script src="~/Areas/Admin/Content/easyui/jquery.easyui.min.js"></script>
     <style>
        html  {height:100%;}  body {height:100%;}
+       #sidebar a {cursor:pointer; }
     </style> 
 </head>
 <body>
@@ -78,71 +79,68 @@
     <!--Content-->
     <div class="main-container" id="main-container" style="height:92%">
         <div class="main-container-inner" style="height:100%;";>
-            <a class="menu-toggler" id="menu-toggler" href="#">
+            <a class="menu-toggler" id="menu-toggler">
                 <span class="menu-text"></span>
             </a>
             <!--左侧菜单栏目-->
             <div class="sidebar" id="sidebar">
-                <div class="sidebar-shortcuts" id="sidebar-shortcuts">
-            
-                </div>
                 <ul class="nav nav-list">
                     <li class="active">
-                        <a href="#">
+                        <a>
                             <i class="icon-dashboard"></i>
                             <span class="menu-text"> 栏目控制台 </span>
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    @*<li>
+                        <a>
                             <i class="icon-text-width"></i>
                             <span class="menu-text"> 文字排版 </span>
                         </a>
-                    </li>
+                    </li>*@
                     <li>
-                        <a href="#" class="dropdown-toggle">
+                        <a class="dropdown-toggle">
                             <i class="icon-desktop"></i>
-                            <span class="menu-text"> UI 组件 </span>
+                            <span class="menu-text">系统设置</span>
                             <b class="arrow icon-angle-down"></b>
                         </a>
                         <ul class="submenu">
                             <li>
-                                <a href="#">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
-                                    <span>组件</span>
+                                    <span data-url="/Admin/AdminUser/Index">后台用户管理</span>
                                 </a>
                             </li>
 
                             <li>
-                                <a href="#">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     按钮 &amp; 图表
                                 </a>
                             </li>
 
                             <li>
-                                <a href="#">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     树菜单
                                 </a>
                             </li>
 
                             <li>
-                                <a href="#">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     jQuery UI
                                 </a>
                             </li>
 
                             <li>
-                                <a href="#">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     可拖拽列表
                                 </a>
                             </li>
 
                             <li>
-                                <a href="#" class="dropdown-toggle">
+                                <a class="dropdown-toggle">
                                     <i class="icon-double-angle-right"></i>
                                     三级菜单
                                     <b class="arrow icon-angle-down"></b>
@@ -150,14 +148,14 @@
 
                                 <ul class="submenu">
                                     <li>
-                                        <a href="#">
+                                        <a>
                                             <i class="icon-leaf"></i>
                                             第一级
                                         </a>
                                     </li>
 
                                     <li>
-                                        <a href="#" class="dropdown-toggle">
+                                        <a class="dropdown-toggle">
                                             <i class="icon-pencil"></i>
 
                                             第四级
@@ -166,14 +164,14 @@
 
                                         <ul class="submenu">
                                             <li>
-                                                <a href="#">
+                                                <a>
                                                     <i class="icon-plus"></i>
                                                     添加产品
                                                 </a>
                                             </li>
 
                                             <li>
-                                                <a href="#">
+                                                <a>
                                                     <i class="icon-eye-open"></i>
                                                     查看商品
                                                 </a>
@@ -186,7 +184,7 @@
                     </li>
 
                     <li>
-                        <a href="#" class="dropdown-toggle">
+                        <a class="dropdown-toggle">
                             <i class="icon-list"></i>
                             <span class="menu-text"> 表格 </span>
 
@@ -211,7 +209,7 @@
                     </li>
 
                     <li>
-                        <a href="#" class="dropdown-toggle">
+                        <a  class="dropdown-toggle">
                             <i class="icon-edit"></i>
                             <span class="menu-text"> 表单 </span>
 
@@ -220,28 +218,28 @@
 
                         <ul class="submenu">
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     表单组件
                                 </a>
                             </li>
 
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     向导提示 &amp; 验证
                                 </a>
                             </li>
 
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     编辑器
                                 </a>
                             </li>
 
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     文件上传
                                 </a>
@@ -250,14 +248,14 @@
                     </li>
 
                     <li>
-                        <a href="">
+                        <a>
                             <i class="icon-list-alt"></i>
                             <span class="menu-text"> 插件 </span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="">
+                        <a>
                             <i class="icon-calendar"></i>
 
                             <span class="menu-text">
@@ -270,14 +268,14 @@
                     </li>
 
                     <li>
-                        <a href="">
+                        <a>
                             <i class="icon-picture"></i>
                             <span class="menu-text"> 相册 </span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="#" class="dropdown-toggle">
+                        <a class="dropdown-toggle">
                             <i class="icon-tag"></i>
                             <span class="menu-text"> 更多页面 </span>
 
@@ -286,42 +284,42 @@
 
                         <ul class="submenu">
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     用户信息
                                 </a>
                             </li>
 
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     收件箱
                                 </a>
                             </li>
 
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     售价单
                                 </a>
                             </li>
 
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     购物车
                                 </a>
                             </li>
 
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     时间轴
                                 </a>
                             </li>
 
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     登录 &amp; 注册
                                 </a>
@@ -330,9 +328,8 @@
                     </li>
 
                     <li class="active open">
-                        <a href="#" class="dropdown-toggle">
+                        <a class="dropdown-toggle">
                             <i class="icon-file-alt"></i>
-
                             <span class="menu-text">
                                 其他页面
                                 <span class="badge badge-primary ">5</span>
@@ -343,35 +340,35 @@
 
                         <ul class="submenu">
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     帮助
                                 </a>
                             </li>
 
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     404错误页面
                                 </a>
                             </li>
 
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     500错误页面
                                 </a>
                             </li>
 
                             <li>
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     网格
                                 </a>
                             </li>
 
                             <li class="active">
-                                <a href="">
+                                <a>
                                     <i class="icon-double-angle-right"></i>
                                     空白页面
                                 </a>
@@ -391,18 +388,7 @@
                 <div class="page-content" style="height:100%;width:100%">
                     <div id="tabs" class="easyui-tabs" data-options="fit:'true',tabHeight:35">
                         <div title="首页" style="padding:10px;">
-                            <button type="button" class="btn btn-success btn-sm">测试按钮</button> &nbsp;
-                            <button type="button" class="btn btn-danger  btn-sm ">测试按钮</button>&nbsp;
-                            <button type="button" class="btn btn-default  btn-sm ">测试按钮</button>&nbsp;
-                            <button type="button" class="btn btn-primary  btn-sm ">测试按钮</button>&nbsp;
-                            <button type="button" class="btn btn-info  btn-sm ">测试按钮</button>&nbsp;
-                            <button type="button" class="btn btn-cart  btn-sm ">测试按钮</button>&nbsp;
-                            <button type="button" class="btn btn-lg  btn-sm ">测试按钮</button>&nbsp;
-                            <button type="button" class="btn btn-link btn-sm ">测试按钮</button>&nbsp;
                         </div>
-                       @* <div title="后台用户管理" style="padding:10px;" data-options="closable:true">
-                            广泛发动过
-                        </div>*@
                     </div>
                 </div>
             </div>
@@ -410,41 +396,46 @@
         </div>
     </div>
     <!--footer-->
-    <div style="text-align:center;position: relative; background: white; width: 100%;height:3%;padding-top:2px">
+    <div style="text-align:center;position: relative; background: #CACACA; width: 100%;height:3%;padding-top:2px">
         <div>&copy;2008-@DateTime.Now.Year <a href="http://www.cdelink.net" target="_blank" title="宜联科技">www.cdelink.net</a>, Inc. All rights reserved. 成都宜联科技有限责任公司</div>
     </div>
 </body>
 </html>
+<script src="~/Scripts/mylib/common.admin.js"></script>
 <script type="text/javascript">
-    $(function () {
-      
+    $(function () {   
         domin.bingEvent();
-        //$('#tabs').tabs('add', {
-        //    title: "fdsfsf",
-        //    content: '<iframe scrolling="auto" frameborder="0"  src="/Admin/AdminUser/Index" width="100%" height="100%";></iframe>',
-        //    closable: true,
-        //    //tools: [{
-        //    //    iconCls: 'icon-mini-refresh',
-        //    //    handler: function () {
-        //    //        alert('refresh');
-        //    //    }
-        //    //}]
-        //});
-
-        ////绑定菜单单击事件
-        //$(".nav-list a").bind("click", function () {
-        //    if ($('#tabs').tabs("getTab", $(this).text())) {
-        //        $('#tabs').tabs("select", $(this).text());
-        //    }
-        //    else {
-        //        /*遮掩层效果和等待效果*/
-        //        var panel = $('#tabs').tabs('getTab', $(this).text());
-        //    }
-        //});
+        domin.menuList();
     });
 
     var domin = function (obj) { return obj; }(new function () {
-        
+  
+        var admin = new adminPackage();
+
+        //绑定菜单导航栏
+        function menuList() {
+            $('.submenu li a').on("click", function () {
+                var title = $(this).find("span").text();
+                var url = $(this).find("span").attr("data-url");
+                if ($('#tabs').tabs("getTab", title)) {
+                    $('#tabs').tabs("select", title);
+                }
+                else {
+                    $('#tabs').tabs('add', {
+                        title: title,
+                        content: '<iframe scrolling="auto" frameborder="0"  src="' + url + '" width="100%" height="100%" style="display:-webkit-box";></iframe>',
+                        closable: true,
+                        //tools: [{
+                        //    iconCls: 'icon-mini-refresh',
+                        //    handler: function () {
+                        //        alert('refresh');
+                        //    }
+                        //}]
+                    });
+                }
+            });
+        }
+
         //事件的绑定
         function bingEvent() {
 
@@ -471,7 +462,8 @@
         }
 
         return {
-            bingEvent: bingEvent
+            bingEvent: bingEvent,
+            menuList: menuList
         }
     });
 </script>

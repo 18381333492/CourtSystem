@@ -53,13 +53,42 @@ namespace DapperHelper
 
 
         /// <summary>
+        /// 根据主键ID获取实体
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        T IReading.Find<T>(Guid ID)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = GetSqlConnection();
+                if (conn == null) throw new ApplicationException("未获取到连接对象。");
+                string sqlCommand = string.Format("SELECT * FROM {0} WHERE ID=@ID",typeof(T).Name);
+                return DoSingleQuery<T>(conn, sqlCommand, new { ID=ID});
+            }
+            catch (Exception ex)
+            {
+                // Logs.GetLog().WriteErrorLog(ex);
+                return default(T);
+            }
+            finally
+            {
+                CloseConnect(conn);
+            }
+        }
+
+
+
+        /// <summary>
         /// 单条查询
         /// </summary>
         /// <typeparam name="T">查询的对象类型</typeparam>
         /// <param name="sqlCommand">sql命令</param>
         /// <param name="parameter">参数</param>
         /// <returns>查询结果</returns>
-        public  T SingleQuery<T>(string sqlCommand, Object parameter)where T : new()
+        public T SingleQuery<T>(string sqlCommand, Object parameter)where T : new()
         {
             SqlConnection conn = null;
             try
@@ -116,7 +145,7 @@ namespace DapperHelper
         /// <param name="pageInfo">分页参数</param>
         /// <param name="parameter">参数</param>
         /// <returns></returns>
-        public  PagingRet<T> PageQuery<T>(string sqlCommand, PageInfo pageInfo, Object parameter) where T : new()
+        public PagingRet<T> PageQuery<T>(string sqlCommand, PageInfo pageInfo, Object parameter) where T : new()
         {
             SqlConnection conn = null;
             try
