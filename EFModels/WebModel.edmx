@@ -12,8 +12,7 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="sRoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="dInsertTime" Type="datetime" Nullable="false" />
-          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
-          <Property Name="sPowerIds" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="sPowerIds" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="CDELINK_AdminUser">
           <Key>
@@ -24,7 +23,7 @@
           <Property Name="sPassWord" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="sPhone" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="sName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="sHeadPicture" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sHeadPicture" Type="nvarchar" MaxLength="255" />
           <Property Name="sRoleId" Type="nvarchar" MaxLength="50" />
           <Property Name="dInsertTime" Type="datetime" Nullable="false" />
           <Property Name="dLastLoginTime" Type="datetime" />
@@ -85,217 +84,64 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Guid" Nullable="false">
-            <Documentation>
-              <Summary>ID</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sRoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>角色名称</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3">
-            <Documentation>
-              <Summary>添加时间</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="bIsDeleted" Type="Boolean" Nullable="false">
-            <Documentation>
-              <Summary>逻辑删除标识</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sPowerIds" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>菜单主键ID集合(以逗号隔开)</Summary>
-            </Documentation>
-          </Property>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sRoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sPowerIds" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CDELINK_AdminUser">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Guid" Nullable="false">
-            <Documentation>
-              <Summary>ID</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sLoginAccout" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>后台登录帐号</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sPassWord" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>帐号面膜</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>手机号码</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>姓名</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sHeadPicture" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>照片</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sRoleId" Type="String" MaxLength="50" FixedLength="false" Unicode="true">
-            <Documentation>
-              <Summary>绑定的角色主键ID</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3">
-            <Documentation>
-              <Summary>注册时间</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="dLastLoginTime" Type="DateTime" Precision="3">
-            <Documentation>
-              <Summary>上次登录时间</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="iState" Type="Int32" Nullable="false">
-            <Documentation>
-              <Summary>状态 0-冻结 1-正常</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="bIsDeleted" Type="Boolean" Nullable="false">
-            <Documentation>
-              <Summary>逻辑删除标识</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="bIsSuper" Type="Boolean" Nullable="false">
-            <Documentation>
-              <Summary>是否是超级管理员</Summary>
-            </Documentation>
-          </Property>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sLoginAccout" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sPassWord" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sHeadPicture" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sRoleId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="dLastLoginTime" Type="DateTime" Precision="3" />
+          <Property Name="iState" Type="Int32" Nullable="false" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="bIsSuper" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="CDELINK_Button">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Guid" Nullable="false">
-            <Documentation>
-              <Summary>ID</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sButtonName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>按钮名称</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sButtonIcon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>按钮图标</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sMenuId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>所属菜单主键ID</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="iOrder" Type="Int32" Nullable="false">
-            <Documentation>
-              <Summary>按钮排序</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sButtonSign" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>按钮标识</Summary>
-            </Documentation>
-          </Property>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sButtonName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sButtonIcon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sMenuId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="sButtonSign" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="CDELINK_Client">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
-          <Property Name="sPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>手机号码</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sPassWord" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>前端会员登录密码</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sCourtId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>会员绑定的法院的主键ID</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="iState" Type="Int32" Nullable="false">
-            <Documentation>
-              <Summary>状态 0-冻结 1-正常</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="dPrices" Type="Decimal" Precision="18" Scale="2" Nullable="false">
-            <Documentation>
-              <Summary>会员的账户余额</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="dRegisterTime" Type="DateTime" Nullable="false" Precision="3">
-            <Documentation>
-              <Summary>注册时间</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sNickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>会员昵称</Summary>
-            </Documentation>
-          </Property>
+          <Property Name="sPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sPassWord" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sCourtId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="iState" Type="Int32" Nullable="false" />
+          <Property Name="dPrices" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="dRegisterTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sNickName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityType Name="CDELINK_Menu">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Guid" Nullable="false">
-            <Documentation>
-              <Summary>ID</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sMenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false">
-            <Documentation>
-              <Summary>菜单名称</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sParentMenuId" Type="String" MaxLength="50" FixedLength="false" Unicode="false">
-            <Documentation>
-              <Summary>上级菜单主键ID</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3">
-            <Documentation>
-              <Summary>添加时间</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sMenuUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true">
-            <Documentation>
-              <Summary>菜单连接</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="iOrder" Type="Int32" Nullable="false">
-            <Documentation>
-              <Summary>菜单排序</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="bIsDeleted" Type="Boolean" Nullable="false">
-            <Documentation>
-              <Summary>逻辑删除标识</Summary>
-            </Documentation>
-          </Property>
-          <Property Name="sMenuIcon" Type="String" MaxLength="50" FixedLength="false" Unicode="true">
-            <Documentation>
-              <Summary>菜单图标</Summary>
-            </Documentation>
-          </Property>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sMenuName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sParentMenuId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sMenuUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="sMenuIcon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="CourtEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CDELINK_AdminRole" EntityType="Self.CDELINK_AdminRole" />
@@ -316,7 +162,6 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="sRoleName" ColumnName="sRoleName" />
                 <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
-                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
                 <ScalarProperty Name="sPowerIds" ColumnName="sPowerIds" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -368,7 +213,6 @@
           <EntitySetMapping Name="CDELINK_Menu">
             <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_Menu">
               <MappingFragment StoreEntitySet="CDELINK_Menu">
-                <ScalarProperty Name="sMenuIcon" ColumnName="sMenuIcon" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="sMenuName" ColumnName="sMenuName" />
                 <ScalarProperty Name="sParentMenuId" ColumnName="sParentMenuId" />
@@ -376,6 +220,7 @@
                 <ScalarProperty Name="sMenuUrl" ColumnName="sMenuUrl" />
                 <ScalarProperty Name="iOrder" ColumnName="iOrder" />
                 <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="sMenuIcon" ColumnName="sMenuIcon" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

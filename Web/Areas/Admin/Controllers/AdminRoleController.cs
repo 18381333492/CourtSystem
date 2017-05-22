@@ -4,13 +4,15 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EFModels.MyModels;
+using Web.App_Start.BaseController;
+using SystemInterface;
 
 namespace Web.Areas.Admin.Controllers
 {
     /// <summary>
     /// 角色管理控制器
     /// </summary>
-    public class RoleController : Controller
+    public class AdminRoleController : AdminBase<IAdminRole>
     {
         //
         // GET: /Admin/Role/
@@ -31,13 +33,16 @@ namespace Web.Areas.Admin.Controllers
             return View();
         }
 
+        
         /// <summary>
-        /// 
+        /// 分页获取角色数据列表
         /// </summary>
+        /// <param name="info"></param>
+        /// <param name="searchText"></param>
         /// <returns></returns>
         public ActionResult List(PageInfo info,string searchText)
         {
-            return Content(string.Empty);
+            return Content(manage.PageList(info, searchText));
         }
     }
 }

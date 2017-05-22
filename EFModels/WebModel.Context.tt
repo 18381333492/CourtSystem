@@ -27,7 +27,6 @@ if (container == null)
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System.Diagnostics;
 <#
 
 var codeNamespace = code.VsNamespaceSuggestion();
@@ -41,10 +40,6 @@ namespace <#=code.EscapeNamespace(codeNamespace)#>
 }
 
 #>
-using Common;
-using System.Data.Entity.Validation;
-using System.Text;
-
 using System;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
@@ -63,9 +58,6 @@ using System.Linq;
     public <#=code.Escape(container)#>()
         : base("name=<#=container.Name#>")
     {
-		//开启数据库脚本跟踪
-        this.Database.Log = s => Debug.WriteLine(s);
-
 <#
 if (!loader.IsLazyLoadingEnabled(container))
 {
@@ -73,7 +65,6 @@ if (!loader.IsLazyLoadingEnabled(container))
         this.Configuration.LazyLoadingEnabled = false;
 <#
 }
- 
 
 foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 {
@@ -88,6 +79,7 @@ foreach (var entitySet in container.BaseEntitySets.OfType<EntitySet>())
 }
 #>
     }
+
     protected override void OnModelCreating(DbModelBuilder modelBuilder)
     {
         throw new UnintentionalCodeFirstException();
