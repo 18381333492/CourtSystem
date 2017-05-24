@@ -1,0 +1,70 @@
+﻿
+
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header" style="padding:10px;">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">添加角色</h4>
+        </div>
+        <!--主体内容-->
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" id="dataForm">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">角色名称</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入角色名称" name="sRoleName">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--主体内容-->
+        <div class="modal-footer" style="padding:10px;">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button id="ok" type="button" class="btn btn-primary">确认提交</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Admin", "AdminRole");
+
+        //提交操作
+        $('#ok').on("click", function () {
+            var bootstrapValidator = admin.form.data('bootstrapValidator');
+            bootstrapValidator.validate();
+            var res = bootstrapValidator.isValid();
+            if (res) {//验证通过
+                admin.Ajax(admin.route("Insert"), admin.form.serialize(), function (r) {
+                    alert("添加成功");
+                });
+            }
+        });
+
+        //表单验证
+        admin.form.bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                sRoleName: {
+                    validators: {
+                        notEmpty: {
+                            message: '角色名称不能为空'
+                        },
+                        stringLength: {
+                            min: 2,
+                            max: 10,
+                            message: '角色名称长度必须在2到10位之间'
+                        },
+                    }
+                }
+            }
+        });
+    });
+</script>

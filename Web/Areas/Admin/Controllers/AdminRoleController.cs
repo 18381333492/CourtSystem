@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EFModels.MyModels;
 using Web.App_Start.BaseController;
 using SystemInterface;
+using EFModels;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -43,6 +44,35 @@ namespace Web.Areas.Admin.Controllers
         public ActionResult List(PageInfo info,string searchText)
         {
             return Content(manage.PageList(info, searchText));
+        }
+
+
+        /// <summary>
+        /// 添加角色
+        /// </summary>
+        /// <param name="adminRole"></param>
+        public void Insert(CDELINK_AdminRole adminRole)
+        {
+            if (!manage.CheckRoleName(adminRole.sRoleName))
+            {
+                if (manage.Insert(adminRole) > 0)
+                    result.success = true;
+            }
+            else result.info =string.Format("{0}角色名称已存在,请重新输入", adminRole.sRoleName);
+        }
+
+        /// <summary>
+        /// 编辑角色
+        /// </summary>
+        /// <param name="adminRole"></param>
+        public void Update(CDELINK_AdminRole adminRole)
+        {
+            if (!manage.CheckRoleName(adminRole.sRoleName, adminRole.ID.ToString()))
+            {
+                if (manage.Update(adminRole) > 0)
+                    result.success = true;
+            }
+            else result.info = string.Format("{0}角色名称已存在,请重新输入", adminRole.sRoleName);
         }
     }
 }

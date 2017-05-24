@@ -13,6 +13,22 @@ namespace DapperHelper.Reading
 {
     public class ReadManage
     {
+
+        /// <summary>
+        /// 根据条件查询是否存在相应的数据
+        /// </summary>
+        /// <param name="conn">数据库连接字符串对象</param>
+        /// <param name="sqlCommand">sql命令</param>
+        /// <param name="parameter">参数</param>
+        /// <returns></returns>
+
+        protected bool DoAny(SqlConnection conn, string sqlCommand, Object parameter = null)
+        {
+            var ret=conn.Query(sqlCommand, parameter, null,true, null, CommandType.Text);
+            return ret.Count() > 0 ? true : false;
+        }
+
+
         /// <summary>
         /// 查询单条数据
         /// </summary>

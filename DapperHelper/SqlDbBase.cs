@@ -58,7 +58,7 @@ namespace DapperHelper
         /// <typeparam name="T"></typeparam>
         /// <param name="ID"></param>
         /// <returns></returns>
-        T IReading.Find<T>(Guid ID)
+        public T Find<T>(string ID) where T : new()
         {
             SqlConnection conn = null;
             try
@@ -79,7 +79,30 @@ namespace DapperHelper
             }
         }
 
-
+        /// <summary>
+        /// 根据条件查询是否存在相应的数据
+        /// </summary>
+        /// <param name="sqlCommand">sql命令</param>
+        /// <param name="parameter">参数</param>
+        /// <returns></returns>
+        public bool Any(string sqlCommand, Object parameter = null)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = GetSqlConnection();
+                if (conn == null) throw new ApplicationException("未获取到连接对象。");
+                return DoAny(conn, sqlCommand, parameter);
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            finally
+            {
+                CloseConnect(conn);
+            }
+        }
 
         /// <summary>
         /// 单条查询

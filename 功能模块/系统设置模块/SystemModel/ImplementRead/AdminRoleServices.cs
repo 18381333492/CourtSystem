@@ -45,7 +45,24 @@ namespace SystemModel
         /// <returns></returns>
         public override CDELINK_AdminRole GetById(string sRoleId)
         {
-            return query.SingleQuery<CDELINK_AdminRole>("SELECT * FROM CDELINK_AdminRole WHERE ID=@ID", new { ID = sRoleId });
+            return query.Find<CDELINK_AdminRole>(sRoleId);
+        }
+
+
+        /// <summary>
+        /// 检查是否存在相同的角色名称
+        /// </summary>
+        /// <param name="sRoleName">角色名称</param>
+        /// <param name="sRoleId">角色主键ID</param>
+        /// <returns></returns>
+        public override bool CheckRoleName(string sRoleName, string sRoleId=null)
+        {
+            var res = false;
+            if (string.IsNullOrEmpty(sRoleId))
+                res = query.Any("SELECT * FROM CDELINK_AdminRole WHERE sRoleName=@sRoleName", new { sRoleName = sRoleName });
+            else
+                res= query.Any("SELECT * FROM CDELINK_AdminRole WHERE sRoleName=@sRoleName AND ID!=@ID", new { sRoleName = sRoleName,ID= sRoleId });
+            return res;
         }
     }
 }

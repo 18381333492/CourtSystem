@@ -19,7 +19,16 @@ namespace DapperHelper
         /// <typeparam name="T"></typeparam>
         /// <param name="ID"></param>
         /// <returns></returns>
-        T Find<T>(Guid ID) where T : new();
+        T Find<T>(string ID) where T : new();
+
+        /// <summary>
+        /// 根据条件查询是否存在相应的数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sqlCommand"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        bool Any(string sqlCommand, Object parameter = null);
 
         /// <summary>
         /// 查询一条数据

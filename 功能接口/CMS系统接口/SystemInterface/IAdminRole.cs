@@ -29,6 +29,14 @@ namespace SystemInterface
         /// <returns></returns>
         public abstract CDELINK_AdminRole GetById(string sUserId);
 
+        /// <summary>
+        /// 检查是否存在相同的角色名称
+        /// </summary>
+        /// <param name="sRoleName">角色名称</param>
+        /// <param name="sRoleId">角色主键ID</param>
+        /// <returns></returns>
+        public abstract bool CheckRoleName(string sRoleName, string sRoleId=null);
+
         #endregion
 
 
@@ -47,6 +55,7 @@ namespace SystemInterface
         /// <param name="adminRole"></param>
         /// <returns></returns>
         public abstract int Update(CDELINK_AdminRole adminRole);
+
 
 
         #endregion

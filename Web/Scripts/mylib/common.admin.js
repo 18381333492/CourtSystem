@@ -1,5 +1,7 @@
 ﻿
 
+
+
 /**后台常用的js的封装
 *author:TT
 *@date:2017/5/18
@@ -7,16 +9,28 @@
 **/
 
 function adminPackage() {
-    
+
     var virtualPath = "";//需要发在在虚拟目录可进行配置
-    var form = $('#dataForm');//数据表单
+
+    //datagird相关
+    var grid = "";
+    var toolbar = "";
+    var form ="";//数据表单
     var basePath = "";
+
     /*注册路由 
     @params area:域名
             control:控制器名
     */
     function routeRegister(area, control) {
-        basePath =virtualPath+"/" + area + "/" + control+"/";
+        basePath = virtualPath + "/" + area + "/" + control + "/";
+        grid = $('#' + control);
+        toolbar = $('#' + control + "_toolbar");
+        form = $('#dataForm');
+        //****动态改变返回值*****//
+        res.form = form;
+        res.grid = grid;
+        res.toolbar = toolbar;
     }
 
     //获取url
@@ -31,9 +45,16 @@ function adminPackage() {
         if (res > -1)
             url = url + "&time=" + new Date().getTime();
         else url = url + "?time=" + new Date().getTime();
-        var element = $('<div/ class="modal fade"  tabindex="1" role="dialog" aria-hidden="true" id="MyModalDialog">').
-                modal({ remote: url });
-   
+        var element = $('<div/ class="modal fade" role="dialog" aria-hidden="false" id="MyModalDialog">').
+                modal({ remote: url, backdrop: 'static' });//backdrop:static 禁止点击无效区域关闭对话框
+
+        ////绑定拖动事件
+        //$(element).on("shown.bs.modal", function () {
+        //    $(element).draggable({
+        //        handle: ".modal-header"   // 只能点击头部拖动
+        //    });
+        //});
+      
         $(element).css("overflow", "scroll");  //允许模态对话框的半透明背景滚动
         //创建成功后绑定隐藏时移除元素
         $(element).on("hidden.bs.modal", function () {
@@ -108,16 +129,28 @@ function adminPackage() {
         });
     }
 
-
-    return {
+    //返回结果
+    var res={
         creatModal: creatModal,
         closeModal: closeModal,
         virtualPath: virtualPath,
         routeRegister: routeRegister,
         route: route,
-        form: form,
         Ajax: Ajax
-
     }
+    return res;
 
+}
+
+//**对js原生的属性扩展***//
+
+//数组的狂战
+Array.prototype.toObject = function () {
+    var obj = {};
+    for (var i = 0; i < this.length; i++) {
+        var key = this[i]["name"];
+        var value = this[i]["value"];
+        obj[key] = value;
+    }
+    return obj;
 }

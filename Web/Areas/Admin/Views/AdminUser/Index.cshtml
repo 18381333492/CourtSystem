@@ -20,7 +20,7 @@
         var admin = new adminPackage();
         //注册路由
         admin.routeRegister("Admin", "AdminUser");
-
+   
         //新增用户
         $('.adminUser_add').on("click", function () {
             admin.creatModal(admin.route("Add"));
@@ -29,10 +29,10 @@
         /*!
         * method:数据列表(datagrid)的绑定
         */
-        $('#AdminUser').datagrid({
+        admin.grid.datagrid({
             fit:true,
             url: admin.route('List'),
-            toolbar: $('#AdminUser_toolbar'),
+            toolbar:admin.toolbar,
             fitColumns:true,
             rownumbers:true,
             striped: true,

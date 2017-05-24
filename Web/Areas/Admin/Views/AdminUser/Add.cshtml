@@ -69,6 +69,8 @@
 <script type="text/javascript">
     $(function () {
         var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Admin", "AdminUser");
 
         //提交操作
         $('#ok').on("click", function () {
