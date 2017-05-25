@@ -29,9 +29,9 @@ namespace Web.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(string sAdminRoleId)
         {
-            return View();
+            return View(manage.GetById(sAdminRoleId));
         }
 
         
@@ -73,6 +73,16 @@ namespace Web.Areas.Admin.Controllers
                     result.success = true;
             }
             else result.info = string.Format("{0}角色名称已存在,请重新输入", adminRole.sRoleName);
+        }
+
+        /// <summary>
+        /// 根据主键ID集合删除角色
+        /// </summary>
+        /// <param name="Ids"></param>
+        public void Cancel(string Ids)
+        {
+            if(manage.Cancel(Ids)>0)
+                result.success = true;
         }
     }
 }

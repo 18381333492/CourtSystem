@@ -68,5 +68,16 @@ namespace SystemModel
         {
             return query.SingleQuery<CDELINK_AdminUser>("SELECT * FROM CDELINK_AdminUser WHERE ID=@ID", new { ID = sUserId });
         }
+
+
+        /// <summary>
+        /// 获取所有的角色名称
+        /// </summary>
+        /// <returns></returns>
+        public override List<Dictionary<string, object>> GetAllRoleNameList()
+        {
+            return query.QueryList<Dictionary<string, object>>(@"SELECT ID,sRoleName
+                                                    FROM CDELINK_AdminRole ORDER BY dInsertTime").ToList();
+        }
     }
 }

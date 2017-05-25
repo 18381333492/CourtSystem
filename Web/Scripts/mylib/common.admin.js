@@ -17,6 +17,30 @@ function adminPackage() {
     var toolbar = "";
     var form ="";//数据表单
     var basePath = "";
+    var button = {
+        disabled: function () {
+            $('#ok').prop("disabled", true);
+        },
+        enable: function () {
+            $('#ok').prop("disabled", false);
+        }
+    }
+ 
+    /*bootstrap表单验证封装
+    *ValidatorForm:需要验证的表单
+    *ValidatorParam：需要验证的参数
+    */
+    function formValidator(ValidatorForm, ValidatorParam) {
+        ValidatorForm.bootstrapValidator({
+            message: 'This value is not valid',
+            feedbackIcons: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: ValidatorParam
+        });
+    }
 
     /*注册路由 
     @params area:域名
@@ -54,7 +78,11 @@ function adminPackage() {
         //        handle: ".modal-header"   // 只能点击头部拖动
         //    });
         //});
-      
+        //$(element).on("loaded.bs.modal", function () {
+        //    debugger
+        //    $(".modal-title", element).text("fdsfdsfds");
+        //});
+
         $(element).css("overflow", "scroll");  //允许模态对话框的半透明背景滚动
         //创建成功后绑定隐藏时移除元素
         $(element).on("hidden.bs.modal", function () {
@@ -70,16 +98,99 @@ function adminPackage() {
         }, 1000);
     }
 
-    //提示框
-    function tip() {
-
+    //提示框 message提示的消息
+    function tip(message) {
+       if ($('.mytip').length > 0) {
+           $('.mytip span').text(message);
+        }
+        else {
+            var html = [];
+            html.push('<div class="alert alert-warning mytip">');
+            html.push('<a href="#" class="close" data-dismiss="alert">&times;</a>');
+            html.push('<strong>提示！</strong><span>' + message + '</span></div>');
+            $('.modal-body').append(html.join(''));
+        }
     }
 
     //弹出框
-    function alert() {
+    function alert(tip,time) {
+        var html = [];
+        html.push('<div class="modal fade" role="dialog" aria-hidden="true" id="myAlert">');
+        html.push('<div class="modal-dialog">');
+        html.push('<div class="modal-content">');
+        html.push('<div class="modal-header">');
+        html.push('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
+        html.push('<h4 class="modal-title">提示</h4>');
+        html.push('</div>');
+        html.push('<div class="modal-body">');
+        html.push('<div class="alert alert-warning mytip">');
+        html.push('<a href="#" class="close" >&times;</a>');
+        html.push('<strong>提示！</strong><span>' + tip + '</span></div>');
+        html.push('</div>');
+        html.push('<div class="modal-footer" style="padding:10px;">');
+        html.push('<button id="closeAlert" type="button" class="btn btn-primary">确认</button>');
+        html.push('</div>');
+        html.push('</div>');
+        html.push('</div>');
+        $('body').append(html.join(''));
+        $('#myAlert').modal();
 
+        //绑定隐藏时移除元素
+        $('#myAlert').on("hidden.bs.modal", function () {
+            $('#myAlert').remove();
+        });
+
+        $('#closeAlert').on("click", function () {
+            $('#myAlert').modal('hide');
+        });
+
+        time = time || 800;
+        setTimeout(function () {
+            $('#myAlert').modal('hide');
+        }, time);
     }
 
+    //确认弹出框
+    function confirm(tip, callback) {
+        var html = [];
+        html.push('<div class="modal fade"  role="dialog" aria-hidden="true" id="myConfirm">');
+        html.push('<div class="modal-dialog">');
+        html.push('<div class="modal-content">');
+        html.push('<div class="modal-header">');
+        html.push('<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>');
+        html.push('<h4 class="modal-title">提示</h4>');
+        html.push('</div>');
+        html.push('<div class="modal-body">' + tip + '');
+        html.push('</div>');
+        html.push('<div class="modal-footer" style="padding:10px;">');
+        html.push('<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>');
+        html.push('<button id="confirm" type="button" class="btn btn-primary">确认</button>');
+        html.push('</div>');
+        html.push('</div>');
+        html.push('</div>');
+        $('body').append(html.join(''));
+        $('#myConfirm').modal();
+        $('#confirm').on("click", function () {
+            if (callback) {
+                $('#myConfirm').modal('hide');
+                callback();
+            }
+        });
+
+        //绑定隐藏时移除元素
+        $('#myConfirm').on("hidden.bs.modal", function () {
+            $('#myConfirm').remove();
+        });
+
+        $('#myConfirm').prev().on("click", function () {
+            $('#myConfirm').modal('hide');
+        });
+    }
+
+    //字符串的格式化函数
+    function formate(str,replaceStr) {
+        return str.replace(/#/g, replaceStr);
+    }
 
     /*
     * ajax的post请求的封装（form）.
@@ -105,9 +216,8 @@ function adminPackage() {
                             er_callback(r);//手动提示错误
                         }
                         else {
-                            alert(r.info);
-                            $('#ok').prop("disabled", false);
-                            //f.alert("操作失败,请联系管理员!");
+                            tip(r.info);
+                            button.enable();
                         }
                     }
                 }
@@ -136,7 +246,13 @@ function adminPackage() {
         virtualPath: virtualPath,
         routeRegister: routeRegister,
         route: route,
-        Ajax: Ajax
+        Ajax: Ajax,
+        tip: tip,
+        alert:alert,
+        confirm: confirm,
+        button: button,
+        formValidator: formValidator,
+        formate:formate
     }
     return res;
 

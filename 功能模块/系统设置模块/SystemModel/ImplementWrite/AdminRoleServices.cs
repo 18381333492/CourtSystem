@@ -18,6 +18,7 @@ namespace SystemModel
         /// <returns></returns>
         public override int Insert(CDELINK_AdminRole adminRole)
         {
+            adminRole.ID = Guid.NewGuid();
             adminRole.dInsertTime = DateTime.Now;
             excute.Add<CDELINK_AdminRole>(adminRole);
             return excute.SaveChange();
@@ -34,5 +35,16 @@ namespace SystemModel
             return excute.SaveChange();
         }
 
+
+        /// <summary>
+        /// 根据主键ID集合删除角色
+        /// </summary>
+        /// <param name="Ids"></param>
+        /// <returns></returns>
+        public override int Cancel(string Ids)
+        {
+            var res=excute.Delete<CDELINK_AdminRole>(Ids);
+            return res;
+        }
     }
 }

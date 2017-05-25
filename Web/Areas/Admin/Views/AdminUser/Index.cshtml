@@ -2,11 +2,12 @@
     ViewBag.Title = "后台用户";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
 }
+<script src="~/Scripts/plug-in/picture/upload.js"></script>
 <table id="AdminUser" style="height:100%;width:100%"></table>
 <div id="AdminUser_toolbar" style="padding:8px;">
     <form id="search">
-        <button type="button" class="btn btn-success btn-sm adminUser_add" >新增用户</button>
-        <button type="button" class="btn btn-danger  btn-sm">删除用户</button>
+        <button type="button" class="btn btn-success btn-sm AdminUser_add" >新增用户</button>
+        <button type="button" class="btn btn-danger  btn-sm AdminUser_cancel">删除用户</button>
         &nbsp; &nbsp; &nbsp;
         <span>状态:</span>
         <text></text>
@@ -21,10 +22,15 @@
         //注册路由
         admin.routeRegister("Admin", "AdminUser");
    
-        //新增用户
-        $('.adminUser_add').on("click", function () {
+        //新增操作
+        $('.AdminUser_add').on("click", function () {
             admin.creatModal(admin.route("Add"));
         });
+
+        //编辑操作
+        function AdminUserUpdate(ID) {
+            admin.creatModal(admin.route("Edit?sAdminUserId=" + ID));
+        }
 
         /*!
         * method:数据列表(datagrid)的绑定
@@ -50,14 +56,33 @@
                     field: 'ID', title: '操作', align: 'center', width: 150, formatter: function (value) {
                         var html = [];
                         html.push('<div style="padding:3px;">');
-                        html.push('<button type="button" class="btn btn-info btn-sm sxr_edit" data-id="' + value + '">编 辑</button>&nbsp&nbsp');
-                        html.push('<button type="button" class="btn btn-warning btn-sm sxr_edit" data-id="' + value + '">冻 结</button>&nbsp&nbsp');
-                        html.push('<button type="button" class="btn btn-danger btn-sm sxr_delete" data-id="' + value + '">删 除</button>');
+                        html.push('<button type="button" class="btn btn-info btn-sm AdminUser_edit" data-id="' + value + '">编 辑</button>&nbsp&nbsp');
+                        html.push('<button type="button" class="btn btn-warning btn-sm AdminUser_freeze" data-id="' + value + '">冻 结</button>&nbsp&nbsp');
+                        html.push('<button type="button" class="btn btn-danger btn-sm AdminUser_delete" data-id="' + value + '">删 除</button>');
                         html.push('</div>');
                         return html.join('');
                     }
                 },
-            ]]
+            ]],
+            onLoadSuccess: function () {
+                $('.adminUser_edit').on("click", function (event) {
+                    event.stopPropagation();
+                    var ID = $(this).attr("data-id");
+                    AdminUserUpdate(ID);
+                });
+
+                //删除事件绑定
+                $('.adminUser_delete').on("click", function (event) {
+                    event.stopPropagation();
+                    var ID = admin.formate("'#'", $(this).attr("data-id"));
+                    admin.confirm("确定要删除这条数据？", function () {
+                        admin.Ajax(admin.route("Cancel"), { Ids: ID }, function (r) {
+                            admin.grid.datagrid('reload');
+                            admin.alert("删除成功");
+                        });
+                    });
+                });
+            }
         });
     });
 </script>

@@ -73,7 +73,7 @@ namespace EFBaseHelper
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="Ids">主键Ids集合</param>
-        public int Cancel<T>(string Ids, object services, string method) where T : class, new()
+        public int Cancel<T>(string Ids) where T : class, new()
         {
             int res = 0;
 
@@ -81,10 +81,22 @@ namespace EFBaseHelper
                 ExecuteSqlCommand(string.Format(@"UPDATE
                                         [{0}] SET bIsDeleted = 1 
                                         WHERE ID IN({1})", typeof(T).Name, Ids));
-            //if (res > 0)
-            //    Task.Factory.StartNew(() => LogHelper.OperateLog(services, method));
             return res;
         }
+
+        /// <summary>
+        /// 物理删除数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Ids">主键Ids集合,以逗号隔开</param>
+        public int Delete<T>(string Ids) where T : class, new()
+        {
+            int res = 0;
+            res = this.db.Database.
+                ExecuteSqlCommand(string.Format(@"DELETE [{0}] WHERE ID IN({1})", typeof(T).Name, Ids));
+            return res;
+        }
+
 
         /// <summary>
         /// 根据Sql语句执行
@@ -93,31 +105,14 @@ namespace EFBaseHelper
         /// <param name="sql">Sql语句</param>
         /// <param name="param"></param>
         /// <returns></returns>
-        public int ExcuteBySql(string sql, object services, string method, params object[] param)
+        public int ExcuteBySql(string sql, params object[] param)
         {
             int res = 0;
             res = this.db.Database.ExecuteSqlCommand(sql, param);
-            //if (res > 0)
-            //    Task.Factory.StartNew(() => LogHelper.OperateLog(services, method));
             return res;
         }
 
-
-
-        /// <summary>
-        /// 提交操作
-        /// </summary>
-        /// <returns></returns>
-        public int SaveChange(object services, string method)
-        {
-            int res = 0;
-            res = db.SaveChanges();
-            //if (res > 0)
-            //    Task.Factory.StartNew(() => LogHelper.OperateLog(services, method));
-            return res;
-        }
-
-
+       
         /// <summary>
         /// 无操作日志提交操作
         /// </summary>
@@ -125,36 +120,6 @@ namespace EFBaseHelper
         public int SaveChange()
         {
             return db.SaveChanges();
-        }
-
-        void IWriting.Add<T>(T entry)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IWriting.Edit<T>(T entry)
-        {
-            throw new NotImplementedException();
-        }
-
-        void IWriting.Delete<T>(T entry)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IWriting.Cancel<T>(string Ids, object services, string method)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IWriting.ExcuteBySql(string sql, object services, string method, params object[] param)
-        {
-            throw new NotImplementedException();
-        }
-
-        int IWriting.SaveChange()
-        {
-            throw new NotImplementedException();
         }
     }
 }

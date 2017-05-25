@@ -39,6 +39,13 @@ namespace SystemInterface
         /// <returns></returns>
         public abstract CDELINK_AdminUser GetById(string sUserId);
 
+        /// <summary>
+        /// 获取所有的角色名称
+        /// </summary>
+        /// <returns></returns>
+        public abstract List<Dictionary<string, object>> GetAllRoleNameList();
+
+
         #endregion
 
 

@@ -41,8 +41,16 @@ namespace EFBaseHelper
         /// 逻辑删除数据
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="Ids">主键Ids集合</param>
-        int Cancel<T>(string Ids, object services, string method) where T : class, new();
+        /// <param name="Ids">主键Ids集合,以逗号隔开</param>
+        int Cancel<T>(string Ids) where T : class, new();
+
+        /// <summary>
+        /// 物理删除数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="Ids">主键Ids集合,以逗号隔开</param>
+         int Delete<T>(string Ids) where T : class, new();
+
 
         /// <summary>
         /// 根据Sql语句执行
@@ -51,7 +59,7 @@ namespace EFBaseHelper
         /// <param name="sql">Sql语句</param>
         /// <param name="param"></param>
         /// <returns></returns>
-        int ExcuteBySql(string sql, object services, string method, params object[] param);
+        int ExcuteBySql(string sql, params object[] param);
 
         /// <summary>
         /// 无操作日志提交操作

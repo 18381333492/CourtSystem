@@ -6,10 +6,10 @@
 <div id="AdminRole_toolbar" style="padding:8px;">
     <form id="search">
         <button type="button" class="btn btn-success btn-sm AdminRole_add">新增角色</button>
-        <button type="button" class="btn btn-danger  btn-sm">删除角色</button>
+        <button type="button" class="btn btn-danger  btn-sm AdminRole_cancel">删除角色</button>
         &nbsp; &nbsp; &nbsp;
         <text></text>
-        <span>模糊查询:</span><input type="text" class="form-control" placeholder="姓名/手机号码/账号"
+        <span>模糊查询:</span><input type="text" class="form-control" placeholder="角色名称"
                                  style="width:200px;height:30px;vertical-align:bottom;display:inline-block">
         <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
     </form>
@@ -20,9 +20,44 @@
         //注册路由
         admin.routeRegister("Admin", "AdminRole");
 
-        //新增用户
+        //模糊查询
+        $('.searchText').on("click", function () {
+            var searchText = $('#search input').val();
+            admin.grid.datagrid({
+                queryParams: {
+                    searchText: searchText
+                }
+            });
+        });
+        
+        //新增操作
         $('.AdminRole_add').on("click", function () {
             admin.creatModal(admin.route("Add"));
+        });
+
+        //编辑操作
+        function AdminRoleUpdate(ID) {
+            admin.creatModal(admin.route("Edit?sAdminRoleId=" + ID));
+        }
+
+        //删除操作
+        $('.AdminRole_cancel').on("click", function () {
+            var selected =admin.grid.datagrid('getSelections');
+            if (selected.length > 0) {
+                var array = [];
+                $(selected).each(function () {
+                    array.push(admin.formate("'#'",this.ID));
+                });
+                admin.confirm("确认要删除选择的数据？", function () {
+                    admin.Ajax(admin.route("Cancel"), { Ids: array.join() }, function (r) {
+                        admin.grid.datagrid("reload");
+                        admin.alert("删除成功");
+                    });
+                })
+            }
+            else {
+                modal.tipAlert("请选择一条数据进行操作!");
+            }
         });
 
         /*!
@@ -45,14 +80,33 @@
                     field: 'ID', title: '操作', align: 'center', width: 150, formatter: function (value) {
                         var html = [];
                         html.push('<div style="padding:3px;">');
-                        html.push('<button type="button" class="btn btn-info btn-sm sxr_edit" data-id="' + value + '">编 辑</button>&nbsp&nbsp');
-                        html.push('<button type="button" class="btn btn-warning btn-sm sxr_edit" data-id="' + value + '">删 除</button>&nbsp&nbsp');
-                        html.push('<button type="button" class="btn btn-danger btn-sm sxr_delete" data-id="' + value + '">分配权限</button>');
+                        html.push('<button type="button" class="btn btn-info btn-sm AdminRole_edit" data-id="' + value + '">编 辑</button>&nbsp&nbsp');
+                        html.push('<button type="button" class="btn btn-warning btn-sm AdminRole_delete" data-id="' + value + '">删 除</button>&nbsp&nbsp');
+                        html.push('<button type="button" class="btn btn-danger btn-sm AdminRole_power" data-id="' + value + '">分配权限</button>');
                         html.push('</div>');
                         return html.join('');
                     }
                 },
-            ]]
+            ]],
+            onLoadSuccess: function () {
+                $('.AdminRole_edit').on("click", function (event) {
+                    event.stopPropagation();
+                    var ID = $(this).attr("data-id");
+                    AdminRoleUpdate(ID);
+                });
+
+                //删除事件绑定
+                $('.AdminRole_delete').on("click", function (event) {
+                    event.stopPropagation();
+                    var ID = admin.formate("'#'", $(this).attr("data-id"));
+                    admin.confirm("确定要删除这条数据？", function () {
+                        admin.Ajax(admin.route("Cancel"), { Ids: ID }, function (r) {
+                            admin.grid.datagrid('reload');
+                            admin.alert("删除成功");
+                        });
+                    });
+                });
+            }
         });
     });
 </script>

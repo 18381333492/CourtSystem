@@ -13,9 +13,9 @@ namespace Web.App_Start.BaseController
     public class AdminBase<T>: Controller
     {
 
-        //返回结果集
-        protected Result result = new Result();
-       
+         //返回结果集
+         protected Result result = new Result();
+
         //接口
         protected T manage;
 

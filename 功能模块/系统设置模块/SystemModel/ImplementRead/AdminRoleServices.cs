@@ -30,7 +30,7 @@ namespace SystemModel
             //条件查询
             if (!string.IsNullOrEmpty(searchText))
             {
-                sSql.AppendFormat("AND (sPhone LIKE '%{0}%' OR sName  LIKE '%{0}%')", searchText);
+                sSql.AppendFormat("AND (sRoleName  LIKE '%{0}%')", searchText);
             }
 
             var userList = query.PageQuery<CDELINK_AdminRole>(sSql.ToString(), pageInfo);

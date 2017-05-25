@@ -19,6 +19,7 @@ namespace Web.HandleProgram
         {
             try
             {
+                var sDirectorieName = context.Request["path"];//上传图片的目录路径
                 context.Response.ContentType = "text/plain";
                 HttpFileCollection ImgList = context.Request.Files;
                 for (int i=0;i< ImgList.Count;i++)
@@ -30,7 +31,11 @@ namespace Web.HandleProgram
                         string dDate = DateTime.Now.ToString("yyyy-MM");
 
                         /*图片保存路径*/
-                        string sPath = System.AppDomain.CurrentDomain.BaseDirectory + "Images\\" + dDate + "\\";
+                        string sPath = System.AppDomain.CurrentDomain.BaseDirectory+"Images\\";
+                        if(!string.IsNullOrEmpty(sDirectorieName))
+                            sPath= sPath+ sDirectorieName + "\\" + dDate + "\\";
+                        else
+                           sPath = sPath + dDate + "\\";
                         if (!Directory.Exists(sPath))
                         {
                             Directory.CreateDirectory(sPath);

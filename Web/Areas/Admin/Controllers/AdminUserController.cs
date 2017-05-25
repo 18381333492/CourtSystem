@@ -27,7 +27,7 @@ namespace Web.Areas.Admin.Controllers
  
         public ActionResult Add()
         {
-            return View();
+            return View(manage.GetAllRoleNameList());
         }
 
         public ActionResult Edit()

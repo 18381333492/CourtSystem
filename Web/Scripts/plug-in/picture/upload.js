@@ -17,6 +17,7 @@ function upload() {
         url: "/HandleProgram/PictureUpload.ashx",
         width: 120,
         height: 120,
+        path: ''//上传的目录
     }
 
     /*!
@@ -81,7 +82,7 @@ function upload() {
         //利用easyui的表单提交上传图片
         $(element).find("form").form('submit', {
             url: defaults.url,
-            //queryParams: { path: option.path },//额外参数
+            queryParams: { path: defaults.path },//额外参数
             success: function (data) {
                 data = JSON.parse(data);
                 if (data.error == 0) {

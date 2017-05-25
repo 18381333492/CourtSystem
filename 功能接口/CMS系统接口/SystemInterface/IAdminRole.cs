@@ -25,9 +25,9 @@ namespace SystemInterface
         /// <summary>
         /// 根据角色主键ID获取信息
         /// </summary>
-        /// <param name="sUserId"></param>
+        /// <param name="sRoleId"></param>
         /// <returns></returns>
-        public abstract CDELINK_AdminRole GetById(string sUserId);
+        public abstract CDELINK_AdminRole GetById(string sRoleId);
 
         /// <summary>
         /// 检查是否存在相同的角色名称
@@ -57,7 +57,12 @@ namespace SystemInterface
         public abstract int Update(CDELINK_AdminRole adminRole);
 
 
-
+        /// <summary>
+        /// 根据主键ID集合删除角色
+        /// </summary>
+        /// <param name="Ids"></param>
+        /// <returns></returns>
+        public abstract int Cancel(string Ids);
         #endregion
 
     }

@@ -1,6 +1,7 @@
 ﻿
 
-
+<!--添加视图-->
+@model List<Dictionary<string, object>>
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header" style="padding:10px;">
@@ -13,9 +14,8 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">头像</label>
                     <div class="col-sm-10">
-                        <img src="" class="img-circle" style="height:80px; width:80px; overflow:hidden;
-                        background:url(/Scripts/plug-in/picture/uploadimg.jpg) repeat center;background-size:100%;border: solid 2px #CACACA" />
-                        <input type="hidden" name="sHeadPicture" />
+                        <div id="sHeadPicture" style="width:100px; height:100px; border-radius:50%; overflow:hidden;border:1px solid #808080"></div>
+                        <input type="hidden" name="sHeadPicture" value="" />
                     </div>
                 </div>
                 <div class="form-group">
@@ -52,8 +52,10 @@
                     <label class="col-sm-2 control-label">选择角色</label>
                     <div class="col-sm-10">
                         <select class="form-control" id="sRoleId" name="sRoleId">
-                            <option value="False">开放</option>
-                            <option value="True">关闭</option>
+                            @foreach(var m in Model)
+                            {
+                                <option value="@m["ID"].ToString()">@m["sRoleName"]</option>
+                            }
                         </select>
                     </div>
                 </div>
@@ -68,6 +70,9 @@
 </div>
 <script type="text/javascript">
     $(function () {
+        var picture = new upload();
+        picture.create("sHeadPicture", { height: 100, width: 100, path: "HeadPicture" });
+
         var admin = new adminPackage();
         //注册路由
         admin.routeRegister("Admin", "AdminUser");
@@ -77,71 +82,65 @@
             var bootstrapValidator = admin.form.data('bootstrapValidator');
             bootstrapValidator.validate();
             var res = bootstrapValidator.isValid();
-            //if (res) {//验证通过
-            //    modal.Ajax(admin.route("Insert"), admin.form.serialize(), function (r) {
-                 
-            //    });
-            //}
+            if (res) {//验证通过
+                admin.button.disabled();
+                admin.Ajax(admin.route("Insert"), admin.form.serialize(), function (r) {
+                    admin.tip("添加成功");
+                    admin.grid.datagrid("reload");
+                    admin.closeModal();
+                });
+            }
         });
 
         //表单验证
-        admin.form.bootstrapValidator({
-           // live: 'disabled',//是否在输入后立即验证
-            message: 'This value is not valid',
-            feedbackIcons: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
+        admin.formValidator(admin.form, {
+            sLoginAccout: {
+                validators: {
+                    notEmpty: {
+                        message: '登录账号不能为空'
+                    }
+                }
             },
-            fields: {
-                sLoginAccout: {
-                    validators: {
-                        notEmpty: {
-                            message: '登录账号不能为空'
-                        }
+            sPassWord: {
+                validators: {
+                    notEmpty: {
+                        message: '密码不能为空'
                     }
-                },
-                sPassWord: {
-                    validators: {
-                        notEmpty: {
-                            message: '密码不能为空'
-                        }
+                }
+            },
+            ResPassWord: {
+                validators: {
+                    notEmpty: {
+                        message: '密码不能为空'
+                    },
+                    identical: {
+                        field: 'sPassWord',
+                        message: '两次密码输入不一致'
                     }
-                },
-                ResPassWord: {
-                    validators: {
-                        notEmpty: {
-                            message: '密码不能为空'
-                        },
-                        identical: {
-                            field: 'sPassWord',
-                            message: '两次密码输入不一致'
-                        }
-                    }
-                },
-                sName: {
-                    validators: {
-                        notEmpty: {
-                            message: '名字不能为空'
-                        },
-                    }
-                },
-                sPhone: {
-                    validators: {
-                        regexp: {
-                            regexp: /^((13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8})*$/,
-                            message: '手机号码格式错误'
-                        },
-                    }
-                },
-                sRoleId: {
-                    validators: {
-                        notEmpty: {
-                            message: '请给后台用户分配角色'
-                        },
-                    }
-                },
-            }
+                }
+            },
+            sName: {
+                validators: {
+                    notEmpty: {
+                        message: '名字不能为空'
+                    },
+                }
+            },
+            sPhone: {
+                validators: {
+                    regexp: {
+                        regexp: /^((13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8})*$/,
+                        message: '手机号码格式错误'
+                    },
+                }
+            },
+            sRoleId: {
+                validators: {
+                    notEmpty: {
+                        message: '请给后台用户分配角色'
+                    },
+                }
+            },
         });
     });
 </script>
