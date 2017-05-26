@@ -17,6 +17,8 @@ namespace SystemModel
         /// <returns></returns>
         public override int Insert(CDELINK_Menu menu)
         {
+            menu.ID = Guid.NewGuid();
+            menu.dInsertTime = DateTime.Now;
             excute.Add<CDELINK_Menu>(menu);
             return excute.SaveChange();
         }
@@ -35,13 +37,14 @@ namespace SystemModel
 
 
         /// <summary>
-        ///  根据菜单主键ID删除菜单
+        ///  根据菜单主键ID集合删除菜单
         /// </summary>
         /// <param name="sButtonId"></param>
         /// <returns></returns>
-        public override int Delete(string sMenuId)
+        public override int Cancel(string Ids)
         {
-            return 0;
+            var res = excute.Cancel<CDELINK_Menu>(Ids);
+            return res;
         }
     }
 }

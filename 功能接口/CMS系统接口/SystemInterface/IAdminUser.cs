@@ -45,6 +45,21 @@ namespace SystemInterface
         /// <returns></returns>
         public abstract List<Dictionary<string, object>> GetAllRoleNameList();
 
+        /// <summary>
+        /// 根据用户的主键ID集合判断是否存在超级管理员
+        /// </summary>
+        /// <param name="Ids"></param>
+        /// <returns></returns>
+        public abstract bool CheckIsSuperByIds(string Ids);
+
+
+        /// <summary>
+        /// 检查登录账号是否重名
+        /// </summary>
+        /// <param name="sLoginAccout"></param>
+        /// <returns></returns>
+        public abstract bool CheckLoginAccout(string sLoginAccout);
+
 
         #endregion
 
@@ -59,12 +74,24 @@ namespace SystemInterface
         public abstract int Insert(CDELINK_AdminUser adminUser);
 
         /// <summary>
-        /// 编辑后台用户
+        /// 根据主键ID重置后台用户密码
         /// </summary>
-        /// <param name="adminUser"></param>
-        /// <returns></returns>
-        public abstract int Update(CDELINK_AdminUser adminUser);
+        /// <param name="Ids"></param>
+        public abstract int Reset(string ID);
 
+        /// <summary>
+        /// 根据主键ID集合删除后台用户
+        /// </summary>
+        /// <param name="Ids"></param>
+        public abstract int Cancel(string Ids);
+
+
+        /// <summary>
+        /// 根据主键ID集合冻结后台用户
+        /// </summary>
+        /// <param name="Ids"></param>
+        /// <returns></returns>
+        public abstract int Freeze(string Ids);
 
         #endregion
 

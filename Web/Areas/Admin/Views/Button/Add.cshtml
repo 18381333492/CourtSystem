@@ -1,40 +1,131 @@
 ﻿
-<form id="add_form">
-    <table class="gridtable">
-        <tr>
-            <td>按钮名称</td>
-            <td>
-                <input class="easyui-textbox" name="sButtonName" />
-            </td>
-        </tr>
-        <tr>
-            <td>按钮标识</td>
-            <td>
-                <input class="easyui-textbox" name="sButtonEn_Name" />
-            </td>
-        </tr>
-        <tr>
-            <td>按钮样式</td>
-            <td>
-                <select class="easyui-combobox" name="sButtonIcon">
-                    <option value="icon-add">icon-add</option>
-                    <option value="icon-edit">icon-edit</option>
-                    <option value="icon-remove">icon-remove</option>
-                    <option value="icon-clear">icon-clear</option>
-                    <option value="icon-ok">icon-ok</option>
-                    <option value="icon-no">icon-no</option>
-                    <option value="icon-cancel">icon-cancel</option>
-                    <option value="icon-undo">icon-undo</option>
-                    <option value="icon-redo">icon-redo</option>
-                    <option value="icon-tip">icon-tip</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>排 序</td>
-            <td>
-                <input class="easyui-textbox" name="iOrder" />
-            </td>
-        </tr>
-</table>
-</form>
+<!--按钮添加视图-->
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header" style="padding:10px;">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">添加按钮</h4>
+        </div>
+        <!--主体内容-->
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" id="dataForm">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">按钮名称</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入按钮名称" name="sButtonName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">按钮标识</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入按钮标识" name="sButtonSign">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">按钮排序</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="请输入按钮排序" name="iOrder">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">IsToolBar</label>
+                    <div class="col-sm-10" style="padding-top:5px;">
+                        <input class="sButtonIcon" name="bIsToolbar" type="radio" value="True">是 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input class="sButtonIcon" name="bIsToolbar" type="radio" value="False">否
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">按钮样式</label>
+                    <div class="col-sm-10" style="padding-top:2px;">
+                        <input class="sButtonIcon" name="sButtonIcon" type="radio" value="btn-success">
+                        <button type="button" class="btn btn-success btn-sm">样式</button>
+
+                        <input class="sButtonIcon" name="sButtonIcon" type="radio" value="btn-info">
+                        <button type="button" class="btn btn-info btn-sm">样式</button>
+
+                        <input class="sButtonIcon" name="sButtonIcon" type="radio" value="btn-warning">
+                        <button type="button" class="btn btn-warning btn-sm">样式</button>
+
+                        <input class="sButtonIcon" name="sButtonIcon" type="radio" value="btn-primary">
+                        <button type="button" class="btn btn-primary btn-sm">样式</button>
+
+                        <input class="sButtonIcon" name="sButtonIcon" type="radio" value="btn-danger">
+                        <button type="button" class="btn btn-danger btn-sm">样式</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--主体内容-->
+        <div class="modal-footer" style="padding:10px;">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button id="ok" type="button" class="btn btn-primary">确认提交</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.sButtonIcon').iCheck({
+            labelHover: false,
+            cursor: true,
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%'
+        });
+
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Admin", "Button");
+
+        //提交操作
+        $('#ok').on("click", function () {
+            var bootstrapValidator = admin.form.data('bootstrapValidator');
+            bootstrapValidator.validate();
+            var res = bootstrapValidator.isValid();
+            if (res) {//验证通过
+                if ($('input[name=bIsToolbar]:checked').length == 0)
+                    return admin.tip("请选择按钮是否在ToolBar");
+                if ($('input[name=sButtonIcon]:checked').length == 0)
+                    return admin.tip("请选择按钮样式");
+                var param = admin.form.serializeArray().toObject();
+                param.sMenuId = sessionStorage["menuId"];
+                admin.button.disabled();
+                admin.Ajax(admin.route("Insert"), param, function (r) {
+                    admin.tip("添加成功");
+                    admin.grid.tree('reload');
+                    admin.closeModal();
+                });
+            }
+        });
+
+        //表单验证
+        admin.formValidator(admin.form, {
+            sButtonName: {
+                validators: {
+                    notEmpty: {
+                        message: '按钮名称不能为空'
+                    },
+                    stringLength: {
+                        min: 2,
+                        max: 6,
+                        message: '按钮名称长度必须在2到6位之间'
+                    },
+                },
+            },
+            sButtonSign: {
+                validators: {
+                    notEmpty: {
+                        message: '按钮标识不能为空'
+                    },
+                }
+            },
+            iOrder: {
+                validators: {
+                    notEmpty: {
+                        message:  '按钮排序不能为空'
+                    },
+                }
+            },
+        });
+    });
+</script>
+

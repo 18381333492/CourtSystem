@@ -30,11 +30,6 @@ namespace Web.Areas.Admin.Controllers
             return View(manage.GetAllRoleNameList());
         }
 
-        public ActionResult Edit()
-        {
-            return View();
-        }
-
         #endregion
 
         /// <summary>
@@ -56,22 +51,55 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="adminUser"></param>
         public void Insert(CDELINK_AdminUser adminUser)
         {
-            if (manage.Insert(adminUser) > 0)
-                result.success = true;
+            if (!manage.CheckLoginAccout(adminUser.sLoginAccout))
+            {
+                if (manage.Insert(adminUser) > 0)
+                    result.success = true;
+            }
+            else
+                result.info =string.Format("账号：{0}已被注册,请重新输入", adminUser.sLoginAccout);
         }
 
 
         /// <summary>
-        /// 编辑后台用户
+        ///  根据主键ID重置后台用户账户密码
         /// </summary>
         /// <param name="adminUser"></param>
-        public void Update(CDELINK_AdminUser adminUser)
+        public void Reset(string ID)
         {
-            if (manage.Update(adminUser) > 0)
+            if (manage.Reset(ID) > 0)
                 result.success = true;
         }
 
+        /// <summary>
+        /// 根据主键ID集合删除后台用户
+        /// </summary>
+        /// <param name="Ids"></param>
+        public void Cancel(string Ids)
+        {
+            if (!manage.CheckIsSuperByIds(Ids))
+            {
+                if (manage.Cancel(Ids) > 0)
+                    result.success = true;
+            }
+            else
+                result.info = "超级管理员不能被执行删除,请重新操作";
+        }
 
+        /// <summary>
+        /// 根据主键ID集合冻结用户
+        /// </summary>
+        /// <param name="Ids"></param>
+        public void Freeze(string Ids)
+        {
+            if (!manage.CheckIsSuperByIds(Ids))
+            {
+                if (manage.Freeze(Ids) > 0)
+                    result.success = true;
+            }
+            else
+                result.info = "超级管理员不能被执行冻结,请重新操作";
+        }
 
         /// <summary>
         /// 后台用户登录

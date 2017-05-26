@@ -20,5 +20,6 @@ namespace EFModels
         public string sMenuId { get; set; }
         public int iOrder { get; set; }
         public string sButtonSign { get; set; }
+        public bool bIsToolbar { get; set; }
     }
 }

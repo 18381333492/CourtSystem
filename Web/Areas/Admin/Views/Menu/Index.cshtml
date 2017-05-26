@@ -1,32 +1,77 @@
 ﻿@{
     ViewBag.Title = "菜单列表";
-    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
 }
-<form id="search_form" style="height:100%">
-    <table id="Menu" oncontextmenu="return(false)"></table>
-    <div id="Menu_toolbar" style="padding:5px">
-        
-    </div>
-</form>
+<link href="~/Areas/Admin/Content/assets/css/font-awesome.min.css" rel="stylesheet" />
+<style>
+    .dropdown-menu li:hover {
+        background-color: #357ebd;
+    }
+</style>
+<table id="Menu" style="height:100%;width:100%"></table>
+<div id="Menu_toolbar" style="padding:8px;">
+    <form id="search">
+        <button type="button" class="btn btn-success btn-sm Menu_add">新增菜单</button>
+        <button type="button" class="btn btn-primary  btn-sm Menu_edit">编辑菜单</button>
+        <button type="button" class="btn btn-danger  btn-sm Menu_cancel">删除菜单</button>
+    </form>
+</div>
 <script type="text/javascript">
     $(function () {
-        var f = new eui();
-        var d = new extend();
-        var menus = f.config("Admin", "Menu");
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Admin", "Menu");
+
+        //新增操作
+        $('.Menu_add').on("click", function () {
+            admin.creatModal(admin.route("Add"));
+        });
+
+        //编辑操作
+        $('.Menu_edit').on("click", function (event) {
+            var selected = admin.grid.treegrid('getSelections');
+            if (selected.length == 1) {
+                admin.creatModal(admin.route("Edit?sMenuId=" + selected[0].ID)); 
+            }
+            else {
+                admin.alert("请选择一条数据进行操作!");
+            }
+        });
+
+        //删除操作
+        $('.Menu_cancel').on("click", function () {
+            var selected = admin.grid.treegrid('getSelections');
+            if (selected.length > 0) {
+                var array = [];
+                $(selected).each(function () {
+                    array.push(admin.formate("'#'", this.ID));
+                });
+                admin.confirm("确认要删除选择的数据？", function () {
+                    admin.Ajax(admin.route("Cancel"), { Ids: array.join() }, function (r) {
+                        admin.grid.treegrid("reload");
+                        admin.alert("删除成功");
+                    });
+                })
+            }
+            else {
+                admin.alert("请选择一条数据进行操作!");
+            }
+        });
 
         /*!
         * method:菜单数据列表(treegrid)的绑定
         */
-        menus.grid.treegrid({
-            url: menus.route('List'),
-            toolbar: menus.toolbar,
+        admin.grid.treegrid({
+            fit:true,
+            url: admin.route('List'),
+            toolbar: admin.toolbar,
             idField: "ID",//必需的
             treeField: "sMenuName",
             striped: true,
-            singleSelect: true,
+            fitColumns: true,
             loadMsg: "正在加载...",
             columns: [[
-                { field: 'sMenuName', title: '菜单名称', align: 'center', width: 250 },// formatter: sModuleName },
+                { field: 'sMenuName', title: '菜单名称', align: 'center', width: 250 },
                 { field: 'sMenuUrl', title: '菜单地址', align: 'center', width: 250 },
                 { field: 'iOrder', title: '排序ID', align: 'center', width: 80 },
                 { field: 'dInsertTime', title: '添加时间', align: 'center', width: 200 }

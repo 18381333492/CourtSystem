@@ -27,18 +27,15 @@ namespace SystemModel
             pageInfo.order = OrderType.DESC;
             pageInfo.sort = "dInsertTime";
             StringBuilder sSql = new StringBuilder();
-            sSql.Append("SELECT * FROM CDELINK_AdminUser WHERE bIsDeleted=0 ");
-            //条件查询
-            if (iState > 0)
-            {
-                sSql.AppendFormat("AND iState={0}", iState);
-            }
+            sSql.Append(@"SELECT A.*,B.sRoleName FROM CDELINK_AdminUser AS A 
+                                        LEFT JOIN CDELINK_AdminRole AS B 
+                                        ON A.sRoleId=B.ID WHERE A.bIsDeleted=0 ");
             if (!string.IsNullOrEmpty(searchText))
             {
-                sSql.AppendFormat("AND (sPhone LIKE '%{0}%' OR sName  LIKE '%{0}%')", searchText);
+                sSql.AppendFormat("AND (A.sPhone LIKE '%{0}%' OR A.sName  LIKE '%{0}%')", searchText);
             }
 
-            var userList = query.PageQuery<CDELINK_AdminUser>(sSql.ToString(), pageInfo);
+            var userList = query.PageQuery<Dictionary<string,object>>(sSql.ToString(), pageInfo);
             return userList.toJson();
         }
 
@@ -78,6 +75,26 @@ namespace SystemModel
         {
             return query.QueryList<Dictionary<string, object>>(@"SELECT ID,sRoleName
                                                     FROM CDELINK_AdminRole ORDER BY dInsertTime").ToList();
+        }
+
+        /// <summary>
+        /// 根据用户的主键ID集合判断是否存在超级管理员
+        /// </summary>
+        /// <param name="Ids"></param>
+        /// <returns></returns>
+        public override bool CheckIsSuperByIds(string Ids)
+        {
+           return query.Any(string.Format(@"SELECT * FROM CDELINK_AdminUser WHERE bIsSuper=1 AND bIsDeleted=0 AND ID IN({0})", Ids));
+        }
+
+        /// <summary>
+        /// 检查登录账号是否重名
+        /// </summary>
+        /// <param name="sLoginAccout"></param>
+        /// <returns></returns>
+        public override bool CheckLoginAccout(string sLoginAccout)
+        {
+            return query.Any(string.Format(@"SELECT * FROM CDELINK_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}'", sLoginAccout));
         }
     }
 }

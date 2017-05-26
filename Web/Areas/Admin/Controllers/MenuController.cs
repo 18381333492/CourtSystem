@@ -22,12 +22,13 @@ namespace Web.Areas.Admin.Controllers
 
         public ActionResult Add()
         {
-            return View();
+            return View(manage.GetMianMenuList());
         }
 
-        public ActionResult Edit()
+        public ActionResult Edit(string sMenuId)
         {
-            return View();
+            ViewBag.MianMenuList = manage.GetMianMenuList();
+            return View(manage.GetById(sMenuId));
         }
         #endregion 
 
@@ -46,8 +47,13 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="menu"></param>
         public void Insert(CDELINK_Menu menu)
         {
-            if (manage.Insert(menu) > 0)
-                result.success = true;
+            if (!manage.CheckMenuName(menu.sMenuName))
+            {
+                if (manage.Insert(menu) > 0)
+                    result.success = true;
+            }
+            else
+                result.info = string.Format("{0}菜单名称已存在,请重新输入", menu.sMenuName);
         }
 
 
@@ -57,7 +63,22 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="menu"></param>
         public void Update(CDELINK_Menu menu)
         {
-            if (manage.Update(menu) > 0)
+            if (!manage.CheckMenuName(menu.sMenuName,menu.ID.ToString()))
+            {
+                if (manage.Update(menu) > 0)
+                result.success = true;
+            }
+            else
+                result.info = string.Format("{0}菜单名称已存在,请重新输入", menu.sMenuName);
+        }
+
+        /// <summary>
+        /// 删除菜单
+        /// </summary>
+        /// <param name="Ids"></param>
+        public void Cancel(string Ids)
+        {
+            if (manage.Cancel(Ids) > 0)
                 result.success = true;
         }
 

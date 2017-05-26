@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CourtSystemDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CourtSystemDatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CDELINK_AdminRole">
           <Key>
             <PropertyRef Name="ID" />
@@ -41,6 +41,7 @@
           <Property Name="sMenuId" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="iOrder" Type="int" Nullable="false" />
           <Property Name="sButtonSign" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="bIsToolbar" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CDELINK_Client">
           <Key>
@@ -75,8 +76,7 @@
           <EntitySet Name="CDELINK_Client" EntityType="Self.CDELINK_Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_Menu" EntityType="Self.CDELINK_Menu" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CourtSystemDatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -116,6 +116,7 @@
           <Property Name="sMenuId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="iOrder" Type="Int32" Nullable="false" />
           <Property Name="sButtonSign" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="bIsToolbar" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="CDELINK_Client">
           <Key>
@@ -187,6 +188,7 @@
           <EntitySetMapping Name="CDELINK_Button">
             <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_Button">
               <MappingFragment StoreEntitySet="CDELINK_Button">
+                <ScalarProperty Name="bIsToolbar" ColumnName="bIsToolbar" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="sButtonName" ColumnName="sButtonName" />
                 <ScalarProperty Name="sButtonIcon" ColumnName="sButtonIcon" />

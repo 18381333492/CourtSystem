@@ -76,7 +76,6 @@ namespace EFBaseHelper
         public int Cancel<T>(string Ids) where T : class, new()
         {
             int res = 0;
-
             res = this.db.Database.
                 ExecuteSqlCommand(string.Format(@"UPDATE
                                         [{0}] SET bIsDeleted = 1 

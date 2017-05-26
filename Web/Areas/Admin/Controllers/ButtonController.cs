@@ -42,11 +42,11 @@ namespace Web.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult List()
         {
-            return Content(string.Empty);
+            return Content(manage.GetList());
         }
 
         /// <summary>
-        /// 添加菜单下面的按钮
+        /// 添加按钮
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
@@ -58,13 +58,24 @@ namespace Web.Areas.Admin.Controllers
 
 
         /// <summary>
-        /// 编辑菜单下面的按钮
+        /// 编辑按钮
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
         public void Update(CDELINK_Button button)
         {
             if (manage.Update(button) > 0)
+                result.success = true;
+        }
+
+        /// <summary>
+        /// 删除按钮
+        /// </summary>
+        /// <param name="button"></param>
+        /// <returns></returns>
+        public void Cancel(string sButtonId)
+        {
+            if (manage.Delete(sButtonId) > 0)
                 result.success = true;
         }
     }

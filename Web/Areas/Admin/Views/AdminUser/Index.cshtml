@@ -11,8 +11,8 @@
         &nbsp; &nbsp; &nbsp;
         <span>状态:</span>
         <text></text>
-        <span>模糊查询:</span><input type="text" class="form-control" placeholder="姓名/手机号码/账号"
-                                 style="width:200px;height:30px;vertical-align:bottom;display:inline-block">
+        <span>模糊查询:</span><input type="text" class="form-control" placeholder="姓名/手机号码"
+                                 style="width:200px;height:30px;vertical-align:bottom;display:inline-block;">
         <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
     </form>
 </div>
@@ -22,15 +22,41 @@
         //注册路由
         admin.routeRegister("Admin", "AdminUser");
    
+
+        //模糊查询
+        $('.searchText').on("click", function () {
+            var searchText = $('#search input').val();
+            admin.grid.datagrid({
+                queryParams: {
+                    searchText: searchText
+                }
+            });
+        });
+
         //新增操作
         $('.AdminUser_add').on("click", function () {
             admin.creatModal(admin.route("Add"));
         });
 
-        //编辑操作
-        function AdminUserUpdate(ID) {
-            admin.creatModal(admin.route("Edit?sAdminUserId=" + ID));
-        }
+        //删除操作
+        $('.AdminUser_cancel').on("click", function () {
+            var selected = admin.grid.datagrid('getSelections');
+            if (selected.length > 0) {
+                var array = [];
+                $(selected).each(function () {
+                    array.push(admin.formate("'#'", this.ID));
+                });
+                admin.confirm("确认要删除选择的数据？", function () {
+                    admin.Ajax(admin.route("Cancel"), { Ids: array.join() }, function (r) {
+                        admin.grid.datagrid("reload");
+                        admin.alert("删除成功");
+                    });
+                })
+            }
+            else {
+                admin.alert("请选择一条数据进行操作!");
+            }
+        });
 
         /*!
         * method:数据列表(datagrid)的绑定
@@ -49,14 +75,25 @@
                 { field: 'sLoginAccout', title: '账号', align: 'center', sortable: true, width: 100 },
                 { field: 'sName', title: '姓名', align: 'center', sortable: true, width: 80 },
                 { field: 'sPhone', title: '手机号码', align: 'center', sortable: true, width: 120 },
-                { field: 'iState', title: '状态', align: 'center', sortable: true, width: 80 },
+                {
+                    field: 'sRoleName', title: '角色', align: 'center', sortable: true, width: 80, formatter: function (value, row) {
+                        if ((!row.sRoleId) && row.bIsSuper) return "超级管理员";
+                        else return value;
+                    }
+                },
+                {
+                    field: 'iState', title: '状态', align: 'center', sortable: true, width: 80, formatter: function (value) {
+                        if (value == 1) return "<span style='color:blue;'>正常</span>";
+                        else return "<span style='color:red'>冻结</span>";
+                    }
+                },
                 { field: 'dInsertTime', title: '添加时间', align: 'center', sortable: true, width: 120 },
                 { field: 'dLastLoginTime', title: '上一次登录时间', align: 'center', sortable: true, width: 120 },
                 {
                     field: 'ID', title: '操作', align: 'center', width: 150, formatter: function (value) {
                         var html = [];
                         html.push('<div style="padding:3px;">');
-                        html.push('<button type="button" class="btn btn-info btn-sm AdminUser_edit" data-id="' + value + '">编 辑</button>&nbsp&nbsp');
+                        html.push('<button type="button" class="btn btn-info btn-sm AdminUser_reset" data-id="' + value + '">重置密码</button>&nbsp&nbsp');
                         html.push('<button type="button" class="btn btn-warning btn-sm AdminUser_freeze" data-id="' + value + '">冻 结</button>&nbsp&nbsp');
                         html.push('<button type="button" class="btn btn-danger btn-sm AdminUser_delete" data-id="' + value + '">删 除</button>');
                         html.push('</div>');
@@ -65,14 +102,32 @@
                 },
             ]],
             onLoadSuccess: function () {
-                $('.adminUser_edit').on("click", function (event) {
+                //重置密码事件绑定
+                $('.AdminUser_reset').on("click", function (event) {
                     event.stopPropagation();
                     var ID = $(this).attr("data-id");
-                    AdminUserUpdate(ID);
+                    admin.confirm("确定要将该账号密码重置成为123456？", function () {
+                        admin.Ajax(admin.route("Reset"), { ID: ID }, function (r) {
+                            admin.grid.datagrid('reload');
+                            admin.alert("操作成功");
+                        });
+                    });
+                });
+
+                //冻结事件绑定
+                $('.AdminUser_freeze').on("click", function (event) {
+                    event.stopPropagation();
+                    var ID = admin.formate("'#'", $(this).attr("data-id"));
+                    admin.confirm("确定要冻结这条数据？", function () {
+                        admin.Ajax(admin.route("Freeze"), { Ids: ID }, function (r) {
+                            admin.grid.datagrid('reload');
+                            admin.alert("操作成功");
+                        });
+                    });
                 });
 
                 //删除事件绑定
-                $('.adminUser_delete').on("click", function (event) {
+                $('.AdminUser_delete').on("click", function (event) {
                     event.stopPropagation();
                     var ID = admin.formate("'#'", $(this).attr("data-id"));
                     admin.confirm("确定要删除这条数据？", function () {

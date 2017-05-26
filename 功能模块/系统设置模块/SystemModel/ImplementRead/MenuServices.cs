@@ -54,5 +54,36 @@ namespace SystemModel
             }
             return Main.ToString();
         }
+
+
+        /// <summary>
+        /// 获取所有的一级菜单
+        /// </summary>
+        /// <returns></returns>
+        public override List<Dictionary<string, object>> GetMianMenuList()
+        {
+            var list = query.QueryList<Dictionary<string, object>>(@"SELECT ID,sMenuName 
+                                                            FROM CDELINK_Menu WHERE bIsDeleted=0 AND sParentMenuId IS NULL ORDER BY iOrder ASC").ToList();
+            var temp = new Dictionary<string, object>();
+            temp["ID"] = string.Empty;
+            temp["sMenuName"] = "一级菜单";
+            list.Insert(0, temp);
+            return list;
+        }
+
+
+        /// <summary>
+        ///  根据菜单名称检查是否有重名的菜单
+        /// </summary>
+        /// <param name="sMenuName">菜单名称</param>
+        /// <param name="sMenuId">菜单的主键ID</param>
+        /// <returns></returns>
+        public override bool CheckMenuName(string sMenuName, string sMenuId = null)
+        {
+            if (string.IsNullOrEmpty(sMenuId))
+                return query.Any(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 AND sMenuName=@sMenuName", new { sMenuName = sMenuName });
+            else
+                return query.Any(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 AND sMenuName=@sMenuName AND ID!=@ID", new { sMenuName = sMenuName, ID = sMenuId });
+        }
     }
 }

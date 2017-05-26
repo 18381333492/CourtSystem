@@ -28,6 +28,20 @@ namespace SystemInterface
         /// <returns></returns>
         public abstract string List();
 
+        /// <summary>
+        /// 获取所有的一级菜单
+        /// </summary>
+        /// <returns></returns>
+        public abstract List<Dictionary<string, object>> GetMianMenuList();
+
+        /// <summary>
+        ///  根据菜单名称检查是否有重名的菜单
+        /// </summary>
+        /// <param name="sMenuName">菜单名称</param>
+        /// <param name="sMenuId">菜单的主键ID</param>
+        /// <returns></returns>
+        public abstract bool CheckMenuName(string sMenuName, string sMenuId=null);
+
 
         #endregion
 
@@ -51,11 +65,11 @@ namespace SystemInterface
 
 
         /// <summary>
-        ///  根据菜单主键ID删除菜单
+        ///  根据菜单主键ID集合删除菜单
         /// </summary>
         /// <param name="sButtonId"></param>
         /// <returns></returns>
-        public abstract int Delete(string sMenuId);
+        public abstract int Cancel(string Ids);
        
         #endregion
     }

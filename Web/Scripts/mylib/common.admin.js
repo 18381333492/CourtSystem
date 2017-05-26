@@ -144,10 +144,11 @@ function adminPackage() {
             $('#myAlert').modal('hide');
         });
 
-        time = time || 800;
-        setTimeout(function () {
-            $('#myAlert').modal('hide');
-        }, time);
+        if (time) {
+            setTimeout(function () {
+                $('#myAlert').modal('hide');
+            }, time);
+        }
     }
 
     //确认弹出框
@@ -216,8 +217,12 @@ function adminPackage() {
                             er_callback(r);//手动提示错误
                         }
                         else {
-                            tip(r.info);
-                            button.enable();
+                            if ($('#MyModalDialog').length > 0) {
+                                tip(r.info);
+                                button.enable();
+                            }
+                            else
+                                alert(r.info);
                         }
                     }
                 }

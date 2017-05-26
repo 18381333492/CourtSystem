@@ -65,12 +65,15 @@ namespace Web.HandleProgram
                             }));
                             return;
                         }
+
                         /*保存图片到本地*/
                         image.SaveAs(sPath + sFileName);
+                        var srcPicture = "/Images/" + dDate + "/" + sFileName;
+                        if(!string.IsNullOrEmpty(sDirectorieName)) srcPicture= "/Images/" + sDirectorieName +"/"+ dDate + "/" + sFileName;
                         context.Response.Write(C_Json.toJson(new result()
                         {
                             error = 0,
-                            url = "/Images/" + dDate + "/" + sFileName
+                            url = srcPicture
                         }));
                     }
                 }

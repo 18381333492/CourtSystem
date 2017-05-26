@@ -14,6 +14,13 @@ namespace SystemInterface
     {
         #region 查询
 
+
+        /// <summary>
+        /// 获取菜单按钮数据列表
+        /// </summary>
+        /// <returns></returns>
+        public abstract string GetList();
+
         /// <summary>
         /// 根据按钮主键ID获取按钮
         /// </summary>

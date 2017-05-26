@@ -18,6 +18,7 @@ namespace SystemModel
         /// <returns></returns>
         public override int Insert(CDELINK_AdminUser adminUser)
         {
+            adminUser.ID = Guid.NewGuid();
             adminUser.sPassWord = C_Security.MD5(adminUser.sPassWord);
             adminUser.iState = 1;
             adminUser.bIsSuper = false;
@@ -28,15 +29,36 @@ namespace SystemModel
         }
 
         /// <summary>
-        /// 编辑后台用户
+        /// 根据主键ID重置后台用户密码
         /// </summary>
-        /// <param name="adminUser"></param>
-        /// <returns></returns>
-        public override int Update(CDELINK_AdminUser adminUser)
+        /// <param name="Ids"></param>
+        public override int Reset(string ID)
         {
-            excute.Edit<CDELINK_AdminUser>(adminUser);
+            var adminUser = excute.Context.CDELINK_AdminUser.Find(new Guid(ID));
+            adminUser.sPassWord = C_Security.MD5("123456");
             return excute.SaveChange();
         }
 
+
+        /// <summary>
+        /// 根据主键ID集合删除后台用户
+        /// </summary>
+        /// <param name="Ids"></param>
+        public override int Cancel(string Ids)
+        {
+            var res = excute.Cancel<CDELINK_AdminUser>(Ids);
+            return res;
+        }
+
+        /// <summary>
+        /// 根据主键ID集合冻结后台用户
+        /// </summary>
+        /// <param name="Ids"></param>
+        /// <returns></returns>
+        public override int Freeze(string Ids)
+        {
+            var res = excute.ExcuteBySql(string.Format(@"UPDATE CDELINK_AdminUser SET iState =0 WHERE ID IN({0})", Ids));
+            return res;
+        }
     }
 }

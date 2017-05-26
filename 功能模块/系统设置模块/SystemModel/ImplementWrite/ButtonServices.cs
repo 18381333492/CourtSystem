@@ -30,7 +30,7 @@ namespace SystemModel
         /// <returns></returns>
         public override int Update(CDELINK_Button button)
         {
-            excute.Add<CDELINK_Button>(button);
+            excute.Edit<CDELINK_Button>(button);
             return excute.SaveChange();
         }
 
@@ -42,7 +42,7 @@ namespace SystemModel
         /// <returns></returns>
         public override int Delete(string sButtonId)
         {
-            return 0; /*excute.ExcuteBySql("DELETE CDELINK_Button WHERE ID=@ID", new { ID = sButtonId });*/
+            return excute.Delete<CDELINK_Button>(sButtonId);
         }
     }
 }
