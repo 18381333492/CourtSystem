@@ -19,7 +19,7 @@ namespace SystemInterface
         /// <param name="Info">分页参数</param>
         /// <param name="searchText">搜索的文本</param>
         /// <returns></returns>
-        public abstract string PageList(PageInfo Info, string searchText);
+        public abstract string PageList(PageInfo Info, string searchText, bool bIsSuperMan = false);
 
 
         /// <summary>
@@ -63,6 +63,15 @@ namespace SystemInterface
         /// <param name="Ids"></param>
         /// <returns></returns>
         public abstract int Cancel(string Ids);
+
+
+        /// <summary>
+        /// 设置角色权限
+        /// </summary>
+        /// <param name="sAdminRoleId"></param>
+        /// <param name="sMenuIds"></param>
+        /// <param name="sButtonIds"></param>
+        public abstract int SetPower(string sAdminRoleId, string sMenuIds, string sButtonIds);
         #endregion
 
     }

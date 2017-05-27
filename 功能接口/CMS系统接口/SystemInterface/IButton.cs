@@ -28,6 +28,12 @@ namespace SystemInterface
         /// <returns></returns>
         public abstract CDELINK_Button GetById(string sButtonId);
 
+        /// <summary>
+        /// 获取所有的按钮（SuperMan专用通道）
+        /// </summary>
+        /// <returns></returns>
+        public abstract List<CDELINK_Button> GetAllButtonList();
+
 
         #endregion
 

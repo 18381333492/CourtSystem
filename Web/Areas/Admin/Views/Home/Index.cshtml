@@ -2,6 +2,8 @@
      string[] weekdays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
      string week = weekdays[Convert.ToInt32(DateTime.Now.DayOfWeek)];
 }
+@using EFModels.MyModels;
+@model UserInfo
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +47,7 @@
                             <img class="nav-user-photo" src="~/Areas/Admin/Content/assets/avatars/user.jpg" alt="Jason's Photo" />
                             <span class="user-info">
                                 <small>欢迎光临</small>
-                                 SuperMan
+                                 @Model.sUserName
                             </span>
                             <i class="icon-caret-down"></i>
                         </a>
@@ -91,284 +93,6 @@
                             <span class="menu-text"> 栏目控制台 </span>
                         </a>
                     </li>
-                    <li>
-                        <a class="dropdown-toggle">
-                            <i class="icon-desktop"></i>
-                            <span class="menu-text">系统设置</span>
-                            <b class="arrow icon-angle-down"></b>
-                        </a>
-                        <ul class="submenu">
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    <span data-url="/Admin/AdminUser/Index">后台用户管理</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    <span data-url="/Admin/AdminRole/Index">角色管理</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    <span data-url="/Admin/Menu/Index">菜单管理</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    <span data-url="/Admin/Button/Index">按钮管理</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    可拖拽列表
-                                </a>
-                            </li>
-
-                            <li>
-                                <a class="dropdown-toggle">
-                                    <i class="icon-double-angle-right"></i>
-                                    三级菜单
-                                    <b class="arrow icon-angle-down"></b>
-                                </a>
-
-                                <ul class="submenu">
-                                    <li>
-                                        <a>
-                                            <i class="icon-leaf"></i>
-                                            第一级
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a class="dropdown-toggle">
-                                            <i class="icon-pencil"></i>
-
-                                            第四级
-                                            <b class="arrow icon-angle-down"></b>
-                                        </a>
-
-                                        <ul class="submenu">
-                                            <li>
-                                                <a>
-                                                    <i class="icon-plus"></i>
-                                                    添加产品
-                                                </a>
-                                            </li>
-
-                                            <li>
-                                                <a>
-                                                    <i class="icon-eye-open"></i>
-                                                    查看商品
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-toggle">
-                            <i class="icon-list"></i>
-                            <span class="menu-text"> 表格 </span>
-
-                            <b class="arrow icon-angle-down"></b>
-                        </a>
-
-                        <ul class="submenu">
-                            <li>
-                                <a href="">
-                                    <i class="icon-double-angle-right"></i>
-                                    简单 &amp; 动态
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="">
-                                    <i class="icon-double-angle-right"></i>
-                                    jqGrid plugin
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a  class="dropdown-toggle">
-                            <i class="icon-edit"></i>
-                            <span class="menu-text"> 表单 </span>
-
-                            <b class="arrow icon-angle-down"></b>
-                        </a>
-
-                        <ul class="submenu">
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    表单组件
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    向导提示 &amp; 验证
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    编辑器
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    文件上传
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a>
-                            <i class="icon-list-alt"></i>
-                            <span class="menu-text"> 插件 </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a>
-                            <i class="icon-calendar"></i>
-
-                            <span class="menu-text">
-                                日历
-                                <span class="badge badge-transparent tooltip-error" title="2&nbsp;Important&nbsp;Events">
-                                    <i class="icon-warning-sign red bigger-130"></i>
-                                </span>
-                            </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a>
-                            <i class="icon-picture"></i>
-                            <span class="menu-text"> 相册 </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="dropdown-toggle">
-                            <i class="icon-tag"></i>
-                            <span class="menu-text"> 更多页面 </span>
-
-                            <b class="arrow icon-angle-down"></b>
-                        </a>
-
-                        <ul class="submenu">
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    用户信息
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    收件箱
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    售价单
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    购物车
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    时间轴
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    登录 &amp; 注册
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li class="active open">
-                        <a class="dropdown-toggle">
-                            <i class="icon-file-alt"></i>
-                            <span class="menu-text">
-                                其他页面
-                                <span class="badge badge-primary ">5</span>
-                            </span>
-
-                            <b class="arrow icon-angle-down"></b>
-                        </a>
-
-                        <ul class="submenu">
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    帮助
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    404错误页面
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    500错误页面
-                                </a>
-                            </li>
-
-                            <li>
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    网格
-                                </a>
-                            </li>
-
-                            <li class="active">
-                                <a>
-                                    <i class="icon-double-angle-right"></i>
-                                    空白页面
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                 </ul>
 
                 <div class="sidebar-collapse" id="sidebar-collapse">
@@ -399,12 +123,56 @@
 <script type="text/javascript">
     $(function () {   
         domin.bingEvent();
-        domin.menuList();
+        domin.loadMenu();
     });
 
     var domin = function (obj) { return obj; }(new function () {
   
         var admin = new adminPackage();
+        admin.routeRegister("Admin", "Home");
+
+        //加载菜单数据
+        function loadMenu() {
+            admin.Ajax(admin.route("MenuList"), null, function (r) {
+                var mainMenu = r.data.mainList;     //一级菜单
+                var childMenu = r.data.childList;   //二级菜单
+                var html = [];
+                $(mainMenu).each(function () {
+                    var main = this;
+                    html.push('<li>');
+                    html.push('<a class="dropdown-toggle">');
+                    html.push('<i class="' + main.sMenuIcon + '"></i>');
+                    html.push('<span class="menu-text">' + main.sMenuName + '</span>');
+                    html.push('<b class="arrow icon-angle-down"></b>');
+                    html.push('</a>');
+                    html.push('<ul class="submenu">');
+                    $(childMenu).each(function () {
+                        var child = this;
+                        if (child.sParentMenuId == main.ID) {
+                            html.push('<li>');
+                            html.push('<a>');
+                            html.push('<i class="icon-double-angle-right"></i>');
+                            html.push('<span data-url="' + admin.virtualPath + child.sMenuUrl + '">' + child.sMenuName + '</span>');
+                            html.push('</a>');
+                            html.push('</li>');
+                        }
+                    });
+                    html.push('</ul>');
+                    html.push('</li>');
+                });
+                $('.nav-list').append(html.join(''));
+                //绑定事件
+                menuList();
+            });
+        }
+
+        //安全退出
+        function Quit() {
+            admin.routeRegister("Admin", "AdminUser");
+            admin.Ajax(admin.route("Quit"), null, function (r) {
+                location.href = admin.route("Login");
+            });
+        }
 
         //绑定菜单导航栏
         function menuList() {
@@ -419,12 +187,6 @@
                         title: title,
                         content: '<iframe scrolling="auto" frameborder="0"  src="' + url + '" width="100%" height="100%" style="display:-webkit-box";></iframe>',
                         closable: true,
-                        //tools: [{
-                        //    iconCls: 'icon-mini-refresh',
-                        //    handler: function () {
-                        //        alert('refresh');
-                        //    }
-                        //}]
                     });
                 }
             });
@@ -443,6 +205,8 @@
                 $(this).next().toggle();
             });
 
+            //安全退出
+            $(".quit").on("click", Quit);
 
             //绑定导航栏的控制
             $('#sidebar-collapse').on("click", function () {
@@ -457,7 +221,7 @@
 
         return {
             bingEvent: bingEvent,
-            menuList: menuList
+            loadMenu:loadMenu
         }
     });
 </script>

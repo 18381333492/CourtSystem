@@ -12,9 +12,7 @@ namespace SystemModel
 {
     public partial class ButtonServices: IButton
     {
-
-
-      
+    
         public class MenuButton
         {
             public string id;
@@ -112,6 +110,16 @@ namespace SystemModel
         {
             var button = query.SingleQuery<CDELINK_Button>(@"SELECT * FROM CDELINK_Button WHERE ID=@ID", new { ID = sButtonId });
             return button;
+        }
+
+
+        /// <summary>
+        /// 获取所有的按钮（SuperMan专用通道）
+        /// </summary>
+        /// <returns></returns>
+        public override List<CDELINK_Button> GetAllButtonList()
+        {
+            return query.QueryList<CDELINK_Button>("SELECT * FROM CDELINK_Button ORDER BY iOrder").ToList();
         }
     }
 }

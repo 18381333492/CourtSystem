@@ -20,7 +20,7 @@ namespace DapperHelper
         {
             try
             {
-                if (connectionStr == null) connectionStr = C_Config.ReadConnString("DapperConnection");
+                if (connectionStr == null) SetconnectionStr();
                 SqlConnection conn = new SqlConnection(connectionStr);
                 conn.Open();
                 return conn;
@@ -31,6 +31,7 @@ namespace DapperHelper
                 return null;
             }
         }
+
 
         /// <summary>
         /// 关闭数据库连接
@@ -51,6 +52,18 @@ namespace DapperHelper
             }
         }
 
+        /// <summary>
+        /// 设置连接字符串
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public void  SetconnectionStr(string str=null)
+        {
+            if (string.IsNullOrEmpty(str))
+                connectionStr= C_Config.ReadConnString("DapperConnection");
+            else
+                connectionStr=str;
+        }
 
         /// <summary>
         /// 根据主键ID获取实体
@@ -150,7 +163,7 @@ namespace DapperHelper
             }
             catch (Exception ex)
             {
-               // Logs.GetLog().WriteErrorLog(ex);
+                // Logs.GetLog().WriteErrorLog(ex);
                 return null;
             }
             finally

@@ -26,7 +26,7 @@ namespace Web.Areas.Admin.Controllers
 
         public ActionResult Add()
         {
-            return View();
+            return View(SessionAdminUser());
         }
 
         public ActionResult Edit(string sAdminRoleId)
@@ -34,7 +34,37 @@ namespace Web.Areas.Admin.Controllers
             return View(manage.GetById(sAdminRoleId));
         }
 
-        
+        /// <summary>
+        /// 权限分配页面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Power(string sAdminRoleId)
+        {
+            return View(manage.GetById(sAdminRoleId));
+        }
+
+        /// <summary>
+        /// 获取所有的菜单列表和按钮数据
+        /// </summary>
+        public void GetMenuList()
+        {
+            var userinfo = SessionAdminUser();
+            if (userinfo.bIsSuperMan)
+            {//超级管理员通道
+                var manageMenu = Resolve<IMenu>();
+                result.data = manageMenu.GetAllMenuList();
+                result.success = true;
+            }
+            else
+            {
+                //var manageAdminUser = Resolve<IAdminUser>();
+                //manageAdminUser.GetMenuAndButtonByRoleId(userinfo.);
+                //result.success = true;
+            }
+
+        }
+
+
         /// <summary>
         /// 分页获取角色数据列表
         /// </summary>
@@ -43,7 +73,7 @@ namespace Web.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult List(PageInfo info,string searchText)
         {
-            return Content(manage.PageList(info, searchText));
+            return Content(manage.PageList(info, searchText,SessionAdminUser().bIsSuperMan));
         }
 
 
@@ -53,12 +83,13 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="adminRole"></param>
         public void Insert(CDELINK_AdminRole adminRole)
         {
+            if (!SessionAdminUser().bIsSuperMan) adminRole.IsShow = true;
             if (!manage.CheckRoleName(adminRole.sRoleName))
             {
                 if (manage.Insert(adminRole) > 0)
                     result.success = true;
             }
-            else result.info =string.Format("{0}角色名称已存在,请重新输入", adminRole.sRoleName);
+            else result.info = string.Format("{0}角色名称已存在,请重新输入", adminRole.sRoleName);
         }
 
         /// <summary>
@@ -67,6 +98,7 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="adminRole"></param>
         public void Update(CDELINK_AdminRole adminRole)
         {
+            if (!SessionAdminUser().bIsSuperMan) adminRole.IsShow = true;
             if (!manage.CheckRoleName(adminRole.sRoleName, adminRole.ID.ToString()))
             {
                 if (manage.Update(adminRole) > 0)
@@ -75,8 +107,6 @@ namespace Web.Areas.Admin.Controllers
             else result.info = string.Format("{0}角色名称已存在,请重新输入", adminRole.sRoleName);
         }
 
-
-
         /// <summary>
         /// 根据主键ID集合删除角色
         /// </summary>
@@ -84,6 +114,18 @@ namespace Web.Areas.Admin.Controllers
         public void Cancel(string Ids)
         {
             if(manage.Cancel(Ids)>0)
+                result.success = true;
+        }
+
+        /// <summary>
+        /// 设置角色权限
+        /// </summary>
+        /// <param name="sAdminRoleId"></param>
+        /// <param name="sMenuIds"></param>
+        /// <param name="sButtonIds"></param>
+        public void SetPower(string sAdminRoleId,string sMenuIds,string sButtonIds)
+        {
+            if (manage.SetPower(sAdminRoleId, sMenuIds, sButtonIds) > 0)
                 result.success = true;
         }
     }

@@ -1,0 +1,19 @@
+
+Log Entry : 
+05/27/2017 16:29:45
+Message:从索引 0 处开始，初始化字符串的格式不符合规范。
+TargetSite.Name:GetKeyValuePair
+Source:System.Data
+StackTrace:   在 System.Data.Common.DbConnectionOptions.GetKeyValuePair(String connectionString, Int32 currentPosition, StringBuilder buffer, Boolean useOdbcRules, String& keyname, String& keyvalue)
+   在 System.Data.Common.DbConnectionOptions.ParseInternal(Hashtable parsetable, String connectionString, Boolean buildChain, Hashtable synonyms, Boolean firstKey)
+   在 System.Data.Common.DbConnectionOptions..ctor(String connectionString, Hashtable synonyms, Boolean useOdbcRules)
+   在 System.Data.SqlClient.SqlConnectionString..ctor(String connectionString)
+   在 System.Data.SqlClient.SqlConnectionFactory.CreateConnectionOptions(String connectionString, DbConnectionOptions previous)
+   在 System.Data.ProviderBase.DbConnectionFactory.GetConnectionPoolGroup(DbConnectionPoolKey key, DbConnectionPoolGroupOptions poolOptions, DbConnectionOptions& userConnectionOptions)
+   在 System.Data.SqlClient.SqlConnection.ConnectionString_Set(DbConnectionPoolKey key)
+   在 System.Data.SqlClient.SqlConnection.set_ConnectionString(String value)
+   在 System.Data.SqlClient.SqlConnection..ctor(String connectionString, SqlCredential credential)
+   在 System.Data.SqlClient.SqlConnection..ctor(String connectionString)
+   在 DapperHelper.SqlDbBase.GetSqlConnection() 位置 F:\源代码管理\诉讼服务基础系统\CourtSystem\DapperHelper\SqlDbBase.cs:行号 24
+_____________________________________________________________________________________________________
+_____________________________________________________________________________________________________

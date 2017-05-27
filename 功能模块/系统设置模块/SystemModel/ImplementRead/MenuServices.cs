@@ -55,6 +55,21 @@ namespace SystemModel
             return Main.ToString();
         }
 
+        /// <summary>
+        /// 获取所有的菜单数据
+        /// </summary>
+        /// <returns></returns>
+        public override object GetAllMenuList()
+        {
+            var menuList = query.QueryList<CDELINK_Menu>(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 ORDER BY iOrder");
+            var buttonList = query.QueryList<CDELINK_Button>(@"SELECT * FROM CDELINK_Button ORDER BY iOrder");
+            return new
+            {
+                menu = menuList,
+                button= buttonList
+            };
+        }
+
 
         /// <summary>
         /// 获取所有的一级菜单
@@ -84,6 +99,27 @@ namespace SystemModel
                 return query.Any(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 AND sMenuName=@sMenuName", new { sMenuName = sMenuName });
             else
                 return query.Any(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 AND sMenuName=@sMenuName AND ID!=@ID", new { sMenuName = sMenuName, ID = sMenuId });
+        }
+
+
+        /// <summary>
+        /// 根据菜单主键IDs集合获取菜单数据
+        /// </summary>
+        /// <param name="Ids"></param>
+        /// <returns></returns>
+        public override List<CDELINK_Menu> GetMainMenuByIds(string Ids)
+        {
+            return query.QueryList<CDELINK_Menu>(string.Format(@"SELECT * FROM CDELINK_Menu WHERE ID IN({0}) AND bIsDeleted=0 ORDER BY iOrder", Ids)).ToList();
+        }
+
+
+        /// <summary>
+        /// 获取所有的二级菜单（SuperMan专用通道）
+        /// </summary>
+        /// <returns></returns>
+        public override List<CDELINK_Menu> GetAllChildMenu()
+        {
+            return query.QueryList<CDELINK_Menu>(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 AND sParentMenuId IS NOT NULL ORDER BY iOrder").ToList();
         }
     }
 }

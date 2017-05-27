@@ -43,7 +43,7 @@ namespace SystemInterface
         /// 获取所有的角色名称
         /// </summary>
         /// <returns></returns>
-        public abstract List<Dictionary<string, object>> GetAllRoleNameList();
+        public abstract List<Dictionary<string, object>> GetAllRoleNameList(bool bIsSuperMan);
 
         /// <summary>
         /// 根据用户的主键ID集合判断是否存在超级管理员
@@ -59,6 +59,14 @@ namespace SystemInterface
         /// <param name="sLoginAccout"></param>
         /// <returns></returns>
         public abstract bool CheckLoginAccout(string sLoginAccout);
+
+        /// <summary>
+        /// 根据用户角色获取相应的菜单和按钮
+        /// </summary>
+        /// <param name="sRoleId"></param>
+        /// <returns></returns>
+        public abstract MenuAndButton GetMenuAndButtonByRoleId(string sRoleId);
+     
 
 
         #endregion

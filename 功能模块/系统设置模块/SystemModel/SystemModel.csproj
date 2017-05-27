@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImplementRead\SuperManServices.cs" />
     <Compile Include="ImplementRead\AdminRoleServices.cs" />
     <Compile Include="ImplementWrite\AdminRoleServices.cs" />
     <Compile Include="ImplementWrite\AdminUserServices.cs" />

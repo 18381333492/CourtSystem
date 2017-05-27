@@ -14,6 +14,12 @@ namespace DapperHelper
     {
 
         /// <summary>
+        /// 设置连接字符串
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        void SetconnectionStr(string str = null);
+        /// <summary>
         /// 根据主键ID查询实体
         /// </summary>
         /// <typeparam name="T"></typeparam>

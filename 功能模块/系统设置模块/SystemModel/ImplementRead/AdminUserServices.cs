@@ -69,12 +69,19 @@ namespace SystemModel
 
         /// <summary>
         /// 获取所有的角色名称
+        /// bIsSuperMan:是否是超级管理员
         /// </summary>
         /// <returns></returns>
-        public override List<Dictionary<string, object>> GetAllRoleNameList()
+        public override List<Dictionary<string, object>> GetAllRoleNameList(bool bIsSuperMan)
         {
-            return query.QueryList<Dictionary<string, object>>(@"SELECT ID,sRoleName
+            if (bIsSuperMan)
+            {
+                return query.QueryList<Dictionary<string, object>>(@"SELECT ID,sRoleName
                                                     FROM CDELINK_AdminRole ORDER BY dInsertTime").ToList();
+            }
+            else
+                return query.QueryList<Dictionary<string, object>>(@"SELECT ID,sRoleName
+                                                    FROM CDELINK_AdminRole WHERE IsShow=1 ORDER BY dInsertTime").ToList();
         }
 
         /// <summary>
@@ -95,6 +102,30 @@ namespace SystemModel
         public override bool CheckLoginAccout(string sLoginAccout)
         {
             return query.Any(string.Format(@"SELECT * FROM CDELINK_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}'", sLoginAccout));
+        }
+
+
+        /// <summary>
+        /// 根据用户角色获取相应的菜单和按钮
+        /// </summary>
+        /// <param name="sRoleId"></param>
+        /// <returns></returns>
+        public override MenuAndButton GetMenuAndButtonByRoleId(string sRoleId)
+        {
+            MenuAndButton data = new MenuAndButton();
+            var adminRole = query.Find<CDELINK_AdminRole>(sRoleId);
+            if (!string.IsNullOrEmpty(adminRole.sPowerIds))
+            {
+                var menuIdsArray = adminRole.sPowerIds.Split('|')[0].Split(',').Select(m => { return "'" + m + "'"; });
+                var buttonIdsArray = adminRole.sPowerIds.Split('|')[1].Split(',').Select(m => { return "'" + m + "'"; });
+
+                string menuIds = string.Join(",", menuIdsArray);
+                string buttonIds = string.Join(",", buttonIdsArray);
+
+                data.menuList = query.QueryList<CDELINK_Menu>(string.Format(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 AND ID IN({0})", menuIds)).ToList();
+                data.buttonList = query.QueryList<CDELINK_Button>(string.Format(@"SELECT * FROM CDELINK_Button WHERE ID IN({0})", buttonIds)).ToList();                
+            }
+            return data;
         }
     }
 }

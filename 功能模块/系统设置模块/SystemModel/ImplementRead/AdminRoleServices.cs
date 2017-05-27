@@ -21,12 +21,15 @@ namespace SystemModel
         /// <param name="Info">分页参数</param>
         /// <param name="searchText">搜索的文本</param>
         /// <returns></returns>
-        public override string PageList(PageInfo pageInfo, string searchText)
+        public override string PageList(PageInfo pageInfo, string searchText, bool bIsSuperMan = false)
         {
             pageInfo.order = OrderType.DESC;
             pageInfo.sort = "dInsertTime";
             StringBuilder sSql = new StringBuilder();
-            sSql.Append("SELECT * FROM CDELINK_AdminRole WHERE 1=1 ");
+            if (bIsSuperMan)
+                sSql.Append("SELECT * FROM CDELINK_AdminRole WHERE 1=1");
+            else
+                sSql.Append("SELECT * FROM CDELINK_AdminRole WHERE IsShow=1");
             //条件查询
             if (!string.IsNullOrEmpty(searchText))
             {

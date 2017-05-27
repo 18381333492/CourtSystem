@@ -138,6 +138,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminUserController.cs" />
     <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminRoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SuperManController.cs" />
     <Compile Include="Areas\Mobile\MobileAreaRegistration.cs" />
     <Compile Include="Areas\Pays\PaysAreaRegistration.cs" />
     <Compile Include="Areas\WeiXin\Controllers\AutoMenuController.cs" />
@@ -816,6 +817,9 @@
     <Content Include="Areas\Admin\Content\icheck\skins\square\yellow.css" />
     <Content Include="Areas\Admin\Content\icheck\skins\square\yellow.png" />
     <Content Include="Areas\Admin\Content\icheck\skins\square\_all.css" />
+    <Content Include="Areas\Admin\Content\Login\Images\bootstrap.min.css" />
+    <Content Include="Areas\Admin\Content\Login\Images\login.css" />
+    <Content Include="Areas\Admin\Content\Login\Images\qc.png" />
     <Content Include="Areas\Mobile\Content\Shoes\css\bootstrap.css" />
     <Content Include="Areas\Mobile\Content\Shoes\css\member.css" />
     <Content Include="Areas\Mobile\Content\Shoes\css\order3.css" />
@@ -1236,10 +1240,6 @@
     <Content Include="Images\2017-03\20170324094636867.jpg" />
     <Content Include="Images\2017-04\20170403230101526.jpg" />
     <Content Include="Images\2017-04\20170428153839929.jpg" />
-    <Content Include="Areas\Admin\Views\GoodsComment\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\GoodsComment\Add.cshtml" />
-    <Content Include="Areas\Admin\Views\GoodsComment\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\GoodsComment\Detail.cshtml" />
     <Content Include="Areas\Admin\Content\easyui\themes\material\images\Thumbs.db" />
     <Content Include="Areas\Admin\Views\AdminUser\Index.cshtml" />
     <Content Include="Areas\Admin\Content\assets\avatars\Thumbs.db" />
@@ -1255,7 +1255,6 @@
     <Content Include="Areas\Admin\Views\AdminUser\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Test\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Test\Add.cshtml" />
-    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
     <Content Include="Areas\Admin\Views\AdminRole\Index.cshtml" />
     <Content Include="Areas\Admin\Views\AdminRole\Add.cshtml" />
     <Content Include="Areas\Admin\Views\AdminRole\Edit.cshtml" />
@@ -1268,6 +1267,9 @@
     <Content Include="Areas\Admin\Content\icheck\css\montserrat-regular.eot" />
     <Content Include="Areas\Admin\Content\icheck\css\montserrat-regular.ttf" />
     <Content Include="Areas\Admin\Content\icheck\css\montserrat-regular.woff" />
+    <Content Include="Areas\Admin\Views\AdminRole\Power.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminUser\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\SuperMan\Login.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />

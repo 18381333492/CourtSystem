@@ -1,0 +1,158 @@
+﻿
+<!--分配权限视图页面-->
+<style>
+    .gridtable {
+
+    font-family: verdana,arial,sans-serif;
+    font-size: 14px;
+    color: #333333;
+    border-width: 1px;
+    border-color: #e4e4e4;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+    .gridtable td {
+        border-width: 1px;
+        padding: 10px;
+        border-style: solid;
+        border-color: #ccc;
+        background-color: #ffffff;
+        height:auto;
+        text-align:left;
+    }
+
+    .gridtable tr td:nth-child(odd) {
+        border-width: 1px;
+        padding: 5px;
+        border-style: solid;
+        border-color: #ccc;
+        background-color: #FBFBFB;
+        text-align: center;
+        width: 130px;
+        color: blue;
+    }
+</style>
+@using EFModels;
+@model CDELINK_AdminRole
+<div class="modal-dialog">
+    <div class="modal-content" style="width:700px;">
+        <div class="modal-header" style="padding:10px;">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">分配权限</h4>
+        </div>
+        <!--主体内容-->
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" id="dataForm">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">角色名称</label>
+                    <div class="col-sm-10">
+                       <table class="gridtable">
+                           <thead>
+                               <tr>
+                                   <td style="text-align:center;color:red">栏目选择</td>
+                                   <td style="color:red;text-align:center">按钮选择</td>
+                                </tr>  
+                           </thead>
+                           <tbody id="powerList">
+                           </tbody>
+                       </table>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--主体内容-->
+        <div class="modal-footer" style="padding:10px;">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button id="ok" type="button" class="btn btn-primary">确认提交</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var sPowerIds = '@Model.sPowerIds';//选择的权限
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Admin", "AdminRole");
+
+        //保存设置
+        $('#ok').on("click", function () {
+            var selectMenu = $('.Power_Menu:checked');//获取选择的菜单
+            var selectButton = $('.Power_Button:checked');//获取选择按钮
+            var selectMenuValue = [];
+            var selectButtonValue = [];
+            $(selectMenu).each(function () { selectMenuValue.push($(this).val()) });
+            $(selectButton).each(function () { selectButtonValue.push($(this).val()) });
+            
+            admin.button.disabled();
+            admin.Ajax(admin.route("SetPower"), {
+                sMenuIds: selectMenuValue.join(),
+                sButtonIds: selectButtonValue.join(),
+                sAdminRoleId: sessionStorage["sAdminRoleId"]//需要设置的角色主键ID
+            }, function (r) {
+                admin.tip("操作成功");
+                admin.closeModal();
+            });
+        });
+
+        //初始化数据
+        admin.Ajax(admin.route("GetMenuList"), null, function (r) {
+            var button = r.data.button;//所有按钮
+            var menuList = r.data.menu;//所有菜单
+            var mainMenu = [];//一级菜单
+            var childMenu = [];//二级菜单
+
+            $(menuList).each(function () {
+                if (this.sParentMenuId)
+                    childMenu.push(this);
+                else
+                    mainMenu.push(this);
+
+            });
+            var html = [];
+            //遍历循环组织菜单和按钮
+            $(mainMenu).each(function () {
+                var main = this;
+                html.push('<tr><td colspan="2">' + main.sMenuName + '</td></tr>');
+                $(childMenu).each(function () {
+                    var child = this;
+                    if (child.sParentMenuId == main.ID) {
+                        html.push('<tr>');
+                        html.push('<td><input class="Power_Menu" type="checkbox" value="' + child.ID + '">&nbsp;<span>' + this.sMenuName + '</span></td>');
+                        html.push('<td>');
+                        //遍历按钮
+                        $(button).each(function () {
+                            var btn = this;
+                            if (btn.sMenuId == child.ID) {
+                                html.push('<input class="Power_Button" type="checkbox" value="' + btn.ID + '">&nbsp;<span>' + btn.sButtonName + '</span>&nbsp;');
+                            }
+                        });
+                        html.push('</td>');
+                        html.push('</tr>');
+                    }
+                });
+            });
+            $('#powerList').append(html.join(''));
+            //渲染多选框
+            $('.Power_Button,.Power_Menu').iCheck({
+                labelHover: false,
+                cursor: true,
+                checkboxClass: 'icheckbox_square-blue',
+                radioClass: 'iradio_square-blue',
+                increaseArea: '20%'
+            });
+
+            //初始化选择的数据
+            if (sPowerIds !== "") {
+                var menuSelected = sPowerIds.split('|')[0].split(',');
+                var buttonSelected = sPowerIds.split('|')[1].split(',');
+                $(menuSelected).each(function () {
+                    $('.Power_Menu[value=' + this + ']').iCheck('check');
+                });
+                $(buttonSelected).each(function () {
+                    $('.Power_Button[value=' + this + ']').iCheck('check');
+                });
+            }
+        });
+    })
+</script>

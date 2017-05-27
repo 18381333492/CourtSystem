@@ -67,6 +67,9 @@
     <Compile Include="CDELINK_Menu.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="MyModels\SerializableButton.cs" />
+    <Compile Include="MyModels\SerializableMenu.cs" />
+    <Compile Include="MyModels\MenuAndButton.cs" />
     <Compile Include="MyModels\PageInfo.cs" />
     <Compile Include="MyModels\PagingRet.cs" />
     <Compile Include="MyModels\Result.cs" />

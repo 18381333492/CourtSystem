@@ -23,10 +23,17 @@ namespace SystemInterface
 
 
         /// <summary>
-        /// 获取所有的菜单列表
+        /// 获取所有的菜单列表(treegrid格式数据)
         /// </summary>
         /// <returns></returns>
         public abstract string List();
+
+        /// <summary>
+        /// 获取所有的菜单数据
+        /// </summary>
+        /// <returns></returns>
+        public abstract object GetAllMenuList();
+      
 
         /// <summary>
         /// 获取所有的一级菜单
@@ -34,6 +41,7 @@ namespace SystemInterface
         /// <returns></returns>
         public abstract List<Dictionary<string, object>> GetMianMenuList();
 
+    
         /// <summary>
         ///  根据菜单名称检查是否有重名的菜单
         /// </summary>
@@ -41,6 +49,19 @@ namespace SystemInterface
         /// <param name="sMenuId">菜单的主键ID</param>
         /// <returns></returns>
         public abstract bool CheckMenuName(string sMenuName, string sMenuId=null);
+
+        /// <summary>
+        /// 根据菜单主键IDs集合获取菜单数据
+        /// </summary>
+        /// <param name="Ids"></param>
+        /// <returns></returns>
+        public abstract List<CDELINK_Menu> GetMainMenuByIds(string Ids);
+
+        /// <summary>
+        /// 获取所有的二级菜单（SuperMan专用通道）
+        /// </summary>
+        /// <returns></returns>
+        public abstract List<CDELINK_Menu> GetAllChildMenu();
 
 
         #endregion

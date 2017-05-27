@@ -46,5 +46,19 @@ namespace SystemModel
             var res=excute.Delete<CDELINK_AdminRole>(Ids);
             return res;
         }
+
+
+        /// <summary>
+        /// 设置角色权限
+        /// </summary>
+        /// <param name="sAdminRoleId"></param>
+        /// <param name="sMenuIds"></param>
+        /// <param name="sButtonIds"></param>
+        public override int SetPower(string sAdminRoleId, string sMenuIds, string sButtonIds)
+        {
+            var adminUser = excute.Context.CDELINK_AdminRole.Find(new Guid(sAdminRoleId));
+            adminUser.sPowerIds = sMenuIds + "|" + sButtonIds;
+            return  excute.SaveChange();
+        }
     }
 }

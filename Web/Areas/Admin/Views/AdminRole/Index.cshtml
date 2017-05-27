@@ -2,6 +2,8 @@
     ViewBag.Title = "角色管理";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
 }
+<link href="~/Areas/Admin/Content/icheck/skins/square/blue.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/icheck/icheck.min.js"></script>
 <table id="AdminRole" style="height:100%;width:100%"></table>
 <div id="AdminRole_toolbar" style="padding:8px;">
     <form id="search">
@@ -89,6 +91,7 @@
                 },
             ]],
             onLoadSuccess: function () {
+                //编辑事件绑定
                 $('.AdminRole_edit').on("click", function (event) {
                     event.stopPropagation();
                     var ID = $(this).attr("data-id");
@@ -105,6 +108,14 @@
                             admin.alert("删除成功");
                         });
                     });
+                });
+
+                //权限分配事件绑定
+                $('.AdminRole_power').on("click", function (event) {
+                    event.stopPropagation();
+                    var ID = $(this).attr("data-id");
+                    sessionStorage["sAdminRoleId"] = ID;
+                    admin.creatModal(admin.route("Power?sAdminRoleId=" + ID));
                 });
             }
         });

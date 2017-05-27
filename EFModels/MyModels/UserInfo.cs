@@ -57,5 +57,11 @@ namespace EFModels.MyModels
             get;
             set;
         }
+
+        public bool bIsSuperMan
+        {
+            get;
+            set;
+        }
     }
 }

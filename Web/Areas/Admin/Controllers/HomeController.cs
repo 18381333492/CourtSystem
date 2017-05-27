@@ -9,6 +9,7 @@ using EFModels.MyModels;
 using System.IO;
 using Web.App_Start.BaseController;
 using SystemInterface;
+using EFModels;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -18,98 +19,32 @@ namespace Web.Areas.Admin.Controllers
         // GET: /Admin/Home/
 
         #region 后台首页相关视图
-        [NoLogin]
+
+         
         public ActionResult Index()
         {
-            return View();
+            return View(Session[SESSION.AdminUser]);
         }
-
-        #endregion
-
-        public ActionResult My404()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// 登录过期提示页面
-        /// </summary>
-        /// <returns></returns>
-        [NoLogin]
-        public ActionResult Tip()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// 登录
-        /// </summary>
-        /// <returns></returns>
-        [NoLogin]
-        public ActionResult Login()
-        {
-            return View();
-        }
-
-        /// <summary>
-        /// 后台用户登录
-        /// </summary>
-        /// <param name="sUserName"></param>
-        /// <param name="sPassWord"></param>
-        /// <returns></returns>
-        [NoLogin]
-        //public void CheckLogin(string sUserName, string sPassWord,string sImgCode)
-        //{
-        //    if (sImgCode == Session[SESSION.ImgCode].ToString())
-        //    {
-        //        string sRoleName;
-        //        var user = _server.Login(sUserName, sPassWord, out sRoleName);
-        //        if (user != null)
-        //        {
-        //            if (user.bState)
-        //            {
-        //                Session[SESSION.User] = new UserInfo()
-        //                {
-        //                    ID = user.ID,
-        //                    sUserName = user.sUserName,
-        //                    sRoleId = user.sRoleID,
-        //                    sRoleName = sRoleName,
-        //                    Ip = Request.UserHostAddress
-        //                };
-
-        //                //缓存用户的二级菜单和按钮
-        //                var menu = Resolve<MenusService>();
-        //                var button = Resolve<ButtonService>();
-        //                Session[SESSION.Menu] = menu.GetSecondMenus(user.sRoleID);
-        //                Session[SESSION.Button] = button.GetButton(user.sRoleID);
-        //                result.success = true;
-        //            }
-        //            else result.info = "该用户已被冻结,请联系管理员!";
-        //        }
-        //        else
-        //            result.info = "用户名或密码错误!";
-        //    }
-        //    else
-        //    {
-        //        result.info = "验证码错误!";
-        //    }
-        //}
 
 
         /// <summary>
-        /// 清楚session 安全退出
+        /// 获取缓存菜单数据列表
         /// </summary>
-        /// <returns></returns>
-        public void Quit()
+        public void MenuList()
         {
-            Session.Remove(SESSION.AdminUser);
-            Session.Remove(SESSION.Button);
-            Session.Remove(SESSION.Menu);
+            var childList = Session[SESSION.Menu] as List<CDELINK_Menu>;
+            var Ids = childList.Select(m => { return "'" + m.sParentMenuId.ToString() + "'"; });
+            var manageMenu = Resolve<IMenu>();
+            var mainList = manageMenu.GetMainMenuByIds(string.Join(",", Ids));
+            result.data = new
+            {
+                mainList = mainList,//一级菜单
+                childList = childList//二级菜单
+            };
             result.success = true;
         }
 
+        #endregion
      
-
-      
     }
 }

@@ -57,5 +57,37 @@ namespace Common
         }
 
 
+        /// <summary>
+        /// RSA加密
+        /// </summary>
+        /// <param name="express">要加密的字符串</param>
+        /// <returns></returns>
+        public static string RSAEncryption(string express)
+        {
+            CspParameters param = new CspParameters();
+            param.KeyContainerName = "oa_erp_dowork";//密匙容器的名称，保持加密解密一致才能解密成功
+            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(param))
+            {
+                byte[] plaindata = Encoding.Default.GetBytes(express);//将要加密的字符串转换为字节数组
+                return Convert.ToBase64String(plaindata);//将加密后的字节数组转换为字符串
+            }
+        }
+
+        /// <summary>
+        ///  RSA解密
+        /// </summary>
+        /// <param name="ciphertext"></param>
+        /// <returns></returns>
+        public static string RSADecrypt(string ciphertext)
+        {
+            CspParameters param = new CspParameters();
+            param.KeyContainerName = "oa_erp_dowork";
+            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider(param))
+            {
+                byte[] encryptdata = Convert.FromBase64String(ciphertext);
+                return Encoding.Default.GetString(encryptdata);
+            }
+        }
+
     }
 }
