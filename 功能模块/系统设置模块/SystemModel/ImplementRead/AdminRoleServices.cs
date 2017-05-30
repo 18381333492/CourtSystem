@@ -21,15 +21,13 @@ namespace SystemModel
         /// <param name="Info">分页参数</param>
         /// <param name="searchText">搜索的文本</param>
         /// <returns></returns>
-        public override string PageList(PageInfo pageInfo, string searchText, bool bIsSuperMan = false)
+        public override string PageList(PageInfo pageInfo, string searchText)
         {
             pageInfo.order = OrderType.DESC;
             pageInfo.sort = "dInsertTime";
             StringBuilder sSql = new StringBuilder();
-            if (bIsSuperMan)
-                sSql.Append("SELECT * FROM CDELINK_AdminRole WHERE 1=1");
-            else
-                sSql.Append("SELECT * FROM CDELINK_AdminRole WHERE IsShow=1");
+            sSql.Append("SELECT * FROM CDELINK_AdminRole WHERE 1=1");
+
             //条件查询
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -58,14 +56,27 @@ namespace SystemModel
         /// <param name="sRoleName">角色名称</param>
         /// <param name="sRoleId">角色主键ID</param>
         /// <returns></returns>
-        public override bool CheckRoleName(string sRoleName, string sRoleId=null)
+        public override bool CheckRoleName(string sRoleName, string sRoleId = null)
         {
             var res = false;
             if (string.IsNullOrEmpty(sRoleId))
                 res = query.Any("SELECT * FROM CDELINK_AdminRole WHERE sRoleName=@sRoleName", new { sRoleName = sRoleName });
             else
-                res= query.Any("SELECT * FROM CDELINK_AdminRole WHERE sRoleName=@sRoleName AND ID!=@ID", new { sRoleName = sRoleName,ID= sRoleId });
+                res = query.Any("SELECT * FROM CDELINK_AdminRole WHERE sRoleName=@sRoleName AND ID!=@ID", new { sRoleName = sRoleName, ID = sRoleId });
             return res;
         }
+
+
+        /// <summary>
+        /// 根据角色主键Ids是否存在对应的后台用户
+        /// </summary>
+        /// <param name="Ids"></param>
+        /// <returns></returns>
+        public override bool IsExitAdminUserByRoleId(string Ids)
+        {
+            var res = query.Any(string.Format(@"SELECT * FROM CDELINK_AdminUser WHERE sRoleId IN({0}) AND bIsDeleted=0", Ids));
+            return res;
+        }
+
     }
 }

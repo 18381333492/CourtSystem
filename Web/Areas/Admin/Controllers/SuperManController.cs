@@ -48,8 +48,8 @@ namespace Web.Areas.Admin.Controllers
                 //获取所有的二级菜单
                 var manageMenu = Resolve<IMenu>();
                 var manageButton = Resolve<IButton>();
-                Session[SESSION.Menu] = manageMenu.GetAllChildMenu();
-                Session[SESSION.Button] = manageButton.GetAllButtonList();
+                Session[SESSION.Menu] = manageMenu.GetAllChildMenu();//获取所有的二级菜单
+                Session[SESSION.Button] = manageButton.GetAllButtonList();//获取所有的按钮
                 Session[SESSION.AdminUser] = new UserInfo()
                 {
                     sUserName = adminUser.sName,

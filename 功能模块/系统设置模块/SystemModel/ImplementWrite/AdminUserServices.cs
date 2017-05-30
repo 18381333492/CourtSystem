@@ -21,7 +21,6 @@ namespace SystemModel
             adminUser.ID = Guid.NewGuid();
             adminUser.sPassWord = C_Security.MD5(adminUser.sPassWord);
             adminUser.iState = 1;
-            adminUser.bIsSuper = false;
             adminUser.bIsDeleted = false;
             adminUser.dInsertTime = DateTime.Now;
             excute.Add<CDELINK_AdminUser>(adminUser);

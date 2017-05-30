@@ -19,7 +19,7 @@ namespace SystemInterface
         /// <param name="Info">分页参数</param>
         /// <param name="searchText">搜索的文本</param>
         /// <returns></returns>
-        public abstract string PageList(PageInfo Info, string searchText, bool bIsSuperMan = false);
+        public abstract string PageList(PageInfo Info, string searchText);
 
 
         /// <summary>
@@ -36,6 +36,14 @@ namespace SystemInterface
         /// <param name="sRoleId">角色主键ID</param>
         /// <returns></returns>
         public abstract bool CheckRoleName(string sRoleName, string sRoleId=null);
+
+
+        /// <summary>
+        /// 根据角色主键Ids是否存在对应的后台用户
+        /// </summary>
+        /// <param name="Ids"></param>
+        /// <returns></returns>
+        public abstract bool IsExitAdminUserByRoleId(string Ids);
 
         #endregion
 

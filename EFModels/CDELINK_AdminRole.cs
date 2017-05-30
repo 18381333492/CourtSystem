@@ -18,6 +18,5 @@ namespace EFModels
         public string sRoleName { get; set; }
         public System.DateTime dInsertTime { get; set; }
         public string sPowerIds { get; set; }
-        public bool IsShow { get; set; }
     }
 }

@@ -43,16 +43,9 @@ namespace SystemInterface
         /// 获取所有的角色名称
         /// </summary>
         /// <returns></returns>
-        public abstract List<Dictionary<string, object>> GetAllRoleNameList(bool bIsSuperMan);
+        public abstract List<Dictionary<string, object>> GetAllRoleNameList();
 
-        /// <summary>
-        /// 根据用户的主键ID集合判断是否存在超级管理员
-        /// </summary>
-        /// <param name="Ids"></param>
-        /// <returns></returns>
-        public abstract bool CheckIsSuperByIds(string Ids);
-
-
+   
         /// <summary>
         /// 检查登录账号是否重名
         /// </summary>

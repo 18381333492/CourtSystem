@@ -1,7 +1,5 @@
 ﻿
 <!--角色添加视图-->
-@using EFModels.MyModels;
-@model UserInfo
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header" style="padding:10px;">
@@ -17,16 +15,6 @@
                         <input type="text" class="form-control" placeholder="请输入角色名称" name="sRoleName">
                     </div>
                 </div>
-                @if (Model.bIsSuperMan)
-                {
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">是否显示</label>
-                    <div class="col-sm-10" style="padding-top:5px;">
-                        <input class="IsShow" name="IsShow" type="radio" value="True">是 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input class="IsShow" name="IsShow" type="radio" value="False">否
-                    </div>
-                </div>
-                }
             </form>
         </div>
         <!--主体内容-->
@@ -38,14 +26,6 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        $('.IsShow').iCheck({
-            labelHover: false,
-            cursor: true,
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%'
-        });
-
         var admin = new adminPackage();
         //注册路由
         admin.routeRegister("Admin", "AdminRole");

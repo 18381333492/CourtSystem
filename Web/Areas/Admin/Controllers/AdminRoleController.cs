@@ -52,16 +52,24 @@ namespace Web.Areas.Admin.Controllers
             if (userinfo.bIsSuperMan)
             {//超级管理员通道
                 var manageMenu = Resolve<IMenu>();
-                result.data = manageMenu.GetAllMenuList();
+                result.data = manageMenu.GetAllMenuAndButtonList();
                 result.success = true;
             }
             else
             {
-                //var manageAdminUser = Resolve<IAdminUser>();
-                //manageAdminUser.GetMenuAndButtonByRoleId(userinfo.);
-                //result.success = true;
+                var manageAdminUser = Resolve<IAdminUser>();
+                //根据用户的角色主键ID获取菜单核按钮
+                var obj = manageAdminUser.GetMenuAndButtonByRoleId(userinfo.sRoleId.ToString());
+                var childMenuIds = obj.menuList.Select(m => { return "'" + m.sParentMenuId.ToString() + "'"; });
+                var manageMenu = Resolve<IMenu>();
+                var mainList = manageMenu.GetMainMenuByIds(string.Join(",", childMenuIds));//获取一级菜单
+                result.data= new
+                {
+                    menu = mainList.Union(obj.menuList),
+                    button = obj.buttonList
+                };
+                result.success = true;
             }
-
         }
 
 
@@ -73,7 +81,7 @@ namespace Web.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult List(PageInfo info,string searchText)
         {
-            return Content(manage.PageList(info, searchText,SessionAdminUser().bIsSuperMan));
+            return Content(manage.PageList(info, searchText));
         }
 
 
@@ -83,7 +91,6 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="adminRole"></param>
         public void Insert(CDELINK_AdminRole adminRole)
         {
-            if (!SessionAdminUser().bIsSuperMan) adminRole.IsShow = true;
             if (!manage.CheckRoleName(adminRole.sRoleName))
             {
                 if (manage.Insert(adminRole) > 0)
@@ -98,7 +105,6 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="adminRole"></param>
         public void Update(CDELINK_AdminRole adminRole)
         {
-            if (!SessionAdminUser().bIsSuperMan) adminRole.IsShow = true;
             if (!manage.CheckRoleName(adminRole.sRoleName, adminRole.ID.ToString()))
             {
                 if (manage.Update(adminRole) > 0)
@@ -113,8 +119,13 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="Ids"></param>
         public void Cancel(string Ids)
         {
-            if(manage.Cancel(Ids)>0)
-                result.success = true;
+            if (!manage.IsExitAdminUserByRoleId(Ids))
+            {
+                if (manage.Cancel(Ids) > 0)
+                    result.success = true;
+            }
+            else
+                result.info = "该角色下面存在关联的后台用户,不能被执行删除操作";
         }
 
         /// <summary>

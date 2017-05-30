@@ -69,30 +69,14 @@ namespace SystemModel
 
         /// <summary>
         /// 获取所有的角色名称
-        /// bIsSuperMan:是否是超级管理员
         /// </summary>
         /// <returns></returns>
-        public override List<Dictionary<string, object>> GetAllRoleNameList(bool bIsSuperMan)
+        public override List<Dictionary<string, object>> GetAllRoleNameList()
         {
-            if (bIsSuperMan)
-            {
-                return query.QueryList<Dictionary<string, object>>(@"SELECT ID,sRoleName
+            return query.QueryList<Dictionary<string, object>>(@"SELECT ID,sRoleName
                                                     FROM CDELINK_AdminRole ORDER BY dInsertTime").ToList();
-            }
-            else
-                return query.QueryList<Dictionary<string, object>>(@"SELECT ID,sRoleName
-                                                    FROM CDELINK_AdminRole WHERE IsShow=1 ORDER BY dInsertTime").ToList();
         }
 
-        /// <summary>
-        /// 根据用户的主键ID集合判断是否存在超级管理员
-        /// </summary>
-        /// <param name="Ids"></param>
-        /// <returns></returns>
-        public override bool CheckIsSuperByIds(string Ids)
-        {
-           return query.Any(string.Format(@"SELECT * FROM CDELINK_AdminUser WHERE bIsSuper=1 AND bIsDeleted=0 AND ID IN({0})", Ids));
-        }
 
         /// <summary>
         /// 检查登录账号是否重名

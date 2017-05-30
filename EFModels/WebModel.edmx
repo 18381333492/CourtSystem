@@ -13,7 +13,6 @@
           <Property Name="sRoleName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="dInsertTime" Type="datetime" Nullable="false" />
           <Property Name="sPowerIds" Type="nvarchar(max)" />
-          <Property Name="IsShow" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CDELINK_AdminUser">
           <Key>
@@ -30,7 +29,6 @@
           <Property Name="dLastLoginTime" Type="datetime" />
           <Property Name="iState" Type="int" Nullable="false" />
           <Property Name="bIsDeleted" Type="bit" Nullable="false" />
-          <Property Name="bIsSuper" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CDELINK_Button">
           <Key>
@@ -89,7 +87,6 @@
           <Property Name="sRoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="sPowerIds" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="IsShow" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="CDELINK_AdminUser">
           <Key>
@@ -106,7 +103,6 @@
           <Property Name="dLastLoginTime" Type="DateTime" Precision="3" />
           <Property Name="iState" Type="Int32" Nullable="false" />
           <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="bIsSuper" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="CDELINK_Button">
           <Key>
@@ -162,7 +158,6 @@
           <EntitySetMapping Name="CDELINK_AdminRole">
             <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_AdminRole">
               <MappingFragment StoreEntitySet="CDELINK_AdminRole">
-                <ScalarProperty Name="IsShow" ColumnName="IsShow" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="sRoleName" ColumnName="sRoleName" />
                 <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
@@ -184,7 +179,6 @@
                 <ScalarProperty Name="dLastLoginTime" ColumnName="dLastLoginTime" />
                 <ScalarProperty Name="iState" ColumnName="iState" />
                 <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
-                <ScalarProperty Name="bIsSuper" ColumnName="bIsSuper" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

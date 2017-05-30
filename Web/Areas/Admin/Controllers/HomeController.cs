@@ -32,7 +32,7 @@ namespace Web.Areas.Admin.Controllers
         /// </summary>
         public void MenuList()
         {
-            var childList = Session[SESSION.Menu] as List<CDELINK_Menu>;
+            var childList = Session[SESSION.Menu] as List<CDELINK_Menu>;//获取缓存的二级菜单
             var Ids = childList.Select(m => { return "'" + m.sParentMenuId.ToString() + "'"; });
             var manageMenu = Resolve<IMenu>();
             var mainList = manageMenu.GetMainMenuByIds(string.Join(",", Ids));

@@ -29,10 +29,10 @@ namespace SystemInterface
         public abstract string List();
 
         /// <summary>
-        /// 获取所有的菜单数据
+        /// 获取所有的菜单数据和按钮数据
         /// </summary>
         /// <returns></returns>
-        public abstract object GetAllMenuList();
+        public abstract object GetAllMenuAndButtonList();
       
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace SystemInterface
         public abstract bool CheckMenuName(string sMenuName, string sMenuId=null);
 
         /// <summary>
-        /// 根据菜单主键IDs集合获取菜单数据
+        /// 根据菜单主键IDs集合获取一级菜单数据
         /// </summary>
         /// <param name="Ids"></param>
         /// <returns></returns>

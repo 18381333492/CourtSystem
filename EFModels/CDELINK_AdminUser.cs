@@ -25,6 +25,5 @@ namespace EFModels
         public Nullable<System.DateTime> dLastLoginTime { get; set; }
         public int iState { get; set; }
         public bool bIsDeleted { get; set; }
-        public bool bIsSuper { get; set; }
     }
 }

@@ -56,10 +56,10 @@ namespace SystemModel
         }
 
         /// <summary>
-        /// 获取所有的菜单数据
+        /// 获取所有的菜单数据和按钮数据
         /// </summary>
         /// <returns></returns>
-        public override object GetAllMenuList()
+        public override object GetAllMenuAndButtonList()
         {
             var menuList = query.QueryList<CDELINK_Menu>(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 ORDER BY iOrder");
             var buttonList = query.QueryList<CDELINK_Button>(@"SELECT * FROM CDELINK_Button ORDER BY iOrder");
@@ -109,7 +109,10 @@ namespace SystemModel
         /// <returns></returns>
         public override List<CDELINK_Menu> GetMainMenuByIds(string Ids)
         {
-            return query.QueryList<CDELINK_Menu>(string.Format(@"SELECT * FROM CDELINK_Menu WHERE ID IN({0}) AND bIsDeleted=0 ORDER BY iOrder", Ids)).ToList();
+            if (!string.IsNullOrEmpty(Ids))
+                return query.QueryList<CDELINK_Menu>(string.Format(@"SELECT * FROM CDELINK_Menu WHERE ID IN({0}) AND bIsDeleted=0 ORDER BY iOrder", Ids)).ToList();
+            else
+                return null;
         }
 
 

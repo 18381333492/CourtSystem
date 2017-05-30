@@ -27,8 +27,7 @@ namespace Web.Areas.Admin.Controllers
  
         public ActionResult Add()
         {
-            var userinfo=SessionAdminUser();
-            return View(manage.GetAllRoleNameList(userinfo.bIsSuperMan));
+            return View(manage.GetAllRoleNameList());
         }
 
         [NoLogin]
@@ -82,13 +81,8 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="Ids"></param>
         public void Cancel(string Ids)
         {
-            if (!manage.CheckIsSuperByIds(Ids))
-            {
-                if (manage.Cancel(Ids) > 0)
-                    result.success = true;
-            }
-            else
-                result.info = "超级管理员不能被执行删除,请重新操作";
+            if (manage.Cancel(Ids) > 0)
+                result.success = true;
         }
 
         /// <summary>
@@ -97,13 +91,8 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="Ids"></param>
         public void Freeze(string Ids)
         {
-            if (!manage.CheckIsSuperByIds(Ids))
-            {
-                if (manage.Freeze(Ids) > 0)
-                    result.success = true;
-            }
-            else
-                result.info = "超级管理员不能被执行冻结,请重新操作";
+            if (manage.Freeze(Ids) > 0)
+                result.success = true;
         }
 
         /// <summary>
@@ -124,8 +113,8 @@ namespace Web.Areas.Admin.Controllers
                 else
                 {
                     var obj = manage.GetMenuAndButtonByRoleId(adminUser.sRoleId);
-                    Session[SESSION.Menu] = obj.menuList;
-                    Session[SESSION.Button] = obj.buttonList;
+                    Session[SESSION.Menu] = obj.menuList;//缓存的二级菜单
+                    Session[SESSION.Button] = obj.buttonList;//缓存的按钮
                     Session[SESSION.AdminUser] = new UserInfo()
                     {
                         sUserName = adminUser.sName,
