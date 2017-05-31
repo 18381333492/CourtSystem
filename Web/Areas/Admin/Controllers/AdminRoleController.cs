@@ -16,7 +16,7 @@ namespace Web.Areas.Admin.Controllers
     public class AdminRoleController : AdminBase<IAdminRole>
     {
         //
-        // GET: /Admin/Role/
+        // GET: /Admin/AdminRole/
 
         public ActionResult Index()
         {

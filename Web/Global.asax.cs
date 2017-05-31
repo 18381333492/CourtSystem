@@ -9,6 +9,8 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Common;
 using System.Threading;
+using Unity;
+using SystemInterface;
 
 namespace Web
 {
@@ -30,11 +32,12 @@ namespace Web
             Application.Add("Online",0);
             Application.Add("Visits", 0);//访问量
 
-            Timer timer = new Timer(new TimerCallback(VisitsCount),
+            Application["bIsStartUp"] = true;
+            Timer timer = new Timer(new TimerCallback(WebSiteStartUp),
                                      null,//一个包含回调方法要使用的信息的对象，或者为空引用
                                      0,//调用 callback 之前延迟的时间量（以毫秒为单位）。(即第一次调用该委托的时间间隔)
                                      //指定 Timeout.Infinite 以防止计时器开始计时。指定零 (0) 以立即启动计时器。
-                                     1*24*60*60*1000);//调用 callback 的时间间隔（以毫秒为单位）
+                                    60*60*1000);//调用 callback 的时间间隔（以毫秒为单位）
         }
         
         /// <summary>
@@ -75,11 +78,16 @@ namespace Web
 
 
         /// <summary>
-        /// 统计访问量写入数据库
+        /// 网站启动检查
         /// </summary>
-        private void VisitsCount(object a)
+        private void WebSiteStartUp(object a)
         {
-           
+            ////var manageSuperMan = DIEntity.GetInstance().GetImpl<ISuperMan>();
+            //var now = DateTime.Now;
+            //var endTime = DateTime.Parse("2017/5/31 16:58");
+            //if (now > endTime)
+            //    Application["bIsStartUp"] = false;
+
         }
     }
 }

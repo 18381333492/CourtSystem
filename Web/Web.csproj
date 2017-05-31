@@ -133,6 +133,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WeiXinMessage\AutoHandleMessage.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\WebSiteController.cs" />
     <Compile Include="Areas\Admin\Controllers\ButtonController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminUserController.cs" />
@@ -1270,6 +1271,7 @@
     <Content Include="Areas\Admin\Views\AdminUser\Login.cshtml" />
     <Content Include="Areas\Admin\Views\SuperMan\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Button.cshtml" />
+    <Content Include="Areas\Admin\Views\WebSite\Index.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />

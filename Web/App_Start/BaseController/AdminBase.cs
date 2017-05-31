@@ -53,28 +53,48 @@ namespace Web.App_Start.BaseController
         /// <param name="filterContext"></param>
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (!(filterContext.ActionDescriptor.GetCustomAttributes(typeof(NoLogin), true).Length == 1))
-            {//有NoLogin属性;不判断登录
-                if (Session[SESSION.AdminUser] == null)
-                {
-                    /*登录过时,session过期*/
-                    if (filterContext.HttpContext.Request.HttpMethod.ToUpper() == "GET")
+            if (bool.Parse(filterContext.HttpContext.Application["bIsStartUp"].ToString())==true)
+            {//网站能继续运行
+                if (!(filterContext.ActionDescriptor.GetCustomAttributes(typeof(NoLogin), true).Length == 1))
+                {//有NoLogin属性;不判断登录
+                    if (Session[SESSION.AdminUser] == null)
                     {
-                        /*跳转到登录过期提示页面*/
-                        var LoginPath = C_Config.ReadAppSetting("virtualPath");
-                        filterContext.Result = new RedirectResult(LoginPath+"/Admin/AdminUser/Login");
+                        /*登录过时,session过期*/
+                        if (filterContext.HttpContext.Request.HttpMethod.ToUpper() == "GET")
+                        {
+                            /*跳转到登录过期提示页面*/
+                            var LoginPath = C_Config.ReadAppSetting("virtualPath");
+                            filterContext.Result = new RedirectResult(LoginPath + "/Admin/AdminUser/Login");
+                        }
+                        else
+                        {
+                            result.over = true;//登录过时
+                            ContentResult res = new ContentResult();
+                            res.Content = result.toJson();
+                            filterContext.Result = res;
+                        }
                     }
                     else
-                    {
-                        result.over = true;//登录过时
-                        ContentResult res = new ContentResult();
-                        res.Content = result.toJson();
-                        filterContext.Result = res;
+                    {//session存在
+
                     }
                 }
+            }
+            else
+            {//网站过期
+                if (filterContext.HttpContext.Request.HttpMethod.ToUpper() == "GET")
+                {
+                    /*跳转到网站到期提示页面*/
+                    var LoginPath = C_Config.ReadAppSetting("virtualPath");
+                    filterContext.Result = new RedirectResult("http://www.baidu.com");
+                }
                 else
-                {//判断会员状态是否正常
-
+                {
+                    result.success = false;
+                    result.info = "网站运行时间已到期,不能执行任何操作.请及时充值!";
+                    ContentResult res = new ContentResult();
+                    res.Content = result.toJson();
+                    filterContext.Result = res;
                 }
             }
         }
