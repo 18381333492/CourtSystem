@@ -1226,7 +1226,6 @@
     <Content Include="Areas\Admin\Views\Button\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Button\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Button\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\_Button.cshtml" />
     <Content Include="Areas\WeiXin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\WeiXin\Views\Shared\_Button.cshtml" />
     <Content Include="Areas\WeiXin\Views\AutoReply\Index.cshtml" />
@@ -1270,6 +1269,7 @@
     <Content Include="Areas\Admin\Views\AdminRole\Power.cshtml" />
     <Content Include="Areas\Admin\Views\AdminUser\Login.cshtml" />
     <Content Include="Areas\Admin\Views\SuperMan\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Button.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />

@@ -88,11 +88,11 @@ namespace SystemInterface
 
 
         /// <summary>
-        /// 根据主键ID集合冻结后台用户
+        /// 根据主键ID冻结/解冻后台用户
         /// </summary>
-        /// <param name="Ids"></param>
+        /// <param name="ID"></param>
         /// <returns></returns>
-        public abstract int Freeze(string Ids);
+        public abstract int Freeze(string ID);
 
         #endregion
 

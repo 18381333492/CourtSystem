@@ -50,14 +50,17 @@ namespace SystemModel
         }
 
         /// <summary>
-        /// 根据主键ID集合冻结后台用户
+        /// 根据主键ID冻结/解冻后台用户
         /// </summary>
-        /// <param name="Ids"></param>
+        /// <param name="ID"></param>
         /// <returns></returns>
-        public override int Freeze(string Ids)
+        public override int Freeze(string ID)
         {
-            var res = excute.ExcuteBySql(string.Format(@"UPDATE CDELINK_AdminUser SET iState =0 WHERE ID IN({0})", Ids));
+            var adminUser = excute.Context.CDELINK_AdminUser.Find(new Guid(ID));
+            adminUser.iState = adminUser.iState == 1 ? 0 : 1;
+            var res= excute.SaveChange();
             return res;
+
         }
     }
 }

@@ -86,12 +86,12 @@ namespace Web.Areas.Admin.Controllers
         }
 
         /// <summary>
-        /// 根据主键ID集合冻结用户
+        /// 根据主键ID冻结/解冻用户
         /// </summary>
-        /// <param name="Ids"></param>
-        public void Freeze(string Ids)
+        /// <param name="ID"></param>
+        public void Freeze(string ID)
         {
-            if (manage.Freeze(Ids) > 0)
+            if (manage.Freeze(ID) > 0)
                 result.success = true;
         }
 

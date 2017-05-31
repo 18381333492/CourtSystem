@@ -1,1 +1,11 @@
 ﻿
+@using EFModels;
+@{ 
+    var buttonList = ViewData["Button_Toolbar"] as List<CDELINK_Button>;
+}
+
+@foreach (var button in buttonList)
+{
+    <button type="button" class="btn @button.sButtonIcon btn-sm @button.sButtonSign">@button.sButtonName</button>
+}
+&nbsp; &nbsp; &nbsp;

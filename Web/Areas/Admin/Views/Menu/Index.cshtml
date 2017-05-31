@@ -11,9 +11,7 @@
 <table id="Menu" style="height:100%;width:100%"></table>
 <div id="Menu_toolbar" style="padding:8px;">
     <form id="search">
-        <button type="button" class="btn btn-success btn-sm Menu_add">新增菜单</button>
-        <button type="button" class="btn btn-primary  btn-sm Menu_edit">编辑菜单</button>
-        <button type="button" class="btn btn-danger  btn-sm Menu_cancel">删除菜单</button>
+        @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
     </form>
 </div>
 <script type="text/javascript">

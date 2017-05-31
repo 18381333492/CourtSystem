@@ -6,11 +6,7 @@
 <table id="AdminUser" style="height:100%;width:100%"></table>
 <div id="AdminUser_toolbar" style="padding:8px;">
     <form id="search">
-        <button type="button" class="btn btn-success btn-sm AdminUser_add" >新增用户</button>
-        <button type="button" class="btn btn-danger  btn-sm AdminUser_cancel">删除用户</button>
-        &nbsp; &nbsp; &nbsp;
-        <span>状态:</span>
-        <text></text>
+        @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
         <span>模糊查询:</span><input type="text" class="form-control" placeholder="姓名/手机号码"
                                  style="width:200px;height:30px;vertical-align:bottom;display:inline-block;">
         <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
@@ -18,11 +14,11 @@
 </div>
 <script type="text/javascript">
     $(function () {
+        var buttonList=@Html.Raw(ViewData["Button_NotToolbar"]);
         var admin = new adminPackage();
         //注册路由
         admin.routeRegister("Admin", "AdminUser");
-   
-
+       
         //模糊查询
         $('.searchText').on("click", function () {
             var searchText = $('#search input').val();
@@ -75,12 +71,7 @@
                 { field: 'sLoginAccout', title: '账号', align: 'center', sortable: true, width: 100 },
                 { field: 'sName', title: '姓名', align: 'center', sortable: true, width: 80 },
                 { field: 'sPhone', title: '手机号码', align: 'center', sortable: true, width: 120 },
-                {
-                    field: 'sRoleName', title: '角色', align: 'center', sortable: true, width: 80, formatter: function (value, row) {
-                        if ((!row.sRoleId) && row.bIsSuper) return "超级管理员";
-                        else return value;
-                    }
-                },
+                { field: 'sRoleName', title: '角色', align: 'center', sortable: true, width: 80 },
                 {
                     field: 'iState', title: '状态', align: 'center', sortable: true, width: 80, formatter: function (value) {
                         if (value == 1) return "<span style='color:blue;'>正常</span>";
@@ -90,12 +81,13 @@
                 { field: 'dInsertTime', title: '添加时间', align: 'center', sortable: true, width: 120 },
                 { field: 'dLastLoginTime', title: '上一次登录时间', align: 'center', sortable: true, width: 120 },
                 {
-                    field: 'ID', title: '操作', align: 'center', width: 150, formatter: function (value) {
+                    field: 'ID', title: '操作', align: 'center', width: 180, formatter: function (value,row) {
                         var html = [];
                         html.push('<div style="padding:3px;">');
-                        html.push('<button type="button" class="btn btn-info btn-sm AdminUser_reset" data-id="' + value + '">重置密码</button>&nbsp&nbsp');
-                        html.push('<button type="button" class="btn btn-warning btn-sm AdminUser_freeze" data-id="' + value + '">冻 结</button>&nbsp&nbsp');
-                        html.push('<button type="button" class="btn btn-danger btn-sm AdminUser_delete" data-id="' + value + '">删 除</button>');
+                        $(buttonList).each(function(){
+                            html.push('<button type="button" class="btn '+this.sButtonIcon+' btn-sm '+this.sButtonSign+'" data-id="' + value + '" data-iState="'+row.iState+'">');
+                            html.push(''+this.sButtonName+'</button>&nbsp&nbsp');
+                        });
                         html.push('</div>');
                         return html.join('');
                     }
@@ -117,9 +109,11 @@
                 //冻结事件绑定
                 $('.AdminUser_freeze').on("click", function (event) {
                     event.stopPropagation();
-                    var ID = admin.formate("'#'", $(this).attr("data-id"));
-                    admin.confirm("确定要冻结这条数据？", function () {
-                        admin.Ajax(admin.route("Freeze"), { Ids: ID }, function (r) {
+                    var ID = $(this).attr("data-id");
+                    var iState = parseInt($(this).attr("data-iState"));//会员状态 1-正常 0-冻结
+                    var operate = iState == 0 ? "解冻" : "冻结";
+                    admin.confirm("确定要" + operate + "这条数据？", function () {
+                        admin.Ajax(admin.route("Freeze"), { ID: ID }, function (r) {
                             admin.grid.datagrid('reload');
                             admin.alert("操作成功");
                         });

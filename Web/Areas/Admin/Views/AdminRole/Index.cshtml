@@ -7,9 +7,7 @@
 <table id="AdminRole" style="height:100%;width:100%"></table>
 <div id="AdminRole_toolbar" style="padding:8px;">
     <form id="search">
-        <button type="button" class="btn btn-success btn-sm AdminRole_add">新增角色</button>
-        <button type="button" class="btn btn-danger  btn-sm AdminRole_cancel">删除角色</button>
-        &nbsp; &nbsp; &nbsp;
+        @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
         <text></text>
         <span>模糊查询:</span><input type="text" class="form-control" placeholder="角色名称"
                                  style="width:200px;height:30px;vertical-align:bottom;display:inline-block">
@@ -18,6 +16,7 @@
 </div>
 <script type="text/javascript">
     $(function () {
+        var buttonList=@Html.Raw(ViewData["Button_NotToolbar"]);
         var admin = new adminPackage();
         //注册路由
         admin.routeRegister("Admin", "AdminRole");
@@ -82,10 +81,10 @@
                     field: 'ID', title: '操作', align: 'center', width: 150, formatter: function (value) {
                         var html = [];
                         html.push('<div style="padding:3px;">');
-                        html.push('<button type="button" class="btn btn-info btn-sm AdminRole_edit" data-id="' + value + '">编 辑</button>&nbsp&nbsp');
-                        html.push('<button type="button" class="btn btn-warning btn-sm AdminRole_delete" data-id="' + value + '">删 除</button>&nbsp&nbsp');
-                        html.push('<button type="button" class="btn btn-danger btn-sm AdminRole_power" data-id="' + value + '">分配权限</button>');
-                        html.push('</div>');
+                        $(buttonList).each(function(){
+                            html.push('<button type="button" class="btn '+this.sButtonIcon+' btn-sm '+this.sButtonSign+'" data-id="' + value + '">');
+                            html.push(''+this.sButtonName+'</button>&nbsp&nbsp');
+                        });
                         return html.join('');
                     }
                 },
