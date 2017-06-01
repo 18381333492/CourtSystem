@@ -42,6 +42,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Basebll.cs" />
+    <Compile Include="IWeChatMenu.cs" />
+    <Compile Include="IWeChatKeyWord.cs" />
+    <Compile Include="IWeChat.cs" />
+    <Compile Include="IWebSite.cs" />
     <Compile Include="ISuperMan.cs" />
     <Compile Include="IAdminRole.cs" />
     <Compile Include="IAdminUser.cs" />

@@ -54,6 +54,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImplementRead\WeChatMenuServices.cs" />
+    <Compile Include="ImplementRead\WeChatServices.cs" />
+    <Compile Include="ImplementRead\WebSiteServices.cs" />
     <Compile Include="ImplementRead\SuperManServices.cs" />
     <Compile Include="ImplementRead\AdminRoleServices.cs" />
     <Compile Include="ImplementWrite\AdminRoleServices.cs" />
@@ -63,6 +66,9 @@
     <Compile Include="ImplementRead\AdminUserServices.cs" />
     <Compile Include="ImplementRead\MenuServices.cs" />
     <Compile Include="ImplementWrite\MenuServices.cs" />
+    <Compile Include="ImplementWrite\WeChatMenuServices.cs" />
+    <Compile Include="ImplementWrite\WeChatServices.cs" />
+    <Compile Include="ImplementWrite\WebSiteServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

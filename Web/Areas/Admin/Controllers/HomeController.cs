@@ -23,6 +23,10 @@ namespace Web.Areas.Admin.Controllers
          
         public ActionResult Index()
         {
+            var  manageWebSite = Resolve<IWebSite>();
+            var webSite = manageWebSite.GetWebSite();
+            if (webSite == null) ViewBag.ICON = string.Empty;
+            ViewBag.ICON = webSite.sWebSiteIcon;
             return View(Session[SESSION.AdminUser]);
         }
 

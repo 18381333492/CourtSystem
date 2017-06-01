@@ -133,6 +133,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WeiXinMessage\AutoHandleMessage.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\WeChatMenuController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WeChatKeyWordController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WeChatController.cs" />
     <Compile Include="Areas\Admin\Controllers\WebSiteController.cs" />
     <Compile Include="Areas\Admin\Controllers\ButtonController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
@@ -1272,6 +1275,10 @@
     <Content Include="Areas\Admin\Views\SuperMan\Login.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Button.cshtml" />
     <Content Include="Areas\Admin\Views\WebSite\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\WeChat\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\WeChatMenu\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\WeChatMenu\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\WeChatMenu\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />

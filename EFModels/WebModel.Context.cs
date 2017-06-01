@@ -30,5 +30,8 @@ namespace EFModels
         public virtual DbSet<CDELINK_Button> CDELINK_Button { get; set; }
         public virtual DbSet<CDELINK_Client> CDELINK_Client { get; set; }
         public virtual DbSet<CDELINK_Menu> CDELINK_Menu { get; set; }
+        public virtual DbSet<CDELINK_WebSite> CDELINK_WebSite { get; set; }
+        public virtual DbSet<CDELINK_WeChat> CDELINK_WeChat { get; set; }
+        public virtual DbSet<CDELINK_WeChatMenu> CDELINK_WeChatMenu { get; set; }
     }
 }

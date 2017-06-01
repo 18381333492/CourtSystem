@@ -17,7 +17,8 @@ function upload() {
         url: "/HandleProgram/PictureUpload.ashx",
         width: 120,
         height: 120,
-        path: ''//上传的目录
+        path: '',//上传的目录
+        VirtualDirectory:''//虚拟目录
     }
 
     /*!
@@ -46,7 +47,7 @@ function upload() {
                 $(element).append(data);//追加html
                 //初始化图片路径
                 if ($(element).next().val() != "") {
-                    $(element).find("img").attr("src", $(element).next().val())
+                    $(element).find("img").attr("src", defaults.VirtualDirectory+$(element).next().val())
                 }
                 //设置图片的大小
                 $(element).find("img").height(defaults.height);
@@ -86,7 +87,7 @@ function upload() {
             success: function (data) {
                 data = JSON.parse(data);
                 if (data.error == 0) {
-                    $(element).find("img").attr("src", data.url);
+                    $(element).find("img").attr("src",defaults.VirtualDirectory+data.url);
                     $(element).next().val(data.url);
                 } else {
                     alert(data.message);

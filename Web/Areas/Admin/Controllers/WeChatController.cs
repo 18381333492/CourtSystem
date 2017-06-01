@@ -11,29 +11,29 @@ using EFModels;
 namespace Web.Areas.Admin.Controllers
 {
     /// <summary>
-    /// 网站设置控制器
+    ///微信公众号控制器
     /// </summary>
-    public class WebSiteController : AdminBase<IWebSite>
+    public class WeChatController : AdminBase<IWeChat>
     {
         //
-        // GET: /Admin/WebSite/
+        // GET: /Admin/WeChat/
 
         public ActionResult Index()
         {
-            var webSite = manage.GetWebSite();
-            webSite = webSite == null ? new CDELINK_WebSite() : webSite;
-            return View(webSite);
+            var wechat = manage.GetWeChat();
+            wechat = wechat == null ? new CDELINK_WeChat() : wechat;
+            return View(wechat);
         }
 
 
         /// <summary>
-        /// 设置网站信息
+        /// 设置公众号信息
         /// </summary>
-        /// <param name="website"></param>
+        /// <param name="wechat"></param>
         /// <returns></returns>
-        public void SetWebSite(CDELINK_WebSite website)
+        public void SetWeChat(CDELINK_WeChat wechat)
         {
-            if (manage.SetWebSite(website) > 0)
+            if (manage.SetWeChat(wechat) > 0)
                 result.success = true;
         }
     }

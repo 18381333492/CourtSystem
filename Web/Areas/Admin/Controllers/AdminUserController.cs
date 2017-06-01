@@ -33,6 +33,10 @@ namespace Web.Areas.Admin.Controllers
         [NoLogin]
         public ActionResult Login()
         {
+            var manageWebSite = Resolve<IWebSite>();
+            var webSite = manageWebSite.GetWebSite();
+            if (webSite == null) ViewBag.ICON = string.Empty;
+            ViewBag.ICON = webSite.sWebSiteIcon;
             return View();
         }
 

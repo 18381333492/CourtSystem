@@ -68,12 +68,52 @@
           <Property Name="bIsDeleted" Type="bit" Nullable="false" />
           <Property Name="sMenuIcon" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="CDELINK_WebSite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sWebSiteName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="sWebSiteIcon" Type="nvarchar" MaxLength="255" />
+          <Property Name="sCourtName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sCourtSign" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CDELINK_WeChat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sWeChatName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sOriginalId" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sAppId" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sAppSecret" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sToken" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="sServerUrl" Type="nvarchar(max)" />
+          <Property Name="sMchId" Type="varchar" MaxLength="100" />
+          <Property Name="sPayKey" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="CDELINK_WeChatMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sMenuName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="sUrl" Type="nvarchar" MaxLength="255" />
+          <Property Name="sParentMenuId" Type="nvarchar" MaxLength="255" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="iType" Type="int" Nullable="false" />
+          <Property Name="iOrder" Type="int" Nullable="false" />
+          <Property Name="sKey" Type="nvarchar" MaxLength="255" />
+        </EntityType>
         <EntityContainer Name="CourtSystemDatabaseModelStoreContainer">
           <EntitySet Name="CDELINK_AdminRole" EntityType="Self.CDELINK_AdminRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_AdminUser" EntityType="Self.CDELINK_AdminUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_Button" EntityType="Self.CDELINK_Button" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_Client" EntityType="Self.CDELINK_Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_Menu" EntityType="Self.CDELINK_Menu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CDELINK_WebSite" EntityType="Self.CDELINK_WebSite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CDELINK_WeChat" EntityType="Self.CDELINK_WeChat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CDELINK_WeChatMenu" EntityType="Self.CDELINK_WeChatMenu" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -148,7 +188,47 @@
           <EntitySet Name="CDELINK_Button" EntityType="Self.CDELINK_Button" />
           <EntitySet Name="CDELINK_Client" EntityType="Self.CDELINK_Client" />
           <EntitySet Name="CDELINK_Menu" EntityType="Self.CDELINK_Menu" />
+          <EntitySet Name="CDELINK_WebSite" EntityType="CourtSystemDatabaseModel.CDELINK_WebSite" />
+          <EntitySet Name="CDELINK_WeChat" EntityType="CourtSystemDatabaseModel.CDELINK_WeChat" />
+          <EntitySet Name="CDELINK_WeChatMenu" EntityType="CourtSystemDatabaseModel.CDELINK_WeChatMenu" />
         </EntityContainer>
+        <EntityType Name="CDELINK_WebSite">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sWebSiteName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="sWebSiteIcon" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sCourtName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sCourtSign" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CDELINK_WeChat">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sWeChatName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sOriginalId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sAppId" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sAppSecret" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sToken" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sServerUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sMchId" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="sPayKey" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CDELINK_WeChatMenu">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sMenuName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sParentMenuId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="iType" Type="Int32" Nullable="false" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="sKey" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -220,6 +300,46 @@
                 <ScalarProperty Name="iOrder" ColumnName="iOrder" />
                 <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
                 <ScalarProperty Name="sMenuIcon" ColumnName="sMenuIcon" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CDELINK_WebSite">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_WebSite">
+              <MappingFragment StoreEntitySet="CDELINK_WebSite">
+                <ScalarProperty Name="sCourtSign" ColumnName="sCourtSign" />
+                <ScalarProperty Name="sCourtName" ColumnName="sCourtName" />
+                <ScalarProperty Name="sWebSiteIcon" ColumnName="sWebSiteIcon" />
+                <ScalarProperty Name="sWebSiteName" ColumnName="sWebSiteName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CDELINK_WeChat">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_WeChat">
+              <MappingFragment StoreEntitySet="CDELINK_WeChat">
+                <ScalarProperty Name="sPayKey" ColumnName="sPayKey" />
+                <ScalarProperty Name="sMchId" ColumnName="sMchId" />
+                <ScalarProperty Name="sServerUrl" ColumnName="sServerUrl" />
+                <ScalarProperty Name="sToken" ColumnName="sToken" />
+                <ScalarProperty Name="sAppSecret" ColumnName="sAppSecret" />
+                <ScalarProperty Name="sAppId" ColumnName="sAppId" />
+                <ScalarProperty Name="sOriginalId" ColumnName="sOriginalId" />
+                <ScalarProperty Name="sWeChatName" ColumnName="sWeChatName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CDELINK_WeChatMenu">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_WeChatMenu">
+              <MappingFragment StoreEntitySet="CDELINK_WeChatMenu">
+                <ScalarProperty Name="sKey" ColumnName="sKey" />
+                <ScalarProperty Name="iOrder" ColumnName="iOrder" />
+                <ScalarProperty Name="iType" ColumnName="iType" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="sParentMenuId" ColumnName="sParentMenuId" />
+                <ScalarProperty Name="sUrl" ColumnName="sUrl" />
+                <ScalarProperty Name="sMenuName" ColumnName="sMenuName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

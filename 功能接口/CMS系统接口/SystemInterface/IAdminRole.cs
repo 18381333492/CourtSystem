@@ -10,6 +10,7 @@ namespace SystemInterface
 {
     public abstract class IAdminRole : BaseBll
     {
+
         #region 查询
 
 
@@ -47,7 +48,6 @@ namespace SystemInterface
 
         #endregion
 
-
         #region 操作
 
         /// <summary>
@@ -81,6 +81,5 @@ namespace SystemInterface
         /// <param name="sButtonIds"></param>
         public abstract int SetPower(string sAdminRoleId, string sMenuIds, string sButtonIds);
         #endregion
-
     }
 }
