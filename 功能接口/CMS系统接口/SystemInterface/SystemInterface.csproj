@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Basebll.cs" />
+    <Compile Include="IWeChatNews.cs" />
     <Compile Include="IWeChatMenu.cs" />
     <Compile Include="IWeChatKeyWord.cs" />
     <Compile Include="IWeChat.cs" />

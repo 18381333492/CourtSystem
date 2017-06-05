@@ -14,7 +14,7 @@ function upload() {
     var element;
     //默认参数
     var defaults = {
-        url: "/HandleProgram/PictureUpload.ashx",
+        url:"/HandleProgram/PictureUpload.ashx",
         width: 120,
         height: 120,
         path: '',//上传的目录
@@ -29,6 +29,8 @@ function upload() {
     function create(id, option) {
         //替换默认参数
         defaults = $.extend(defaults, option);
+        //设置虚拟目录
+        defaults.url = defaults.VirtualDirectory + defaults.url;
         element = document.getElementById(id);
         init();
     }
@@ -40,11 +42,19 @@ function upload() {
     * version:[1.0.0]
     */
     function init() {
-        $(element).load("/Scripts/plug-in/picture/style.html",
+        $(element).load(defaults.VirtualDirectory+"/Scripts/plug-in/picture/style.html",
             function (data) {
                 $(element).html("");
                 data = data.trim();
                 $(element).append(data);//追加html
+                //设置图片背景图片的虚拟路径
+                $(element).find("img").css({
+                    "background": "url(" + defaults.VirtualDirectory + "/Scripts/plug-in/picture/uploadimg.jpg) repeat center",
+                    "background-size": "100%",
+                    "border": "1px solid #CACACA",
+                    "cursor": "pointer"
+                });
+
                 //初始化图片路径
                 if ($(element).next().val() != "") {
                     $(element).find("img").attr("src", defaults.VirtualDirectory+$(element).next().val())

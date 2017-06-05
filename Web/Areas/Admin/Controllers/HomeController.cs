@@ -20,13 +20,21 @@ namespace Web.Areas.Admin.Controllers
 
         #region 后台首页相关视图
 
-         
+
         public ActionResult Index()
         {
-            var  manageWebSite = Resolve<IWebSite>();
+            var manageWebSite = Resolve<IWebSite>();
             var webSite = manageWebSite.GetWebSite();
-            if (webSite == null) ViewBag.ICON = string.Empty;
-            ViewBag.ICON = webSite.sWebSiteIcon;
+            if (webSite == null)
+            {
+                ViewBag.ICON = string.Empty;
+                ViewBag.sWebSiteName = string.Empty;
+            }
+            else
+            {
+                ViewBag.ICON = webSite.sWebSiteIcon;
+                ViewBag.sWebSiteName = webSite.sWebSiteName;
+            }
             return View(Session[SESSION.AdminUser]);
         }
 

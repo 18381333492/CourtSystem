@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImplementRead\WeChatNewsServices.cs" />
     <Compile Include="ImplementRead\WeChatMenuServices.cs" />
     <Compile Include="ImplementRead\WeChatServices.cs" />
     <Compile Include="ImplementRead\WebSiteServices.cs" />

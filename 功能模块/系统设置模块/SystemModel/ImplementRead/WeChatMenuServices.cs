@@ -112,5 +112,15 @@ namespace SystemModel
             }
             return res;
         }
+
+
+        /// <summary>
+        /// 获取所有的微信自定义菜单
+        /// </summary>
+        /// <returns></returns>
+        public override List<CDELINK_WeChatMenu> GetAllList()
+        {
+            return query.QueryList<CDELINK_WeChatMenu>("SELECT * FROM CDELINK_WeChatMenu WHERE bIsDeleted=0").ToList();
+        }
     }
 }

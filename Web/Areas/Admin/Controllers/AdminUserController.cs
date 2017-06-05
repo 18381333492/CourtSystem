@@ -40,6 +40,22 @@ namespace Web.Areas.Admin.Controllers
             return View();
         }
 
+        /// <summary>
+        /// 个人中心页面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult PersonCenter()
+        {
+            var adminUser = new CDELINK_AdminUser();
+            var sessionUser = SessionAdminUser();
+            adminUser = manage.GetById(sessionUser.ID.ToString());
+            //根据角色ID获取角色名称
+            var manageRole = Resolve<IAdminRole>();
+            ViewBag.sRoleName=manageRole.GetById(adminUser.sRoleId).sRoleName;
+            return View(adminUser);
+        }
+
+
         #endregion
 
         /// <summary>
@@ -67,6 +83,21 @@ namespace Web.Areas.Admin.Controllers
             }
             else
                 result.info =string.Format("账号：{0}已被注册,请重新输入", adminUser.sLoginAccout);
+        }
+
+        /// <summary>
+        /// 编辑后台用户
+        /// </summary>
+        /// <param name="adminUser"></param>
+        public void Update(CDELINK_AdminUser adminUser)
+        {
+            if (!manage.CheckLoginAccout(adminUser.sLoginAccout, adminUser.ID.ToString()))
+            {
+                if (manage.Update(adminUser) > 0)
+                    result.success = true;
+            }
+            else
+                result.info = string.Format("账号：{0}已被注册,请重新输入", adminUser.sLoginAccout);
         }
 
         /// <summary>

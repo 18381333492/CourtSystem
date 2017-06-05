@@ -50,6 +50,12 @@ namespace SystemInterface
         /// <returns></returns>
         public abstract bool CheckChildMenuFive(string sWeChatMenuId = null);
 
+        /// <summary>
+        /// 获取所有的微信自定义菜单
+        /// </summary>
+        /// <returns></returns>
+        public abstract List<CDELINK_WeChatMenu> GetAllList();
+
         #endregion
 
 

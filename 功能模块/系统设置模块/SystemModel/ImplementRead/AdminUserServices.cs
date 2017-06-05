@@ -83,9 +83,17 @@ namespace SystemModel
         /// </summary>
         /// <param name="sLoginAccout"></param>
         /// <returns></returns>
-        public override bool CheckLoginAccout(string sLoginAccout)
+        public override bool CheckLoginAccout(string sLoginAccout,string sAdminUserId=null)
         {
-            return query.Any(string.Format(@"SELECT * FROM CDELINK_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}'", sLoginAccout));
+            if (string.IsNullOrEmpty(sAdminUserId))
+            {
+                return query.Any(string.Format(@"SELECT * FROM CDELINK_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}'", sLoginAccout));
+            }
+            else
+            {
+                return query.Any(string.Format(@"SELECT * FROM CDELINK_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}' AND ID!='{1}'",
+                    sLoginAccout, sAdminUserId));
+            }
         }
 
 

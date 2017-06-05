@@ -28,6 +28,18 @@ namespace SystemModel
         }
 
         /// <summary>
+        /// 编辑后台用户
+        /// </summary>
+        /// <param name="adminUser"></param>
+        /// <returns></returns>
+        public override int Update(CDELINK_AdminUser adminUser)
+        {
+            excute.Edit<CDELINK_AdminUser>(adminUser);
+            return excute.SaveChange();
+        }
+
+
+        /// <summary>
         /// 根据主键ID重置后台用户密码
         /// </summary>
         /// <param name="Ids"></param>

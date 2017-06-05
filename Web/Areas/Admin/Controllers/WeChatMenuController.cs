@@ -7,6 +7,7 @@ using EFModels.MyModels;
 using Web.App_Start.BaseController;
 using SystemInterface;
 using EFModels;
+using WeiXin.Tool;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -112,6 +113,34 @@ namespace Web.Areas.Admin.Controllers
         {
             if (manage.Cancel(Ids) > 0)
                 result.success = true;
+        }
+
+
+        /// <summary>
+        /// 生成自定义菜单
+        /// </summary>
+        public void MakeMenu()
+        {
+            var list = manage.GetAllList();
+            var data = (from m in list
+                       orderby m.iOrder ascending
+                       select new button
+                       {
+                           id=m.ID.ToString(),
+                           name = m.sMenuName,
+                           url = m.sUrl,
+                           key = m.sKey,
+                           type = m.iType.ToString(),
+                           toid=m.sParentMenuId
+                       }).ToList();
+            string sJsonData=MenuHelper.InstallData(data);
+            var manageWeChat = Resolve<IWeChat>().GetWeChat();
+            access_token at = new access_token(manageWeChat.sAppId, manageWeChat.sAppSecret);
+            if (MenuHelper.MakeMenu(sJsonData,at.Get(), out result.info))
+            {
+                result.success = true;
+            }
+            else result.success = false;
         }
 
     }

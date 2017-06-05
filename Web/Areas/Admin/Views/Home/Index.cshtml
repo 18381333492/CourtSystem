@@ -8,7 +8,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>成都宜联后台管理系统</title>
+    <title>@ViewBag.sWebSiteName</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
     <link rel="shortcut icon" href="@ViewBag.ICON" type="image/x-icon">
     <!--bootstrap引用-->
@@ -34,7 +34,7 @@
                 <a class="navbar-brand">
                     <small>
                         <i class="icon-leaf"></i>
-                        成都宜联后台管理系统
+                        @ViewBag.sWebSiteName
                     </small>
                 </a>
             </div>
@@ -60,12 +60,15 @@
                                     设置
                                 </a>
                             </li>
+                            @if (!Model.bIsSuperMan)
+                            {
                             <li>
-                                <a href="#">
+                                <a href="#" class="personCenter">
                                     <i class="icon-user"></i>
                                     个人资料
                                 </a>
                             </li>
+                            }
                             <li class="divider"></li>
                             <li>
                                 <a href="#" class="quit">
@@ -167,6 +170,24 @@
             });
         }
 
+        //个人资料
+        function personCenter() {
+            $(".user-menu").hide();
+            admin.routeRegister("Admin","AdminUser");
+            var title = "个人资料";
+            if ($('#tabs').tabs("getTab", title)) {
+                $('#tabs').tabs("select", title);
+            }
+            else {
+                $('#tabs').tabs('add', {
+                    title: title,
+                    content: '<iframe scrolling="auto" frameborder="0"  src="' + admin.route("PersonCenter") + '" width="100%" height="100%" style="display:-webkit-box";></iframe>',
+                    closable: true,
+                });
+            }
+        }
+
+
         //安全退出
         function Quit() {
             admin.routeRegister("Admin", "AdminUser");
@@ -205,6 +226,9 @@
             $('.icon-caret-down').parent().on("click", function () {
                 $(this).next().toggle();
             });
+
+            //个人资料
+            $(".personCenter").on("click", personCenter);
 
             //安全退出
             $(".quit").on("click", Quit);

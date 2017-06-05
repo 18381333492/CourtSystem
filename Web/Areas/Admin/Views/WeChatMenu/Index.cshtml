@@ -41,6 +41,15 @@
             admin.creatModal(admin.route("Edit?sWeChatMenuId=" + ID));
         }
 
+        //生成菜单
+        $('.WeChatMenu_make').on("click",function(){
+            admin.confirm("确定要重新生成微信自定义菜单?",function(){
+                admin.Ajax(admin.route("MakeMenu"),null,function(r){
+                    admin.alert("菜单生成成功!");
+                });
+            });
+        });
+
         //删除操作
         $('.WeChatMenu_cancel').on("click", function () {
             var selected =admin.grid.datagrid('getSelections');

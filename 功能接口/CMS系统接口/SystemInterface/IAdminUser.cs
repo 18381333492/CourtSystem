@@ -45,13 +45,14 @@ namespace SystemInterface
         /// <returns></returns>
         public abstract List<Dictionary<string, object>> GetAllRoleNameList();
 
-   
+
         /// <summary>
         /// 检查登录账号是否重名
         /// </summary>
         /// <param name="sLoginAccout"></param>
+        /// <param name="sAdminUserId"></param>
         /// <returns></returns>
-        public abstract bool CheckLoginAccout(string sLoginAccout);
+        public abstract bool CheckLoginAccout(string sLoginAccout, string sAdminUserId = null);
 
         /// <summary>
         /// 根据用户角色获取相应的菜单和按钮
@@ -73,6 +74,13 @@ namespace SystemInterface
         /// <param name="adminUser"></param>
         /// <returns></returns>
         public abstract int Insert(CDELINK_AdminUser adminUser);
+
+        /// <summary>
+        /// 编辑后台用户
+        /// </summary>
+        /// <param name="adminUser"></param>
+        /// <returns></returns>
+        public abstract int Update(CDELINK_AdminUser adminUser);
 
         /// <summary>
         /// 根据主键ID重置后台用户密码
