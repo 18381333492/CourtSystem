@@ -3,7 +3,15 @@
     Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
 }
 <div style="height:100%;width:100%;">
-   
+   <div style="padding:10px;margin-bottom:10px;border-bottom:1px solid #CACACA">
+       <form id="search">
+           @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+           <span>模糊查询:</span><input type="text" class="form-control" placeholder="素材名称/标题"
+                                    style="width:200px;height:30px;vertical-align:bottom;display:inline-block;">
+           <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
+       </form>
+   </div>
+   <div class="NewsContent">
     <div style="float:left;margin-right:5px;border:1px solid #CACACA;width:262px;">
     <div style="padding:10px">
         <div>
@@ -45,5 +53,23 @@
             <p style="width:50%;display:block;float:left;height:40px;line-height:40px;text-align:center;background-color:#CACACA;margin-bottom:0px;">删除</p>
         </div>
     </div>
-
+       </div>
 </div>
+<script type="text/javascript">
+    $(function () {
+        var buttonList=@Html.Raw(ViewData["Button_NotToolbar"]);
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Admin", "WeChatNews");
+
+        //模糊查询
+        $('.searchText').on("click", function () {
+            var searchText = $('#search input').val();
+        });
+
+        //新增操作
+        $('.WeChatNews_add').on("click", function () {
+            var ss= window.parent;
+        });   
+    });
+</script>
