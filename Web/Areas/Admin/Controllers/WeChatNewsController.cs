@@ -22,5 +22,22 @@ namespace Web.Areas.Admin.Controllers
         {
             return View();
         }
+
+
+        public ActionResult Add()
+        {
+            return View();
+        }
+
+
+        /// <summary>
+        /// 添加图文信息
+        /// </summary>
+        /// <param name="newsName"></param>
+        /// <param name="sJsonDataChatNews"></param>
+        public void Insert(CDELINK_WeChatNewsName newsName,string sJsonDataChatNews)
+        {
+            
+        }
     }
 }

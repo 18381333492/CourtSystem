@@ -105,6 +105,24 @@
           <Property Name="iOrder" Type="int" Nullable="false" />
           <Property Name="sKey" Type="nvarchar" MaxLength="255" />
         </EntityType>
+        <EntityType Name="CDELINK_WeChatNews">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sTitle" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="sPictureUrl" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="sDataUrl" Type="nvarchar(max)" />
+          <Property Name="sContent" Type="nvarchar(max)" />
+          <Property Name="sDescribe" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="CDELINK_WeChatNewsName">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sWeChatNewsName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="CourtSystemDatabaseModelStoreContainer">
           <EntitySet Name="CDELINK_AdminRole" EntityType="Self.CDELINK_AdminRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_AdminUser" EntityType="Self.CDELINK_AdminUser" Schema="dbo" store:Type="Tables" />
@@ -114,6 +132,8 @@
           <EntitySet Name="CDELINK_WebSite" EntityType="Self.CDELINK_WebSite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_WeChat" EntityType="Self.CDELINK_WeChat" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_WeChatMenu" EntityType="Self.CDELINK_WeChatMenu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CDELINK_WeChatNews" EntityType="Self.CDELINK_WeChatNews" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CDELINK_WeChatNewsName" EntityType="Self.CDELINK_WeChatNewsName" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -191,6 +211,8 @@
           <EntitySet Name="CDELINK_WebSite" EntityType="CourtSystemDatabaseModel.CDELINK_WebSite" />
           <EntitySet Name="CDELINK_WeChat" EntityType="CourtSystemDatabaseModel.CDELINK_WeChat" />
           <EntitySet Name="CDELINK_WeChatMenu" EntityType="CourtSystemDatabaseModel.CDELINK_WeChatMenu" />
+          <EntitySet Name="CDELINK_WeChatNews" EntityType="CourtSystemDatabaseModel.CDELINK_WeChatNews" />
+          <EntitySet Name="CDELINK_WeChatNewsName" EntityType="CourtSystemDatabaseModel.CDELINK_WeChatNewsName" />
         </EntityContainer>
         <EntityType Name="CDELINK_WebSite">
           <Key>
@@ -228,6 +250,24 @@
           <Property Name="iType" Type="Int32" Nullable="false" />
           <Property Name="iOrder" Type="Int32" Nullable="false" />
           <Property Name="sKey" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CDELINK_WeChatNews">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sTitle" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="sPictureUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sDataUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sDescribe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="CDELINK_WeChatNewsName">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sWeChatNewsName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -339,6 +379,26 @@
                 <ScalarProperty Name="sParentMenuId" ColumnName="sParentMenuId" />
                 <ScalarProperty Name="sUrl" ColumnName="sUrl" />
                 <ScalarProperty Name="sMenuName" ColumnName="sMenuName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CDELINK_WeChatNews">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_WeChatNews">
+              <MappingFragment StoreEntitySet="CDELINK_WeChatNews">
+                <ScalarProperty Name="sDescribe" ColumnName="sDescribe" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="sDataUrl" ColumnName="sDataUrl" />
+                <ScalarProperty Name="sPictureUrl" ColumnName="sPictureUrl" />
+                <ScalarProperty Name="sTitle" ColumnName="sTitle" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CDELINK_WeChatNewsName">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_WeChatNewsName">
+              <MappingFragment StoreEntitySet="CDELINK_WeChatNewsName">
+                <ScalarProperty Name="sWeChatNewsName" ColumnName="sWeChatNewsName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

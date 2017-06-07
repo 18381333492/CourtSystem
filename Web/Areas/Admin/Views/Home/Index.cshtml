@@ -249,4 +249,19 @@
             loadMenu:loadMenu
         }
     });
+
+    //手动添加Tab
+    //params url:链接,title:标题
+    window.AddTab = function (url, title) {
+        if ($('#tabs').tabs("getTab", title)) {
+            $('#tabs').tabs("select", title);
+        }
+        else {
+            $('#tabs').tabs('add', {
+                title: title,
+                content: '<iframe scrolling="auto" frameborder="0"  src="' + url + '" width="100%" height="100%" style="display:-webkit-box";></iframe>',
+                closable: true,
+            });
+        }
+    }
 </script>

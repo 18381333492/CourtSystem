@@ -76,6 +76,12 @@
     <Compile Include="CDELINK_WeChatMenu.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CDELINK_WeChatNews.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CDELINK_WeChatNewsName.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="MyModels\SerializableButton.cs" />
     <Compile Include="MyModels\SerializableMenu.cs" />
     <Compile Include="MyModels\MenuAndButton.cs" />

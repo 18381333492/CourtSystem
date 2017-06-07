@@ -1,0 +1,264 @@
+﻿@{
+    ViewBag.Title = "新增图文素材";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
+}
+<style>
+     div{border-color:#CACACA }
+    .NewList{
+        min-width:300px;float:left;background-color:#F8F8F8
+    }
+    .ContentData{
+        min-width:600px;float:left;height:auto;border:1px solid #CACACA
+    }
+    .childPicture{height:100px;padding:10px;border-width:1px; border-style:solid;}
+    .greenBorder{border-color:#0026ff;}
+</style>
+
+<div style="height:100%;width:100%;">
+    <div class="NewList">
+        <div style="height:40px;line-height:40px;padding-left:29px;">图文列表</div>
+        <div style="min-width:260px;float:left;margin-left:19px;">
+            <div class="childPicture greenBorder" style="height:auto">
+                <div style="position:relative;">
+                    <img src="" style="width:240px;height:160px" />
+                    <div class="sTitle" style="position:absolute;background-color:rgba(0,0,0,0.5);height:25px;width:100%;bottom:0;left:0;padding:0 10px;line-height:25px;color:white;overflow:hidden"></div>
+                </div>
+            </div>
+            <div class="Last_childPicture" style="height:55px;padding:10px;border:1px solid #CACACA;border-top:none">
+                <div style="text-align: center;">
+                    <button id="createNews" type="button" class="btn btn-success">新建图文</button>
+                    <button id="cancelNews" type="button" class="btn btn-danger">删除图文</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="ContentData">
+       <div style="padding:10px;">
+           <form class="form-horizontal" role="form" id="dataForm">
+               <div class="form-group">
+                   <label class="col-sm-2 control-label">图文名称</label>
+                   <div class="col-sm-10">
+                       <input type="text" class="form-control" placeholder="请输入图文名称" name="sWeChatNewsName">
+                   </div>
+               </div>
+               <hr>
+               <div class="form-group">
+                   <label class="col-sm-2 control-label">标题</label>
+                   <div class="col-sm-10">
+                       <input type="text" class="form-control" placeholder="请输入标题" name="sTitle">
+                   </div>
+               </div>
+               <div class="form-group">
+                   <label class="col-sm-2 control-label">链接</label>
+                   <div class="col-sm-10">
+                       <input type="text" class="form-control" placeholder="请输入链接" name="sDataUrl">
+                   </div>
+               </div>
+               <div class="form-group">
+                   <label class="col-sm-2 control-label">描述内容</label>
+                   <div class="col-sm-10">
+                       <textarea class="form-control" rows="3" placeholder="请输入描述内容" name="sDescribe"></textarea>
+                   </div>
+               </div>
+               <div class="form-group">
+                   <label class="col-sm-2 control-label">正文内容</label>
+                   <div class="col-sm-10">
+                       <textarea id="sContent" name="sContent" style="width:100%;"></textarea>
+                   </div>
+               </div>
+               <div class="form-group">
+                   <label class="col-sm-2 control-label">封面图</label>
+                   <div class="col-sm-10">
+                       <div id="sPictureUrl"></div>
+                       <input type="hidden" name="sPictureUrl" value="" />
+                   </div>
+               </div>
+               <div class="form-group">
+                   <label class="col-sm-2 control-label"></label>
+                   <div class="col-sm-10" style="text-align:left">
+                       <button type="button" class="btn btn-primary" id="ok">添 加</button>
+                   </div>
+               </div>  
+           </form>
+       </div>
+    </div>
+</div>
+<script src="~/Content/kindeditor/kindeditor.js"></script>
+<script src="~/Content/kindeditor/lang/zh_CN.js"></script>
+<script src="~/Scripts/plug-in/kindeditor.js"></script>
+<script src="~/Scripts/plug-in/picture/upload.js"></script>
+<script type="text/javascript">
+    $(function () {
+        domin.bingEvent();
+        domin.formValidate();
+        domin.commit();
+    });
+ 
+    var domin = function (obj) { return obj; }(new function () {
+        var picture = new upload();
+        picture.create("sPictureUrl", { height: 160, width: 240, path: "WeChatNews" });
+
+        var editor = new kindeditor();
+        editor.create("#sContent");
+
+        var admin = new adminPackage();
+        admin.routeRegister("Admin", "WeChatNews");
+        var array = [];
+        //提交操作
+        function commit() {
+            //添加操作
+            $('#ok').on("click", function () {
+                var bootstrapValidator = admin.form.data('bootstrapValidator');
+                bootstrapValidator.validate();
+                var res = bootstrapValidator.isValid();
+                if (res) {
+                    var sPictureUrl = $('#sPictureUrl').next().val();
+                    if (sPictureUrl.length == 0) return admin.alert("封面图必传");
+                    admin.button.disabled();
+                    var params = admin.form.serializeArray().toObject();
+                    var weChatNew = {};
+                    weChatNew.sTitle = params.sTitle;
+                    weChatNew.sPictureUrl = params.sPictureUrl;
+                    weChatNew.sDataUrl = params.sDataUrl;
+                    weChatNew.sContent = editor.gethtml();//获取富文本编辑框内容
+                    weChatNew.sDescribe = params.sDescribe;
+                    weChatNew.iOrder = $('.greenBorder').index();
+                    //赋值显示
+                    $('.greenBorder').find('.sTitle').text(weChatNew.sTitle);
+                    $('.greenBorder').find('img').attr("src", weChatNew.sPictureUrl);
+                    debugger
+                    if (array[weChatNew.iOrder]) {
+                        //存在修改
+                        array[weChatNew.iOrder] = weChatNew;
+                    }
+                    else {
+                        //不存在添加
+                        array.push(weChatNew);
+                    }
+                    admin.alert("添加成功");
+                    admin.button.enable();
+                }
+            });
+        }
+
+        //清空表单
+        function clearForm() {
+            $('input[name=sTitle]').val("");
+            $('input[name=sDataUrl]').val("");
+            $('textarea[name=sDescribe]').val("");
+            $('#sPictureUrl').find("img").attr("src", "");
+            $('input[name=sPictureUrl]').val("");
+            editor.sethtml("");//清空富文本编辑框
+        }
+        //设置表单值
+        function setForm(json) {
+            $('input[name=sTitle]').val(json.sTitle);
+            $('input[name=sDataUrl]').val(json.sDataUrl);
+            $('textarea[name=sDescribe]').val(json.sDescribe);
+            $('#sPictureUrl').find("img").attr("src", json.sPictureUrl);
+            $('input[name=sPictureUrl]').val(json.sPictureUrl);
+            editor.sethtml(json.sContent);//清空富文本编辑框
+        }
+
+
+        //追加新图文html
+        function newsHtml() {
+            var html = [];
+            html.push('<div class="childPicture">');
+            html.push('<div class="sTitle" style="float:left;height:80px;max-width:160px;overflow: hidden">');
+            html.push('</div>');
+            html.push('<div style="float:right">');
+            html.push('<img style="width:80px;height:80px" />');
+            html.push('</div>');
+            html.push('</div>');
+            var newsCount = $('.childPicture').length;
+            if (newsCount <= 7) {
+                $(html.join('')).insertBefore('.Last_childPicture');
+                $('.greenBorder').removeClass("greenBorder");
+                $('.Last_childPicture').prev().addClass("greenBorder");
+
+                //先移除选中事件
+                $('.childPicture').off("click");
+                //选中获取事件绑定
+                $('.childPicture').on("click", function () {
+                    $(this).addClass('greenBorder').siblings().removeClass('greenBorder');
+                    clearForm();//先清数据
+                    //在赋值
+                    if (array[$(this).index()])
+                    {//存在赋值
+                        setForm(array[$(this).index()]);
+                    }
+                });
+                //清空表单
+                clearForm();
+            }
+            else {
+                admin.alert("一条图文素材最多八条图文信息");
+            }
+        }
+
+        //删除图文信息
+        function cancelNews() {
+            var length = $('.greenBorder').length;
+            if (length > 0) {
+                var index = $('.greenBorder').index();
+                if (array[index]) {
+                    //已存在的数据要移除
+                    //移除数组
+                }
+
+            }
+            else {
+                admin.alert("请选择一条图文数据进行删除操作");
+            }
+        }
+
+        //表单验证sTitle
+        function formValidate() {
+            admin.formValidator(admin.form, {
+                sWeChatNewsName: {
+                    validators: {
+                        notEmpty: {
+                            message: '图文名称不能为空'
+                        },
+                    }
+                },
+                sTitle: {
+                    validators: {
+                        notEmpty: {
+                            message: '标题不能为空'
+                        },
+                        stringLength: {
+                            max: 40,
+                            message: '标题长度不能超过40'
+                        },
+                    }
+                },
+            })
+        }
+
+        //绑定事件
+        function bingEvent() {
+            //添加图文信息
+            $('#createNews').on("click", newsHtml);
+
+            //删除图文信息
+            $('#cancelNews').on("click", cancelNews)
+
+            //标题的动态变化
+            $('input[name=sTitle]').on("input", function () {
+                var value = $(this).val();
+                $('.greenBorder .sTitle').text(value);
+            });
+        }
+
+        return {
+            bingEvent: bingEvent,
+            formValidate: formValidate,
+            commit: commit
+        }
+
+    });
+
+
+</script>
