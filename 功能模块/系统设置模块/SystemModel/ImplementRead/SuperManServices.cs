@@ -25,12 +25,12 @@ namespace SystemModel
         public override CDELINK_AdminUser CheckLogin(string sLoginAccout, string sPassWord)
         {
             var connectionStr = C_Config.ReadAppSetting("SuperConnection");
-         //   connectionStr = C_Security.RSADecrypt(connectionStr);
+         // connectionStr = C_Security.RSADecrypt(connectionStr);
             query.SetconnectionStr(connectionStr);
 
-            return query.SingleQuery<CDELINK_AdminUser>(@"SELECT * FROM CDELINK_SuperUser 
-                                                                WHERE sLoginAccout=@sLoginAccout
-                                                                AND sPassWord=@sPassWord", new
+            return query.SingleQuery<CDELINK_AdminUser>(@"SELECT * FROM SuperAdmin 
+                                                                WHERE sAccount=@sLoginAccout
+                                                                AND sPassword=@sPassWord", new
             {
                 sLoginAccout = sLoginAccout,
                 sPassWord =C_Security.MD5(sPassWord)

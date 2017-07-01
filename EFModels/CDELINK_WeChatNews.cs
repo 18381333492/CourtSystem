@@ -20,5 +20,7 @@ namespace EFModels
         public string sDataUrl { get; set; }
         public string sContent { get; set; }
         public string sDescribe { get; set; }
+        public int iOrder { get; set; }
+        public System.Guid sToId { get; set; }
     }
 }

@@ -16,5 +16,8 @@ namespace EFModels
     {
         public System.Guid ID { get; set; }
         public string sWeChatNewsName { get; set; }
+        public System.DateTime dInsertTime { get; set; }
+        public bool bIsDeleted { get; set; }
+        public System.DateTime dUpdateTime { get; set; }
     }
 }

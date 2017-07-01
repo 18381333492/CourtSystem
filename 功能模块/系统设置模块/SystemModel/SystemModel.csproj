@@ -68,6 +68,7 @@
     <Compile Include="ImplementRead\MenuServices.cs" />
     <Compile Include="ImplementWrite\MenuServices.cs" />
     <Compile Include="ImplementWrite\WeChatMenuServices.cs" />
+    <Compile Include="ImplementWrite\WeChatNewsServices.cs" />
     <Compile Include="ImplementWrite\WeChatServices.cs" />
     <Compile Include="ImplementWrite\WebSiteServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

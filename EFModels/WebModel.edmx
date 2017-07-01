@@ -115,6 +115,8 @@
           <Property Name="sDataUrl" Type="nvarchar(max)" />
           <Property Name="sContent" Type="nvarchar(max)" />
           <Property Name="sDescribe" Type="nvarchar(max)" />
+          <Property Name="iOrder" Type="int" Nullable="false" />
+          <Property Name="sToId" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="CDELINK_WeChatNewsName">
           <Key>
@@ -122,6 +124,9 @@
           </Key>
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="sWeChatNewsName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+          <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="dUpdateTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityContainer Name="CourtSystemDatabaseModelStoreContainer">
           <EntitySet Name="CDELINK_AdminRole" EntityType="Self.CDELINK_AdminRole" Schema="dbo" store:Type="Tables" />
@@ -261,6 +266,8 @@
           <Property Name="sDataUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="sDescribe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="iOrder" Type="Int32" Nullable="false" />
+          <Property Name="sToId" Type="Guid" Nullable="false" />
         </EntityType>
         <EntityType Name="CDELINK_WeChatNewsName">
           <Key>
@@ -268,6 +275,9 @@
           </Key>
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="sWeChatNewsName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="dUpdateTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -386,6 +396,8 @@
           <EntitySetMapping Name="CDELINK_WeChatNews">
             <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_WeChatNews">
               <MappingFragment StoreEntitySet="CDELINK_WeChatNews">
+                <ScalarProperty Name="sToId" ColumnName="sToId" />
+                <ScalarProperty Name="iOrder" ColumnName="iOrder" />
                 <ScalarProperty Name="sDescribe" ColumnName="sDescribe" />
                 <ScalarProperty Name="sContent" ColumnName="sContent" />
                 <ScalarProperty Name="sDataUrl" ColumnName="sDataUrl" />
@@ -398,6 +410,9 @@
           <EntitySetMapping Name="CDELINK_WeChatNewsName">
             <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_WeChatNewsName">
               <MappingFragment StoreEntitySet="CDELINK_WeChatNewsName">
+                <ScalarProperty Name="dUpdateTime" ColumnName="dUpdateTime" />
+                <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
                 <ScalarProperty Name="sWeChatNewsName" ColumnName="sWeChatNewsName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>

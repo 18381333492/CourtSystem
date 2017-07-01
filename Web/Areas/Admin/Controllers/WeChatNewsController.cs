@@ -8,6 +8,7 @@ using Web.App_Start.BaseController;
 using SystemInterface;
 using EFModels;
 using WeiXin.Tool;
+using Newtonsoft.Json;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -37,7 +38,11 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="sJsonDataChatNews"></param>
         public void Insert(CDELINK_WeChatNewsName newsName,string sJsonDataChatNews)
         {
-            
+            var newsData = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(sJsonDataChatNews);
+            if(manage.Insert(newsName, newsData) > 0)
+            {
+                result.success = true;
+            }
         }
     }
 }

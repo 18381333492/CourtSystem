@@ -11,7 +11,7 @@ using Common;
 namespace SystemModel
 {
     /// <summary>
-    /// 网站的写操作相关
+    /// 微信公众号的写操作相关
     /// </summary>
     public partial class WeChatServices : IWeChat
     {

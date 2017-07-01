@@ -70,6 +70,9 @@ namespace WeiXin.Base.Message
             return string.Empty;
         }
         #endregion
+
+
+
         ///// <summary>
         ///// 关注时触发
         ///// </summary>

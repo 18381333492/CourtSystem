@@ -16,11 +16,14 @@
 
 <div style="height:100%;width:100%;">
     <div class="NewList">
-        <div style="height:40px;line-height:40px;padding-left:29px;">图文列表</div>
+        <div style="height:40px;line-height:40px;padding-left:29px;">
+            图文列表
+            <button type="button" id="keep" class="btn btn-sm btn-primary" style="float:right;margin-right:30px;margin-top:5px" >保 存</button>
+        </div>
         <div style="min-width:260px;float:left;margin-left:19px;">
             <div class="childPicture greenBorder" style="height:auto">
                 <div style="position:relative;">
-                    <img src="" style="width:240px;height:160px" />
+                    <img src="" style="width:240px;height:160px;background-color: #CACACA;" />
                     <div class="sTitle" style="position:absolute;background-color:rgba(0,0,0,0.5);height:25px;width:100%;bottom:0;left:0;padding:0 10px;line-height:25px;color:white;overflow:hidden"></div>
                 </div>
             </div>
@@ -32,6 +35,7 @@
             </div>
         </div>
     </div>
+    <!--内容设置区-->
     <div class="ContentData">
        <div style="padding:10px;">
            <form class="form-horizontal" role="form" id="dataForm">
@@ -126,7 +130,6 @@
                     //赋值显示
                     $('.greenBorder').find('.sTitle').text(weChatNew.sTitle);
                     $('.greenBorder').find('img').attr("src", weChatNew.sPictureUrl);
-                    debugger
                     if (array[weChatNew.iOrder]) {
                         //存在修改
                         array[weChatNew.iOrder] = weChatNew;
@@ -168,7 +171,7 @@
             html.push('<div class="sTitle" style="float:left;height:80px;max-width:160px;overflow: hidden">');
             html.push('</div>');
             html.push('<div style="float:right">');
-            html.push('<img style="width:80px;height:80px" />');
+            html.push('<img style="width:80px;height:80px;background-color: #CACACA;" />');
             html.push('</div>');
             html.push('</div>');
             var newsCount = $('.childPicture').length;
@@ -202,15 +205,36 @@
             var length = $('.greenBorder').length;
             if (length > 0) {
                 var index = $('.greenBorder').index();
-                if (array[index]) {
-                    //已存在的数据要移除
-                    //移除数组
+                if (index > 0) {
+                    $('.greenBorder').remove();//删除html
+                    $('.Last_childPicture').prev().addClass('greenBorder');//移动光标
+                    if (array[index]) {
+                        //已存在的数据要移除
+                        //移除数组
+                        array.splice(index, 1);
+                    }
                 }
-
+                else {
+                    admin.alert("第一条图文不能被删除");
+                }
             }
             else {
                 admin.alert("请选择一条图文数据进行删除操作");
             }
+        }
+        
+        //提交保存
+        function keepNews(){
+            if (array.length > 0) {
+                admin.Ajax(admin.route("Insert"), {
+                    sWeChatNewsName: $('input[name=sWeChatNewsName]').val(),
+                    sJsonDataChatNews:JSON.stringify(array)
+                }, function (r) {
+                    admin.alert("添加成功!");
+                })
+            }
+            else
+                admin.alert("请至少新建一条图文信息!");
         }
 
         //表单验证sTitle
@@ -241,9 +265,10 @@
         function bingEvent() {
             //添加图文信息
             $('#createNews').on("click", newsHtml);
-
             //删除图文信息
-            $('#cancelNews').on("click", cancelNews)
+            $('#cancelNews').on("click", cancelNews);
+            //提交
+            $('#keep').on("click", keepNews);
 
             //标题的动态变化
             $('input[name=sTitle]').on("input", function () {
@@ -259,6 +284,4 @@
         }
 
     });
-
-
 </script>
