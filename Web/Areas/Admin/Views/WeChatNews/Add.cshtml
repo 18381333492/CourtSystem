@@ -146,6 +146,7 @@
 
         //清空表单
         function clearForm() {
+            admin.form.data('bootstrapValidator').resetForm();
             $('input[name=sTitle]').val("");
             $('input[name=sDataUrl]').val("");
             $('textarea[name=sDescribe]').val("");
