@@ -2,6 +2,10 @@
     ViewBag.Title = "微信图文素材";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
 }
+<style>
+    .bottom_btn{width:50%;display:block;float:left;height:40px;line-height:40px;text-align:center;background-color:#CACACA;margin-bottom:0px;cursor:pointer}
+    .bottom_btn:hover{color:red;}
+</style>
 <div style="height:100%;width:100%;">
    <div style="padding:10px;margin-bottom:10px;border-bottom:1px solid #CACACA">
        <form id="search">
@@ -12,48 +16,32 @@
        </form>
    </div>
    <div class="NewsContent">
-    <div style="float:left;margin-right:5px;border:1px solid #CACACA;width:262px;">
+       <!--图文消息数据列表-->
+    @*<div style="float:left;margin-right:5px;border:1px solid #CACACA;width:262px;">
     <div style="padding:10px">
-        <div>
-            更新于@(DateTime.Now)
-        </div>
-        <hr />
-        <p>fdgdg<p>
+        <div>更新于@(DateTime.Now)</div>
+        <p style="text-align:center;border-top:1px solid #CACACA;margin-top:10px;padding:5px;">fdgdg<p>
         <div style="position:relative">
-            <img src="~/Images/HeadPicture/2017-05/20170525175616830.png" style="width:240px;height:160px"  />
+            <img src="~/Images/HeadPicture/2017-05/20170525175616830.png" style="width:240px;height:160px" />
             <div style="position:absolute;background-color:rgba(0,0,0,0.5);height:25px;width:100%;bottom:0;left:0;padding:0 10px;line-height:25px;color:white">
                 齑还房贷是否会十多个符
             </div>
         </div>
         <p style="padding-top:5px">淡饭黄齑还房贷是否会十多个符合规所发生的</p>
+        <div style="height:100px;padding:10px;border:1px solid #CACACA">
+            <div class="sTitle" style="float:left;height:80px;max-width:160px;overflow: hidden">
+            </div>
+            <div style="float:right">
+                <img style="width:80px;height:80px;background-color: #CACACA;" />
+            </div>
+        </div>
     </div>
     <div>
-        <p style="width:50%;display:block;float:left;height:40px;line-height:40px;text-align:center;background-color:#CACACA;margin-bottom:0px;";>编 辑</p>
-        <p style="width:50%;display:block;float:left;height:40px;line-height:40px;text-align:center;background-color:#CACACA;margin-bottom:0px;">删除</p>
+        <p style="width:50%;display:block;float:left;height:40px;line-height:40px;text-align:center;background-color:#CACACA;margin-bottom:0px;cursor:pointer";>编 辑</p>
+        <p style="width:50%;display:block;float:left;height:40px;line-height:40px;text-align:center;background-color:#CACACA;margin-bottom:0px;cursor:pointer">删除</p>
     </div>
-    </div>
-
-    <div style="float:left;margin-right:5px;border:1px solid #CACACA;width:262px;">
-        <div style="padding:10px">
-            <div>
-                更新于@(DateTime.Now)
-            </div>
-            <hr />
-            <p>fdgdg<p>
-                <div>
-                    <img style="width:240px;height:160px" />
-                </div>
-            <p style="padding-top:5px">淡饭黄齑还房贷是否会十多个符合规所发生的</p>
-        </div>
-        <div>
-            
-        </div>
-        <div>
-            <p style="width:50%;display:block;float:left;height:40px;line-height:40px;text-align:center;background-color:#CACACA;margin-bottom:0px;" ;>编 辑</p>
-            <p style="width:50%;display:block;float:left;height:40px;line-height:40px;text-align:center;background-color:#CACACA;margin-bottom:0px;">删除</p>
-        </div>
-    </div>
-       </div>
+    </div>*@
+</div>
 </div>
 <script type="text/javascript">
     $(function () {
@@ -65,11 +53,83 @@
         //模糊查询
         $('.searchText').on("click", function () {
             var searchText = $('#search input').val();
+            $('.NewsContent').html('');
+            loadData(searchText);
+
         });
 
         //新增操作
         $('.WeChatNews_add').on("click", function () {
             window.parent.AddTab(admin.route("Add"),"添加图文素材");
-        });   
+        });
+
+        loadData();
+
+        //加载图文列表数据
+        function loadData(data){
+            admin.Ajax(admin.route("GetNewsList"),{searchText:data},function(r){
+                var array=r.data;
+                var html=[];
+                $(array).each(function(){
+                    var newsList=JSON.parse(this.newsList);
+                    html.push('<div class="mainBox" style="float:left;margin-right:5px;border:1px solid #CACACA;width:262px;margin-top:5px;">');
+                    html.push('<div style="padding:10px">');
+                    html.push('<div style="color:blue">更新于'+this.dUpdateTime+'</div>');
+                    html.push('<p style="text-align:center;border-top:1px solid #CACACA;margin-top:10px;padding:5px;">'+this.sWeChatNewsName+'<p>');
+                    html.push('<div style="position:relative">');
+                    html.push('<img src="'+newsList[0].sPictureUrl+'" style="width:240px;height:160px"/>');
+                    html.push('<div style="position:absolute;background-color:rgba(0,0,0,0.5);height:25px;width:100%;bottom:0;left:0;padding:0 10px;line-height:25px;color:white">');
+                    html.push(''+newsList[0].sTitle+'</div>');
+                    html.push('</div>');
+                    if(newsList.length==1)
+                        html.push('<p style="padding-top:5px">'+newsList[0].sDescribe+'</p>');
+                    //子图文追加
+                    for(var i=1;i<newsList.length;i++){
+                        html.push('<div style="height:100px;padding:10px;border:1px solid #CACACA">');
+                        html.push('<div class="sTitle" style="float:left;height:80px;max-width:125px;overflow:hidden">'+newsList[i].sTitle+'</div>');
+                        html.push('<div style="float:right">');
+                        html.push('<img style="width:80px;height:80px;" src='+newsList[i].sPictureUrl+' />');
+                        html.push('</div>');
+                        html.push('</div>');
+                    }
+                    html.push('</div>');
+                    html.push('<div>');
+                    html.push('<p class="bottom_btn News_Edit" data-ID='+this.ID+'>编 辑</p>');
+                    html.push('<p class="bottom_btn News_Cancel" style="float:left" data-ID='+this.ID+'>删 除</p>');
+                    html.push('</div>');
+                    html.push('</div>');
+                });
+                if(html.length>0){
+                    $('.NewsContent').append(html.join(''));
+                    //绑定编辑删除事件
+                    $('.News_Edit').on("click",function(){
+                        var ID=$(this).attr("data-ID");
+                        window.parent.AddTab(admin.route("Edit?sNewsId="+ID+""),"编辑图文素材");
+                    });
+                    $('.News_Cancel').on("click",function(){
+                        var ID=$(this).attr("data-ID");
+                        CancelNews(ID,this);
+                    });
+                }
+                else{
+
+                }
+            });
+        }
+
+        //删除图文操作
+        function CancelNews(id,element){
+            admin.confirm("确认要删除该条图文信息？",function(){
+                if(id){
+                    admin.Ajax("Cancel",{sNewsId:id},function(r){
+                        admin.alert("删除成功!");
+                        $(element).parents('.mainBox').remove();   
+                    });
+                }
+                else admin.alert("参数错误!");
+            });
+        }
+
     });
+
 </script>

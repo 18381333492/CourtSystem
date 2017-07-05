@@ -1281,6 +1281,7 @@
     <Content Include="Areas\Admin\Views\AdminUser\PersonCenter.cshtml" />
     <Content Include="Areas\Admin\Views\WeChatNews\Index.cshtml" />
     <Content Include="Areas\Admin\Views\WeChatNews\Add.cshtml" />
+    <Content Include="Areas\Admin\Views\WeChatNews\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />

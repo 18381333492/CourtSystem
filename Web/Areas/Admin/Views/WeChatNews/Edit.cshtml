@@ -1,24 +1,42 @@
 ﻿@{
-    ViewBag.Title = "新增图文素材";
+    ViewBag.Title = "编辑图文素材";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
 }
 <style>
-     div{border-color:#CACACA }
-    .NewList{
-        min-width:300px;float:left;background-color:#F8F8F8
+    div {
+        border-color: #CACACA;
     }
-    .ContentData{
-        min-width:600px;float:left;height:auto;border:1px solid #CACACA
+
+    .NewList {
+        min-width: 300px;
+        float: left;
+        background-color: #F8F8F8;
     }
-    .childPicture{height:100px;padding:10px;border-width:1px; border-style:solid;}
-    .greenBorder{border-color:#0026ff;}
+
+    .ContentData {
+        min-width: 600px;
+        float: left;
+        height: auto;
+        border: 1px solid #CACACA;
+    }
+
+    .childPicture {
+        height: 100px;
+        padding: 10px;
+        border-width: 1px;
+        border-style: solid;
+    }
+
+    .greenBorder {
+        border-color: #0026ff;
+    }
 </style>
 
 <div style="height:100%;width:100%;">
     <div class="NewList">
         <div style="height:40px;line-height:40px;padding-left:29px;">
             图文列表
-            <button type="button" id="keep" class="btn btn-sm btn-primary" style="float:right;margin-right:30px;margin-top:5px" >保 存</button>
+            <button type="button" id="keep" class="btn btn-sm btn-primary" style="float:right;margin-right:30px;margin-top:5px">保 存</button>
         </div>
         <div style="min-width:260px;float:left;margin-left:19px;">
             <div class="childPicture greenBorder" style="height:auto">
@@ -37,54 +55,54 @@
     </div>
     <!--内容设置区-->
     <div class="ContentData">
-       <div style="padding:10px;">
-           <form class="form-horizontal" role="form" id="dataForm">
-               <div class="form-group">
-                   <label class="col-sm-2 control-label">图文名称</label>
-                   <div class="col-sm-10">
-                       <input type="text" class="form-control" placeholder="请输入图文名称" name="sWeChatNewsName">
-                   </div>
-               </div>
-               <hr>
-               <div class="form-group">
-                   <label class="col-sm-2 control-label">标题</label>
-                   <div class="col-sm-10">
-                       <input type="text" class="form-control" placeholder="请输入标题" name="sTitle">
-                   </div>
-               </div>
-               <div class="form-group">
-                   <label class="col-sm-2 control-label">链接</label>
-                   <div class="col-sm-10">
-                       <input type="text" class="form-control" placeholder="请输入链接" name="sDataUrl">
-                   </div>
-               </div>
-               <div class="form-group">
-                   <label class="col-sm-2 control-label">描述内容</label>
-                   <div class="col-sm-10">
-                       <textarea class="form-control" rows="3" placeholder="请输入描述内容" name="sDescribe"></textarea>
-                   </div>
-               </div>
-               <div class="form-group">
-                   <label class="col-sm-2 control-label">正文内容</label>
-                   <div class="col-sm-10">
-                       <textarea id="sContent" name="sContent" style="width:100%;"></textarea>
-                   </div>
-               </div>
-               <div class="form-group">
-                   <label class="col-sm-2 control-label">封面图</label>
-                   <div class="col-sm-10">
-                       <div id="sPictureUrl"></div>
-                       <input type="hidden" name="sPictureUrl" value="" />
-                   </div>
-               </div>
-               <div class="form-group">
-                   <label class="col-sm-2 control-label"></label>
-                   <div class="col-sm-10" style="text-align:left">
-                       <button type="button" class="btn btn-primary" id="ok">添 加</button>
-                   </div>
-               </div>  
-           </form>
-       </div>
+        <div style="padding:10px;">
+            <form class="form-horizontal" role="form" id="dataForm">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">图文名称</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入图文名称" name="sWeChatNewsName">
+                    </div>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">标题</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入标题" name="sTitle">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">链接</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入链接" name="sDataUrl">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">描述内容</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" placeholder="请输入描述内容" name="sDescribe"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">正文内容</label>
+                    <div class="col-sm-10">
+                        <textarea id="sContent" name="sContent" style="width:100%;"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">封面图</label>
+                    <div class="col-sm-10">
+                        <div id="sPictureUrl"></div>
+                        <input type="hidden" name="sPictureUrl" value="" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10" style="text-align:left">
+                        <button type="button" class="btn btn-primary" id="ok">确 定</button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <script src="~/Content/kindeditor/kindeditor.js"></script>
@@ -96,8 +114,9 @@
         domin.bingEvent();
         domin.formValidate();
         domin.commit();
+        domin.initData();
     });
- 
+
     var domin = function (obj) { return obj; }(new function () {
         var picture = new upload();
         picture.create("sPictureUrl", { height: 160, width: 240, path: "WeChatNews" });
@@ -107,7 +126,54 @@
 
         var admin = new adminPackage();
         admin.routeRegister("Admin", "WeChatNews");
+
         var array = [];
+        var initparams = {
+            ID:'',
+            sWeChatNewsName:'',
+        }
+        //初始化数据
+        function initData() {
+            admin.Ajax("GetNews", { sNewsId: '@ViewBag.sNewsId' }, function (r) {
+                var result = r.data;
+                initparams.ID = result.ID;
+                initparams.sWeChatNewsName = result.sWeChatNewsName;
+                array = JSON.parse(result.newsList);
+                //展示数据
+                $('input[name=sWeChatNewsName]').val(initparams.sWeChatNewsName);
+                if (array.length > 0) {
+                    //为第一个图文赋值展示
+                    $('.childPicture').eq(0).find(".sTitle").text(array[0].sTitle);
+                    $('.childPicture').eq(0).find("img").attr("src", array[0].sPictureUrl);
+
+                    var html = [];
+                    for (var i = 1; i < array.length; i++) {
+                        html.push('<div class="childPicture">');
+                        html.push('<div class="sTitle" style="float:left;height:80px;max-width:160px;overflow: hidden">');
+                        html.push('' + array[i].sTitle + '</div>');
+                        html.push('<div style="float:right">');
+                        html.push('<img style="width:80px;height:80px;background-color: #CACACA;" src="' + array[i].sPictureUrl + '" />');
+                        html.push('</div>');
+                        html.push('</div>');
+                    }
+                    $(html.join('')).insertBefore('.Last_childPicture');
+                    
+                    //先移除选中事件
+                    $('.childPicture').off("click");
+                    //选中获取事件绑定
+                    $('.childPicture').on("click", function () {
+                        $(this).addClass('greenBorder').siblings().removeClass('greenBorder');
+                        clearForm();//先清数据
+                        //在赋值
+                        if (array[$(this).index()]) {//存在赋值
+                            setForm(array[$(this).index()]);
+                        }
+                    });
+                    setForm(array[0]);
+                }
+            });
+        }
+
         //提交操作
         function commit() {
             //添加操作
@@ -138,7 +204,7 @@
                         //不存在添加
                         array.push(weChatNew);
                     }
-                    admin.alert("添加成功");
+                    admin.alert("操作成功");
                     admin.button.enable();
                 }
             });
@@ -223,20 +289,22 @@
                 admin.alert("请选择一条图文数据进行删除操作");
             }
         }
-        
+
         //提交保存
         function keepNews(){
             if (array.length > 0) {
                 $('#keep').prop("disabled", true);//禁用按钮
-                admin.Ajax(admin.route("Insert"), {
+                admin.Ajax(admin.route("Update"), {
+                    ID: initparams.ID,
                     sWeChatNewsName: $('input[name=sWeChatNewsName]').val(),
                     sJsonDataChatNews: JSON.stringify(array)
                 }, function (r) {
-                    admin.alert("添加成功!", null, function () {
+                    admin.alert("编辑成功!", null, function () {
                         window.parent.$('#tabs').tabs('select', '图文素材列表');//选中图文素材列表
                         window.parent.$('#tabs').tabs("getTab", "图文素材列表").panel();//刷新图文素材列表tab
                         window.parent.$('#tabs').tabs('close', '添加图文素材');//关闭当前tab 
                     });
+                    //$('#keep').prop("disabled", false);//启用按钮
                 });
             }
             else
@@ -286,7 +354,8 @@
         return {
             bingEvent: bingEvent,
             formValidate: formValidate,
-            commit: commit
+            commit: commit,
+            initData: initData
         }
 
     });

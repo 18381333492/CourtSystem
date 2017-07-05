@@ -113,7 +113,7 @@ function adminPackage() {
     }
 
     //弹出框
-    function alert(tip,time) {
+    function alert(tip,time,callback) {
         var html = [];
         html.push('<div class="modal fade" role="dialog" aria-hidden="true" id="myAlert">');
         html.push('<div class="modal-dialog">');
@@ -142,6 +142,7 @@ function adminPackage() {
 
         $('#closeAlert').on("click", function () {
             $('#myAlert').modal('hide');
+            if (callback) callback();//回调函数
         });
 
         if (time) {

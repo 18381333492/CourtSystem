@@ -63,7 +63,7 @@ namespace EFBaseHelper
         /// <param name="entry"></param>
         public void Delete<T>(T entry) where T : class, new()
         {
-            this.db.Set<T>().Add(entry);
+            this.db.Set<T>().Attach(entry);
             this.db.Entry<T>(entry).State = EntityState.Deleted;//删除
         }
 
