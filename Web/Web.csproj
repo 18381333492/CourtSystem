@@ -133,6 +133,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WeiXinMessage\AutoHandleMessage.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\WeChatConcernController.cs" />
     <Compile Include="Areas\Admin\Controllers\WeChatNewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\WeChatMenuController.cs" />
     <Compile Include="Areas\Admin\Controllers\WeChatKeyWordController.cs" />
@@ -1282,6 +1283,7 @@
     <Content Include="Areas\Admin\Views\WeChatNews\Index.cshtml" />
     <Content Include="Areas\Admin\Views\WeChatNews\Add.cshtml" />
     <Content Include="Areas\Admin\Views\WeChatNews\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\WeChatConcern\Index.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />

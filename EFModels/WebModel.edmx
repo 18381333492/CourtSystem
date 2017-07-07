@@ -92,6 +92,17 @@
           <Property Name="sMchId" Type="varchar" MaxLength="100" />
           <Property Name="sPayKey" Type="nvarchar" MaxLength="255" />
         </EntityType>
+        <EntityType Name="CDELINK_WeChatConcern">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="bIsConcernOn" Type="bit" Nullable="false" />
+          <Property Name="iConcernType" Type="int" Nullable="false" />
+          <Property Name="sContent" Type="nvarchar(max)" />
+          <Property Name="sWeChatNewsName" Type="nvarchar" MaxLength="255" />
+          <Property Name="sWeChatNewsNameId" Type="uniqueidentifier" />
+        </EntityType>
         <EntityType Name="CDELINK_WeChatMenu">
           <Key>
             <PropertyRef Name="ID" />
@@ -136,6 +147,7 @@
           <EntitySet Name="CDELINK_Menu" EntityType="Self.CDELINK_Menu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_WebSite" EntityType="Self.CDELINK_WebSite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_WeChat" EntityType="Self.CDELINK_WeChat" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CDELINK_WeChatConcern" EntityType="Self.CDELINK_WeChatConcern" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_WeChatMenu" EntityType="Self.CDELINK_WeChatMenu" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_WeChatNews" EntityType="Self.CDELINK_WeChatNews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CDELINK_WeChatNewsName" EntityType="Self.CDELINK_WeChatNewsName" Schema="dbo" store:Type="Tables" />
@@ -218,6 +230,7 @@
           <EntitySet Name="CDELINK_WeChatMenu" EntityType="CourtSystemDatabaseModel.CDELINK_WeChatMenu" />
           <EntitySet Name="CDELINK_WeChatNews" EntityType="CourtSystemDatabaseModel.CDELINK_WeChatNews" />
           <EntitySet Name="CDELINK_WeChatNewsName" EntityType="CourtSystemDatabaseModel.CDELINK_WeChatNewsName" />
+          <EntitySet Name="CDELINK_WeChatConcern" EntityType="CourtSystemDatabaseModel.CDELINK_WeChatConcern" />
         </EntityContainer>
         <EntityType Name="CDELINK_WebSite">
           <Key>
@@ -278,6 +291,17 @@
           <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
           <Property Name="dUpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="CDELINK_WeChatConcern">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="bIsConcernOn" Type="Boolean" Nullable="false" />
+          <Property Name="iConcernType" Type="Int32" Nullable="false" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sWeChatNewsName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="sWeChatNewsNameId" Type="Guid" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -414,6 +438,18 @@
                 <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
                 <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
                 <ScalarProperty Name="sWeChatNewsName" ColumnName="sWeChatNewsName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CDELINK_WeChatConcern">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_WeChatConcern">
+              <MappingFragment StoreEntitySet="CDELINK_WeChatConcern">
+                <ScalarProperty Name="sWeChatNewsNameId" ColumnName="sWeChatNewsNameId" />
+                <ScalarProperty Name="sWeChatNewsName" ColumnName="sWeChatNewsName" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="iConcernType" ColumnName="iConcernType" />
+                <ScalarProperty Name="bIsConcernOn" ColumnName="bIsConcernOn" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

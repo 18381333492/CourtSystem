@@ -10,6 +10,8 @@ using WeiXin.Base.Message;
 using WeiXin.Base.Message.EventModels;
 using WeiXin.Base.Message.ReceiveModels;
 using WeiXin.Base.Message.SendModels;
+using Unity;
+using SystemInterface;
 
 namespace Web.App_Start.WeiXinMessage
 {
@@ -47,6 +49,19 @@ namespace Web.App_Start.WeiXinMessage
         /// <returns></returns>
         public override string HandleSubscribe(SubscribeEvent message)
         {
+            //获取微信关注设置
+             var WeChatConcern=DIEntity.GetInstance().GetImpl<IWeChatConcern>().Get();
+            if (WeChatConcern.bIsConcernOn)
+            {//关注回复功能开启
+
+            }
+            else
+            {//关闭
+                base.HandleSubscribe(message);
+            }
+                
+
+
             return MessageHelper.Text("关注时回复成功了", message);
         }
 

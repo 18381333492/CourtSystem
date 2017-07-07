@@ -1,0 +1,106 @@
+﻿@{
+    ViewBag.Title = "微信关注回复";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
+}
+@using EFModels;
+@model CDELINK_WeChatConcern
+<link href="~/Areas/Admin/Content/icheck/skins/square/blue.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/icheck/icheck.min.js"></script>
+<div style="width:600px;">
+    <div style="padding:10px;">
+        <form class="form-horizontal" role="form" id="dataForm">
+            <input type="hidden" name="ID" value="@Model.ID" />
+            <div class="form-group">
+                <label class="col-sm-2 control-label">功能开关</label>
+                <div class="col-sm-10">
+                    <input class="bIsConcernOn" name="bIsConcernOn" style="width:80px;height:30px">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">回复类型</label>
+                <div class="col-sm-10" style="padding-top: 5px">
+                    @if (Model.iConcernType == 0) {
+                    <input class="iConcernType" name="iConcernType" type="radio" value="0" checked>@:文本 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                    <input class="iConcernType" name="iConcernType" type="radio" value="1">@:图文
+                     }
+                    else
+                    {
+                        <input class="iConcernType" name="iConcernType" type="radio" value="0">@:文本 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <input class="iConcernType" name="iConcernType" type="radio" value="1" checked>@:图文
+                    }
+                </div>
+            </div>
+            <div class="form-group TestType">
+                <label class="col-sm-2 control-label">文本设置</label>
+                <div class="col-sm-10">
+                    <textarea id="sContent" name="sContent" style="width:100%;height:200px">@Model.sContent</textarea>
+                </div>
+            </div>
+            <div class="form-group NewsType">
+                <label class="col-sm-2 control-label">图文设置</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" style="width:80%;float:left" placeholder="请输入图文信息的名称" name="sWeChatNewsName" readonly="readonly" value="@Model.sWeChatNewsName">
+                    <input type="hidden" name="sWeChatNewsNameId" value="@Model.sWeChatNewsNameId" />
+                    <button type="button" id="search" class="btn btn-danger btn-sm" style="float:right;margin-top: 2px">选择图文</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-10" style="text-align:left">
+                    <button type="button" class="btn btn-primary btn-sm" id="ok">确 定</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="~/Content/kindeditor/kindeditor.js"></script>
+<script src="~/Content/kindeditor/lang/zh_CN.js"></script>
+<script src="~/Scripts/plug-in/kindeditor.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('.iConcernType').iCheck({
+            labelHover: false,
+            cursor: true,
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%'
+        });
+
+        var bIsConcernOn = '@Model.bIsConcernOn'=="True"?true:false;
+        //开关按钮的渲染
+        $('.bIsConcernOn').switchbutton({
+            checked: bIsConcernOn,
+            value: true
+        });
+        //渲染富文本编辑器
+        var editor = new kindeditor();
+        editor.create("#sContent", { items: editor.items.small });
+
+        var admin = new adminPackage();
+
+        //绑定搜索图文事件
+        $('#search').on("click", function () {
+            admin.routeRegister("Admin", "WeChatNews");//注册路由
+            sessionStorage.setItem("IsSelect", "1");//设置图文选择模式
+            window.parent.AddTab(admin.route("Index"), "图文素材列表");
+            window.parent.$('#tabs').tabs("getTab", "图文素材列表").panel();//刷新tabs内容
+        });  
+        
+        //提交操作
+        $('#ok').on("click", function () {
+            admin.routeRegister("Admin", "WeChatConcern");//注册路由
+            var select = $('input[name=iConcernType]:checked');
+            if (select.length == 0) return admin.alert("请选择回复类型");
+            var iConcernType = $(select).val();
+            if (iConcernType == 0 && editor.gethtml().length == 0) return admin.alert("文本设置不能为空!");
+            if (iConcernType == 1 && $('input[name=sWeChatNewsName]').val().length == 0) return admin.alert("请选择图文消息!");
+            var params = admin.form.serializeArray().toObject();
+            params.sContent = editor.gethtml();
+            admin.button.disabled();
+            admin.Ajax(admin.route("Keep"), params, function (r) {
+                admin.alert("操作成功");
+                admin.button.enable();
+            });
+        });
+    });
+</script>

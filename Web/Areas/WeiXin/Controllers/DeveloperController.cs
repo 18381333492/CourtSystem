@@ -10,6 +10,8 @@ using System.Text;
 using WeiXin.Tool;
 using WeiXin.Base.Message;
 using Web.App_Start.WeiXinMessage;
+using Unity;
+using SystemInterface;
 
 namespace Web.Areas.WeiXin.Controllers
 {
@@ -31,7 +33,9 @@ namespace Web.Areas.WeiXin.Controllers
                 string timestamp = Request["timestamp"].ToString();//时间戳
                 string nonce = Request["nonce"].ToString();        //随机数
                 string echostr = Request["echostr"].ToString();    //随机字符串
-                string token = C_Config.ReadAppSetting("token");   //获取微信配置token
+
+                var weChat=DIEntity.GetInstance().GetImpl<IWeChat>().GetWeChat();
+                string token = weChat.sToken;   //获取微信配置token
 
                 string result = Developer.Valiate(signature, timestamp, nonce, echostr, token);
                 Response.Write(result);

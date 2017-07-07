@@ -73,6 +73,9 @@
     <Compile Include="CDELINK_WeChat.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="CDELINK_WeChatConcern.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="CDELINK_WeChatMenu.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>

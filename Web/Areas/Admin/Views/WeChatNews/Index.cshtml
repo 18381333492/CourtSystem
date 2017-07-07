@@ -54,7 +54,9 @@
         $('.searchText').on("click", function () {
             var searchText = $('#search input').val();
             $('.NewsContent').html('');
+
             loadData(searchText);
+
 
         });
 
@@ -72,10 +74,10 @@
                 var html=[];
                 $(array).each(function(){
                     var newsList=JSON.parse(this.newsList);
-                    html.push('<div class="mainBox" style="float:left;margin-right:5px;border:1px solid #CACACA;width:262px;margin-top:5px;">');
+                    html.push('<div class="mainBox" data-id='+this.ID+' style="float:left;margin-right:5px;border:1px solid #CACACA;width:262px;margin-top:5px;">');
                     html.push('<div style="padding:10px">');
                     html.push('<div style="color:blue">更新于'+this.dUpdateTime+'</div>');
-                    html.push('<p style="text-align:center;border-top:1px solid #CACACA;margin-top:10px;padding:5px;">'+this.sWeChatNewsName+'<p>');
+                    html.push('<p class="sWeChatNewsName" style="text-align:center;border-top:1px solid #CACACA;margin-top:10px;padding:5px;">'+this.sWeChatNewsName+'<p>');
                     html.push('<div style="position:relative">');
                     html.push('<img src="'+newsList[0].sPictureUrl+'" style="width:240px;height:160px"/>');
                     html.push('<div style="position:absolute;background-color:rgba(0,0,0,0.5);height:25px;width:100%;bottom:0;left:0;padding:0 10px;line-height:25px;color:white">');
@@ -101,6 +103,38 @@
                 });
                 if(html.length>0){
                     $('.NewsContent').append(html.join(''));
+                    //边框的变换事件绑定
+                    $('.mainBox').mouseenter(function(event){
+                        event.stopPropagation();
+                        $(this).css({"border":"1px solid blue"});
+                    });
+                    $('.mainBox').mouseleave(function(event){
+                        event.stopPropagation();
+                        $(this).css({"border":"1px solid #CACACA"});
+                    });
+
+                    //选择的时候才绑定双击事件
+                    if(sessionStorage.getItem("IsSelect")){
+                        sessionStorage.removeItem("IsSelect");
+                        //绑定双击事件
+                        $('.mainBox').on("dblclick",function(e){
+                            e.stopPropagation();//阻止事件向下传递
+                            var sWeChatNewsName=$(this).find('.sWeChatNewsName').text();
+                            var sWeChatNewsNameId=$(this).attr('data-id');
+                            admin.confirm("确定要选择["+sWeChatNewsName+"]图文数据",function(){
+                               window.parent.$('#tabs').tabs('select', '关注回复');//选中图文素材列表
+                               (function(){
+                                    var myTab=window.parent.$('#tabs').tabs('getTab', '关注回复');
+                                    var iframe=myTab.panel("panel").find('iframe');
+                                    iframe=iframe[0].contentDocument;
+                                    $(iframe).find("input[name=sWeChatNewsName]").val(sWeChatNewsName);
+                                    $(iframe).find("input[name=sWeChatNewsNameId]").val(sWeChatNewsNameId);
+                                }());
+                                window.parent.$('#tabs').tabs('close', '图文素材列表');//关闭当前tab    
+                            });
+                        });
+                    }
+
                     //绑定编辑删除事件
                     $('.News_Edit').on("click",function(){
                         var ID=$(this).attr("data-ID");

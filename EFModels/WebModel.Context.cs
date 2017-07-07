@@ -35,5 +35,6 @@ namespace EFModels
         public virtual DbSet<CDELINK_WeChatMenu> CDELINK_WeChatMenu { get; set; }
         public virtual DbSet<CDELINK_WeChatNews> CDELINK_WeChatNews { get; set; }
         public virtual DbSet<CDELINK_WeChatNewsName> CDELINK_WeChatNewsName { get; set; }
+        public virtual DbSet<CDELINK_WeChatConcern> CDELINK_WeChatConcern { get; set; }
     }
 }
