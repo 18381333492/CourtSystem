@@ -12,6 +12,9 @@ using WeiXin.Base.Message.ReceiveModels;
 using WeiXin.Base.Message.SendModels;
 using Unity;
 using SystemInterface;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using EFModels;
 
 namespace Web.App_Start.WeiXinMessage
 {
@@ -53,16 +56,35 @@ namespace Web.App_Start.WeiXinMessage
              var WeChatConcern=DIEntity.GetInstance().GetImpl<IWeChatConcern>().Get();
             if (WeChatConcern.bIsConcernOn)
             {//关注回复功能开启
-
+                if (WeChatConcern.iConcernType == 0)
+                {//回复文本
+                    string resStr = MessageHelper.Text(WeChatConcern.sContent,message);
+                    return resStr;
+                }
+                else
+                {//回复图文
+                    //获取图文借口
+                    var WeChatNewsData = DIEntity.GetInstance().GetImpl<IWeChatNews>().GetNews(WeChatConcern.sWeChatNewsNameId.ToString()) as JObject;
+                    //数据组装
+                    List<item> Articles = new List<item>();
+                    List<CDELINK_WeChatNews> array = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(WeChatNewsData["newsList"].ToString());
+                    foreach(var m in array)
+                    {
+                        Articles.Add(new item()
+                        {
+                            Title = m.sTitle,
+                            Description = m.sDescribe,
+                            PicUrl = m.sPictureUrl,
+                            Url = m.sDataUrl
+                        });
+                    }
+                  return  MessageHelper.News(Articles, message);
+                }
             }
             else
             {//关闭
-                base.HandleSubscribe(message);
+                return base.HandleSubscribe(message);
             }
-                
-
-
-            return MessageHelper.Text("关注时回复成功了", message);
         }
 
     }

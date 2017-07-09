@@ -86,6 +86,26 @@
             window.parent.$('#tabs').tabs("getTab", "图文素材列表").panel();//刷新tabs内容
         });  
         
+        var iConcernTypeValue='@Model.iConcernType';
+        divToggle(iConcernTypeValue);
+        //类型的切换
+        $('.iConcernType').on('ifChecked', function (event) {
+            var iConcernType = $(this).val();
+            divToggle(iConcernType);
+        });
+   
+        //切换函数的封装
+        function divToggle(value) {
+            if (value == 0) {
+                $('.TestType').show();
+                $('.NewsType').hide();
+            }
+            else {
+                $('.TestType').hide();
+                $('.NewsType').show();
+            }
+        }
+        
         //提交操作
         $('#ok').on("click", function () {
             admin.routeRegister("Admin", "WeChatConcern");//注册路由
@@ -96,7 +116,7 @@
             if (iConcernType == 1 && $('input[name=sWeChatNewsName]').val().length == 0) return admin.alert("请选择图文消息!");
             var params = admin.form.serializeArray().toObject();
             params.sContent = editor.gethtml();
-            admin.button.disabled();
+            admin.button.disabled();   
             admin.Ajax(admin.route("Keep"), params, function (r) {
                 admin.alert("操作成功");
                 admin.button.enable();
