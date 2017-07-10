@@ -1,0 +1,134 @@
+﻿@{
+    ViewBag.Title = "微信关键字";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
+}
+<link href="~/Areas/Admin/Content/icheck/skins/square/blue.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/icheck/icheck.min.js"></script>
+<table id="WeChatKeyWord" style="height:100%;width:100%"></table>
+<div id="WeChatKeyWord_toolbar" style="padding:8px;">
+    <form id="search">
+        @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        <text></text>
+        <span>模糊查询:</span><input type="text" class="form-control" placeholder="关键字"
+                                 style="width:200px;height:30px;vertical-align:bottom;display:inline-block">
+        <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var buttonList=@Html.Raw(ViewData["Button_NotToolbar"]);
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Admin", "WeChatKeyWord");
+
+        //模糊查询
+        $('.searchText').on("click", function () {
+            var searchText = $('#search input').val();
+            admin.grid.datagrid({
+                queryParams: {
+                    searchText: searchText
+                }
+            });
+        });
+
+        //新增操作
+        $('.WeChatKeyWord_add').on("click", function () {
+            admin.creatModal(admin.route("Add"));
+        });
+
+        //编辑操作
+        function WeChatKeyWordUpdate(ID) {
+            admin.creatModal(admin.route("Edit?sWeChatKeyWordId=" + ID));
+        }
+
+        //生成菜单
+        $('.WeChatKeyWord_make').on("click",function(){
+            admin.confirm("确定要重新生成微信自定义菜单?",function(){
+                admin.Ajax(admin.route("MakeMenu"),null,function(r){
+                    admin.alert("菜单生成成功!");
+                });
+            });
+        });
+
+        //删除操作
+        $('.WeChatKeyWord_cancel').on("click", function () {
+            var selected =admin.grid.datagrid('getSelections');
+            if (selected.length > 0) {
+                var array = [];
+                $(selected).each(function () {
+                    array.push(admin.formate("'#'",this.ID));
+                });
+                admin.confirm("确认要删除选择的数据？", function () {
+                    admin.Ajax(admin.route("Cancel"), { Ids: array.join() }, function (r) {
+                        admin.grid.datagrid("reload");
+                        admin.alert("删除成功");
+                    });
+                })
+            }
+            else {
+                admin.alert("请选择一条数据进行操作!");
+            }
+        });
+
+        /*!
+        * method:数据列表(datagrid)的绑定
+        */
+        admin.grid.datagrid({
+            fit:true,
+            url: admin.route('List'),
+            toolbar:admin.toolbar,
+            fitColumns:true,
+            rownumbers:true,
+            striped: true,
+            pagination: true,
+            pageSize:20,
+            loadMsg: "正在加载...",
+            columns: [[
+                { field: 'sKeyWordName', title: '关键字', align: 'center', sortable: true, width: 100 },
+                {
+                    field: 'iRePlyType', title: '回复类型', align: 'center', sortable: true, width: 100,formatter:function(value,row){
+                        if(value==0) return "文本";
+                        else return "图文";
+                    }
+                },
+                { field: 'bIsOpen', title: '是否开启', align: 'center', sortable: true, width: 100,formatter:function(value){
+                    if(value) return "<span style='color:green'>开启</span>";
+                    else return "<span style='color:red'>关闭</span>";
+                    }
+                },
+                { field: 'dUpdateTime', title: '最近更新时间', align: 'center', sortable: true, width: 150 },
+                {
+                    field: 'ID', title: '操作', align: 'center', width: 150, formatter: function (value) {
+                        var html = [];
+                        html.push('<div style="padding:3px;">');
+                        $(buttonList).each(function(){
+                            html.push('<button type="button" class="btn '+this.sButtonIcon+' btn-sm '+this.sButtonSign+'" data-id="' + value + '">');
+                            html.push(''+this.sButtonName+'</button>&nbsp&nbsp');
+                        });
+                        return html.join('');
+                    }
+                },
+            ]],
+            onLoadSuccess: function () {
+                //编辑事件绑定
+                $('.WeChatKeyWord_edit').on("click", function (event) {
+                    event.stopPropagation();
+                    var ID = $(this).attr("data-id");
+                    WeChatKeyWordUpdate(ID);
+                });
+
+                //删除事件绑定
+                //$('.WeChatKeyWord_delete').on("click", function (event) {
+                //    event.stopPropagation();
+                //    var ID = admin.formate("'#'", $(this).attr("data-id"));
+                //    admin.confirm("确定要删除这条数据？", function () {
+                //        admin.Ajax(admin.route("Cancel"), { Ids: ID }, function (r) {
+                //            admin.grid.datagrid('reload');
+                //            admin.alert("删除成功");
+                //        });
+                //    });
+                //});
+            }
+        });
+    });
+</script>

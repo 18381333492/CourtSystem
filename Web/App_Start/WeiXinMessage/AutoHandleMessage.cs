@@ -23,31 +23,52 @@ namespace Web.App_Start.WeiXinMessage
         //需要处理那些消息就重写
 
         /// <summary>
-        /// 处理微信文本消息
+        /// 处理微信关键字回复
         /// </summary>
         /// <returns></returns>
         public override string HandleText(TextMessage message)
         {
-            List<item> Articles = new List<item>();
-            Articles.Add(new item()
+            //匹配关键字
+            var keyWord = DIEntity.GetInstance().GetImpl<IWeChatKeyWord>().GetByKeyWord(message.Content);
+            if (keyWord != null)
             {
-                Title = "测试图文消息1",
-                Url = "https://www.baidu.com",
-                PicUrl = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=584375705,2843051093&fm=116&gp=0.jpg",
-            });
-            Articles.Add(new item()
+                if (keyWord.bIsOpen)
+                {
+                    if (keyWord.iRePlyType == 0)
+                    {//回复问本消息
+                        return MessageHelper.Text(keyWord.sContent, message);
+                    }
+                    else
+                    {//回复图文消息
+                                    //获取图文借口
+                        var WeChatNewsData = DIEntity.GetInstance().GetImpl<IWeChatNews>().GetNews(keyWord.sWeChatNewsNameId.ToString()) as JObject;
+                        List<CDELINK_WeChatNews> array = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(WeChatNewsData["newsList"].ToString());
+                        //组装数据
+                        List<item> Articles = new List<item>();
+                        foreach (var m in array)
+                        {
+                            Articles.Add(new item()
+                            {
+                                Title = m.sTitle,
+                                Description = m.sDescribe,
+                                PicUrl = m.sPictureUrl,
+                                Url = m.sDataUrl
+                            });
+                        }
+                        return MessageHelper.News(Articles, message);
+                    }
+                }
+                else
+                    return base.HandleText(message);
+            }
+            else
             {
-                Title = "测试图文消息2",
-                Url = "https://www.baidu.com",
-                PicUrl = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=584375705,2843051093&fm=116&gp=0.jpg",
-            });
-            return MessageHelper.News(Articles,message);
-           // return  MessageHelper.Text("成功了啊", message);
-
+                return base.HandleText(message);
+            }
         }
 
         /// <summary>
-        /// 处理用户关注
+        /// 处理用户关注事件
         /// </summary>
         /// <returns></returns>
         public override string HandleSubscribe(SubscribeEvent message)

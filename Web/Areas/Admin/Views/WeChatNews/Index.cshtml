@@ -115,22 +115,22 @@
 
                     //选择的时候才绑定双击事件
                     if(sessionStorage.getItem("IsSelect")){
-                        sessionStorage.removeItem("IsSelect");
+                        var IsSelect=JSON.parse(sessionStorage.getItem("IsSelect"));
                         //绑定双击事件
                         $('.mainBox').on("dblclick",function(e){
                             e.stopPropagation();//阻止事件向下传递
                             var sWeChatNewsName=$(this).find('.sWeChatNewsName').text();
                             var sWeChatNewsNameId=$(this).attr('data-id');
                             admin.confirm("确定要选择["+sWeChatNewsName+"]图文数据",function(){
-                               window.parent.$('#tabs').tabs('select', '关注回复');//选中图文素材列表
+                                window.parent.$('#tabs').tabs('select', IsSelect.name);//选中图文素材列表
                                (function(){
-                                    var myTab=window.parent.$('#tabs').tabs('getTab', '关注回复');
+                                   var myTab=window.parent.$('#tabs').tabs('getTab', IsSelect.name);
                                     var iframe=myTab.panel("panel").find('iframe');
                                     iframe=iframe[0].contentDocument;
                                     $(iframe).find("input[name=sWeChatNewsName]").val(sWeChatNewsName);
                                     $(iframe).find("input[name=sWeChatNewsNameId]").val(sWeChatNewsNameId);
                                 }());
-                                window.parent.$('#tabs').tabs('close', '图文素材列表');//关闭当前tab    
+                               window.parent.$('#tabs').tabs('close', '图文素材列表');//关闭当前tab    
                             });
                         });
                     }

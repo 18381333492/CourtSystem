@@ -1,0 +1,148 @@
+﻿
+@using EFModels;
+@model CDELINK_WeChatKeyWord
+<!--编辑关键字视图-->
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header" style="padding:10px;">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">添加关键字</h4>
+        </div>
+        <!--主体内容-->
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" id="dataForm">
+                <input type="hidden" name="ID" value="@Model.ID" />
+                <input type="hidden" name="dInsertTime" value="@Model.dInsertTime" />
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">关键字</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入关键字" name="sKeyWordName" value="@Model.sKeyWordName" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">是否开启</label>
+                    <div class="col-sm-10" style="padding-top:5px;">
+                        @if (Model.bIsOpen)
+                        {
+                        <input class="bIsOpen" name="bIsOpen" type="radio" value="true" checked />@:开启 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                        <input class="bIsOpen" name="bIsOpen" type="radio" value="false">@:关闭
+                        }
+                        else
+                        {
+                            <input class="bIsOpen" name="bIsOpen" type="radio" value="true"/>@:开启 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                            <input class="bIsOpen" name="bIsOpen" type="radio" value="false" checked>@:关闭
+                        }
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">回复类型</label>
+                    <div class="col-sm-10" style="padding-top:5px;">
+                        @if (Model.iRePlyType==0)
+                        {
+                        <input class="iRePlyType" name="iRePlyType" type="radio" value="0" checked />@:文本 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input class="iRePlyType" name="iRePlyType" type="radio" value="1">@:图文
+                        }
+                        else
+                        {
+                            <input class="iRePlyType" name="iRePlyType" type="radio" value="0"/>@:文本 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input class="iRePlyType" name="iRePlyType" type="radio" value="1" checked>@:图文
+                        }
+                    </div>
+                </div>
+                <div class="form-group TestType">
+                    <label class="col-sm-2 control-label">文本设置</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="4" placeholder="请输入文本设置" name="sContent">@Model.sContent</textarea>
+                    </div>
+                </div>
+                <div class="form-group NewsType" style="display:none">
+                    <label class="col-sm-2 control-label">图文设置</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" style="width:80%;float:left" placeholder="请输入图文信息的名称" name="sWeChatNewsName" value="@Model.sWeChatNewsName" readonly="readonly">
+                        <input type="hidden" name="sWeChatNewsNameId" value="@Model.sWeChatNewsNameId" />
+                        <button type="button" id="searchNews" class="btn btn-danger btn-sm" style="float:right;margin-top: 2px">选择图文</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--主体内容-->
+        <div class="modal-footer" style="padding:10px;">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button id="ok" type="button" class="btn btn-primary">确认提交</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.iRePlyType,.bIsOpen').iCheck({
+            labelHover: false,
+            cursor: true,
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%'
+        });
+
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Admin", "WeChatKeyWord");
+
+        //绑定搜索图文事件
+        $('#searchNews').on("click", function () {
+            admin.routeRegister("Admin", "WeChatNews");//注册路由
+            sessionStorage.setItem("IsSelect", JSON.stringify({ name: "关键字回复", value: 1 }));//设置图文选择模式
+            window.parent.AddTab(admin.route("Index"), "图文素材列表");
+            window.parent.$('#tabs').tabs("getTab", "图文素材列表").panel();//刷新tabs内容
+        });
+
+        var iRePlyType = '@Model.iRePlyType';
+        divToggle(iRePlyType);
+        //类型的切换
+        $('.iRePlyType').on('ifChecked', function (event) {
+            var iConcernType = $(this).val();
+            divToggle(iConcernType);
+        });
+
+        //切换函数的封装
+        function divToggle(value) {
+            if (value == 0) {
+                $('.TestType').show();
+                $('.NewsType').hide();
+            }
+            else {
+                $('.TestType').hide();
+                $('.NewsType').show();
+            }
+        }
+
+        //提交操作
+        $('#ok').on("click", function () {
+            admin.routeRegister("Admin", "WeChatKeyWord");//注册路由
+            var bootstrapValidator = admin.form.data('bootstrapValidator');
+            bootstrapValidator.validate();
+            var res = bootstrapValidator.isValid();
+            if (res) {//验证通过
+                admin.button.disabled();
+                admin.Ajax(admin.route("Update"), admin.form.serialize(), function (r) {
+                    admin.tip("编辑成功");
+                    admin.grid.datagrid("reload");
+                    admin.closeModal();
+                });
+            }
+        });
+
+        //表单验证
+        admin.formValidator(admin.form, {
+            sKeyWordName: {
+                validators: {
+                    notEmpty: {
+                        message: '关键字不能为空'
+                    },
+                    stringLength: {
+                        max: 20,
+                        message: '关键字长度不能超过20'
+                    }
+                }
+            }
+        });
+    });
+</script>

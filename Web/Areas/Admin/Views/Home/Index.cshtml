@@ -245,6 +245,14 @@
 
         //事件的绑定
         function bingEvent() {
+            sessionStorage.removeItem("IsSelect");//移除图文的选择模式
+            //给tabs绑定选项卡关闭的时间
+            $('#tabs').tabs({
+                onClose: function (title, index) {
+                    sessionStorage.removeItem("IsSelect");//移除图文的选择模式
+                }
+            })
+
             //调整窗口大小
             window.onresize = function () {
                 $('#tabs').tabs('resize');

@@ -63,6 +63,7 @@ namespace Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="newsName"></param>
         /// <param name="sJsonDataChatNews"></param>
+        [ValidateInput(false)]
         public void Insert(CDELINK_WeChatNewsName newsName,string sJsonDataChatNews)
         {
             var newsData = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(sJsonDataChatNews);
@@ -78,6 +79,7 @@ namespace Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="newsName"></param>
         /// <param name="sJsonDataChatNews"></param>
+        [ValidateInput(false)]
         public void Update(CDELINK_WeChatNewsName newsName, string sJsonDataChatNews)
         {
             var newsData = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(sJsonDataChatNews);

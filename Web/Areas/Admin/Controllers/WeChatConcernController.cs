@@ -24,12 +24,13 @@ namespace Web.Areas.Admin.Controllers
             var m=manage.Get();
             if (m == null) m = new CDELINK_WeChatConcern();
             return View(m);
-        }     
+        }
 
         /// <summary>
         /// 修改关注回复设置
         /// </summary>
         /// <param name="Concern"></param>
+        [ValidateInput(false)]
         public void Keep(CDELINK_WeChatConcern Concern)
         {
             if (manage.KeepWeChatConcern(Concern) > 0)

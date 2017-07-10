@@ -58,8 +58,12 @@ function adminPackage() {
     }
 
     //获取url
-    function route(action) {
-        return basePath + action;
+    function route(action, value) {
+        if (value) {
+            return virtualPath + action;
+        }
+        else
+            return basePath + action;
     }
 
     //bootstrap的模态框的封装
@@ -236,11 +240,12 @@ function adminPackage() {
             // textStatus 可能为null、 'timeout（超时）'、 'error（错误）'、 'abort(中止)'和'parsererror（解析错误)'等
             // errorMsg 是错误信息字符串(响应状态的文本描述部分，例如'Not Found'或'Internal Server Error')
             error: function (jqXHR, textStatus, errorMsg) {
-                //switch (jqXHR.status) {
-                //    case 404: tipAlert('链接地址错误!'); break;
-                //    case 500: tipAlert('服务器内部错误!'); break;
-                //    default: tipAlert(jqXHR.status + ":" + jqXHR.statusText);
-                //}
+                debugger
+                switch (jqXHR.status) {
+                    case 404:alert('链接地址错误!'); break;
+                    case 500: alert('服务器内部错误!'); break;
+                    default: alert(jqXHR.status + ":" + jqXHR.statusText);
+                }
             }
         });
     }
