@@ -68,5 +68,15 @@ namespace Web.Areas.Admin.Controllers
             if (manage.Update(keyWord) > 0)
                 result.success = true;
         }
+
+        /// <summary>
+        /// 根据主键ID集合删除微信关键字
+        /// </summary>
+        /// <param name="Ids"></param>
+        public void Cancel(string Ids)
+        {
+            if(manage.Cancel(Ids)>0)
+                result.success = true;
+        }
     }
 }

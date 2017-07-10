@@ -40,5 +40,16 @@ namespace SystemModel
             excute.Edit<CDELINK_WeChatKeyWord>(keyWord);
             return excute.SaveChange();
         }
+
+
+        /// <summary>
+        ///  根据关键字ID集合删除关键字
+        /// </summary>
+        /// <param name="sButtonId"></param>
+        /// <returns></returns>
+        public override int Cancel(string Ids)
+        {
+           return  excute.Delete<CDELINK_WeChatKeyWord>(Ids);
+        }
     }
 }

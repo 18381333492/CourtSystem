@@ -65,12 +65,6 @@
                    </div>
                </div>
                <div class="form-group">
-                   <label class="col-sm-2 control-label">正文内容</label>
-                   <div class="col-sm-10">
-                       <textarea id="sContent" name="sContent" style="width:100%;"></textarea>
-                   </div>
-               </div>
-               <div class="form-group">
                    <label class="col-sm-2 control-label">封面图</label>
                    <div class="col-sm-10">
                        <div id="sPictureUrl"></div>
@@ -102,9 +96,6 @@
         var picture = new upload();
         picture.create("sPictureUrl", { height: 160, width: 240, path: "WeChatNews" });
 
-        var editor = new kindeditor();
-        editor.create("#sContent");
-
         var admin = new adminPackage();
         admin.routeRegister("Admin", "WeChatNews");
         var array = [];
@@ -124,7 +115,6 @@
                     weChatNew.sTitle = params.sTitle;
                     weChatNew.sPictureUrl = params.sPictureUrl;
                     weChatNew.sDataUrl = params.sDataUrl;
-                    weChatNew.sContent = editor.gethtml();//获取富文本编辑框内容
                     weChatNew.sDescribe = params.sDescribe;
                     weChatNew.iOrder = $('.greenBorder').index();
                     //赋值显示
@@ -153,7 +143,6 @@
             $('textarea[name=sDescribe]').val("");
             $('#sPictureUrl').find("img").attr("src", "");
             $('input[name=sPictureUrl]').val("");
-            editor.sethtml("");//清空富文本编辑框
         }
         //设置表单值
         function setForm(json) {
@@ -162,7 +151,6 @@
             $('textarea[name=sDescribe]').val(json.sDescribe);
             $('#sPictureUrl').find("img").attr("src", json.sPictureUrl);
             $('input[name=sPictureUrl]').val(json.sPictureUrl);
-            editor.sethtml(json.sContent);//清空富文本编辑框
         }
 
         //追加新图文html

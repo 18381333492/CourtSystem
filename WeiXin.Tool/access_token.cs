@@ -49,6 +49,7 @@ namespace WeiXin.Tool
                     line.Add(res);
                 }
                 sr.Close();//关闭流
+                sr.Dispose();
                 if (DateTime.Now > DateTime.Parse(line[1]))
                 {//access_token已过期
                     return Get_access_token();
@@ -77,7 +78,7 @@ namespace WeiXin.Tool
                 StreamWriter sw = new StreamWriter(fs);
                 sw.WriteLine(res["access_token"].ToString());
                 int expires_in = int.Parse(res["expires_in"].ToString());
-                sw.WriteLine(DateTime.Now.AddSeconds(expires_in-200).ToString());
+                sw.WriteLine(DateTime.Now.AddSeconds(expires_in-200).ToString("yyyy/MM/dd HH:mm:ss"));
                 //清空缓冲区
                 sw.Flush();
                 //关闭流

@@ -118,16 +118,16 @@
                 });
 
                 //删除事件绑定
-                //$('.WeChatKeyWord_delete').on("click", function (event) {
-                //    event.stopPropagation();
-                //    var ID = admin.formate("'#'", $(this).attr("data-id"));
-                //    admin.confirm("确定要删除这条数据？", function () {
-                //        admin.Ajax(admin.route("Cancel"), { Ids: ID }, function (r) {
-                //            admin.grid.datagrid('reload');
-                //            admin.alert("删除成功");
-                //        });
-                //    });
-                //});
+                $('.WeChatKeyWord_delete').on("click", function (event) {
+                    event.stopPropagation();
+                    var ID = admin.formate("'#'", $(this).attr("data-id"));
+                    admin.confirm("确定要删除这条数据？", function () {
+                        admin.Ajax(admin.route("Cancel"), { Ids: ID }, function (r) {
+                            admin.grid.datagrid('reload');
+                            admin.alert("删除成功");
+                        });
+                    });
+                });
             }
         });
     });

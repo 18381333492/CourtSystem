@@ -30,7 +30,7 @@ namespace SystemModel
             //条件查询
             if (!string.IsNullOrEmpty(searchText))
             {
-                sSql.AppendFormat("AND searchText LIKE '%{0}%'", searchText);
+                sSql.AppendFormat("AND sKeyWordName LIKE '%{0}%'", searchText);
             }
             var userList = query.PageQuery<Dictionary<string,object>>(sSql.ToString(), pageInfo);
             return userList.toJson();

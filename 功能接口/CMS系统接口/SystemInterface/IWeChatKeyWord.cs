@@ -14,6 +14,7 @@ namespace SystemInterface
     /// </summary>
     public abstract class IWeChatKeyWord : BaseBll
     {
+
         #region 查询
 
         /// <summary>
@@ -40,7 +41,6 @@ namespace SystemInterface
 
         #endregion
 
-
         #region 操作
 
         /// <summary>
@@ -58,9 +58,16 @@ namespace SystemInterface
         /// <returns></returns>
         public abstract int Update(CDELINK_WeChatKeyWord keyWord);
 
+
+
+        /// <summary>
+        ///  根据关键字ID集合删除关键字
+        /// </summary>
+        /// <param name="sButtonId"></param>
+        /// <returns></returns>
+        public abstract int Cancel(string Ids);
+
         #endregion
-
-
 
     }
 }
