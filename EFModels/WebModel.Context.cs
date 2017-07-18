@@ -37,5 +37,9 @@ namespace EFModels
         public virtual DbSet<CDELINK_WeChatNewsName> CDELINK_WeChatNewsName { get; set; }
         public virtual DbSet<CDELINK_WeChatConcern> CDELINK_WeChatConcern { get; set; }
         public virtual DbSet<CDELINK_WeChatKeyWord> CDELINK_WeChatKeyWord { get; set; }
+        public virtual DbSet<ES_Client> ES_Client { get; set; }
+        public virtual DbSet<ES_Goods> ES_Goods { get; set; }
+        public virtual DbSet<ES_Orders> ES_Orders { get; set; }
+        public virtual DbSet<ES_ShopAddress> ES_ShopAddress { get; set; }
     }
 }

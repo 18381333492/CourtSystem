@@ -17,6 +17,10 @@
         <EntityTypeShape EntityType="CourtSystemDatabaseModel.CDELINK_WeChatNewsName" Width="1.5" PointX="2.75" PointY="8.75" />
         <EntityTypeShape EntityType="CourtSystemDatabaseModel.CDELINK_WeChatConcern" Width="1.5" PointX="5.375" PointY="8.75" />
         <EntityTypeShape EntityType="CourtSystemDatabaseModel.CDELINK_WeChatKeyWord" Width="1.5" PointX="7.375" PointY="8.75" />
+        <EntityTypeShape EntityType="CourtSystemDatabaseModel.ES_Client" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CourtSystemDatabaseModel.ES_Goods" Width="1.5" PointX="9.375" PointY="5.75" />
+        <EntityTypeShape EntityType="CourtSystemDatabaseModel.ES_Orders" Width="1.5" PointX="9.375" PointY="9.75" />
+        <EntityTypeShape EntityType="CourtSystemDatabaseModel.ES_ShopAddress" Width="1.5" PointX="11.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

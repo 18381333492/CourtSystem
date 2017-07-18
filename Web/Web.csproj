@@ -133,6 +133,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WeiXinMessage\AutoHandleMessage.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\WeChatConcernController.cs" />
     <Compile Include="Areas\Admin\Controllers\WeChatNewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\WeChatMenuController.cs" />
@@ -826,6 +827,7 @@
     <Content Include="Areas\Admin\Content\Login\Images\bootstrap.min.css" />
     <Content Include="Areas\Admin\Content\Login\Images\login.css" />
     <Content Include="Areas\Admin\Content\Login\Images\qc.png" />
+    <Content Include="Areas\Admin\Content\toolBar.css" />
     <Content Include="Areas\Mobile\Content\Shoes\css\bootstrap.css" />
     <Content Include="Areas\Mobile\Content\Shoes\css\member.css" />
     <Content Include="Areas\Mobile\Content\Shoes\css\order3.css" />
@@ -1287,6 +1289,7 @@
     <Content Include="Areas\Admin\Views\WeChatKeyWord\Index.cshtml" />
     <Content Include="Areas\Admin\Views\WeChatKeyWord\Add.cshtml" />
     <Content Include="Areas\Admin\Views\WeChatKeyWord\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\Index.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
@@ -1384,21 +1387,29 @@
       <Project>{5a05de7a-ea2b-40d8-95e7-040606f8c9fd}</Project>
       <Name>Unity</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WeiXin.Base\WeiXin.Base.csproj">
-      <Project>{98a8beff-8246-4eee-aaf4-e45d49692e9d}</Project>
-      <Name>WeiXin.Base</Name>
+    <ProjectReference Include="..\功能接口\业务逻辑接口\LogicInterface\LogicHandlerInterface.csproj">
+      <Project>{6ed78bdc-6325-4d3d-b21c-0f2977be8b07}</Project>
+      <Name>LogicHandlerInterface</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WeiXin.Tool\WeiXin.Tool.csproj">
-      <Project>{407029d4-2d18-46f2-8690-ee7ddde8c429}</Project>
-      <Name>WeiXin.Tool</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\功能接口\CMS系统接口\SystemInterface\SystemInterface.csproj">
+    <ProjectReference Include="..\功能接口\系统设置接口\SystemInterface\SystemInterface.csproj">
       <Project>{4dbc02e5-ae9a-45ce-ba79-7ab92febd590}</Project>
       <Name>SystemInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\功能模块\业务逻辑模块\LogicModel\LogicHandlerModel.csproj">
+      <Project>{50324a32-3b6b-4c8a-bc1f-10683534636e}</Project>
+      <Name>LogicHandlerModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\功能模块\系统设置模块\SystemModel\SystemModel.csproj">
       <Project>{5436ce6d-636b-430a-9738-a48cc715de96}</Project>
       <Name>SystemModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\微信接口\WeiXin.Base\WeiXin.Base.csproj">
+      <Project>{98a8beff-8246-4eee-aaf4-e45d49692e9d}</Project>
+      <Name>WeiXin.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\微信接口\WeiXin.Tool\WeiXin.Tool.csproj">
+      <Project>{407029d4-2d18-46f2-8690-ee7ddde8c429}</Project>
+      <Name>WeiXin.Tool</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

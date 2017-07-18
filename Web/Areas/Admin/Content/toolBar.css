@@ -1,0 +1,21 @@
+﻿
+#search span:first-child{
+    margin-left:0px;
+    vertical-align:middle;
+    font-size:14px;
+}
+#search span{
+    margin-left:20px;
+    vertical-align:middle;
+    font-size:14px;
+}
+
+#search select{
+    vertical-align:middle;
+    display:inline-block;
+}
+
+#search input{
+    vertical-align:middle;
+    display:inline-block;
+}
