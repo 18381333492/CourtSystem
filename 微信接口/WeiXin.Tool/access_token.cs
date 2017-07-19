@@ -19,8 +19,6 @@ namespace WeiXin.Tool
 
         public string secret;
 
-        public string Access_Token;//接受的access_token
-
         /// <summary>
         /// 初始化构造函数
         /// </summary>

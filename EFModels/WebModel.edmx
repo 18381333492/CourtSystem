@@ -179,12 +179,16 @@
           <Property Name="sGoodsName" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="iGoodsType" Type="int" Nullable="false" />
           <Property Name="sGoodsNo" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="sGoodsPrices" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="sDisPrices" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="sGoodsPrices" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsRateGiving" Type="bit" Nullable="false" />
           <Property Name="iCount" Type="int" Nullable="false" />
           <Property Name="bIsShelves" Type="bit" Nullable="false" />
           <Property Name="sOrderHtmlKey" Type="varchar" MaxLength="50" />
           <Property Name="dInsertTime" Type="datetime" Nullable="false" />
           <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="iIntegral" Type="int" Nullable="false" />
+          <Property Name="IsRateAdd" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ES_Orders">
           <Key>
@@ -212,6 +216,8 @@
           <Property Name="sIp" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="iChannel" Type="int" Nullable="false" />
           <Property Name="iState" Type="int" Nullable="false" />
+          <Property Name="iIntegral" Type="int" Nullable="false" />
+          <Property Name="sGuige" Type="varchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="ES_ShopAddress">
           <Key>
@@ -441,12 +447,16 @@
           <Property Name="sGoodsName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="iGoodsType" Type="Int32" Nullable="false" />
           <Property Name="sGoodsNo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="sGoodsPrices" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="sGoodsPrices" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="iCount" Type="Int32" Nullable="false" />
           <Property Name="bIsShelves" Type="Boolean" Nullable="false" />
           <Property Name="sOrderHtmlKey" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="sDisPrices" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="IsRateGiving" Type="Boolean" Nullable="false" />
+          <Property Name="iIntegral" Type="Int32" Nullable="false" />
+          <Property Name="IsRateAdd" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="ES_Orders">
           <Key>
@@ -474,6 +484,8 @@
           <Property Name="sIp" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="iChannel" Type="Int32" Nullable="false" />
           <Property Name="iState" Type="Int32" Nullable="false" />
+          <Property Name="iIntegral" Type="Int32" Nullable="false" />
+          <Property Name="sGuige" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ES_ShopAddress">
           <Key>
@@ -677,6 +689,10 @@
           <EntitySetMapping Name="ES_Goods">
             <EntityTypeMapping TypeName="CourtSystemDatabaseModel.ES_Goods">
               <MappingFragment StoreEntitySet="ES_Goods">
+                <ScalarProperty Name="IsRateAdd" ColumnName="IsRateAdd" />
+                <ScalarProperty Name="iIntegral" ColumnName="iIntegral" />
+                <ScalarProperty Name="IsRateGiving" ColumnName="IsRateGiving" />
+                <ScalarProperty Name="sDisPrices" ColumnName="sDisPrices" />
                 <ScalarProperty Name="bIsDeleted" ColumnName="bIsDeleted" />
                 <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
                 <ScalarProperty Name="sOrderHtmlKey" ColumnName="sOrderHtmlKey" />
@@ -693,6 +709,8 @@
           <EntitySetMapping Name="ES_Orders">
             <EntityTypeMapping TypeName="CourtSystemDatabaseModel.ES_Orders">
               <MappingFragment StoreEntitySet="ES_Orders">
+                <ScalarProperty Name="sGuige" ColumnName="sGuige" />
+                <ScalarProperty Name="iIntegral" ColumnName="iIntegral" />
                 <ScalarProperty Name="iState" ColumnName="iState" />
                 <ScalarProperty Name="iChannel" ColumnName="iChannel" />
                 <ScalarProperty Name="sIp" ColumnName="sIp" />

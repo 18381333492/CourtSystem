@@ -27,6 +27,22 @@ namespace LogicHandlerInterface
 
         #region 操作
 
+        /// <summary>
+        /// 确认收货
+        /// </summary>
+        /// <param name="sOrdersId">订单主键ID或主键ID集合</param>
+        public abstract int Confrim(string sOrdersId);
+
+
+        /// <summary>
+        /// 添加物流信息
+        /// </summary>
+        /// <param name="sOrdersId">订单主键ID</param>
+        /// <param name="sExpressName">快递名称</param>
+        /// <param name="sExpressNo">快递编号</param>
+        /// <returns></returns>
+        public abstract int AddLogistics(string sOrdersId, string sExpressName, string sExpressNo);
+
         #endregion
     }
 }

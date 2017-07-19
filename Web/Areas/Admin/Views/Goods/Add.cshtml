@@ -1,0 +1,111 @@
+﻿
+<!--添加商品视图-->
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header" style="padding:10px;">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">添加商品</h4>
+        </div>
+        <!--主体内容-->
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" id="dataForm">
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">商品名称</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入商品名称" name="sGoodsName">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">商品类型</label>
+                    <div class="col-sm-10">
+                        <div class="col-sm-10" style="padding-top:5px;">
+                            <input class="iGoodsType" name="iGoodsType" type="radio" value="0" checked>普通商品 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input class="iGoodsType" name="iGoodsType" type="radio" value="1">虚拟商品
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">商品价格</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" placeholder="请输入商品价格" name="sGoodsPrices">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">商品库存</label>
+                    <div class="col-sm-10">
+                        <input type="number" class="form-control" placeholder="请输入商品库存" name="iCount">
+                    </div>
+                </div>
+                
+            </form>
+        </div>
+        <!--主体内容-->
+        <div class="modal-footer" style="padding:10px;">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button id="ok" type="button" class="btn btn-primary">确认提交</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('.iGoodsType').iCheck({
+            labelHover: false,
+            cursor: true,
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue',
+            increaseArea: '20%'
+        });
+
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Admin", "Goods");
+
+        //提交操作
+        $('#ok').on("click", function () {
+            var bootstrapValidator = admin.form.data('bootstrapValidator');
+            bootstrapValidator.validate();
+            var res = bootstrapValidator.isValid();
+            if (res) {//验证通过
+                admin.button.disabled();
+                admin.Ajax(admin.route("Insert"), admin.form.serialize(), function (r) {
+                    admin.tip("添加成功");
+                    admin.grid.datagrid('reload');
+                    admin.closeModal();
+                });
+            }
+        });
+
+        //表单验证
+        admin.formValidator(admin.form, {
+            sGoodsName: {
+                validators: {
+                    notEmpty: {
+                        message: '商品名称不能为空'
+                    },
+                    stringLength: {
+                        max:30,
+                        message: '商品名称长度不能超过30'
+                    },
+                }
+            },
+            sGoodsPrices: {
+                validators: {
+                    notEmpty: {
+                        message: '商品价格不能为空'
+                    },
+                    regexp: {
+                        regexp:/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
+                        message: '金额格式错误'
+                    },
+                }
+            },
+            iCount: {
+                validators: {
+                    notEmpty: {
+                        message: '商品库存不能为空'
+                    }
+                }
+            }
+        });
+    });
+</script>

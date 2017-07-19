@@ -15,6 +15,8 @@ using SystemInterface;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using EFModels;
+using LogicHandlerInterface;
+using WeiXin.Tool;
 
 namespace Web.App_Start.WeiXinMessage
 {
@@ -73,8 +75,36 @@ namespace Web.App_Start.WeiXinMessage
         /// <returns></returns>
         public override string HandleSubscribe(SubscribeEvent message)
         {
+            /*关注的时候注册用户*/
+            var clientDomin = DIEntity.GetInstance().GetImpl<IClient>();//会员接口的实现
+            if (!clientDomin.IsExistByOpenId(message.FromUserName))
+            {//不存在注册
+                var weChat = DIEntity.GetInstance().GetImpl<IWeChat>().GetWeChat();
+                access_token token = new access_token(weChat.sAppId,weChat.sAppSecret);
+                //获取用户信息
+                var userInfo = UserInfoHelper.GetUserInfo(message.FromUserName, token.Get());
+                //注册会员
+                clientDomin.AddClient(new ES_Client {
+                    sOpenId = userInfo.openid,
+                    sNickName = userInfo.nickname,
+                    iSex = userInfo.sex,
+                    iIsSubscribe = userInfo.subscribe,
+                    sHeadPicture = userInfo.headimgurl,
+                    sCity = userInfo.city,
+                    sProvince = userInfo.province,
+                    sCountry = userInfo.country,
+                    dSubscribeTime = DateTime.Now,
+                    iState=0,
+                    iIntegral=0,                    
+                });
+            }
+            else
+            {//存在修改关注状态
+                clientDomin.SubscribeEditClient(message.FromUserName);
+            }
+
             //获取微信关注设置
-             var WeChatConcern=DIEntity.GetInstance().GetImpl<IWeChatConcern>().Get();
+            var WeChatConcern=DIEntity.GetInstance().GetImpl<IWeChatConcern>().Get();
             if (WeChatConcern.bIsConcernOn)
             {//关注回复功能开启
                 if (WeChatConcern.iConcernType == 0)
@@ -106,6 +136,21 @@ namespace Web.App_Start.WeiXinMessage
             {//关闭
                 return base.HandleSubscribe(message);
             }
+        }
+
+
+        /// <summary>
+        /// 处理用户取消关注事件
+        /// </summary>
+        /// <param name="message"></param>
+        /// <returns></returns>
+        public override string HandleUnSubscribe(UnSubscribeEvent message)
+        {
+            var clientDomin = DIEntity.GetInstance().GetImpl<IClient>();//会员接口的实现
+            //取消关注处理事件
+            clientDomin.UnSubscribeEditClient(message.FromUserName);
+
+            return base.HandleUnSubscribe(message);
         }
 
     }

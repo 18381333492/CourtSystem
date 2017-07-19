@@ -48,6 +48,8 @@
     <Compile Include="access_token.cs" />
     <Compile Include="HttpHelper.cs" />
     <Compile Include="MenuHelper.cs" />
+    <Compile Include="UserInfoHelper.cs" />
+    <Compile Include="WeChatUserInfo.cs" />
     <Compile Include="XmlHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

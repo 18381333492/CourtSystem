@@ -24,5 +24,9 @@ namespace EFModels
         public string sOrderHtmlKey { get; set; }
         public System.DateTime dInsertTime { get; set; }
         public bool bIsDeleted { get; set; }
+        public decimal sDisPrices { get; set; }
+        public bool IsRateGiving { get; set; }
+        public int iIntegral { get; set; }
+        public bool IsRateAdd { get; set; }
     }
 }

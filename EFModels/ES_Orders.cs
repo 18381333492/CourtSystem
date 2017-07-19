@@ -36,5 +36,7 @@ namespace EFModels
         public string sIp { get; set; }
         public int iChannel { get; set; }
         public int iState { get; set; }
+        public int iIntegral { get; set; }
+        public string sGuige { get; set; }
     }
 }

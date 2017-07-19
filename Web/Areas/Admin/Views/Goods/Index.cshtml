@@ -1,50 +1,36 @@
 ﻿@{
-    ViewBag.Title = "订单查询";
+    ViewBag.Title = "商品列表";
     Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
 }
-<link href="~/Areas/Admin/Content/Calendar/skin/WdatePicker.css" rel="stylesheet" />
-<script src="~/Areas/Admin/Content/Calendar/WdatePicker.js"></script>
-<table id="Orders" style="height:100%;width:100%"></table>
-<div id="Orders_toolbar" style="padding:8px;">
+<link href="~/Areas/Admin/Content/icheck/skins/square/blue.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/icheck/icheck.min.js"></script>
+<table id="Goods" style="height:100%;width:100%"></table>
+<div id="Goods_toolbar" style="padding:8px;">
     <form id="search">
-        <span>状态:</span>
-        <select name="iState"  class="form-control input-sm" style="width:100px;">
-            <option value="-1">--请选择--</option>
-            <option value="0">待付款</option>
-            <option value="1">待发货</option>
-            <option value="2">待收货</option>
-            <option value="3">已完成</option>
-        </select>
-        <span>订单类型:</span>
+        <span>上/下架:</span>
         <select name="iState" class="form-control input-sm" style="width:100px;">
             <option value="-1">--请选择--</option>
-            <option value="0">普通订单</option>
-            <option value="1">虚拟订单</option>
+            <option value="0">下架</option>
+            <option value="1">上架</option>
         </select>
-        <span>渠道:</span>
+        <span>商品类型:</span>
         <select name="iState" class="form-control input-sm" style="width:100px;">
             <option value="-1">--请选择--</option>
-            <option value="0">微信</option>
-            <option value="1">PC</option>
+            <option value="0">普通商品</option>
+            <option value="1">虚拟商品</option>
         </select>
-        <span>下单时间:</span>
-        <input type="text" id="dPreStaTime" name="dPreStaTime" class="form-control input-sm" readonly="readonly"
-               style="width:150px;cursor: pointer" placeholder="开始时间" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"> --
-        <input type="text" id="dPreStaTime" name="dPreStaTime" class="form-control input-sm" readonly="readonly"
-               style="width:150px;cursor: pointer" placeholder="结束时间" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
-        <br /><br />
-        <i>模糊查询:</i>
-        <input type="text" class="form-control input-sm" placeholder="收件人/手机/订单号/商品编号" style="width:200px">
+        <span>模糊查询:</span>
+        <input type="text" class="form-control input-sm" placeholder="商品名/商品编号" style="width:200px">
         <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
-         &nbsp; &nbsp; @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        &nbsp; &nbsp; @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
     </form>
 </div>
 <script type="text/javascript">
     $(function () {
-      //  var buttonList=@Html.Raw(ViewData["Button_NotToolbar"]);
+        var buttonList=@Html.Raw(ViewData["Button_NotToolbar"]);
         var admin = new adminPackage();
         //注册路由
-        admin.routeRegister("Admin", "Orders");
+        admin.routeRegister("Admin", "Goods");
 
         //模糊查询
         $('.searchText').on("click", function () {
@@ -57,12 +43,17 @@
         });
 
         //新增操作
-        $('.Orders_add').on("click", function () {
+        $('.Goods_add').on("click", function () {
             admin.creatModal(admin.route("Add"));
         });
 
-        //删除操作
-        $('.Orders_cancel').on("click", function () {
+        //编辑操作
+        function UpdateGoods(id){
+            admin.creatModal(admin.route("Edit?sGoodsId="+id));
+        }
+
+        //上下架操作
+        $('.Goods_cancel').on("click", function () {
             var selected = admin.grid.datagrid('getSelections');
             if (selected.length > 0) {
                 var array = [];
@@ -95,27 +86,43 @@
             pageSize:20,
             loadMsg: "正在加载...",
             columns: [[
-                { field: 'sOpenId', title: 'OpenId', align: 'center', sortable: true, width: 80 },
-                { field: 'sOrderNo', title: '订单号', align: 'center', sortable: true, width: 100 },
-                { field: 'sReceiver', title: '收件人', align: 'center', sortable: true, width: 80 },
-                { field: 'sPhone', title: '手机号码', align: 'center', sortable: true, width: 100 },
+                { field: 'sGoodsName', title: '商品名称', align: 'center', sortable: true, width: 180 },
                 { field: 'sGoodsNo', title: '商品编号', align: 'center', sortable: true, width: 80 },
-                { field: 'sGoodsName', title: '商品名称', align: 'center', sortable: true, width: 120 },
-                { field: 'iCount', title: '数量', align: 'center', sortable: true, width: 60 },
-                { field: 'dAllPrices', title: '金额', align: 'center', sortable: true, width: 80 },
-                { field: 'dDiscountPrices', title: '优惠金额', align: 'center', sortable: true, width: 80 },
-                { field: 'dPrices', title: '支付金额', align: 'center', sortable: true, width: 80 },
-                { field: 'iOrderType', title: '订单类型', align: 'center', sortable: true, width: 80 },
-                { field: 'iChannel', title: '渠道', align: 'center', sortable: true, width: 60 },
-                { field: 'iState', title: '状态', align: 'center', sortable: true, width: 60 },
-                { field: 'dBookTime', title: '下单时间', align: 'center', sortable: true, width: 100 },
-                { field: 'sIp', title: 'Ip地址', align: 'center', sortable: true, width: 100 },
                 {
-                    field: 'ID', title: '操作', align: 'center', width: 180, formatter: function (value,row) {
+                    field: 'iGoodsType', title: '商品类型', align: 'center', sortable: true, width: 60, formatter: function (value) {
+                        if (value == 0) return "普通商品";
+                        else return "虚拟商品";
+                    }
+                },
+                { field: 'iCount', title: '库存', align: 'center', sortable: true, width: 40 },
+                { field: 'sGoodsPrices', title: '商品价格', align: 'center', sortable: true, width: 60,formatter:function(value){return value.toFixed(2); } },
+                { field: 'sDisPrices', title: '优惠价格', align: 'center', sortable: true, width: 60 ,formatter:function(value){return value.toFixed(2); }},
+                {
+                    field: 'IsRateGiving', title: '比例增加(优惠)', align: 'center', sortable: true, width: 70, formatter: function (value) {
+                        if (value) return "<span style='color:blue'>启用</span>";
+                        else return "<span style='color:red'>禁用</span>";
+                    }
+                },
+                { field: 'iIntegral', title: '积分', align: 'center', sortable: true, width: 60 },
+                {
+                    field: 'IsRateAdd', title: '比例增加(积分)', align: 'center', sortable: true, width: 70, formatter: function (value) {
+                        if (value) return "<span style='color:blue'>启用</span>";
+                        else return "<span style='color:red'>禁用</span>";
+                    }
+                },
+                {
+                    field: 'bIsShelves', title: '上/下架', align: 'center', sortable: true, width: 80, formatter: function (value) {
+                        if (value) return "<span style='color:green'>上架</span>";
+                        else return "<span style='color:red'>下架</span>";
+                    }
+                },
+                { field: 'dInsertTime', title: '添加时间', align: 'center', sortable: true, width: 100 },
+                {
+                    field: 'ID', title: '操作', align: 'center', width: 130, formatter: function (value,row) {
                         var html = [];
                         html.push('<div style="padding:3px;">');
                         $(buttonList).each(function(){
-                            html.push('<button type="button" class="btn '+this.sButtonIcon+' btn-sm '+this.sButtonSign+'" data-id="' + value + '" data-iState="'+row.iState+'">');
+                            html.push('<button type="button" class="btn '+this.sButtonIcon+' btn-sm '+this.sButtonSign+'" data-id="' + value + '">');
                             html.push(''+this.sButtonName+'</button>&nbsp&nbsp');
                         });
                         html.push('</div>');
@@ -124,8 +131,16 @@
                 },
             ]],
             onLoadSuccess: function () {
+                //编辑事件绑定
+                $('.Goods_edit').on("click",function(event){
+                    event.stopPropagation();
+                    var id=$(this).attr("data-id");
+                    UpdateGoods(id);
+                });
+
+
                 ////重置密码事件绑定
-                //$('.Orders_reset').on("click", function (event) {
+                //$('.Goods_reset').on("click", function (event) {
                 //    event.stopPropagation();
                 //    var ID = $(this).attr("data-id");
                 //    admin.confirm("确定要将该账号密码重置成为123456？", function () {
@@ -137,7 +152,7 @@
                 //});
 
                 ////冻结事件绑定
-                //$('.Orders_freeze').on("click", function (event) {
+                //$('.Goods_freeze').on("click", function (event) {
                 //    event.stopPropagation();
                 //    var ID = $(this).attr("data-id");
                 //    var iState = parseInt($(this).attr("data-iState"));//会员状态 1-正常 0-冻结
@@ -151,7 +166,7 @@
                 //});
 
                 ////删除事件绑定
-                //$('.Orders_delete').on("click", function (event) {
+                //$('.Goods_delete').on("click", function (event) {
                 //    event.stopPropagation();
                 //    var ID = admin.formate("'#'", $(this).attr("data-id"));
                 //    admin.confirm("确定要删除这条数据？", function () {

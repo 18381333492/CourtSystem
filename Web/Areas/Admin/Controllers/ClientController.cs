@@ -1,22 +1,21 @@
-﻿
+﻿using EFModels.MyModels;
+using LogicHandlerInterface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Web.App_Start.BaseController;
-using EFModels.MyModels;
-using LogicHandlerInterface;
 
 namespace Web.Areas.Admin.Controllers
 {
     /// <summary>
-    /// 订单控制器
+    /// 会员管理控制器
     /// </summary>
-    public class OrdersController :AdminBase<IOrders>
+    public class ClientController : AdminBase<IClient>
     {
         //
-        // GET: /Admin/Orders/
+        // GET: /Admin/Client/
 
         public ActionResult Index()
         {
@@ -32,17 +31,6 @@ namespace Web.Areas.Admin.Controllers
         public ActionResult List(PageInfo pageInfo, string searchText)
         {
             return Content(manage.List(pageInfo, searchText));
-        }
-
-
-        /// <summary>
-        /// 确认收货
-        /// </summary>
-        /// <param name="sOrdersId">订单主键ID或主键ID集合</param>
-        public void Confrim(string sOrdersId)
-        {
-            if (manage.Confrim(sOrdersId) > 0)
-                result.success = true;
         }
     }
 }
