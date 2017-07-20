@@ -30,6 +30,10 @@
         admin.grid.tree({
             url: admin.route('List'),
             animate: true,
+            onLoadSuccess:function(){
+                //折叠所有节点。
+                admin.grid.tree("collapseAll");
+            },
             onContextMenu: function (e, row) {
                 if (row.iconCls == "") {
                     sessionStorage["menuId"] = row.id;//缓存菜单主键ID

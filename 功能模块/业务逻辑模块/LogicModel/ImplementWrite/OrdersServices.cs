@@ -37,18 +37,17 @@ namespace LogicHandlerModel
 
 
         /// <summary>
-        /// 添加物流信息
+        /// 设置物流信息
         /// </summary>
-        /// <param name="sOrdersId">订单主键ID</param>
-        /// <param name="sExpressName">快递名称</param>
-        /// <param name="sExpressNo">快递编号</param>
+        /// <param name="orders"></param>
         /// <returns></returns>
-        public override int AddLogistics(string sOrdersId, string sExpressName, string sExpressNo)
+        public override int SetLogistics(ES_Orders orders)
         {
-            var order = excute.Context.ES_Orders.Find(sOrdersId);
+            var oldOrder = excute.Context.ES_Orders.Find(orders.ID);
+            oldOrder.sLogisticsCompany = orders.sLogisticsCompany;
+            oldOrder.sLogisticsNo = orders.sLogisticsNo;
             return excute.SaveChange();
         }
-
 
     }
 }

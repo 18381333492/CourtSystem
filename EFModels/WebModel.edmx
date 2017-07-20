@@ -189,6 +189,7 @@
           <Property Name="bIsDeleted" Type="bit" Nullable="false" />
           <Property Name="iIntegral" Type="int" Nullable="false" />
           <Property Name="IsRateAdd" Type="bit" Nullable="false" />
+          <Property Name="bIsActivity" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ES_Orders">
           <Key>
@@ -218,6 +219,8 @@
           <Property Name="iState" Type="int" Nullable="false" />
           <Property Name="iIntegral" Type="int" Nullable="false" />
           <Property Name="sGuige" Type="varchar" MaxLength="255" />
+          <Property Name="sLogisticsCompany" Type="varchar" MaxLength="50" />
+          <Property Name="sLogisticsNo" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ES_ShopAddress">
           <Key>
@@ -457,6 +460,7 @@
           <Property Name="IsRateGiving" Type="Boolean" Nullable="false" />
           <Property Name="iIntegral" Type="Int32" Nullable="false" />
           <Property Name="IsRateAdd" Type="Boolean" Nullable="false" />
+          <Property Name="bIsActivity" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="ES_Orders">
           <Key>
@@ -486,6 +490,8 @@
           <Property Name="iState" Type="Int32" Nullable="false" />
           <Property Name="iIntegral" Type="Int32" Nullable="false" />
           <Property Name="sGuige" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="sLogisticsCompany" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sLogisticsNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ES_ShopAddress">
           <Key>
@@ -689,6 +695,7 @@
           <EntitySetMapping Name="ES_Goods">
             <EntityTypeMapping TypeName="CourtSystemDatabaseModel.ES_Goods">
               <MappingFragment StoreEntitySet="ES_Goods">
+                <ScalarProperty Name="bIsActivity" ColumnName="bIsActivity" />
                 <ScalarProperty Name="IsRateAdd" ColumnName="IsRateAdd" />
                 <ScalarProperty Name="iIntegral" ColumnName="iIntegral" />
                 <ScalarProperty Name="IsRateGiving" ColumnName="IsRateGiving" />
@@ -709,6 +716,8 @@
           <EntitySetMapping Name="ES_Orders">
             <EntityTypeMapping TypeName="CourtSystemDatabaseModel.ES_Orders">
               <MappingFragment StoreEntitySet="ES_Orders">
+                <ScalarProperty Name="sLogisticsNo" ColumnName="sLogisticsNo" />
+                <ScalarProperty Name="sLogisticsCompany" ColumnName="sLogisticsCompany" />
                 <ScalarProperty Name="sGuige" ColumnName="sGuige" />
                 <ScalarProperty Name="iIntegral" ColumnName="iIntegral" />
                 <ScalarProperty Name="iState" ColumnName="iState" />

@@ -15,13 +15,17 @@ namespace LogicHandlerInterface
     {
 
         #region 查询
+
+
         /// <summary>
         /// 分页获取商品数据列表
         /// </summary>
         /// <param name="pageInfo"></param>
         /// <param name="searchText"></param>
+        /// <param name="bIsShelves"></param>
+        /// <param name="iGoodsType"></param>
         /// <returns></returns>
-        public abstract string List(PageInfo pageInfo, string searchText);
+        public abstract string List(PageInfo pageInfo, string searchText, int bIsShelves, int iGoodsType);
 
         /// <summary>
         /// 根据商品主键ID获取商品
@@ -59,13 +63,20 @@ namespace LogicHandlerInterface
         /// <returns></returns>
         public abstract int Update(ES_Goods goods);
 
-
         /// <summary>
-        /// 上下架商品
+        ///上下架商品
         /// </summary>
         /// <param name="sGoodsId"></param>
         /// <returns></returns>
         public abstract int Shelves(string sGoodsId);
+
+
+        /// <summary>
+        /// 商品活动的开启与禁用
+        /// </summary>
+        /// <param name="sGoodsId"></param>
+        /// <returns></returns>
+        public abstract int Activity(string sGoodsId);
 
 
         /// <summary>

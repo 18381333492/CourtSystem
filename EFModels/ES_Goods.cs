@@ -28,5 +28,6 @@ namespace EFModels
         public bool IsRateGiving { get; set; }
         public int iIntegral { get; set; }
         public bool IsRateAdd { get; set; }
+        public bool bIsActivity { get; set; }
     }
 }

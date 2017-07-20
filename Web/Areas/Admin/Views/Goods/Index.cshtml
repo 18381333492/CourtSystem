@@ -8,19 +8,19 @@
 <div id="Goods_toolbar" style="padding:8px;">
     <form id="search">
         <span>上/下架:</span>
-        <select name="iState" class="form-control input-sm" style="width:100px;">
+        <select name="bIsShelves" class="form-control input-sm" style="width:100px;">
             <option value="-1">--请选择--</option>
             <option value="0">下架</option>
             <option value="1">上架</option>
         </select>
         <span>商品类型:</span>
-        <select name="iState" class="form-control input-sm" style="width:100px;">
+        <select name="iGoodsType" class="form-control input-sm" style="width:100px;">
             <option value="-1">--请选择--</option>
             <option value="0">普通商品</option>
             <option value="1">虚拟商品</option>
         </select>
         <span>模糊查询:</span>
-        <input type="text" class="form-control input-sm" placeholder="商品名/商品编号" style="width:200px">
+        <input type="text" class="form-control input-sm" placeholder="商品名/商品编号" style="width:200px" name="searchText">
         <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
         &nbsp; &nbsp; @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
     </form>
@@ -34,11 +34,9 @@
 
         //模糊查询
         $('.searchText').on("click", function () {
-            var searchText = $('#search input').val();
+            var params=$('#search').serializeArray().toObject();
             admin.grid.datagrid({
-                queryParams: {
-                    searchText: searchText
-                }
+                queryParams:params
             });
         });
 
@@ -52,18 +50,38 @@
             admin.creatModal(admin.route("Edit?sGoodsId="+id));
         }
 
+        //设置优惠价格
+        $('.Goods_setdisprices').on("click",function(){
+            var selected = admin.grid.datagrid('getSelections');
+            if(selected.length==1){
+                admin.creatModal(admin.route("SetPrices?sGoodsId="+selected[0].ID));
+            }
+            else
+               admin.alert("请选择一条数据进行操作!");
+        });
+
+        //设置积分
+        $('.Goods_setintegral').on("click",function(){
+            var selected = admin.grid.datagrid('getSelections');
+            if(selected.length==1){
+                admin.creatModal(admin.route("Integral?sGoodsId="+selected[0].ID));
+            }
+            else
+                admin.alert("请选择一条数据进行操作!");
+        });
+
         //上下架操作
-        $('.Goods_cancel').on("click", function () {
+        $('.Goods_shelves').on("click", function () {
             var selected = admin.grid.datagrid('getSelections');
             if (selected.length > 0) {
                 var array = [];
                 $(selected).each(function () {
-                    array.push(admin.formate("'#'", this.ID));
+                    array.push(this.ID);
                 });
-                admin.confirm("确认要删除选择的数据？", function () {
-                    admin.Ajax(admin.route("Cancel"), { Ids: array.join() }, function (r) {
+                admin.confirm("确认要上/下架所选择的商品？", function () {
+                    admin.Ajax(admin.route("Shelves"), { sGoodsId: array.join() }, function (r) {
                         admin.grid.datagrid("reload");
-                        admin.alert("删除成功");
+                        admin.alert("操作成功");
                     });
                 })
             }
@@ -103,26 +121,32 @@
                         else return "<span style='color:red'>禁用</span>";
                     }
                 },
-                { field: 'iIntegral', title: '积分', align: 'center', sortable: true, width: 60 },
+                { field: 'iIntegral', title: '积分', align: 'center', sortable: true, width: 40 },
                 {
-                    field: 'IsRateAdd', title: '比例增加(积分)', align: 'center', sortable: true, width: 70, formatter: function (value) {
+                    field: 'IsRateAdd', title: '比例增加(积分)', align: 'center', sortable: true, width: 60, formatter: function (value) {
                         if (value) return "<span style='color:blue'>启用</span>";
                         else return "<span style='color:red'>禁用</span>";
                     }
                 },
                 {
-                    field: 'bIsShelves', title: '上/下架', align: 'center', sortable: true, width: 80, formatter: function (value) {
+                    field: 'bIsShelves', title: '上/下架', align: 'center', sortable: true, width: 60, formatter: function (value) {
                         if (value) return "<span style='color:green'>上架</span>";
                         else return "<span style='color:red'>下架</span>";
                     }
                 },
+                {
+                    field: 'bIsActivity', title: '活动', align: 'center', sortable: true, width: 60, formatter: function (value) {
+                        if (value) return "<span style='color:blue'>启用</span>";
+                        else return "<span style='color:red'>禁用</span>";
+                    }
+                 },
                 { field: 'dInsertTime', title: '添加时间', align: 'center', sortable: true, width: 100 },
                 {
-                    field: 'ID', title: '操作', align: 'center', width: 130, formatter: function (value,row) {
+                    field: 'ID', title: '操作', align: 'center', width: 180, formatter: function (value,row) {
                         var html = [];
                         html.push('<div style="padding:3px;">');
                         $(buttonList).each(function(){
-                            html.push('<button type="button" class="btn '+this.sButtonIcon+' btn-sm '+this.sButtonSign+'" data-id="' + value + '">');
+                            html.push('<button type="button" class="btn '+this.sButtonIcon+' btn-sm '+this.sButtonSign+'" data-id="' + value + '" data-shelves="'+row.bIsShelves+'" data-bIsActivity="'+row.bIsActivity+'">');
                             html.push(''+this.sButtonName+'</button>&nbsp&nbsp');
                         });
                         html.push('</div>');
@@ -138,44 +162,33 @@
                     UpdateGoods(id);
                 });
 
+                //上下架事件绑定
+                $('.Goods_oneshelves').on("click",function(event){
+                    event.stopPropagation();
+                    var id=$(this).attr("data-id");
+                    var bIsShelves=$(this).attr("data-shelves");
+                    var tip=bIsShelves=="true"?"下架":"上架";
+                    admin.confirm("确认要["+tip+"]该商品？", function () {
+                        admin.Ajax(admin.route("Shelves"), { sGoodsId: id }, function (r) {
+                            admin.grid.datagrid("reload");
+                            admin.alert("操作成功");
+                        });
+                    })
+                });
 
-                ////重置密码事件绑定
-                //$('.Goods_reset').on("click", function (event) {
-                //    event.stopPropagation();
-                //    var ID = $(this).attr("data-id");
-                //    admin.confirm("确定要将该账号密码重置成为123456？", function () {
-                //        admin.Ajax(admin.route("Reset"), { ID: ID }, function (r) {
-                //            admin.grid.datagrid('reload');
-                //            admin.alert("操作成功");
-                //        });
-                //    });
-                //});
-
-                ////冻结事件绑定
-                //$('.Goods_freeze').on("click", function (event) {
-                //    event.stopPropagation();
-                //    var ID = $(this).attr("data-id");
-                //    var iState = parseInt($(this).attr("data-iState"));//会员状态 1-正常 0-冻结
-                //    var operate = iState == 0 ? "解冻" : "冻结";
-                //    admin.confirm("确定要" + operate + "这条数据？", function () {
-                //        admin.Ajax(admin.route("Freeze"), { ID: ID }, function (r) {
-                //            admin.grid.datagrid('reload');
-                //            admin.alert("操作成功");
-                //        });
-                //    });
-                //});
-
-                ////删除事件绑定
-                //$('.Goods_delete').on("click", function (event) {
-                //    event.stopPropagation();
-                //    var ID = admin.formate("'#'", $(this).attr("data-id"));
-                //    admin.confirm("确定要删除这条数据？", function () {
-                //        admin.Ajax(admin.route("Cancel"), { Ids: ID }, function (r) {
-                //            admin.grid.datagrid('reload');
-                //            admin.alert("删除成功");
-                //        });
-                //    });
-                //});
+                //活动的开关事件bIsActivity
+                $('.Goods_activity').on("click",function(event){
+                    event.stopPropagation();
+                    var id=$(this).attr("data-id");
+                    var bIsActivity=$(this).attr("data-bIsActivity");
+                    var tip=bIsActivity=="true"?"禁用":"启用";
+                    admin.confirm("确认要["+tip+"]该商品的活动？", function () {
+                        admin.Ajax(admin.route("Activity"), { sGoodsId: id }, function (r) {
+                            admin.grid.datagrid("reload");
+                            admin.alert("操作成功");
+                        });
+                    })
+                });
             }
         });
     });

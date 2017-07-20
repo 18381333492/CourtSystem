@@ -43,15 +43,20 @@ namespace Web.Areas.Admin.Controllers
             return View(manage.Get(sGoodsId));
         }
 
+        public ActionResult Integral(string sGoodsId)
+        {
+            return View(manage.Get(sGoodsId));
+        }
+
         /// <summary>
         /// 分页获取数据列表
         /// </summary>
         /// <param name="pageInfo"></param>
         /// <param name="searchText"></param>
         /// <returns></returns>
-        public ActionResult List(PageInfo pageInfo,string searchText)
+        public ActionResult List(PageInfo pageInfo,string searchText,int bIsShelves=-1,int iGoodsType=-1)
         {
-            return Content(manage.List(pageInfo, searchText));
+            return Content(manage.List(pageInfo, searchText, bIsShelves, iGoodsType));
         }
 
         /// <summary>
@@ -81,6 +86,36 @@ namespace Web.Areas.Admin.Controllers
         public void SetDisPrices(ES_Goods goods)
         {
             if (manage.SetDisPrices(goods.ID.ToString(),goods.sDisPrices,goods.IsRateGiving) > 0)
+                result.success = true;
+        }
+
+        /// <summary>
+        /// 设置积分
+        /// </summary>
+        /// <param name="goods"></param>
+        public void SetIntegral(ES_Goods goods)
+        {
+            if (manage.SetIntegral(goods.ID.ToString(), goods.iIntegral, goods.IsRateAdd) > 0)
+                result.success = true;
+        }
+
+        /// <summary>
+        /// 商品的上下架
+        /// </summary>
+        /// <param name="sGoodsId"></param>
+        public void Shelves(string sGoodsId)
+        {
+            if (manage.Shelves(sGoodsId)>0)
+                 result.success = true;
+        }
+
+        /// <summary>
+        /// 商品活动的开启与禁用
+        /// </summary>
+        /// <param name="sGoodsId"></param>
+        public void Activity(string sGoodsId)
+        {
+            if (manage.Activity(sGoodsId) > 0)
                 result.success = true;
         }
     }

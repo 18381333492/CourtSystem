@@ -16,63 +16,71 @@
             <option value="3">已完成</option>
         </select>
         <span>订单类型:</span>
-        <select name="iState" class="form-control input-sm" style="width:100px;">
+        <select name="iOrderType" class="form-control input-sm" style="width:100px;">
             <option value="-1">--请选择--</option>
             <option value="0">普通订单</option>
             <option value="1">虚拟订单</option>
         </select>
         <span>渠道:</span>
-        <select name="iState" class="form-control input-sm" style="width:100px;">
+        <select name="iChannel" class="form-control input-sm" style="width:100px;">
             <option value="-1">--请选择--</option>
             <option value="0">微信</option>
             <option value="1">PC</option>
         </select>
         <span>下单时间:</span>
-        <input type="text" id="dPreStaTime" name="dPreStaTime" class="form-control input-sm" readonly="readonly"
-               style="width:150px;cursor: pointer" placeholder="开始时间" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"> --
-        <input type="text" id="dPreStaTime" name="dPreStaTime" class="form-control input-sm" readonly="readonly"
+        <input type="text"  name="dStaTime" class="form-control input-sm" readonly="readonly"
+               style="width:150px;cursor: pointer;" placeholder="开始时间" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})"> --
+        <input type="text"  name="dEndTime" class="form-control input-sm" readonly="readonly"
                style="width:150px;cursor: pointer" placeholder="结束时间" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})">
         <br /><br />
         <i>模糊查询:</i>
-        <input type="text" class="form-control input-sm" placeholder="收件人/手机/订单号/商品编号" style="width:200px">
+        <input type="text" class="form-control input-sm" placeholder="收件人/手机/订单号/商品编号" style="width:200px" name="searchText">
         <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
          &nbsp; &nbsp; @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
     </form>
 </div>
 <script type="text/javascript">
     $(function () {
-      //  var buttonList=@Html.Raw(ViewData["Button_NotToolbar"]);
+        var buttonList=@Html.Raw(ViewData["Button_NotToolbar"]);
         var admin = new adminPackage();
         //注册路由
         admin.routeRegister("Admin", "Orders");
 
         //模糊查询
         $('.searchText').on("click", function () {
-            var searchText = $('#search input').val();
+            var params = $('#search').serializeArray().toObject();
             admin.grid.datagrid({
-                queryParams: {
-                    searchText: searchText
-                }
+                queryParams: params
             });
         });
 
-        //新增操作
-        $('.Orders_add').on("click", function () {
-            admin.creatModal(admin.route("Add"));
+        //物流设置
+        $('.Orders_logistics').on("click", function () {
+            var selected = admin.grid.datagrid('getSelections');
+            if(selected.length==1){
+                if(selected[0].iState==2){
+                    admin.creatModal(admin.route("Logistics?sOrderId="+selected[0].ID));
+                }
+                else
+                    admin.alert("待发货的订单才能设置物流信息!");
+            }
+            else{
+                admin.alert("请选择一条数据进行操作!");
+            }
         });
 
-        //删除操作
-        $('.Orders_cancel').on("click", function () {
+        //确认收货操作(批量)
+        $('.Orders_confirm').on("click", function () {
             var selected = admin.grid.datagrid('getSelections');
             if (selected.length > 0) {
                 var array = [];
                 $(selected).each(function () {
-                    array.push(admin.formate("'#'", this.ID));
+                    array.push(this.ID);
                 });
-                admin.confirm("确认要删除选择的数据？", function () {
-                    admin.Ajax(admin.route("Cancel"), { Ids: array.join() }, function (r) {
+                admin.confirm("确定要[确认收货]所选择的订单？", function () {
+                    admin.Ajax(admin.route("Confrim"), { sOrdersId: array.join() }, function (r) {
                         admin.grid.datagrid("reload");
-                        admin.alert("删除成功");
+                        admin.alert("操作成功");
                     });
                 })
             }
@@ -95,21 +103,34 @@
             pageSize:20,
             loadMsg: "正在加载...",
             columns: [[
-                { field: 'sOpenId', title: 'OpenId', align: 'center', sortable: true, width: 80 },
-                { field: 'sOrderNo', title: '订单号', align: 'center', sortable: true, width: 100 },
+                { field: 'sOpenId', title: 'OpenId', align: 'center', sortable: true, width: 120 },
+                { field: 'sOrderNo', title: '订单号', align: 'center', sortable: true, width: 130 },
                 { field: 'sReceiver', title: '收件人', align: 'center', sortable: true, width: 80 },
-                { field: 'sPhone', title: '手机号码', align: 'center', sortable: true, width: 100 },
+                { field: 'sPhone', title: '手机号码', align: 'center', sortable: true, width: 80 },
                 { field: 'sGoodsNo', title: '商品编号', align: 'center', sortable: true, width: 80 },
                 { field: 'sGoodsName', title: '商品名称', align: 'center', sortable: true, width: 120 },
-                { field: 'iCount', title: '数量', align: 'center', sortable: true, width: 60 },
-                { field: 'dAllPrices', title: '金额', align: 'center', sortable: true, width: 80 },
-                { field: 'dDiscountPrices', title: '优惠金额', align: 'center', sortable: true, width: 80 },
-                { field: 'dPrices', title: '支付金额', align: 'center', sortable: true, width: 80 },
-                { field: 'iOrderType', title: '订单类型', align: 'center', sortable: true, width: 80 },
-                { field: 'iChannel', title: '渠道', align: 'center', sortable: true, width: 60 },
-                { field: 'iState', title: '状态', align: 'center', sortable: true, width: 60 },
-                { field: 'dBookTime', title: '下单时间', align: 'center', sortable: true, width: 100 },
-                { field: 'sIp', title: 'Ip地址', align: 'center', sortable: true, width: 100 },
+                { field: 'iCount', title: '数量', align: 'center', sortable: true, width: 40 },
+                { field: 'dAllPrices', title: '金额', align: 'center', sortable: true, width: 60,formatter:function(value){return value.toFixed(2);} },
+                { field: 'dDiscountPrices', title: '优惠金额', align: 'center', sortable: true, width: 60,formatter:function(value){return value.toFixed(2);} },
+                { field: 'dPrices', title: '支付金额', align: 'center', sortable: true, width: 60,formatter:function(value){return value.toFixed(2);} },
+                { field: 'iOrderType', title: '订单类型', align: 'center', sortable: true, width: 60,formatter:function(value){
+                    if(value==0) return "普通订单";
+                    else return "虚拟订单";
+                    }
+                },
+                { field: 'iChannel', title: '渠道', align: 'center', sortable: true, width: 50,formatter:function(value){
+                    if(value==0) return "微信";
+                    else return "PC";
+                }},
+                { field: 'iState', title: '状态', align: 'center', sortable: true, width: 50,formatter:function(value){
+                    if(value==0) return "<span style='color:red'>待付款</span>";
+                    if(value==1) return "<span style='color:blueviolet'>待发货</span>";
+                    if(value==2) return "<span style='color:green'>待收货</span>";
+                    if(value==3) return "<span style='color:blue'>已完成</span>";         
+                }
+                },
+                { field: 'dBookTime', title: '下单时间', align: 'center', sortable: true, width: 120 },
+                { field: 'sIp', title: 'Ip地址', align: 'center', sortable: true, width: 90 },
                 {
                     field: 'ID', title: '操作', align: 'center', width: 180, formatter: function (value,row) {
                         var html = [];
@@ -123,44 +144,27 @@
                     }
                 },
             ]],
+            onDblClickRow:function(index,row){
+                admin.creatModal(admin.route("Detail?sOrderId="+row.ID));
+            },
             onLoadSuccess: function () {
-                ////重置密码事件绑定
-                //$('.Orders_reset').on("click", function (event) {
-                //    event.stopPropagation();
-                //    var ID = $(this).attr("data-id");
-                //    admin.confirm("确定要将该账号密码重置成为123456？", function () {
-                //        admin.Ajax(admin.route("Reset"), { ID: ID }, function (r) {
-                //            admin.grid.datagrid('reload');
-                //            admin.alert("操作成功");
-                //        });
-                //    });
-                //});
-
-                ////冻结事件绑定
-                //$('.Orders_freeze').on("click", function (event) {
-                //    event.stopPropagation();
-                //    var ID = $(this).attr("data-id");
-                //    var iState = parseInt($(this).attr("data-iState"));//会员状态 1-正常 0-冻结
-                //    var operate = iState == 0 ? "解冻" : "冻结";
-                //    admin.confirm("确定要" + operate + "这条数据？", function () {
-                //        admin.Ajax(admin.route("Freeze"), { ID: ID }, function (r) {
-                //            admin.grid.datagrid('reload');
-                //            admin.alert("操作成功");
-                //        });
-                //    });
-                //});
-
-                ////删除事件绑定
-                //$('.Orders_delete').on("click", function (event) {
-                //    event.stopPropagation();
-                //    var ID = admin.formate("'#'", $(this).attr("data-id"));
-                //    admin.confirm("确定要删除这条数据？", function () {
-                //        admin.Ajax(admin.route("Cancel"), { Ids: ID }, function (r) {
-                //            admin.grid.datagrid('reload');
-                //            admin.alert("删除成功");
-                //        });
-                //    });
-                //});
+                //确认收货事件
+                $('.Orders_reconfirm').on("click",function(event){
+                    event.stopPropagation();
+                    var iState=parseInt($(this).attr("data-iState"));
+                    if(iState==2){
+                        admin.confirm("确定要将该订单状态变为已完成?",function(){
+                            var sOrdersId=$(this).attr("data-id");
+                            admin.Ajax(admin.route("Confrim"),{sOrdersId:sOrdersId},function(r){
+                                admin.alert("操作成功");
+                                admin.grid.datagrid("reload");
+                            })
+                        });
+                    }
+                    else{
+                        admin.alert("待收货的订单才能确认收货!");
+                    }
+                });
             }
         });
     });

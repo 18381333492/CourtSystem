@@ -1,4 +1,5 @@
-﻿using EFModels.MyModels;
+﻿using EFModels;
+using EFModels.MyModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,8 +20,20 @@ namespace LogicHandlerInterface
         /// </summary>
         /// <param name="pageInfo"></param>
         /// <param name="searchText"></param>
+        /// <param name="dStaTime"></param>
+        /// <param name="dEndTime"></param>
+        /// <param name="iState"></param>
+        /// <param name="iOrderType"></param>
+        /// <param name="iChannel"></param>
         /// <returns></returns>
-        public abstract string List(PageInfo pageInfo, string searchText);
+        public abstract string List(PageInfo pageInfo, string searchText, string dStaTime, string dEndTime, int iState, int iOrderType, int iChannel);
+
+        /// <summary>
+        /// 根据主键ID获取订单对象
+        /// </summary>
+        /// <param name="sOrderId"></param>
+        /// <returns></returns>
+        public abstract ES_Orders Get(string sOrderId);
 
         #endregion
 
@@ -35,13 +48,11 @@ namespace LogicHandlerInterface
 
 
         /// <summary>
-        /// 添加物流信息
+        /// 设置物流信息
         /// </summary>
-        /// <param name="sOrdersId">订单主键ID</param>
-        /// <param name="sExpressName">快递名称</param>
-        /// <param name="sExpressNo">快递编号</param>
+        /// <param name="orders"></param>
         /// <returns></returns>
-        public abstract int AddLogistics(string sOrdersId, string sExpressName, string sExpressNo);
+        public abstract int SetLogistics(ES_Orders orders);
 
         #endregion
     }

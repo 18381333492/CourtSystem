@@ -1,0 +1,106 @@
+﻿
+<!--订单详情视图-->
+@using EFModels;
+@model ES_Orders
+<div class="modal-dialog">
+    <div class="modal-content" style="width:800px">
+        <div class="modal-header" style="padding:10px;">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">订单详情</h4>
+        </div>
+        <!--主体内容-->
+        <div class="modal-body">
+            <table class="table table-hover" style="margin-bottom:0px">
+                <tbody>
+                    <tr class="success">
+                        <td>OpenId:@Model.sOpenId</td>
+                        <td colspan="2">订单类型:
+                            @if (Model.iOrderType == 0)
+                            {<span>普通订单</span> }
+                            @if (Model.iOrderType == 1)
+                            {<span>虚拟订单</span> }
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>订单编号:@Model.sOrderNo</td>
+                        <td>订单状态:
+                            @if (Model.iState == 0)
+                            { <span style="color:red">待付款</span> }
+                            @if (Model.iState == 1)
+                            { <span style="color:yellow">待发货</span> }
+                            @if (Model.iState == 2)
+                            { <span style="color:green">待收货</span> }
+                            @if (Model.iState == 3)
+                            { <span style="color:blue">已完成</span> }
+                        </td>
+                        <td>渠道:
+                            @if (Model.iChannel == 0)
+                            { <span>微信</span> }
+                            @if (Model.iChannel == 1)
+                            { <span>PC</span> }
+                        </td>
+                    </tr>
+                    <tr class="success">
+                        <td>下单时间:@Model.dBookTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                        <td>支付时间:@Model.dPayTime</td>
+                        <td>完成时间:@Model.dDoneTime</td>
+                    </tr>
+                    @if (!string.IsNullOrEmpty(Model.sActivity))
+                    {
+                    <tr class="success">
+                        <td>商品活动:@Model.sActivity</td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            <table class="table table-hover"  style="margin-bottom:0px">
+                <thead>
+                    <tr class="danger">
+                        <th style="text-align:center">商品图片</th>
+                        <th style="text-align:center">商品单价</th>
+                        <th style="text-align:center">购买数量</th>
+                        <th style="text-align:center">规格</th>
+                        <th style="text-align:center">赠送积分</th>
+                        <th style="text-align:center">金额</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="text-align:center">
+                                <img src="" style="width:80px;height:80px" />
+                                <p style="text-align:center">@Model.sGoodsName</p>
+                            </div>
+                        </td>
+                        <td style="text-align:center;vertical-align:middle;color:red">@Model.dGoodsPrices.ToString("f2")</td>
+                        <td style="text-align:center;vertical-align:middle">@Model.iCount</td>
+                        <td style="text-align:center;vertical-align:middle">@Model.sGuige</td>
+                        <td style="text-align:center;vertical-align:middle">@Model.iIntegral</td>
+                        <td style="text-align:center;vertical-align:middle;color:red">
+                            <p>订单总价:@Model.dAllPrices.ToString("f2")</p>
+                            <p>优惠价格:@Model.dDiscountPrices.ToString("f2")</p>
+                            <p>实际支付:@Model.dPrices.ToString("f2")</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">收件人:@Model.sReceiver</td>
+                        <td colspan="3">电话号码:@Model.sPhone</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">收货地址:@Model.sAddress</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">物流信息:@Model.sLogisticsCompany &nbsp; @Model.sLogisticsNo</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">订单备注:@Model.sContent</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--主体内容-->
+        <div class="modal-footer" style="padding:10px;">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        </div>
+    </div>
+</div>

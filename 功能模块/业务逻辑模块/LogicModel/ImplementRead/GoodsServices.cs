@@ -20,9 +20,23 @@ namespace LogicHandlerModel
         /// <param name="pageInfo"></param>
         /// <param name="searchText"></param>
         /// <returns></returns>
-        public override string List(PageInfo pageInfo, string searchText)
+        public override string List(PageInfo pageInfo, string searchText, int bIsShelves, int iGoodsType)
         {
-            var res = query.PageQuery<Dictionary<string, object>>("select * from ES_Goods", pageInfo, searchText);
+            StringBuilder sSql = new StringBuilder();
+            sSql.Append("select * from ES_Goods where 1=1");
+            if (bIsShelves > -1)
+            {//上下架查询
+                sSql.AppendFormat(" and bIsShelves={0}", bIsShelves);
+            }
+            if (iGoodsType > -1)
+            {//商品类型查询
+                sSql.AppendFormat(" and iGoodsType={0}", iGoodsType);
+            }
+            if (!string.IsNullOrEmpty(searchText))
+            {//模糊查询
+                sSql.AppendFormat(" and (sGoodsName like '%{0}%' or sGoodsNo like '%{0}%')", searchText);
+            }
+            var res = query.PageQuery<Dictionary<string, object>>(sSql.ToString(), pageInfo, searchText);
             return res.toJson();
         }
 

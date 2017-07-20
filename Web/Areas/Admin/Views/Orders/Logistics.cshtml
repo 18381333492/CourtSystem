@@ -1,29 +1,27 @@
-﻿<!--设置优惠价格视图-->
+﻿
+<!--物流设置视图-->
 @using EFModels;
-@model ES_Goods
+@model ES_Orders
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header" style="padding:10px;">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">设置价格</h4>
+            <h4 class="modal-title">物流设置</h4>
         </div>
         <!--主体内容-->
         <div class="modal-body">
             <form class="form-horizontal" role="form" id="dataForm">
                 <input type="hidden" name="ID" value="@Model.ID" />
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">优惠价格</label>
+                    <label class="col-sm-2 control-label">快递公司</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" placeholder="请输入优惠价格" name="sDisPrices" value="@Model.sDisPrices.ToString("f2")">
+                        <input type="text" class="form-control" placeholder="请输入快递公司" name="sLogisticsCompany" value="@Model.sLogisticsCompany">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">比例优惠</label>
+                    <label class="col-sm-2 control-label">快递单号</label>
                     <div class="col-sm-10">
-                        <div class="col-sm-10" style="padding-top:5px;">
-                            <input class="IsRateGiving" name="IsRateGiving" type="radio" value="False">否 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input class="IsRateGiving" name="IsRateGiving" type="radio" value="True">是
-                        </div>
+                           <input type="text" class="form-control" placeholder="请输入快递单号" name="sLogisticsNo" value="@Model.sLogisticsNo">
                     </div>
                 </div>
             </form>
@@ -37,20 +35,10 @@
 </div>
 <script type="text/javascript">
     $(function () {
-        $('.IsRateGiving').iCheck({
-            labelHover: false,
-            cursor: true,
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%'
-        });
-
-        var IsRateGiving = '@Model.IsRateGiving';
-        $('.IsRateGiving[value=' + IsRateGiving + ']').iCheck('check');
-
+  
         var admin = new adminPackage();
         //注册路由
-        admin.routeRegister("Admin", "Goods");
+        admin.routeRegister("Admin", "Orders");
 
         //提交操作
         $('#ok').on("click", function () {
@@ -59,7 +47,7 @@
             var res = bootstrapValidator.isValid();
             if (res) {//验证通过
                 admin.button.disabled();
-                admin.Ajax(admin.route("SetDisPrices"), admin.form.serialize(), function (r) {
+                admin.Ajax(admin.route("SetLogistics"), admin.form.serialize(), function (r) {
                     admin.tip("操作成功");
                     admin.grid.datagrid('reload');
                     admin.closeModal();
@@ -69,15 +57,18 @@
 
         //表单验证
         admin.formValidator(admin.form, {
-            sDisPrices: {
+            sLogisticsCompany: {
                 validators: {
                     notEmpty: {
-                        message: '优惠价格不能为空'
-                    },
-                    regexp: {
-                        regexp: /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/,
-                        message: '金额格式错误'
-                    },
+                        message: '快递公司不能为空'
+                    }
+                }
+            },
+            sLogisticsNo: {
+                validators: {
+                    notEmpty: {
+                        message: '快递单号不能为空'
+                    }
                 }
             }
         });

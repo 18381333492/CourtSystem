@@ -38,5 +38,7 @@ namespace EFModels
         public int iState { get; set; }
         public int iIntegral { get; set; }
         public string sGuige { get; set; }
+        public string sLogisticsCompany { get; set; }
+        public string sLogisticsNo { get; set; }
     }
 }

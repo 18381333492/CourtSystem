@@ -1311,6 +1311,9 @@
     <Content Include="Areas\Admin\Views\Goods\Add.cshtml" />
     <Content Include="Areas\Admin\Views\Goods\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Goods\SetPrices.cshtml" />
+    <Content Include="Areas\Admin\Views\Goods\Integral.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\Detail.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\Logistics.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
