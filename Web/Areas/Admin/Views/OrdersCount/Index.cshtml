@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "订单统计";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
+}
+<link href="~/Areas/Admin/Content/Calendar/skin/WdatePicker.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/Calendar/WdatePicker.js"></script>
+<div style="width:100%;height:100%;margin-top:10px;margin-left:10px">
+    <form id="search">
+        <span>统计范畴:</span>
+        <select id="iCompareType"  name="iCompareType" class="form-control input-sm" style="width:100px;">
+            <option value="1">年份</option>
+            <option value="2">月份</option>
+            <option value="3">天</option>
+        </select>
+        <span>时间选择:</span>
+        <span class="date_year">
+        <input type="text" name="dBookTime" class="form-control input-sm" readonly="readonly" value="@DateTime.Now.ToString("yyyy")"
+               style="width:150px;cursor: pointer;" placeholder="交易时间" onClick="WdatePicker({dateFmt:'yyyy'})" > --
+        <input type="text"  name="dCompareTime" class="form-control input-sm" readonly="readonly"
+               style="width:150px;cursor: pointer" placeholder="参考时间" onClick="WdatePicker({dateFmt:'yyyy'})">
+        </span>
+        <span class="date_month" style="display:none">
+            <input type="text" name="dBookTime" class="form-control input-sm" readonly="readonly" value="@DateTime.Now.ToString("yyyy-MM")"
+                   style="width:150px;cursor: pointer;" placeholder="交易时间" onClick="WdatePicker({ dateFmt: 'yyyy-MM' })"> --
+            <input type="text"  name="dCompareTime" class="form-control input-sm" readonly="readonly"
+                   style="width:150px;cursor: pointer" placeholder="参考时间" onClick="WdatePicker({ dateFmt: 'yyyy-MM' })">
+        </span>
+        <span class="date_day" style="display:none">
+            <input type="text"  name="dBookTime" class="form-control input-sm" readonly="readonly" value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                   style="width:150px;cursor: pointer;" placeholder="交易时间" onClick="WdatePicker({ dateFmt: 'yyyy-MM-dd' })"> --
+            <input type="text"  name="dCompareTime" class="form-control input-sm" readonly="readonly"
+                   style="width:150px;cursor: pointer" placeholder="参考时间" onClick="WdatePicker({ dateFmt: 'yyyy-MM-dd' })">
+        </span>
+        <span>订单类型:</span>
+        <select name="iOrderType" class="form-control input-sm" style="width:100px;">
+            <option value="-1">--请选择--</option>
+            <option value="0">普通订单</option>
+            <option value="1">虚拟订单</option>
+        </select>
+        <span>渠道:</span>
+        <select name="iChannel" class="form-control input-sm" style="width:100px;">
+            <option value="-1">--请选择--</option>
+            <option value="0">微信</option>
+            <option value="1">PC</option>
+        </select>
+        &nbsp;
+        <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
+    </form>
+    <div id="container" style="min-width:400px;height:500px;margin-top:50px;"></div>
+</div>
+<script src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+<script type="text/javascript">
+    $(function () {
+        var admin = new adminPackage();
+        admin.routeRegister("Admin", "OrdersCount");
+
+        //下拉选择框的选中事件绑定
+        $('#iCompareType').change(function () {
+            var value =parseInt($(this).val());
+            switch (value) {
+                case 1: $('.date_year').show(); $('.date_month').show(); $('.date_day').show(); break;
+                case 2: $('.date_year').hide(); $('.date_month').show(); $('.date_day').hide();; break;
+                case 3: $('.date_year').hide(); $('.date_month').hide(); $('.date_day').show();; break;
+            }
+        });
+
+        var chart = new Highcharts.Chart('container', {
+            title: {
+                text: '订单交易统计折线图',
+                x: -20
+            },
+            subtitle: {
+                text: '数据来源: WorldClimate.com',
+                x: -20
+            },
+            xAxis: {
+                categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
+            },
+            yAxis: {
+                title: {
+                    text: '温度 (°C)'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            },
+            tooltip: {
+                valueSuffix: '°C'
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: '东京',
+                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+            }, {
+                name: '纽约',
+                data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+            }, {
+                name: '柏林',
+                data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+            }, {
+                name: '伦敦',
+                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+            }]
+        });
+
+    });
+</script>

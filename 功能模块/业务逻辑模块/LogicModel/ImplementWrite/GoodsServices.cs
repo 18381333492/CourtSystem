@@ -105,5 +105,7 @@ namespace LogicHandlerModel
             goods.IsRateGiving = IsRateGiving;
             return excute.SaveChange();
         }
+
+
     }
 }

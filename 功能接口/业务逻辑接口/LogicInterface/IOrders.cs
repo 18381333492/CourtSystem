@@ -54,6 +54,16 @@ namespace LogicHandlerInterface
         /// <returns></returns>
         public abstract int SetLogistics(ES_Orders orders);
 
+
+        /**********************************前端订单的相关操作***********************************/
+
+        /// <summary>
+        /// 预订下单
+        /// </summary>
+        /// <param name="orders"></param>
+        /// <returns></returns>
+        public abstract int BookOrder(ES_Orders orders);
+
         #endregion
     }
 }

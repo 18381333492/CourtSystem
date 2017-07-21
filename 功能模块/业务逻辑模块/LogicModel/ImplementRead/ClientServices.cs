@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EFModels.MyModels;
+using EFModels;
 
 namespace LogicHandlerModel
 {
@@ -35,6 +36,16 @@ namespace LogicHandlerModel
         public override bool IsExistByOpenId(string sOpenId)
         {
             return query.Any("select * from ES_Client where sOpenId=@sOpenId", new { sOpenId = sOpenId });
+        }
+
+        /// <summary>
+        /// 根据OpenId获取会员信息
+        /// </summary>
+        /// <param name="OpenId"></param>
+        /// <returns></returns>
+        public override ES_Client GetByOpenId(string sOpenId)
+        {
+            return query.SingleQuery<ES_Client>("select * from ES_Client where sOpenId=@sOpenId", new { sOpenId = sOpenId });
         }
     }
 }

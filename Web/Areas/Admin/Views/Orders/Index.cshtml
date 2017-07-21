@@ -152,9 +152,9 @@
                 $('.Orders_reconfirm').on("click",function(event){
                     event.stopPropagation();
                     var iState=parseInt($(this).attr("data-iState"));
+                    var sOrdersId=$(this).attr("data-id");
                     if(iState==2){
                         admin.confirm("确定要将该订单状态变为已完成?",function(){
-                            var sOrdersId=$(this).attr("data-id");
                             admin.Ajax(admin.route("Confrim"),{sOrdersId:sOrdersId},function(r){
                                 admin.alert("操作成功");
                                 admin.grid.datagrid("reload");

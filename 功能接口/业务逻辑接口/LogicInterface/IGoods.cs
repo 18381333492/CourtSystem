@@ -42,6 +42,16 @@ namespace LogicHandlerInterface
         public abstract ES_Goods GetByGoodsNo(string sGoodsNo);
 
 
+        /*******************************************前端的相关查询接口***********************************************/
+
+        /// <summary>
+        /// 根据商品编号获取商品的信息
+        /// </summary>
+        /// <param name="sGoodsNo"></param>
+        /// <returns></returns>
+        public abstract ES_Goods GetGoodsInfoByGoodsNo(string sGoodsNo);
+
+      
 
         #endregion
 

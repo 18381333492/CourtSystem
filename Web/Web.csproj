@@ -125,10 +125,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BaseController\AdminBase.cs" />
+    <Compile Include="App_Start\BaseController\MobileBase.cs" />
     <Compile Include="App_Start\BaseController\SESSION.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NoLogin.cs" />
+    <Compile Include="App_Start\PayHelper\PayHelper.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="App_Start\WeiXinMessage\AutoHandleMessage.cs" />
@@ -136,6 +138,7 @@
     <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
     <Compile Include="Areas\Admin\Controllers\GoodsController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrdersCountController.cs" />
     <Compile Include="Areas\Admin\Controllers\WeChatConcernController.cs" />
     <Compile Include="Areas\Admin\Controllers\WeChatNewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\WeChatMenuController.cs" />
@@ -148,6 +151,10 @@
     <Compile Include="Areas\Admin\Controllers\MenuController.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminRoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\SuperManController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\ClientController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\GoodsController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\PayController.cs" />
     <Compile Include="Areas\Mobile\MobileAreaRegistration.cs" />
     <Compile Include="Areas\Pays\PaysAreaRegistration.cs" />
     <Compile Include="Areas\WeiXin\Controllers\AutoMenuController.cs" />
@@ -1314,6 +1321,7 @@
     <Content Include="Areas\Admin\Views\Goods\Integral.cshtml" />
     <Content Include="Areas\Admin\Views\Orders\Detail.cshtml" />
     <Content Include="Areas\Admin\Views\Orders\Logistics.cshtml" />
+    <Content Include="Areas\Admin\Views\OrdersCount\Index.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
@@ -1381,7 +1389,6 @@
   <ItemGroup>
     <Folder Include="Areas\Admin\Content\assets\js\fuelux\data\" />
     <Folder Include="Areas\Admin\Content\assets\js\jqGrid\i18n\" />
-    <Folder Include="Areas\Mobile\Controllers\" />
     <Folder Include="Areas\Mobile\Views\Shared\" />
     <Folder Include="Areas\Pays\Controllers\" />
     <Folder Include="Areas\Pays\Views\Shared\" />

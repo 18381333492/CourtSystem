@@ -14,6 +14,7 @@ namespace LogicHandlerModel
     /// </summary>
     public partial class GoodsServices:IGoods
     {
+      
         /// <summary>
         /// 分页获取商品数据列表
         /// </summary>
@@ -60,5 +61,18 @@ namespace LogicHandlerModel
         {
             return query.SingleQuery<ES_Goods>("select * from ES_Goods where sGoodsNo=@sGoodsNo", new { sGoodsNo = sGoodsNo });
         }
+
+
+        /// <summary>
+        /// 根据商品编号获取商品的信息
+        /// </summary>
+        /// <param name="sGoodsNo"></param>
+        /// <returns></returns>
+        public override ES_Goods GetGoodsInfoByGoodsNo(string sGoodsNo)
+        {
+            return query.SingleQuery<ES_Goods>("select sGoodsPrices,bIsShelves,bIsActivity,iCount from ES_Goods where sGoodsNo=@sGoodsNo", new { sGoodsNo = sGoodsNo });
+        }
+
+
     }
 }

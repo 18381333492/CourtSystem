@@ -30,6 +30,16 @@ namespace LogicHandlerInterface
         /// <returns></returns>
         public abstract bool IsExistByOpenId(string sOpenId);
 
+
+        /************************************前段页面的查询接口****************************************/
+
+        /// <summary>
+        /// 根据OpenId获取会员信息
+        /// </summary>
+        /// <param name="OpenId"></param>
+        /// <returns></returns>
+        public abstract ES_Client GetByOpenId(string OpenId);
+
         #endregion
 
 

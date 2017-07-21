@@ -65,7 +65,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr class="warning">
                         <td>
                             <div style="text-align:center">
                                 <img src="" style="width:80px;height:80px" />
@@ -82,17 +82,17 @@
                             <p>实际支付:@Model.dPrices.ToString("f2")</p>
                         </td>
                     </tr>
-                    <tr>
+                    <tr class="warning">
                         <td colspan="3">收件人:@Model.sReceiver</td>
                         <td colspan="3">电话号码:@Model.sPhone</td>
                     </tr>
-                    <tr>
+                    <tr class="warning">
                         <td colspan="6">收货地址:@Model.sAddress</td>
                     </tr>
-                    <tr>
+                    <tr class="warning">
                         <td colspan="6">物流信息:@Model.sLogisticsCompany &nbsp; @Model.sLogisticsNo</td>
                     </tr>
-                    <tr>
+                    <tr class="warning">
                         <td colspan="6">订单备注:@Model.sContent</td>
                     </tr>
                 </tbody>
