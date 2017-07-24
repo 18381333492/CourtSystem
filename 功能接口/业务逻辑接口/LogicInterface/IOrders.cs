@@ -35,6 +35,18 @@ namespace LogicHandlerInterface
         /// <returns></returns>
         public abstract ES_Orders Get(string sOrderId);
 
+
+        /// <summary>
+        /// 获取订单图表统计数据
+        /// </summary>
+        /// <param name="iType">比较类型</param>
+        /// <param name="iCompareType">统计范畴</param>
+        /// <param name="dBookTime">交易时间</param>
+        /// <param name="dCompareTime">参考时间</param>
+        /// <param name="iOrderType">订单类型</param>
+        /// <param name="iChannel">渠道</param>
+        public abstract List<Dictionary<string, object>> SearchCount(int iType, int iCompareType, string dBookTime, int iOrderType, int iChannel);
+
         #endregion
 
 

@@ -11,7 +11,6 @@ window.client = {
     localStorage: new myStorage(),
 }
 
-
 window.dialog = function () {
 
     ////创建背景DIV(创建遮罩层)
@@ -331,7 +330,6 @@ function myStorage() {
 
 /*前端ajax的封装*/
 function ajax() {
-
     function ajaxRequest(url, params, callback, er_callback, type, async) {
         type = type || false;
         $.ajax({

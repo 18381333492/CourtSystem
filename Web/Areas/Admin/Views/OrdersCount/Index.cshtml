@@ -6,6 +6,11 @@
 <script src="~/Areas/Admin/Content/Calendar/WdatePicker.js"></script>
 <div style="width:100%;height:100%;margin-top:10px;margin-left:10px">
     <form id="search">
+        <span>比较类型:</span>
+        <select id="iType" name="iType" class="form-control input-sm" style="width:100px;">
+            <option value="1">订单量</option>
+            <option value="2">交易金额</option>
+        </select>
         <span>统计范畴:</span>
         <select id="iCompareType"  name="iCompareType" class="form-control input-sm" style="width:100px;">
             <option value="1">年份</option>
@@ -64,7 +69,8 @@
             }
         });
 
-        var chart = new Highcharts.Chart('container', {
+        //参数配置
+        var chartParams = {
             title: {
                 text: '订单交易统计折线图',
                 x: -20
@@ -77,8 +83,9 @@
                 categories: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月']
             },
             yAxis: {
+                allowDecimals:false,
                 title: {
-                    text: '温度 (°C)'
+                    text: '订单量(笔数)'
                 },
                 plotLines: [{
                     value: 0,
@@ -87,7 +94,8 @@
                 }]
             },
             tooltip: {
-                valueSuffix: '°C'
+                valueSuffix: '笔',
+                shared: true,
             },
             legend: {
                 layout: 'vertical',
@@ -95,20 +103,64 @@
                 verticalAlign: 'middle',
                 borderWidth: 0
             },
-            series: [{
-                name: '东京',
-                data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-            }, {
-                name: '纽约',
-                data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-            }, {
-                name: '柏林',
-                data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-            }, {
-                name: '伦敦',
-                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-            }]
-        });
+            series: []
+        }
 
+        //初始化图表
+        function initChart() {
+            var params = $('#search').serializeArray().toObject();
+            var iCompareType = parseInt($('#iCompareType').val());
+            params.dBookTime = $('#search input[name=dBookTime]').eq(iCompareType - 1).val();
+            params.dCompareTime = $('#search input[name=dCompareTime]').eq(iCompareType - 1).val();
+            if (iCompareType == 1) {
+                params.dBookTime = params.dBookTime + "-01-01";
+                if (params.dCompareTime)
+                    params.dCompareTime = params.dCompareTime + "-01-01";
+            }
+            if (iCompareType == 2) {
+                params.dBookTime = params.dBookTime + "-01";
+                if (params.dCompareTime)
+                    params.dCompareTime = params.dCompareTime + "-01";
+            }
+            if (iCompareType == 3) {
+                params.dBookTime = params.dBookTime + " 00:00:00";
+                if (params.dCompareTime)
+                    params.dCompareTime = params.dCompareTime + " 00:00:00";
+            }
+            admin.Ajax(admin.route('SearchCount'), params, function (r) {
+                debugger
+                chartParams.series = [];
+                var bookData = r.data.bookData;
+                var compData = r.data.compData;
+                var type = r.data.iType;
+                var seriesName = type == 1 ? "订单量" : "交易金额";
+                chartParams.yAxis.allowDecimals = type == 1 ? false : true;
+                chartParams.yAxis.title.text = type == 1 ? "订单量(笔数)" : "交易金额(RMB)";
+                chartParams.tooltip.valueSuffix = type == 1 ? "笔" : "";
+                chartParams.series.push({ name: seriesName, data: bookData });
+                if (iCompareType == 2) {
+                    var categories=[];
+                    for(var i=1;i<=bookData.length;i++){
+                        categories.push(i+"Day");
+                    }
+                    chartParams.xAxis.categories = categories;
+                }
+                if (iCompareType == 3) {
+                    var categories = [];
+                    for (var i = 1; i <= bookData.length; i++) {
+                        categories.push(i + "Hour");
+                    }
+                    chartParams.xAxis.categories = categories;
+                }
+                new Highcharts.Chart('container', chartParams);
+            });
+        }
+        //初始化
+        initChart();
+
+        //绑定定查询事件
+        $('.searchText').on("click", function () {
+            initChart();
+        });
     });
 </script>

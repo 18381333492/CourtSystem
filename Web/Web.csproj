@@ -155,6 +155,7 @@
     <Compile Include="Areas\Mobile\Controllers\GoodsController.cs" />
     <Compile Include="Areas\Mobile\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Mobile\Controllers\PayController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\ShopAddressController.cs" />
     <Compile Include="Areas\Mobile\MobileAreaRegistration.cs" />
     <Compile Include="Areas\Pays\PaysAreaRegistration.cs" />
     <Compile Include="Areas\WeiXin\Controllers\AutoMenuController.cs" />
