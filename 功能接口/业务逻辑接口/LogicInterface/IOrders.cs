@@ -47,6 +47,20 @@ namespace LogicHandlerInterface
         /// <param name="iChannel">渠道</param>
         public abstract List<Dictionary<string, object>> SearchCount(int iType, int iCompareType, string dBookTime, int iOrderType, int iChannel);
 
+
+
+        /// <summary>
+        /// 获取订单数据统计列表
+        /// </summary>
+        /// <param name="pageInfo"></param>
+        /// <param name="iCompareType">统计范畴</param>
+        /// <param name="dStaTime">开始时间</param>
+        /// <param name="dEndTime">结束时间</param>
+        /// <param name="iOrderType">订单类型</param>
+        /// <param name="iChannel">渠道</param>
+        /// <returns></returns>
+        public abstract string DataCountList(PageInfo pageInfo, int iCompareType, string dStaTime, string dEndTime, int iOrderType, int iChannel);
+
         #endregion
 
 

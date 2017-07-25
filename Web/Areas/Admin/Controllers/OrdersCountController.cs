@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Web.App_Start.BaseController;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using EFModels.MyModels;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -56,7 +57,7 @@ namespace Web.Areas.Admin.Controllers
                 {
                     iType = iType,
                     bookData = InstallData(res, iCompareType, dBookTime),
-                    compData = InstallData(res, iCompareType, dBookTime)
+                    compData = InstallData(res_data, iCompareType, dCompareTime)
                 };
             }
         }
@@ -121,7 +122,7 @@ namespace Web.Areas.Admin.Controllers
                             m_state = true;
                             for (var j = 0; j < res.Count; j++)
                             {
-                                var da_time = DateTime.Parse(res[j]["date"].ToString());
+                                var da_time = DateTime.Parse(res[j]["date"].ToString()+":00");
                                 if (da_time.Hour == i)
                                 {
                                     data_list.Add(decimal.Parse(res[j]["value"].ToString()));
@@ -139,6 +140,32 @@ namespace Web.Areas.Admin.Controllers
             }
             return data_list;
         }
-            
+
+
+        /// <summary>
+        /// 订单数据统计
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult DataIndex()
+        {
+            return View();
+        }
+
+
+        /// <summary>
+        /// 获取数据统计列表
+        /// </summary>
+        /// <param name="pageInfo"></param>
+        /// <param name="iCompareType">统计范畴</param>
+        /// <param name="dStaTime">开始时间</param>
+        /// <param name="dEndTime">结束时间</param>
+        /// <param name="iOrderType">订单类型</param>
+        /// <param name="iChannel">渠道</param>
+        /// <returns></returns>
+        public ActionResult DataCountList(PageInfo pageInfo, string dStaTime, string dEndTime, int iCompareType=1, int iOrderType=-1, int iChannel=-1)
+        {
+            return Content(manage.DataCountList(pageInfo, iCompareType, dStaTime, dEndTime, iOrderType, iChannel));
+        }
+
     }
 }

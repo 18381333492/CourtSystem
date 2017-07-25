@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = "订单数据统计";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
+}
+<link href="~/Areas/Admin/Content/Calendar/skin/WdatePicker.css" rel="stylesheet" />
+<script src="~/Areas/Admin/Content/Calendar/WdatePicker.js"></script>
+<table id="OrdersCount" style="height:100%;width:100%"></table>
+<div id="OrdersCount_toolbar" style="padding:8px;">
+    <form id="search">
+        <span>统计类型:</span>
+        <select id="iType" name="iType" class="form-control input-sm" style="width:100px;">
+            <option value="1">订单量</option>
+            <option value="2">交易金额</option>
+        </select>
+        <span>统计范畴:</span>
+        <select id="iCompareType" name="iCompareType" class="form-control input-sm" style="width:100px;">
+            <option value="1">年份</option>
+            <option value="2">月份</option>
+        </select>
+        <span>订单类型:</span>
+        <select name="iOrderType" class="form-control input-sm" style="width:100px;">
+            <option value="-1">--请选择--</option>
+            <option value="0">普通订单</option>
+            <option value="1">虚拟订单</option>
+        </select>
+        <span>渠道:</span>
+        <select name="iChannel" class="form-control input-sm" style="width:100px;">
+            <option value="-1">--请选择--</option>
+            <option value="0">微信</option>
+            <option value="1">PC</option>
+        </select>
+        <span>时间选择:</span>
+        <b class="date_year">
+            <input type="text" name="dStaTime" class="form-control input-sm" readonly="readonly"
+                   style="width:150px;cursor: pointer;" placeholder="开始时间" onClick="WdatePicker({dateFmt:'yyyy'})"> --
+            <input type="text" name="dEndTime" class="form-control input-sm" readonly="readonly"
+                   style="width:150px;cursor: pointer" placeholder="结束时间" onClick="WdatePicker({dateFmt:'yyyy'})">
+        </b>
+        <b class="date_month" style="display:none">
+            <input type="text" name="dStaTime" class="form-control input-sm" readonly="readonly"
+                   style="width:150px;cursor: pointer;" placeholder="开始时间" onClick="WdatePicker({ dateFmt: 'yyyy-MM' })"> --
+            <input type="text" name="dEndTime" class="form-control input-sm" readonly="readonly"
+                   style="width:150px;cursor: pointer" placeholder="结束时间" onClick="WdatePicker({ dateFmt: 'yyyy-MM' })">
+        </b>
+        &nbsp;
+        <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
+        &nbsp; &nbsp; @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+        <div id="count" style="color:red;margin-top:10px;">
+            <span>订单量(总计)：<b>0</b></span>
+            <span>交易金额(总计)：<b>0.00</b></span>
+            <span>支付金额(总计)：<b>0.00</b></span>
+        </div>
+    </form>
+</div>
+    <script type="text/javascript">
+        $(function () {
+            var admin = new adminPackage();
+            //注册路由
+            admin.routeRegister("Admin", "OrdersCount");
+
+            //模糊查询
+            $('.searchText').on("click", function () {
+                var params = $('#search').serializeArray().toObject();
+                var iCompareType = parseInt($('#iCompareType').val());
+                params.dStaTime = $('#search input[name=dStaTime]').eq(iCompareType - 1).val();
+                params.dEndTime = $('#search input[name=dEndTime]').eq(iCompareType - 1).val();
+                if (iCompareType == 1) {
+                    if(params.dStaTime)
+                        params.dStaTime = params.dStaTime + "-01-01 00:00:00";
+                    if (params.dEndTime)
+                        params.dEndTime = params.dEndTime + "-12-31 23:59:59 ";
+                }
+                if (iCompareType == 2) {
+                    if (params.dStaTime)
+                        params.dStaTime = params.dStaTime + "-01 00:00:00";
+                    if (params.dEndTime) {
+                        var s = new Date(params.dEndTime)
+                        var ss = new Date(s.getFullYear(), s.getMonth()+1, 0)
+                        params.dEndTime = params.dEndTime + "-"+ss.getDate()+" 23:59:59";
+                    }
+                }
+                admin.grid.datagrid({
+                    queryParams: params
+                });
+            });
+
+            //下拉选择框的选中事件绑定
+            $('#iCompareType').change(function () {
+                var value = parseInt($(this).val());
+                switch (value) {
+                    case 1: $('.date_year').show(); $('.date_month').hide();break;
+                    case 2: $('.date_year').hide(); $('.date_month').show(); break;
+                }
+            });
+
+            //导出报表
+            $('.OrdersCount_export').on("click", function () {
+
+            })
+
+
+            /*!
+            * method:数据列表(datagrid)的绑定
+            */
+            admin.grid.datagrid({
+                fit: true,
+                url: admin.route('DataCountList'),
+                toolbar: admin.toolbar,
+                rownumbers: true,
+                striped: true,
+                pagination: true,
+                pageSize: 20,
+                loadMsg: "正在加载...",
+                columns: [[
+                    { field: 'date', title: '日期', align: 'center', sortable: true, width: 150 },
+                    { field: 'value', title: '订单量', align: 'center', sortable: true, width:110 },
+                    {
+                        field: 'dAllPrices', title: '订单金额', align: 'center', sortable: true, width: 120, formatter: function (value) {
+                            return value.toFixed(2);
+                        }
+                    },
+                    {
+                        field: 'dPrices', title: '支付金额', align: 'center', sortable: true, width: 120, formatter: function (value) {
+                            return value.toFixed(2);
+                        }
+                    },
+                ]],
+                onLoadSuccess: function (data) {
+                    $('#count b').eq(0).text(data.data.value);
+                    if (data.data.dAllPrices == null) data.data.dAllPrices = 0;
+                    $('#count b').eq(1).text(data.data.dAllPrices.toFixed(2));
+                    if (data.data.dPrices == null) data.data.dPrices = 0;
+                    $('#count b').eq(2).text(data.data.dPrices.toFixed(2));
+                }
+            });
+        });
+ </script>

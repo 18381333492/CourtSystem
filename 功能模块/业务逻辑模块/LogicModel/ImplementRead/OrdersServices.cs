@@ -99,12 +99,6 @@ namespace LogicHandlerModel
                 sSql.AppendFormat(" and iOrderType={0}", iOrderType);
             if (iChannel > -1)
                 sSql.AppendFormat(" and iChannel={0}", iChannel);
-            if (iCompareType == 1)
-                sSql.Append(" group by LEFT(CONVERT(varchar(100), dBookTime, 20),7)");
-            if (iCompareType == 2)
-                sSql.Append(" group by LEFT(CONVERT(varchar(100), dBookTime, 20),10)");
-            if (iCompareType == 3)
-                sSql.Append(" group by LEFT(CONVERT(varchar(100), dBookTime, 20),13)");
             if (!string.IsNullOrEmpty(dBookTime))
             {
                 var date = DateTime.Parse(dBookTime);
@@ -123,9 +117,17 @@ namespace LogicHandlerModel
                         break;
                     case 3:
                         dateSta = date.ToString("yyyy-MM-dd") + " 00:00:00";
-                        dateSta = date.ToString("yyyy-MM-dd") + " 23:59:59";
+                        dateEnd = date.ToString("yyyy-MM-dd") + " 23:59:59";
                         break;
                 }
+                sSql.AppendFormat(" and dBookTime>='{0}' and dBookTime<'{1}'", dateSta, dateEnd);
+                if (iCompareType == 1)
+                    sSql.Append(" group by LEFT(CONVERT(varchar(100), dBookTime, 20),7)");
+                if (iCompareType == 2)
+                    sSql.Append(" group by LEFT(CONVERT(varchar(100), dBookTime, 20),10)");
+                if (iCompareType == 3)
+                    sSql.Append(" group by LEFT(CONVERT(varchar(100), dBookTime, 20),13)");
+
                 var res = query.QueryList<Dictionary<string, object>>(sSql.ToString()).ToList();
                 return res;
             }
@@ -133,6 +135,63 @@ namespace LogicHandlerModel
             {
                 throw new ApplicationException("交易时间不能为空!");
             }
+        }
+
+
+
+        /// <summary>
+        /// 获取订单数据统计列表
+        /// </summary>
+        /// <param name="pageInfo"></param>
+        /// <param name="iCompareType">统计范畴</param>
+        /// <param name="dStaTime">开始时间</param>
+        /// <param name="dEndTime">结束时间</param>
+        /// <param name="iOrderType">订单类型</param>
+        /// <param name="iChannel">渠道</param>
+        /// <returns></returns>
+        public override string DataCountList(PageInfo pageInfo, int iCompareType, string dStaTime, string dEndTime, int iOrderType, int iChannel)
+        {
+            StringBuilder countSql = new StringBuilder();//统计的sql语句
+            countSql.AppendFormat(@"select
+                                     count(*) as value, --订单量
+                                     sum(dAllPrices) as dAllPrices, --交易金额
+                                     sum(dPrices) as dPrices    --支付金额
+                                     from ES_Orders where iState > 0");
+
+
+            if (pageInfo.sort == "ID") pageInfo.sort = "date";
+            StringBuilder sSql = new StringBuilder();
+            string StringCount = iCompareType == 1 ? "7" : "10";
+            sSql.AppendFormat(@"select 
+                                     LEFT(CONVERT(varchar(100), dBookTime, 20),{0}) as date,
+                                     count(*) as value, --订单量
+                                     sum(dAllPrices) as dAllPrices, --交易金额
+                                     sum(dPrices) as dPrices    --支付金额
+                                     from ES_Orders where iState>0 ", StringCount);
+            if (!string.IsNullOrEmpty(dStaTime))
+            {
+                sSql.AppendFormat(" and dBookTime>='{0}'", dStaTime);
+                countSql.AppendFormat(" and dBookTime>='{0}'", dStaTime);
+            }
+            if (!string.IsNullOrEmpty(dEndTime))
+            {
+                sSql.AppendFormat(" and dBookTime<'{0}'", dEndTime);
+                countSql.AppendFormat(" and dBookTime<'{0}'", dEndTime);
+            }
+            if (iOrderType > -1)
+            {
+                sSql.AppendFormat(" and iOrderType={0}", iOrderType);
+                countSql.AppendFormat(" and iOrderType={0}", iOrderType);
+            }
+            if (iChannel > -1)
+            {
+                sSql.AppendFormat(" and iChannel={0}", iChannel);
+                countSql.AppendFormat(" and iChannel={0}", iChannel);
+            }
+            sSql.AppendFormat(" group by LEFT(CONVERT(varchar(100), dBookTime, 20),{0})", StringCount);
+            var res = query.PageQuery<Dictionary<string, object>>(sSql.ToString(), pageInfo);
+            res.data = query.SingleQuery<Dictionary<string, object>>(countSql.ToString());
+            return res.toJson();
         }
     }
 }

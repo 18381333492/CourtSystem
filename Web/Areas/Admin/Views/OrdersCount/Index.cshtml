@@ -18,24 +18,24 @@
             <option value="3">天</option>
         </select>
         <span>时间选择:</span>
-        <span class="date_year">
+        <b class="date_year">
         <input type="text" name="dBookTime" class="form-control input-sm" readonly="readonly" value="@DateTime.Now.ToString("yyyy")"
                style="width:150px;cursor: pointer;" placeholder="交易时间" onClick="WdatePicker({dateFmt:'yyyy'})" > --
         <input type="text"  name="dCompareTime" class="form-control input-sm" readonly="readonly"
                style="width:150px;cursor: pointer" placeholder="参考时间" onClick="WdatePicker({dateFmt:'yyyy'})">
-        </span>
-        <span class="date_month" style="display:none">
+        </b>
+        <b class="date_month" style="display:none">
             <input type="text" name="dBookTime" class="form-control input-sm" readonly="readonly" value="@DateTime.Now.ToString("yyyy-MM")"
                    style="width:150px;cursor: pointer;" placeholder="交易时间" onClick="WdatePicker({ dateFmt: 'yyyy-MM' })"> --
             <input type="text"  name="dCompareTime" class="form-control input-sm" readonly="readonly"
                    style="width:150px;cursor: pointer" placeholder="参考时间" onClick="WdatePicker({ dateFmt: 'yyyy-MM' })">
-        </span>
-        <span class="date_day" style="display:none">
+        </b>
+        <b class="date_day" style="display:none">
             <input type="text"  name="dBookTime" class="form-control input-sm" readonly="readonly" value="@DateTime.Now.ToString("yyyy-MM-dd")"
                    style="width:150px;cursor: pointer;" placeholder="交易时间" onClick="WdatePicker({ dateFmt: 'yyyy-MM-dd' })"> --
             <input type="text"  name="dCompareTime" class="form-control input-sm" readonly="readonly"
                    style="width:150px;cursor: pointer" placeholder="参考时间" onClick="WdatePicker({ dateFmt: 'yyyy-MM-dd' })">
-        </span>
+        </b>
         <span>订单类型:</span>
         <select name="iOrderType" class="form-control input-sm" style="width:100px;">
             <option value="-1">--请选择--</option>
@@ -63,7 +63,7 @@
         $('#iCompareType').change(function () {
             var value =parseInt($(this).val());
             switch (value) {
-                case 1: $('.date_year').show(); $('.date_month').show(); $('.date_day').show(); break;
+                case 1: $('.date_year').show(); $('.date_month').hide(); $('.date_day').hide(); break;
                 case 2: $('.date_year').hide(); $('.date_month').show(); $('.date_day').hide();; break;
                 case 3: $('.date_year').hide(); $('.date_month').hide(); $('.date_day').show();; break;
             }
@@ -76,7 +76,7 @@
                 x: -20
             },
             subtitle: {
-                text: '数据来源: WorldClimate.com',
+                text: '数据来源:台哥来了系统(ltgirl.com)',
                 x: -20
             },
             xAxis: {
@@ -128,7 +128,6 @@
                     params.dCompareTime = params.dCompareTime + " 00:00:00";
             }
             admin.Ajax(admin.route('SearchCount'), params, function (r) {
-                debugger
                 chartParams.series = [];
                 var bookData = r.data.bookData;
                 var compData = r.data.compData;
@@ -137,18 +136,19 @@
                 chartParams.yAxis.allowDecimals = type == 1 ? false : true;
                 chartParams.yAxis.title.text = type == 1 ? "订单量(笔数)" : "交易金额(RMB)";
                 chartParams.tooltip.valueSuffix = type == 1 ? "笔" : "";
-                chartParams.series.push({ name: seriesName, data: bookData });
+                chartParams.series.push({ name: seriesName, data: bookData, color: "green" });
+                if (compData.length > 0) chartParams.series.push({ name: "(参考)" + seriesName, data: compData , color:"red" })
                 if (iCompareType == 2) {
                     var categories=[];
                     for(var i=1;i<=bookData.length;i++){
-                        categories.push(i+"Day");
+                        categories.push(i+"号");
                     }
                     chartParams.xAxis.categories = categories;
                 }
                 if (iCompareType == 3) {
                     var categories = [];
-                    for (var i = 1; i <= bookData.length; i++) {
-                        categories.push(i + "Hour");
+                    for (var i = 0; i < bookData.length; i++) {
+                        categories.push(i + "h");
                     }
                     chartParams.xAxis.categories = categories;
                 }

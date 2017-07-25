@@ -30,6 +30,11 @@ namespace EFModels.MyModels
         public List<T> rows { get; set; }
 
         /// <summary>
+        /// 其它数据
+        /// </summary>
+        public object data  { get; set; }
+
+        /// <summary>
         /// 转化为Json字符串
         /// </summary>
         /// <returns></returns>
