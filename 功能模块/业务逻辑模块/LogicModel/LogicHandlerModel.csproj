@@ -50,12 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImplementRead\IntegralRecordServices.cs" />
     <Compile Include="ImplementRead\ClientServices.cs" />
     <Compile Include="ImplementRead\GoodsServices.cs" />
     <Compile Include="ImplementRead\OrdersServices.cs" />
     <Compile Include="ImplementRead\ShopAddressServices.cs" />
     <Compile Include="ImplementWrite\ClientServices.cs" />
     <Compile Include="ImplementWrite\GoodsServices.cs" />
+    <Compile Include="ImplementWrite\IntegralRecordServices.cs" />
     <Compile Include="ImplementWrite\OrdersServices.cs" />
     <Compile Include="ImplementWrite\ShopAddressServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

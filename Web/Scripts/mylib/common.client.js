@@ -419,10 +419,17 @@ function datetime() {
         return date;
     }
 
+    //获取某月的有多少天
+    function GetDaysInMonth(value) {
+        var date=value==undefined?new Date():value;
+        date = typeof (value) == "string" ? new Date(date) : date;
+        return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+    }
 
         //返回的接口
     return {
         format: format,
+        GetDaysInMonth:GetDaysInMonth,
         getCurrentMonthFirstDay: getCurrentMonthFirstDay
     }
 }

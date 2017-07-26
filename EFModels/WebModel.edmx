@@ -191,6 +191,27 @@
           <Property Name="IsRateAdd" Type="bit" Nullable="false" />
           <Property Name="bIsActivity" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="ES_GoodsComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sGoodsNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sOpenId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sComment" Type="varchar(max)" />
+          <Property Name="sPictureUrl" Type="varchar(max)" />
+          <Property Name="iScore" Type="int" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_IntegralRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sOpenId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="iType" Type="int" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="ES_Orders">
           <Key>
             <PropertyRef Name="ID" />
@@ -251,6 +272,8 @@
           <EntitySet Name="CDELINK_WeChatNewsName" EntityType="Self.CDELINK_WeChatNewsName" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ES_Client" EntityType="Self.ES_Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ES_Goods" EntityType="Self.ES_Goods" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_GoodsComment" EntityType="Self.ES_GoodsComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_IntegralRecord" EntityType="Self.ES_IntegralRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ES_Orders" EntityType="Self.ES_Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ES_ShopAddress" EntityType="Self.ES_ShopAddress" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
@@ -338,6 +361,8 @@
           <EntitySet Name="ES_Goods" EntityType="CourtSystemDatabaseModel.ES_Goods" />
           <EntitySet Name="ES_Orders" EntityType="CourtSystemDatabaseModel.ES_Orders" />
           <EntitySet Name="ES_ShopAddress" EntityType="CourtSystemDatabaseModel.ES_ShopAddress" />
+          <EntitySet Name="ES_IntegralRecord" EntityType="CourtSystemDatabaseModel.ES_IntegralRecord" />
+          <EntitySet Name="ES_GoodsComment" EntityType="CourtSystemDatabaseModel.ES_GoodsComment" />
         </EntityContainer>
         <EntityType Name="CDELINK_WebSite">
           <Key>
@@ -506,6 +531,27 @@
           <Property Name="sArea" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="sAddress" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="bIsDefault" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_IntegralRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sOpenId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="iType" Type="Int32" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ES_GoodsComment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sGoodsNo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sOpenId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sPictureUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="iScore" Type="Int32" Nullable="false" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -756,6 +802,29 @@
                 <ScalarProperty Name="sPhone" ColumnName="sPhone" />
                 <ScalarProperty Name="sReceiver" ColumnName="sReceiver" />
                 <ScalarProperty Name="sOpenId" ColumnName="sOpenId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_IntegralRecord">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.ES_IntegralRecord">
+              <MappingFragment StoreEntitySet="ES_IntegralRecord">
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="iType" ColumnName="iType" />
+                <ScalarProperty Name="sOpenId" ColumnName="sOpenId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_GoodsComment">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.ES_GoodsComment">
+              <MappingFragment StoreEntitySet="ES_GoodsComment">
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="iScore" ColumnName="iScore" />
+                <ScalarProperty Name="sPictureUrl" ColumnName="sPictureUrl" />
+                <ScalarProperty Name="sComment" ColumnName="sComment" />
+                <ScalarProperty Name="sOpenId" ColumnName="sOpenId" />
+                <ScalarProperty Name="sGoodsNo" ColumnName="sGoodsNo" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

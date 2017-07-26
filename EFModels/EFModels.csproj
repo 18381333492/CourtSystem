@@ -94,6 +94,12 @@
     <Compile Include="ES_Goods.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ES_GoodsComment.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ES_IntegralRecord.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ES_Orders.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>

@@ -41,5 +41,7 @@ namespace EFModels
         public virtual DbSet<ES_Goods> ES_Goods { get; set; }
         public virtual DbSet<ES_Orders> ES_Orders { get; set; }
         public virtual DbSet<ES_ShopAddress> ES_ShopAddress { get; set; }
+        public virtual DbSet<ES_IntegralRecord> ES_IntegralRecord { get; set; }
+        public virtual DbSet<ES_GoodsComment> ES_GoodsComment { get; set; }
     }
 }

@@ -152,7 +152,9 @@
     <Compile Include="Areas\Admin\Controllers\AdminRoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\SuperManController.cs" />
     <Compile Include="Areas\Mobile\Controllers\ClientController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\GoodsCommentController.cs" />
     <Compile Include="Areas\Mobile\Controllers\GoodsController.cs" />
+    <Compile Include="Areas\Mobile\Controllers\IntegralRecordController.cs" />
     <Compile Include="Areas\Mobile\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Mobile\Controllers\PayController.cs" />
     <Compile Include="Areas\Mobile\Controllers\ShopAddressController.cs" />
