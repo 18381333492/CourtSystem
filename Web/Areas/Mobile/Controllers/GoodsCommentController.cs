@@ -14,6 +14,7 @@ namespace Web.Areas.Mobile.Controllers
         //
         // GET: /Mobile/GoodsComment/
 
+        
         public ActionResult Index()
         {
             return View();

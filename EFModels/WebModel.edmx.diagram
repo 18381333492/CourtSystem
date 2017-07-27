@@ -23,6 +23,7 @@
         <EntityTypeShape EntityType="CourtSystemDatabaseModel.ES_ShopAddress" Width="1.5" PointX="11.375" PointY="0.75" />
         <EntityTypeShape EntityType="CourtSystemDatabaseModel.ES_IntegralRecord" Width="1.5" PointX="0.5" PointY="12" />
         <EntityTypeShape EntityType="CourtSystemDatabaseModel.ES_GoodsComment" Width="1.5" PointX="11.375" PointY="4.75" />
+        <EntityTypeShape EntityType="CourtSystemDatabaseModel.ES_GoodsStandard" Width="1.5" PointX="3.375" PointY="11.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1326,6 +1326,7 @@
     <Content Include="Areas\Admin\Views\Orders\Logistics.cshtml" />
     <Content Include="Areas\Admin\Views\OrdersCount\Index.cshtml" />
     <Content Include="Areas\Admin\Views\OrdersCount\DataIndex.cshtml" />
+    <Content Include="Areas\Admin\Views\Goods\Standard.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Important\commonFun.js" />

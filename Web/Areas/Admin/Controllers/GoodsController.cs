@@ -7,6 +7,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Web.App_Start.BaseController;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -43,9 +45,26 @@ namespace Web.Areas.Admin.Controllers
             return View(manage.Get(sGoodsId));
         }
 
+        /// <summary>
+        /// 设置积分视图
+        /// </summary>
+        /// <param name="sGoodsId"></param>
+        /// <returns></returns>
         public ActionResult Integral(string sGoodsId)
         {
             return View(manage.Get(sGoodsId));
+        }
+
+        /// <summary>
+        /// 设置商品规格视图
+        /// </summary>
+        /// <param name="sGoodsId"></param>
+        /// <returns></returns>
+        public ActionResult Standard(string sGoodsId)
+        {
+            ViewBag.sGoodsId = sGoodsId;
+            var manageStandard = Resolve<IGoodsStandard>();
+            return View(manageStandard.GetList(sGoodsId));
         }
 
         /// <summary>
@@ -100,6 +119,18 @@ namespace Web.Areas.Admin.Controllers
         }
 
         /// <summary>
+        /// 设置商品规格
+        /// </summary>
+        /// <param name="list"></param>
+        public void SetStandard(string list)
+        {
+            var List = JsonConvert.DeserializeObject<List<ES_GoodsStandard>>(list);
+            var manageStandard = Resolve<IGoodsStandard>();
+            if (manageStandard.SetStandard(List) > 0)
+                result.success = true;
+        }
+
+        /// <summary>
         /// 商品的上下架
         /// </summary>
         /// <param name="sGoodsId"></param>
@@ -118,5 +149,6 @@ namespace Web.Areas.Admin.Controllers
             if (manage.Activity(sGoodsId) > 0)
                 result.success = true;
         }
+
     }
 }

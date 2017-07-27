@@ -29,5 +29,6 @@ namespace EFModels
         public int iIntegral { get; set; }
         public bool IsRateAdd { get; set; }
         public bool bIsActivity { get; set; }
+        public string sGoodsStandardId { get; set; }
     }
 }

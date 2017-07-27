@@ -190,6 +190,7 @@
           <Property Name="iIntegral" Type="int" Nullable="false" />
           <Property Name="IsRateAdd" Type="bit" Nullable="false" />
           <Property Name="bIsActivity" Type="bit" Nullable="false" />
+          <Property Name="sGoodsStandardId" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ES_GoodsComment">
           <Key>
@@ -201,6 +202,16 @@
           <Property Name="sComment" Type="varchar(max)" />
           <Property Name="sPictureUrl" Type="varchar(max)" />
           <Property Name="iScore" Type="int" Nullable="false" />
+          <Property Name="dInsertTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ES_GoodsStandard">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sGoodsId" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="sStandardName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="dPrices" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="dInsertTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="ES_IntegralRecord">
@@ -273,6 +284,7 @@
           <EntitySet Name="ES_Client" EntityType="Self.ES_Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ES_Goods" EntityType="Self.ES_Goods" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ES_GoodsComment" EntityType="Self.ES_GoodsComment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ES_GoodsStandard" EntityType="Self.ES_GoodsStandard" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ES_IntegralRecord" EntityType="Self.ES_IntegralRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ES_Orders" EntityType="Self.ES_Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ES_ShopAddress" EntityType="Self.ES_ShopAddress" Schema="dbo" store:Type="Tables" />
@@ -363,6 +375,7 @@
           <EntitySet Name="ES_ShopAddress" EntityType="CourtSystemDatabaseModel.ES_ShopAddress" />
           <EntitySet Name="ES_IntegralRecord" EntityType="CourtSystemDatabaseModel.ES_IntegralRecord" />
           <EntitySet Name="ES_GoodsComment" EntityType="CourtSystemDatabaseModel.ES_GoodsComment" />
+          <EntitySet Name="ES_GoodsStandard" EntityType="CourtSystemDatabaseModel.ES_GoodsStandard" />
         </EntityContainer>
         <EntityType Name="CDELINK_WebSite">
           <Key>
@@ -486,6 +499,7 @@
           <Property Name="iIntegral" Type="Int32" Nullable="false" />
           <Property Name="IsRateAdd" Type="Boolean" Nullable="false" />
           <Property Name="bIsActivity" Type="Boolean" Nullable="false" />
+          <Property Name="sGoodsStandardId" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="ES_Orders">
           <Key>
@@ -552,6 +566,16 @@
           <Property Name="sPictureUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="iScore" Type="Int32" Nullable="false" />
           <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ES_GoodsStandard">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Guid" Nullable="false" />
+          <Property Name="sGoodsId" Type="Guid" Nullable="false" />
+          <Property Name="dPrices" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="dInsertTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sStandardName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -741,6 +765,7 @@
           <EntitySetMapping Name="ES_Goods">
             <EntityTypeMapping TypeName="CourtSystemDatabaseModel.ES_Goods">
               <MappingFragment StoreEntitySet="ES_Goods">
+                <ScalarProperty Name="sGoodsStandardId" ColumnName="sGoodsStandardId" />
                 <ScalarProperty Name="bIsActivity" ColumnName="bIsActivity" />
                 <ScalarProperty Name="IsRateAdd" ColumnName="IsRateAdd" />
                 <ScalarProperty Name="iIntegral" ColumnName="iIntegral" />
@@ -825,6 +850,17 @@
                 <ScalarProperty Name="sComment" ColumnName="sComment" />
                 <ScalarProperty Name="sOpenId" ColumnName="sOpenId" />
                 <ScalarProperty Name="sGoodsNo" ColumnName="sGoodsNo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ES_GoodsStandard">
+            <EntityTypeMapping TypeName="CourtSystemDatabaseModel.ES_GoodsStandard">
+              <MappingFragment StoreEntitySet="ES_GoodsStandard">
+                <ScalarProperty Name="sStandardName" ColumnName="sStandardName" />
+                <ScalarProperty Name="dInsertTime" ColumnName="dInsertTime" />
+                <ScalarProperty Name="dPrices" ColumnName="dPrices" />
+                <ScalarProperty Name="sGoodsId" ColumnName="sGoodsId" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

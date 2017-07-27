@@ -70,6 +70,16 @@
                 admin.alert("请选择一条数据进行操作!");
         });
 
+        //设置商品规格
+        $('.Goods_standard').on("click",function(){
+            var selected = admin.grid.datagrid('getSelections');
+            if(selected.length==1){
+                admin.creatModal(admin.route("Standard?sGoodsId="+selected[0].ID));
+            }
+            else
+                admin.alert("请选择一条数据进行操作!");
+        });
+
         //上下架操作
         $('.Goods_shelves').on("click", function () {
             var selected = admin.grid.datagrid('getSelections');

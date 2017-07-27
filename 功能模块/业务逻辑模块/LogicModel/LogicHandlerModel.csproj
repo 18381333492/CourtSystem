@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ImplementRead\GoodsStandardServices.cs" />
     <Compile Include="ImplementRead\IntegralRecordServices.cs" />
     <Compile Include="ImplementRead\ClientServices.cs" />
     <Compile Include="ImplementRead\GoodsServices.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="ImplementRead\ShopAddressServices.cs" />
     <Compile Include="ImplementWrite\ClientServices.cs" />
     <Compile Include="ImplementWrite\GoodsServices.cs" />
+    <Compile Include="ImplementWrite\GoodsStandardServices.cs" />
     <Compile Include="ImplementWrite\IntegralRecordServices.cs" />
     <Compile Include="ImplementWrite\OrdersServices.cs" />
     <Compile Include="ImplementWrite\ShopAddressServices.cs" />
