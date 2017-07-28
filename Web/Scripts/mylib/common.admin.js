@@ -240,12 +240,12 @@ function adminPackage() {
             // textStatus 可能为null、 'timeout（超时）'、 'error（错误）'、 'abort(中止)'和'parsererror（解析错误)'等
             // errorMsg 是错误信息字符串(响应状态的文本描述部分，例如'Not Found'或'Internal Server Error')
             error: function (jqXHR, textStatus, errorMsg) {
-                debugger
                 switch (jqXHR.status) {
                     case 404:alert('链接地址错误!'); break;
                     case 500: alert('服务器内部错误!'); break;
                     default: alert(jqXHR.status + ":" + jqXHR.statusText);
                 }
+                button.enable();
             }
         });
     }

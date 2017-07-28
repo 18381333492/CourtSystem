@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "商品评论";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_EuiAndBoot.cshtml";
+}
+<table id="GoodsComment" style="height:100%;width:100%"></table>
+<div id="GoodsComment_toolbar" style="padding:8px;">
+    <form id="search">
+        <span>模糊查询:</span>
+        <input type="text" class="form-control input-sm" placeholder="商品编号" style="width:200px">
+        <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
+        &nbsp; &nbsp; @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Admin", "GoodsComment");
+
+        /*!
+        * method:数据列表(datagrid)的绑定
+        */
+        admin.grid.datagrid({
+            fit:true,
+            url: admin.route('List'),
+            toolbar:admin.toolbar,
+            fitColumns:true,
+            rownumbers:true,
+            striped: true,
+            pagination: true,
+            pageSize:20,
+            loadMsg: "正在加载...",
+            columns: [[
+                { field: 'sGoodsNo', title: '商品编号', align: 'center', sortable: true, width:80 },
+                { field: 'sNickName', title: '微信昵称', align: 'center', sortable: true, width: 100 },
+                { field: 'sHeadPicture', title: '头像', align: 'center', sortable: true, width: 120},
+                { field: 'sComment', title: '评价内容', align: 'center', sortable: true, width: 150 },
+                { field: 'iScore', title: '评分', align: 'center', sortable: true, width: 120 },
+                { field: 'dInsertTime', title: '评价时间', align: 'center', sortable: true, width: 120 }
+            ]],
+            onLoadSuccess: function () {
+
+            }
+        });
+    });
+</script>

@@ -42,6 +42,7 @@
         admin.routeRegister("Admin", "Goods");
 
         //初始化页面
+        initHtml();
         function initHtml() {
             bingCancel();
         }
@@ -87,11 +88,17 @@
                 var json = [];
                 var array = admin.form.serializeArray();
                 for (var i = 0; i < array.length; i += 2) {
-                    json.push({
-                        sGoodsId:sGoodsId,
-                        sStandardName:array[i].value,
-                        dPrices: array[i + 1].value
-                    });
+                   if (!isNaN(parseFloat(array[i + 1].value))) {
+                        json.push({
+                            sGoodsId: sGoodsId,
+                            sStandardName: array[i].value,
+                            dPrices: array[i + 1].value
+                        });
+                    }
+                    else {
+                        admin.button.enable();
+                        return admin.tip("【" + array[i + 1].value + "】不是有效金额数据格式");
+                    }
                 }
                 admin.Ajax(admin.route("SetStandard"), { list: JSON.stringify(json) }, function (r) {
                     admin.tip("操作成功");

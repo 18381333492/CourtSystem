@@ -42,6 +42,7 @@ namespace Web
         
         /// <summary>
         /// 截取应用程序的错误
+        /// 一般处理的是404错误
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

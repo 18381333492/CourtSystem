@@ -136,6 +136,7 @@
     <Compile Include="App_Start\WeiXinMessage\AutoHandleMessage.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\ClientController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GoodsCommentController.cs" />
     <Compile Include="Areas\Admin\Controllers\GoodsController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersCountController.cs" />
@@ -1327,6 +1328,7 @@
     <Content Include="Areas\Admin\Views\OrdersCount\Index.cshtml" />
     <Content Include="Areas\Admin\Views\OrdersCount\DataIndex.cshtml" />
     <Content Include="Areas\Admin\Views\Goods\Standard.cshtml" />
+    <Content Include="Areas\Admin\Views\GoodsComment\Index.cshtml" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Important\commonFun.js" />

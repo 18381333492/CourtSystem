@@ -31,7 +31,7 @@ namespace Logs
         /// <summary>
         /// 写错误日志
         /// </summary>
-        public static void ErrorLog(Exception e)
+        public static void ErrorLog(Exception ex,string sUrl=null)
         {
             string sDirectoryPath = AppDomain.CurrentDomain.BaseDirectory +"ErrorLogs\\Error\\";//文件夹路径
             if (!Directory.Exists(sDirectoryPath))
@@ -45,16 +45,17 @@ namespace Logs
             }
             using (StreamWriter w = File.AppendText(path))
             {
-                w.WriteLine("\r\nLog Entry : ");
-                w.WriteLine("{0}", DateTime.Now.ToString(CultureInfo.InvariantCulture));
-                w.WriteLine("Message:{0}",e.Message);
-                if (e.InnerException != null) 
-                w.WriteLine("InnerException:{0}", e.InnerException.Message);
-                w.WriteLine("TargetSite.Name:{0}", e.TargetSite.Name);
-                w.WriteLine("Source:{0}", e.Source);
-                w.WriteLine("StackTrace:{0}", e.StackTrace);
-                w.WriteLine("_____________________________________________________________________________________________________");
-                w.WriteLine("_____________________________________________________________________________________________________");
+                w.WriteLine("-------------  异常信息   ---------------------------------------------------------------");
+                w.WriteLine("发生时间：" + DateTime.Now.ToString());
+                w.WriteLine("发生异常页：" + sUrl);
+                w.WriteLine("异常信息：" + ex.Message);
+                if (ex.InnerException != null)
+                    w.WriteLine("InnerException:{0}", ex.InnerException.Message);
+                w.WriteLine("TargetSite.Name:{0}", ex.TargetSite.Name);
+                w.WriteLine("错误源：" + ex.Source);
+                w.WriteLine("堆栈信息：" + ex.StackTrace);
+                w.WriteLine("-----------------------------------------------------------------------------------------");
+                w.WriteLine("-----------------------------------------------------------------------------------------");
                 w.Flush();
                 w.Close();
             }

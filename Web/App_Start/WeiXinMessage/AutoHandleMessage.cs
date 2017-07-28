@@ -17,6 +17,7 @@ using Newtonsoft.Json.Linq;
 using EFModels;
 using LogicHandlerInterface;
 using WeiXin.Tool;
+using System.Threading.Tasks;
 
 namespace Web.App_Start.WeiXinMessage
 {
@@ -75,8 +76,9 @@ namespace Web.App_Start.WeiXinMessage
         /// <returns></returns>
         public override string HandleSubscribe(SubscribeEvent message)
         {
-            /*关注的时候注册用户*/
-            var clientDomin = DIEntity.GetInstance().GetImpl<IClient>();//会员接口的实现
+            Task.Factory.StartNew(()=> { 
+                /*关注的时候注册用户*/
+             var clientDomin = DIEntity.GetInstance().GetImpl<IClient>();//会员接口的实现
             if (!clientDomin.IsExistByOpenId(message.FromUserName))
             {//不存在注册
                 var weChat = DIEntity.GetInstance().GetImpl<IWeChat>().GetWeChat();
@@ -102,7 +104,9 @@ namespace Web.App_Start.WeiXinMessage
             {//存在修改关注状态
                 clientDomin.SubscribeEditClient(message.FromUserName);
             }
+            });
 
+           
             //获取微信关注设置
             var WeChatConcern=DIEntity.GetInstance().GetImpl<IWeChatConcern>().Get();
             if (WeChatConcern.bIsConcernOn)

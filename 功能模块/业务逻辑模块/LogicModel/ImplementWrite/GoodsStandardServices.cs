@@ -25,11 +25,12 @@ namespace LogicHandlerModel
             {
                 excute.Delete<ES_GoodsStandard>(m);
             }
-            foreach (var item in list)
+
+            for(var i=0;i< list.Count; i++)
             {
-                item.ID = Guid.NewGuid();
-                item.dInsertTime = DateTime.Now;
-                excute.Add<ES_GoodsStandard>(item);
+                list[i].ID = Guid.NewGuid();
+                list[i].dInsertTime = DateTime.Now.AddSeconds(i);
+                excute.Add<ES_GoodsStandard>(list[i]);
             }
             return excute.SaveChange();
 

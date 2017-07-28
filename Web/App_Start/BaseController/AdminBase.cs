@@ -143,6 +143,16 @@ namespace Web.App_Start.BaseController
         protected override void OnException(ExceptionContext filterContext)
         {
             base.OnException(filterContext);
+            ////表示异常已经处理 不在对IIS抛出异常
+            filterContext.ExceptionHandled = true;
+
+            //记录错误日志
+            Logs.LogHelper.ErrorLog(filterContext.Exception,  filterContext.HttpContext.Request.Url.ToString());
+
+            /**统一处理ajax的返回结果**/
+            result.info = filterContext.Exception.Message;
+            filterContext.Result = Content(result.toJson());
+
         }
     }
 }
