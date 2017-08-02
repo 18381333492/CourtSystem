@@ -90,6 +90,7 @@ void function () {
     *重写datagrid的onLoadSuccess事件
     */
     $.extend($.fn.datagrid.defaults, {
+
         pageSize: 20,
     });
 
