@@ -83,8 +83,7 @@ namespace DapperHelper
             }
             catch (Exception ex)
             {
-                // Logs.GetLog().WriteErrorLog(ex);
-                return default(T);
+                throw ex;
             }
             finally
             {
@@ -109,7 +108,7 @@ namespace DapperHelper
             }
             catch (Exception ex)
             {
-                return false;
+                throw ex;
             }
             finally
             {
@@ -192,8 +191,34 @@ namespace DapperHelper
             }
             catch (Exception ex)
             {
-                //Logs.GetLog().WriteErrorLog(ex);
-                return null;
+                throw ex;
+            }
+            finally
+            {
+                CloseConnect(conn);
+            }
+        }
+
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sqlCommand">SQL语句</param>
+        /// <param name="pageInfo">分页参数</param>
+        /// <param name="parameter">参数</param>
+        /// <returns></returns>
+        public PagingRet PageQuery(string sqlCommand, PageInfo pageInfo, Object parameter)
+        {
+            SqlConnection conn = null;
+            try
+            {
+                conn = GetSqlConnection();
+                if (conn == null) throw new ApplicationException("未获取到连接对象。");
+                return DoPaginationQuery(conn, sqlCommand, pageInfo, parameter);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
             finally
             {

@@ -37,7 +37,7 @@ namespace LogicHandlerModel
             {//模糊查询
                 sSql.AppendFormat(" and (sGoodsName like '%{0}%' or sGoodsNo like '%{0}%')", searchText);
             }
-            var res = query.PageQuery<Dictionary<string, object>>(sSql.ToString(), pageInfo, searchText);
+            var res = query.PageQuery(sSql.ToString(), pageInfo, searchText);
             return res.toJson();
         }
 

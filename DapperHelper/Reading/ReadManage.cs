@@ -162,6 +162,49 @@ namespace DapperHelper.Reading
             }
             return result;
         }
-        
+
+
+        /// <summary>
+        /// 分页获取数据
+        /// </summary>
+        /// <param name="conn"></param>
+        /// <param name="sqlCommand"></param>
+        /// <param name="pageInfo"></param>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
+        protected PagingRet DoPaginationQuery(SqlConnection conn, string sqlCommand, PageInfo pageInfo, Object parameter = null)
+        {
+            string sSql = string.Format(@"DECLARE @rows int 
+                                                SELECT @rows=COUNT(*) FROM({0}) as entry 
+                                                SELECT  TOP 
+                                                {1} *,@rows MaxRows FROM
+                                                (SELECT  ROW_NUMBER() OVER(ORDER BY {2} {3}) AS Number,*
+                                                FROM ({0}) AS query) AS entry 
+                                                WHERE  Number>{1}*({4}-1) ", sqlCommand,
+                                          pageInfo.rows,
+                                          pageInfo.sort,
+                                          pageInfo.order.ToString(),
+                                          pageInfo.page);
+
+            var result = new PagingRet();
+            result.page = pageInfo.page;//当前页码数
+
+            //获取查询结果（DapperRow[类型是IEnumerable<dynamic>]）,并将其转换为字典
+            var ret = conn.Query(sSql, parameter, null, true, null, CommandType.Text).
+                                Select(m => ((IDictionary<string, object>)m).ToDictionary(pi => pi.Key, pi => pi.Value)).
+                                 ToList<IDictionary<string, object>>();
+            if (ret.Count > 0)
+            {
+                //随意抽一条做最大条数记录
+                result.total = ret[0]["MaxRows"].toInt32();
+                result.rows = ret;
+            }
+            else
+            {
+                result.rows =new List<object>();
+            }
+            return result;
+        }
+
     }
 }

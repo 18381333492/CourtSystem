@@ -34,7 +34,7 @@ namespace SystemModel
                 sSql.AppendFormat("AND (sRoleName  LIKE '%{0}%')", searchText);
             }
 
-            var userList = query.PageQuery<CDELINK_AdminRole>(sSql.ToString(), pageInfo);
+            var userList = query.PageQuery(sSql.ToString(), pageInfo);
             return userList.toJson();
         }
 

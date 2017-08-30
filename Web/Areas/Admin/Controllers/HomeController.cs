@@ -45,7 +45,8 @@ namespace Web.Areas.Admin.Controllers
         public void MenuList()
         {
             var childList = Session[SESSION.Menu] as List<CDELINK_Menu>;//获取缓存的二级菜单
-            var Ids = childList.Select(m => { return "'" + m.sParentMenuId.ToString() + "'"; });
+            var Ids = childList.Select(m=>m.sParentMenuId).Distinct().
+                                                            Select(m => { return string.Format("'{0}'", m); });
             var manageMenu = Resolve<IMenu>();
             var mainList = manageMenu.GetMainMenuByIds(string.Join(",", Ids));
             result.data = new

@@ -21,7 +21,7 @@ namespace LogicHandlerModel
         /// <returns></returns>
         public override string List(PageInfo pageInfo, string searchText)
         {
-            var list = query.PageQuery<Dictionary<string, object>>(@"select a.*,b.sHeadPicture,b.sNickName from ES_GoodsComment as a 
+            var list = query.PageQuery(@"select a.*,b.sHeadPicture,b.sNickName from ES_GoodsComment as a 
                                                                                left join ES_Client as b on a.sOpenId=b.sOpenId", pageInfo);
             return list.toJson();
         }

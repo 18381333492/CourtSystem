@@ -23,7 +23,7 @@ namespace LogicHandlerModel
         /// <returns></returns>
         public override string List(PageInfo pageInfo, string sOpenId)
         {
-            var res = query.PageQuery<ES_IntegralRecord>(@"select * from ES_IntegralRecord where sOpenId=@sOpenId", pageInfo, new { sOpenId = sOpenId });
+            var res = query.PageQuery(@"select * from ES_IntegralRecord where sOpenId=@sOpenId", pageInfo, new { sOpenId = sOpenId });
             return res.toJson();
         }
     }

@@ -32,7 +32,7 @@ namespace SystemModel
             {
                 sSql.AppendFormat("AND sKeyWordName LIKE '%{0}%'", searchText);
             }
-            var userList = query.PageQuery<Dictionary<string,object>>(sSql.ToString(), pageInfo);
+            var userList = query.PageQuery(sSql.ToString(), pageInfo);
             return userList.toJson();
         }
 

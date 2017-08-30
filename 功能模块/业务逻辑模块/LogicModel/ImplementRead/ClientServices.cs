@@ -23,7 +23,7 @@ namespace LogicHandlerModel
         /// <returns></returns>
         public override string List(PageInfo pageInfo, string searchText)
         {
-            var res = query.PageQuery<Dictionary<string, object>>("select * from ES_Client",pageInfo);
+            var res = query.PageQuery("select * from ES_Client",pageInfo);
             return res.toJson();
         }
 

@@ -37,7 +37,7 @@ namespace LogicHandlerModel
                 sSql.AppendFormat(" and dBookTime<='{0}'", dEndTime);
             if(!string.IsNullOrEmpty(searchText))
                 sSql.AppendFormat(" and (sReceiver like '%{0}%' or sPhone like '%{0}%' or sGoodsNo like '%{0}%' or sOrderNo like '%{0}%')", searchText);
-            var res = query.PageQuery<Dictionary<string, object>>(sSql.ToString(), pageInfo, searchText);
+            var res = query.PageQuery(sSql.ToString(), pageInfo, searchText);
             return res.toJson();
         }
 

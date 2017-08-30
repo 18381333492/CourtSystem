@@ -10,7 +10,7 @@
    <div style="padding:10px;margin-bottom:10px;border-bottom:1px solid #CACACA">
        <form id="search">
            @Html.Partial("~/Areas/Admin/Views/Shared/_Button.cshtml")
-           <span>模糊查询:</span><input type="text" class="form-control" placeholder="素材名称/标题"
+           <span>模糊查询:</span><input type="text" class="form-control" placeholder="素材名称"
                                     style="width:200px;height:30px;vertical-align:bottom;display:inline-block;">
            <button type="button" class="btn btn-default  btn-sm searchText">查 询</button>
        </form>
@@ -56,7 +56,6 @@
             $('.NewsContent').html('');
 
             loadData(searchText);
-
 
         });
 

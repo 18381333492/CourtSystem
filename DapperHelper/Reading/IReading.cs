@@ -63,5 +63,15 @@ namespace DapperHelper
         /// <param name="parameter">参数</param>
         /// <returns>查询结果</returns>
         PagingRet<T> PageQuery<T>(string sqlCommand, PageInfo pageInfo, Object parameter=null) where T : new();
+
+
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <typeparam name="T">映射类型</typeparam>
+        /// <param name="sqlCommand">sql</param>
+        /// <param name="parameter">参数</param>
+        /// <returns>查询结果</returns>
+        PagingRet PageQuery(string sqlCommand, PageInfo pageInfo, Object parameter = null);
     }
 }

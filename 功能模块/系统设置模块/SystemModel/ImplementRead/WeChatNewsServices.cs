@@ -25,15 +25,15 @@ namespace SystemModel
         {
 
             StringBuilder sSql = new StringBuilder();
-            if(!string.IsNullOrEmpty(searchText))
-            sSql.AppendFormat(@"select * from CDELINK_WeChatNewsName where bIsDeleted=0
+            if (!string.IsNullOrEmpty(searchText))
+                sSql.AppendFormat(@"select * from CDELINK_WeChatNewsName where bIsDeleted=0
                                                                and  sWeChatNewsName like '%{0}%'
                                                                  order by dUpdateTime desc", searchText);
             else
-            sSql.Append(@"select * from CDELINK_WeChatNewsName where bIsDeleted=0 order by dUpdateTime desc");
+                sSql.Append(@"select * from CDELINK_WeChatNewsName where bIsDeleted=0 order by dUpdateTime desc");
 
             var nameList = query.QueryList<CDELINK_WeChatNewsName>(sSql.ToString()).ToList();
-   
+
             var newsList = query.QueryList<CDELINK_WeChatNews>(@"select ID,sTitle,sDescribe,sPictureUrl,iOrder,sToId from CDELINK_WeChatNews order by iOrder");
 
             JArray array = new JArray();
@@ -44,7 +44,7 @@ namespace SystemModel
                 job.Add(new JProperty("ID", item.ID));
                 job.Add(new JProperty("sWeChatNewsName", item.sWeChatNewsName));
                 job.Add(new JProperty("dUpdateTime", item.dUpdateTime));
-                job.Add(new JProperty("newsList",JsonConvert.SerializeObject(newsList.Where(m => m.sToId.ToString().ToLower() == item.ID.ToString().ToLower()))));
+                job.Add(new JProperty("newsList", JsonConvert.SerializeObject(newsList.Where(m => m.sToId.ToString().ToLower() == item.ID.ToString().ToLower()))));
                 array.Add(job);
             }
             return array;
