@@ -271,7 +271,7 @@ function adminPackage() {
 
 //**对js原生的属性扩展***//
 
-//数组的狂战
+//数组的扩展
 Array.prototype.toObject = function () {
     var obj = {};
     for (var i = 0; i < this.length; i++) {

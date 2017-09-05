@@ -107,9 +107,8 @@ namespace Web.App_Start.BaseController
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var request = filterContext.HttpContext.Request;
-            var actionMethod = filterContext.Controller
-              .GetType()
-              .GetMethod(filterContext.ActionDescriptor.ActionName);//获取访问方法   
+            var actionMethod = filterContext.Controller.GetType().GetMethods().
+                    FirstOrDefault(m=>m.Name.ToLower()== filterContext.ActionDescriptor.ActionName.ToLower());//获取访问方法   
             if (Session[SESSION.AdminUser] != null)
             {
                 if (request.HttpMethod.ToUpper() == "GET")
@@ -129,7 +128,7 @@ namespace Web.App_Start.BaseController
                     }
                 }
             }
-            if (actionMethod.ReturnType.Name.ToString() == "Void" && request.IsAjaxRequest() && request.HttpMethod.ToUpper() == "POST")
+            if (actionMethod.ReturnType.Name.ToLower() == "void" && request.IsAjaxRequest() && request.HttpMethod.ToLower() == "post")
             {//POST的返回结果处理
                 filterContext.Result = Content(result.toJson()); /**统一处理ajax的返回结果**/
             }

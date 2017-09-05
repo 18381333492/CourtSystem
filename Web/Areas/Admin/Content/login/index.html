@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<title>大气简洁后台登录模板下载</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script src="../../登陆/js/jquery-1.9.0.min.js"></script>
+<script src="../../登陆/js/login.js"></script>
+<link href="css/login2.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>后台登录系统<sup>V2014</sup></h1>
+
+<div class="login" style="margin-top:50px;">
+    <div class="header">
+        <div class="switch" id="switch">
+            <a class="switch_btn_focus" id="switch_qlogin" href="javascript:void(0);" tabindex="7">快速登录</a>
+			<a class="switch_btn" id="switch_login" href="javascript:void(0);" tabindex="8">扫码登录</a>
+            <div class="switch_bottom" id="switch_bottom" style="position: absolute; width: 64px; left: 0px;"></div>
+        </div>
+    </div>    
+    <!--密码登录-->
+    <div class="web_qr_login" id="web_qr_login" style="display: block; height: 290px;">      
+         <div class="web_login" id="web_login">             
+           <div class="login-box">
+			<div class="login_form">
+                <div class="uinArea">
+                <label class="input-tips" for="u">帐号：</label>
+                <div class="inputOuter" >  
+                    <input type="text" class="inputstyle"/>
+                </div>
+                </div>
+               <div class="pwdArea">
+               <label class="input-tips">密码：</label> 
+               <div class="inputOuter" >  
+                    <input type="password" class="inputstyle"/>
+                </div>
+                </div> 
+                <div class="pwdArea">
+                    <label class="input-tips" for="p">验证码：</label>
+                    <div class="inputOuter">
+                        <input type="text" class="inputstyle" style="width:100px" />
+                        <img style="width:85px;height:42px;float:right" />
+                    </div>
+                </div> 
+                <div style="padding-left:65px;margin-top:20px;">
+                    <input type="submit" value="登 录" style="width:150px;" class="button_blue"/>
+                </div>
+           </div>
+        </div>        
+     </div>        
+   </div>
+    <!--扫码登录-->
+    <div class="qlogin" id="qlogin" style="display:none; ">
+        <div class="web_login" style="text-align:center;margin-top:40px;padding-bottom:30px;">
+             <img style="height:180px;width:180px;" />
+             <p style="color:red">
+                 微信扫描图中二维码登录
+             </p>
+         </div> 
+    </div>
+</div>
+<div class="jianyi">*推荐使用ie8或以上版本ie浏览器或Chrome内核浏览器访问本站</div>
+</body>
+</html>

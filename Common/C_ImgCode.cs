@@ -102,7 +102,7 @@ namespace Common
                 }
                 Font font = new Font("Arial", 22, (FontStyle.Bold | FontStyle.Italic));
                 LinearGradientBrush brush = new LinearGradientBrush(new Rectangle(0, 0, image.Width, image.Height),
-                 Color.Blue, Color.DarkRed, 2.2f, true);
+                 Color.Yellow, Color.DarkRed, 2.2f, true);
                 g.DrawString(validateCode, font, brush, 3, 2);
                 //画图片的前景干扰点
                 for (int i = 0; i < 100; i++)
