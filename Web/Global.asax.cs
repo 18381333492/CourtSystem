@@ -11,6 +11,9 @@ using Common;
 using System.Threading;
 using Unity;
 using SystemInterface;
+using Fleck;
+using EFModels.MyModels;
+using Newtonsoft.Json;
 
 namespace Web
 {
@@ -28,18 +31,16 @@ namespace Web
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 			BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //定义全局变量统计在线人数
-            Application.Add("Online",0);
-            Application.Add("Visits", 0);//访问量
-
             Application["bIsStartUp"] = true;
-            Timer timer = new Timer(new TimerCallback(WebSiteStartUp),
-                                     null,//一个包含回调方法要使用的信息的对象，或者为空引用
-                                     0,//调用 callback 之前延迟的时间量（以毫秒为单位）。(即第一次调用该委托的时间间隔)
-                                     //指定 Timeout.Infinite 以防止计时器开始计时。指定零 (0) 以立即启动计时器。
-                                    60*60*1000);//调用 callback 的时间间隔（以毫秒为单位）
+            //Timer timer = new Timer(new TimerCallback(WebSiteStartUp),
+            //                         null,//一个包含回调方法要使用的信息的对象，或者为空引用
+            //                         0,//调用 callback 之前延迟的时间量（以毫秒为单位）。(即第一次调用该委托的时间间隔)
+            //                         //指定 Timeout.Infinite 以防止计时器开始计时。指定零 (0) 以立即启动计时器。
+            //                        60*60*1000);//调用 callback 的时间间隔（以毫秒为单位）
+
+            WebSocket();//启动socket服务
         }
-        
+
         /// <summary>
         /// 截取应用程序的错误
         /// 一般处理的是404错误
@@ -58,13 +59,11 @@ namespace Web
             //}
         }
 
-
         /// <summary>
         /// 会话结束
         /// </summary>
         protected void Session_End()
         {
-            Application["Online"] = Application["Online"].toInt32() - 1;
             
         }
 
@@ -73,22 +72,51 @@ namespace Web
         /// </summary>
         protected void Session_Start()
         {
-            Application["Online"] = Application["Online"].toInt32() + 1;//统计在线人数
-            Application["Visits"] = Application["Visits"].toInt32() + 1;//统计访问量
+            
         }
 
 
         /// <summary>
-        /// 网站启动检查
+        /// 启动Socket服务
         /// </summary>
-        private void WebSiteStartUp(object a)
+        private void WebSocket()
         {
-            ////var manageSuperMan = DIEntity.GetInstance().GetImpl<ISuperMan>();
-            //var now = DateTime.Now;
-            //var endTime = DateTime.Parse("2017/5/31 16:58");
-            //if (now > endTime)
-            //    Application["bIsStartUp"] = false;
-
+            var allSockets = new List<IWebSocketConnection>();
+            var server = new WebSocketServer("ws://127.0.0.1:8181");
+            server.Start(socket =>
+            {
+                socket.OnOpen = () =>
+                {
+                    allSockets.Add(socket);
+                    socket.Send(new SocketMode()
+                    {
+                        sPriKey = socket.ConnectionInfo.Id.ToString(),
+                        IsFirstConnect = true
+                    }.toJson());
+                };
+                socket.OnClose = () =>
+                {
+                    allSockets.Remove(socket);
+                };
+                socket.OnMessage = message =>
+                {
+                    var revices = JsonConvert.DeserializeObject<SocketMode>(message);
+                    if (!string.IsNullOrEmpty(revices.sSendPriKey))
+                    {
+                        var sendSocket = allSockets.Where(m => m.ConnectionInfo.Id.ToString() == revices.sSendPriKey).SingleOrDefault();
+                        if (sendSocket != null)
+                        {
+                            sendSocket.Send(new SocketMode()
+                            {
+                                sPriKey = sendSocket.ConnectionInfo.Id.ToString(),
+                                data = "success"
+                            }.toJson());
+                        }
+                    }
+                };
+            });
         }
+       
     }
+
 }

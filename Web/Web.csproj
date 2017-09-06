@@ -48,6 +48,10 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Fleck, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Fleck.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -1366,6 +1370,7 @@
     <Content Include="Scripts\plug-in\cityselect\jquery.cityselect.js" />
     <Content Include="Scripts\plug-in\picture\uploadimg.jpg" />
     <Content Include="Scripts\plug-in\jquery.qrcode.js" />
+    <Content Include="Scripts\plug-in\qrcode.min.js" />
     <Content Include="Scripts\plug-in\slidepage.js" />
     <Content Include="Scripts\plug-in\starsScore\images\star-half-big.png" />
     <Content Include="Scripts\plug-in\starsScore\images\star-half.png" />

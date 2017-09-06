@@ -42,7 +42,7 @@
                                 <label class="input-tips">验证码：</label>
                                 <div class="inputOuter">
                                     <input id="sCode" type="text" class="inputstyle" style="width:100px" />
-                                    <img id="code" style="width:85px;height:42px;float:right" src="/Admin/AdminUser/MakePictureCode" />
+                                    <img id="code" style="width:85px;height:38px;float:right" src="/Admin/AdminUser/MakePictureCode" />
                                 </div>
                             </div>
                             <div style="padding-left:65px;margin-top:20px;">
@@ -55,8 +55,8 @@
             <!--扫码登录-->
             <div class="qlogin" id="qlogin" style="display:none; ">
                 <div class="web_login" style="text-align:center;margin-top:40px;padding-bottom:30px;">
-                    <img style="height:180px;width:180px;" />
-                    <p style="color:red">
+                    <div id="qrcode" style="margin: auto"></div>
+                    <p style="color:red;margin-top:5px">
                         微信扫描图中二维码登录
                     </p>
                 </div>
@@ -67,8 +67,8 @@
 </html>
 <script src="~/Scripts/mylib/common.admin.js"></script>
 <script src="~/Areas/Admin/Content/login/js/login.js"></script>
+<script src="~/Scripts/plug-in/qrcode.min.js"></script>
 <script type="text/javascript">
-
     $(function () {
 
         function GetCode() {
@@ -79,7 +79,7 @@
         $('#code').on("click", function () {
             GetCode();
         });
-        
+
         //弹出错误信息
         function errorTip(tip, id) {
             $('font').remove();
@@ -109,21 +109,112 @@
             var UserName = $('#UserName').val().trim();
             var Password = $('#Password').val().trim();
             var sCode = $('#sCode').val().trim();
-            if (UserName=="")
-                return errorTip(1,"#UserName");
-            if (Password =="")
+            if (UserName == "")
+                return errorTip(1, "#UserName");
+            if (Password == "")
                 return errorTip(2, "#Password");
-            if (sCode =="")
+            if (sCode == "")
                 return errorTip(3, "#sCode");
             admin.Ajax(admin.route('LoginCheck'), {
-                sCode:sCode,
+                sCode: sCode,
                 sLoginAccout: UserName,
                 sPassWord: Password
             }, function (r) {
+                admin.alert("登录成功,即将跳转......");
                 admin.routeRegister("Admin", "Home");
-                location.href = admin.route("Index");
+                setTimeout(function () {
+                    location.href = admin.route("Index");
+                }, 1000);
+            }, function (r) {
+                admin.alert(r.info);
+                GetCode();
             });
         });
 
-    })
+     
+        loginSocket.createSocket("ws://127.0.0.1:8181/");
+
+    });
+
+
+    var loginSocket = (function (obj) { return obj; }(new function () {
+
+        var admin = new adminPackage();
+        var ws;
+        var model =
+            {
+                sPriKey: '',
+                sSendPriKey: '',
+                IsFirstConnect: false,
+                data:'',
+                toJson: function () {
+                    return JSON.stringify(this);
+                }
+            }
+
+        //检查浏览器是否支持webSocket
+        function checkBrowser() {
+            if (window.WebSocket) {
+                return true;
+            }
+            else
+                return admin.alert("该浏览器不支持扫码登录,请升级您的浏览器");
+        }
+
+        //创建链接
+        function createSocket(url) {
+            if (checkBrowser()) {
+                ws = new WebSocket(url);
+
+                //链接成功时候执行
+                ws.onopen = function () {
+                    model.connect = true;
+                    console.log("连接成功!");
+                }
+
+                //接受消息时执行
+                ws.onmessage = function (message) {
+                    if (message.data)
+                        var res = JSON.parse(message.data);
+                    if (res.IsFirstConnect) {//第一次连接
+                        model.sPriKey = res.sPriKey;
+                        //生成二维码
+                        var url = "http://www.baidu.com?sSendPriKey=" + model.sPriKey;
+                        $("#qrcode").qrcode({
+                            //render: "html",
+                            width: 180, //宽度 
+                            height: 180, //高度 
+                            text: url    //生成二维码的内容
+                        });
+                    }
+                    else {
+                       
+                    }
+                };
+
+                //链接关闭时候执行
+                ws.onclose = function () {
+                    console.log("连接关闭!");
+                }
+
+                //连接失败时候执行
+                ws.onerror = function () {
+                    console.log("连接失败!");
+                }
+            }
+        }
+
+        //发送消息
+        function send(data) {
+            model.data = data;
+            var value = model.toJson();
+            ws.send(value);
+        }
+
+        return {
+            createSocket: createSocket,
+            send: send,
+        }
+    }));
+   
 </script>

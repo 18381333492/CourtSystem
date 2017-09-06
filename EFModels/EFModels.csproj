@@ -115,6 +115,7 @@
     <Compile Include="MyModels\PageInfo.cs" />
     <Compile Include="MyModels\PagingRet.cs" />
     <Compile Include="MyModels\Result.cs" />
+    <Compile Include="MyModels\SocketMode.cs" />
     <Compile Include="MyModels\UserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebModel.Context.cs">

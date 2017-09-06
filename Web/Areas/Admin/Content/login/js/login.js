@@ -1,4 +1,5 @@
 $(function () {
+
     $('#switch_qlogin').click(function () {
         $('#switch_login').removeClass("switch_btn_focus").addClass('switch_btn');
         $('#switch_qlogin').removeClass("switch_btn").addClass('switch_btn_focus');
@@ -7,6 +8,7 @@ $(function () {
         $('#web_qr_login').css('display', 'block');
 
     });
+
     $('#switch_login').click(function () {
 
         $('#switch_login').removeClass("switch_btn").addClass('switch_btn_focus');
@@ -16,8 +18,6 @@ $(function () {
         $('#qlogin').css('display', 'block');
         $('#web_qr_login').css('display', 'none');
     });
-
 });
 	
 
-//<font color='red'><b>×用户名不能为空</b></font>

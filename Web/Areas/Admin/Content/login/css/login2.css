@@ -19,6 +19,9 @@ a {
 a:hover {
 	text-decoration:none;color:#f00;
 }
+a:focus{
+    text-decoration:none;color:#f00;
+}
 .cl{ clear: both;}
 input[type="text"]:focus, input[type="password"]:focus {
 	outline:none;
@@ -97,8 +100,8 @@ input::-ms-clear {
 	margin-top:10px;
 	width:65px;
 	height:42px;
-	font-size:16px;
-	line-height:42px;
+	font-size:12px;
+	line-height:37px;
 	font-family:"Hiragino Sans GB", "Microsoft Yahei";
 }
 .web_login .input-tips2 {
