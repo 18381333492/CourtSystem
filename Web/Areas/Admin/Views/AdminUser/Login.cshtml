@@ -71,6 +71,10 @@
 <script type="text/javascript">
     $(function () {
 
+        (function () {
+            alert("ok");
+        })();
+
         function GetCode() {
             $('#code').attr("src", '/Admin/AdminUser/MakePictureCode/' + new Date().getTime());
         }
@@ -173,20 +177,32 @@
 
                 //接受消息时执行
                 ws.onmessage = function (message) {
-                    if (message.data)
+                    if (message.data) {
                         var res = JSON.parse(message.data);
-                    if (res.IsFirstConnect) {//第一次连接
-                        model.sPriKey = res.sPriKey;
-                        //生成二维码
-                        var url = "http://www.baidu.com?sSendPriKey=" + model.sPriKey;
-                        $("#qrcode").qrcode({
-                            width: 180, //宽度 
-                            height: 180, //高度 
-                            text: url    //生成二维码的内容
-                        });
-                    }
-                    else {
-                       
+                        if (res.IsFirstConnect) {//第一次连接
+                            model.sPriKey = res.sPriKey;
+                            //生成二维码
+                            var url = "http://www.baidu.com?sSendPriKey=" + model.sPriKey;
+                            $("#qrcode").qrcode({
+                                width: 180, //宽度 
+                                height: 180, //高度 
+                                text: url    //生成二维码的内容
+                            });
+                        }
+                        else {
+                            if (res.data.success) {
+                                //登录成功
+                                $("#qrcode").next().text("登录成功,即将跳转......");
+                                setTimeout(function () {
+                                    admin.routeRegister("Admin", "Home");
+                                    location.href = admin.route("Index");
+                                },1000);
+                            }
+                            else {
+                                //登录失败
+                                $("#qrcode").next().text(res.data.info);
+                            }
+                        }
                     }
                 };
 

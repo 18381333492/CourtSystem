@@ -133,6 +133,7 @@
     <Compile Include="App_Start\BaseController\SESSION.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\LoginServices.cs" />
     <Compile Include="App_Start\NoLogin.cs" />
     <Compile Include="App_Start\PayHelper\PayHelper.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
