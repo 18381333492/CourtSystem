@@ -39,8 +39,8 @@ namespace Web.App_Start
                     if (adminUser != null)
                     {
                         if (adminUser.iState == 0)
-                        {//该用户被冻结
-                            result.info = "该账户已被冻结,请联系管理员";
+                        {//在审核中
+                            result.info = "该账户在审核中,请联系管理员";
                         }
                         else
                         {
@@ -79,7 +79,38 @@ namespace Web.App_Start
         /// <returns></returns>
         public Result ScanLogin(string openid)
         {
-            return null;
+            var result = new Result();
+            if (!string.IsNullOrEmpty(openid))
+            {
+                var manage = DIEntity.GetInstance().GetImpl<IAdminUser>();
+                var user=manage.ScanLogin(openid);
+                if (user.iState == 0)
+                {//该账户正在审核中
+                    result.info = "该账户在审核中,请联系管理员";
+                }
+                else
+                {
+                    var obj = manage.GetMenuAndButtonByRoleId(user.sRoleId);
+                    HttpContext.Current.Session[SESSION.Menu] = obj.menuList;//缓存的二级菜单
+                    HttpContext.Current.Session[SESSION.Button] = obj.buttonList;//缓存的按钮
+                    HttpContext.Current.Session[SESSION.AdminUser] = new UserInfo()
+                    {
+                        sUserName =user.sNick,
+                        iState = user.iState,
+                        ID = user.ID,
+                        sRoleId = new Guid(user.sRoleId),
+                        sHeadPic= user.sHeadPicture,//微信头像
+                        bIsSuperMan = false
+                    };
+                    result.success = true;
+                }
+
+            }
+            else
+            {
+                result.info = "登录失败[缺少参数openid]";
+            }
+            return result;
         }
     }
 }

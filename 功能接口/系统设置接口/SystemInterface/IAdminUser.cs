@@ -33,6 +33,14 @@ namespace SystemInterface
 
 
         /// <summary>
+        ///  微信扫码登录后台
+        /// </summary>
+        /// <param name="sOpenId"></param>
+        /// <returns></returns>
+        public abstract CDELINK_AdminUser ScanLogin(string sOpenId);
+
+
+        /// <summary>
         /// 根据管理员主键ID获取信息
         /// </summary>
         /// <param name="sUserId"></param>

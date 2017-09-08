@@ -29,6 +29,8 @@
           <Property Name="dLastLoginTime" Type="datetime" />
           <Property Name="iState" Type="int" Nullable="false" />
           <Property Name="bIsDeleted" Type="bit" Nullable="false" />
+          <Property Name="sNick" Type="nvarchar" MaxLength="50" />
+          <Property Name="sOpenId" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <EntityType Name="CDELINK_Button">
           <Key>
@@ -317,6 +319,8 @@
           <Property Name="dLastLoginTime" Type="DateTime" Precision="3" />
           <Property Name="iState" Type="Int32" Nullable="false" />
           <Property Name="bIsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="sNick" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sOpenId" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="CDELINK_Button">
           <Key>
@@ -596,6 +600,8 @@
           <EntitySetMapping Name="CDELINK_AdminUser">
             <EntityTypeMapping TypeName="CourtSystemDatabaseModel.CDELINK_AdminUser">
               <MappingFragment StoreEntitySet="CDELINK_AdminUser">
+                <ScalarProperty Name="sOpenId" ColumnName="sOpenId" />
+                <ScalarProperty Name="sNick" ColumnName="sNick" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="sLoginAccout" ColumnName="sLoginAccout" />
                 <ScalarProperty Name="sPassWord" ColumnName="sPassWord" />

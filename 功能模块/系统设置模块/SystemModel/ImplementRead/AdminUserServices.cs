@@ -48,10 +48,25 @@ namespace SystemModel
         public override CDELINK_AdminUser ValidateLogin(string sLoginAccout, string sPassWord)
         {
             var user = query.SingleQuery<CDELINK_AdminUser>(@"SELECT * FROM CDELINK_AdminUser 
-                                                                WHERE sLoginAccout=@sLoginAccout AND sPassWord=@sPassWord", new
+                                                                WHERE sLoginAccout=@sLoginAccout AND sPassWord=@sPassWord AND bIsDeleted=0", new
             {
                 sLoginAccout = sLoginAccout,
                 sPassWord = C_Security.MD5(sPassWord)
+            });
+            return user;
+        }
+
+        /// <summary>
+        /// 微信扫码验证登录
+        /// </summary>
+        /// <param name="sOpenId"></param>
+        /// <returns></returns>
+        public override CDELINK_AdminUser ScanLogin(string sOpenId)
+        {
+            var user = query.SingleQuery<CDELINK_AdminUser>(@"SELECT * FROM CDELINK_AdminUser 
+                                                                WHERE sOpenId=@sOpenId AND bIsDeleted=0", new
+            {
+                sOpenId = sOpenId
             });
             return user;
         }
