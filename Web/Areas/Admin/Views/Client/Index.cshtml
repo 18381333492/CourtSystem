@@ -50,7 +50,15 @@
             pageSize:20,
             loadMsg: "正在加载...",
             columns: [[
-                { field: 'sOpenId', title: 'OpenId', align: 'center', sortable: true, width: 120 },
+                { field: 'sOpenId', title: 'OpenId', align: 'center', sortable: true, width: 150 },
+                {
+                    field: 'sHeadPicture', title: '头像', align: 'center', sortable: true, width: 80, formatter: function (value) {
+                        var html = [];
+                        html.push('<img src="' + value + '" style="height:50px;width:50px;border-radius:25px;" />');
+                        return html.join("");
+
+                    }
+                },
                 { field: 'sNickName', title: '微信昵称', align: 'center', sortable: true, width: 100 },
                 { field: 'iSex', title: '性别', align: 'center', sortable: true, width: 80,formatter:function(value)
                     {
