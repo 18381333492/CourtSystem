@@ -10,6 +10,7 @@ namespace WeiXin.Tool
     /// <summary>
     /// 微信用户基本信息Model
     /// </summary>
+    [Serializable]
     public class WeChatUserInfo
     {
 
@@ -83,12 +84,6 @@ namespace WeiXin.Tool
         /// 消息提示
         /// </summary>
         public string message { get; set; }
-
-        ///// <summary>
-        ///// 用户被打上的标签ID列表
-        ///// </summary>
-        //public string tagid_list { get; set; }
-
 
     }
 }

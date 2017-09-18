@@ -21,10 +21,13 @@ using System.Threading.Tasks;
 
 namespace Web.App_Start.WeiXinMessage
 {
+    /// <summary>
+    /// 需要处理那些消息就重写
+    /// </summary>
     public class AutoHandleMessage : IBaseAction
     {
-        //需要处理那些消息就重写
-
+        private static object _lock = new object();
+        
         /// <summary>
         /// 处理微信关键字回复
         /// </summary>
@@ -76,54 +79,59 @@ namespace Web.App_Start.WeiXinMessage
         /// <returns></returns>
         public override string HandleSubscribe(SubscribeEvent message)
         {
-            Task.Factory.StartNew(()=> { 
+
+            Task.Factory.StartNew(() =>
+            {
                 /*关注的时候注册用户*/
-             var clientDomin = DIEntity.GetInstance().GetImpl<IClient>();//会员接口的实现
-            if (!clientDomin.IsExistByOpenId(message.FromUserName))
-            {//不存在注册
-                var weChat = DIEntity.GetInstance().GetImpl<IWeChat>().GetWeChat();
-                access_token token = new access_token(weChat.sAppId,weChat.sAppSecret);
-                //获取用户信息
-                var userInfo = UserInfoHelper.GetUserInfo(message.FromUserName, token.Get());
-                //注册会员
-                clientDomin.AddClient(new ES_Client {
-                    sOpenId = userInfo.openid,
-                    sNickName = userInfo.nickname,
-                    iSex = userInfo.sex,
-                    iIsSubscribe = userInfo.subscribe,
-                    sHeadPicture = userInfo.headimgurl,
-                    sCity = userInfo.city,
-                    sProvince = userInfo.province,
-                    sCountry = userInfo.country,
-                    dSubscribeTime = DateTime.Now,
-                    iState=0,
-                    iIntegral=0,                    
-                });
-            }
-            else
-            {//存在修改关注状态
-                clientDomin.SubscribeEditClient(message.FromUserName);
-            }
+                var clientDomin = DIEntity.GetInstance().GetImpl<IClient>();//会员接口的实现
+                if (!clientDomin.IsExistByOpenId(message.FromUserName))
+                {//不存在注册
+                    var weChat = DIEntity.GetInstance().GetImpl<IWeChat>().GetWeChat();
+                    access_token token = new access_token(weChat.sAppId, weChat.sAppSecret);
+                    //获取用户信息
+                    var userInfo = UserInfoHelper.GetUserInfo(message.FromUserName, token.Get());
+                    //注册会员
+                    if (!string.IsNullOrEmpty(userInfo.openid))
+                    {
+                        clientDomin.AddClient(new ES_Client
+                        {
+                            sOpenId = userInfo.openid,
+                            sNickName = userInfo.nickname,
+                            iSex = userInfo.sex,
+                            iIsSubscribe = userInfo.subscribe,
+                            sHeadPicture = userInfo.headimgurl,
+                            sCity = userInfo.city,
+                            sProvince = userInfo.province,
+                            sCountry = userInfo.country,
+                            dSubscribeTime = DateTime.Now,
+                            iState = 0,
+                            iIntegral = 0,
+                        });
+                    }
+                }
+                else
+                {//存在修改关注状态
+                    clientDomin.SubscribeEditClient(message.FromUserName);
+                }
             });
 
-           
             //获取微信关注设置
-            var WeChatConcern=DIEntity.GetInstance().GetImpl<IWeChatConcern>().Get();
+            var WeChatConcern = DIEntity.GetInstance().GetImpl<IWeChatConcern>().Get();
             if (WeChatConcern.bIsConcernOn)
             {//关注回复功能开启
                 if (WeChatConcern.iConcernType == 0)
                 {//回复文本
-                    string resStr = MessageHelper.Text(WeChatConcern.sContent,message);
+                    string resStr = MessageHelper.Text(WeChatConcern.sContent, message);
                     return resStr;
                 }
                 else
                 {//回复图文
-                    //获取图文借口
+                 //获取图文借口
                     var WeChatNewsData = DIEntity.GetInstance().GetImpl<IWeChatNews>().GetNews(WeChatConcern.sWeChatNewsNameId.ToString()) as JObject;
                     //数据组装
                     List<item> Articles = new List<item>();
                     List<CDELINK_WeChatNews> array = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(WeChatNewsData["newsList"].ToString());
-                    foreach(var m in array)
+                    foreach (var m in array)
                     {
                         Articles.Add(new item()
                         {
@@ -133,7 +141,7 @@ namespace Web.App_Start.WeiXinMessage
                             Url = m.sDataUrl
                         });
                     }
-                  return  MessageHelper.News(Articles, message);
+                    return MessageHelper.News(Articles, message);
                 }
             }
             else

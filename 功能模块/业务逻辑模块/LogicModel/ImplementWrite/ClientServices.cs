@@ -23,7 +23,6 @@ namespace LogicHandlerModel
         public override int AddClient(ES_Client client)
         {
             client.ID = Guid.NewGuid();
-            client.iState = 0;
             excute.Add<ES_Client>(client);
             return excute.SaveChange();
         }
@@ -39,7 +38,7 @@ namespace LogicHandlerModel
             var client = excute.Context.ES_Client.FirstOrDefault(m => m.sOpenId == sOpenId);
             if (client != null)
             {
-                client.iIsSubscribe = 1;
+                client.iIsSubscribe =1;
                 return excute.SaveChange();
             }
             return 0;

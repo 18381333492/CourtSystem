@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
+using Common;
 
 namespace WeiXin.Tool
 {
@@ -32,33 +33,28 @@ namespace WeiXin.Tool
 
 
         /// <summary>
-        /// 获取
+        /// 获取access_token
         /// </summary>
         /// <returns></returns>
         public string Get()
         {
-            if(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "access_token.txt"))
-            {//文件存在
-                StreamReader sr = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "access_token.txt",Encoding.Default);
-                List<string> line=new List<string>();
-                string res;
-                while ((res=sr.ReadLine()) != null)
+            string token = string.Empty;
+            var TimeValue = C_Cache.GetCache("token_out_time");
+            if (TimeValue != null)
+            {
+                var date = C_Convert.toDateTime(TimeValue);//获取过期时间
+                if (DateTime.Now > date)
                 {
-                    line.Add(res);
-                }
-                sr.Close();//关闭流
-                sr.Dispose();
-                if (DateTime.Now > DateTime.Parse(line[1]))
-                {//access_token已过期
-                    return Get_access_token();
+                    token = Get_access_token();
                 }
                 else
-                    return line[0];
+                {
+                    token = C_Cache.GetCache("access_token").ToString();
+                }
             }
             else
-            {//不存在
-               return Get_access_token();
-            }
+                token = Get_access_token();
+            return token;
         }
 
         /// <summary>
@@ -67,27 +63,17 @@ namespace WeiXin.Tool
         /// <returns></returns>
         public string Get_access_token()
         {
+            string token = string.Empty;
             string sUrl = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", appid, secret);
             string result = HttpHelper.HttpGet(sUrl);
             JObject res = JObject.Parse(result);
             if (res["access_token"] != null)
             {//返回成功
-                FileStream fs = new FileStream(AppDomain.CurrentDomain.BaseDirectory + "access_token.txt", FileMode.Create);//如果文件存在,直接覆盖
-                StreamWriter sw = new StreamWriter(fs);
-                sw.WriteLine(res["access_token"].ToString());
-                int expires_in = int.Parse(res["expires_in"].ToString());
-                sw.WriteLine(DateTime.Now.AddSeconds(expires_in-200).ToString("yyyy/MM/dd HH:mm:ss"));
-                //清空缓冲区
-                sw.Flush();
-                //关闭流
-                sw.Close();
-                fs.Close();
-                return res["access_token"].ToString();
+                C_Cache.SetCache("token_out_time",DateTime.Now.AddSeconds(7000),7000);
+                C_Cache.SetCache("access_token", res["access_token"].ToString(), 7000);
+                token = res["access_token"].ToString();
             }
-            else
-            {
-                return string.Empty;
-            }
+            return token;
         }
     }
 }

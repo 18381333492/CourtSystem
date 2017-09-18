@@ -24,7 +24,7 @@ namespace WeiXin.Tool
             var userInfo = new WeChatUserInfo();
             if (!(string.IsNullOrEmpty(sOpenId)||string.IsNullOrEmpty(access_token)))
             {
-                string sUrl = string.Format("https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN", sOpenId, access_token);
+                string sUrl = string.Format("https://api.weixin.qq.com/cgi-bin/user/info?access_token={0}&openid={1}&lang=zh_CN", access_token, sOpenId);
                 var resString=HttpHelper.HttpGet(sUrl);
                 var result = JObject.Parse(resString);
                 if (result["errcode"] == null)

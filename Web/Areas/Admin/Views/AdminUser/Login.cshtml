@@ -70,11 +70,6 @@
 <script src="~/Scripts/plug-in/qrcode.min.js"></script>
 <script type="text/javascript">
     $(function () {
-
-        (function () {
-            alert("ok");
-        })();
-
         function GetCode() {
             $('#code').attr("src", '/Admin/AdminUser/MakePictureCode/' + new Date().getTime());
         }
@@ -135,7 +130,7 @@
             });
         });
 
-        loginSocket.createSocket("ws://127.0.0.1:8181/");
+        loginSocket.createSocket("ws://127.0.0.1:9999/");
 
     });
 

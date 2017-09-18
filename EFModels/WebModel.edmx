@@ -162,7 +162,7 @@
           <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="sOpenId" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="sNickName" Type="varchar" MaxLength="50" />
-          <Property Name="sHeadPicture" Type="varchar" MaxLength="50" />
+          <Property Name="sHeadPicture" Type="varchar(max)" />
           <Property Name="iIntegral" Type="int" Nullable="false" />
           <Property Name="iState" Type="int" Nullable="false" />
           <Property Name="iIsSubscribe" Type="int" Nullable="false" />
@@ -473,7 +473,7 @@
           <Property Name="ID" Type="Guid" Nullable="false" />
           <Property Name="sOpenId" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="sNickName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="sHeadPicture" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="sHeadPicture" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="iIntegral" Type="Int32" Nullable="false" />
           <Property Name="iState" Type="Int32" Nullable="false" />
           <Property Name="iIsSubscribe" Type="Int32" Nullable="false" />

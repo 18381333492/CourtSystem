@@ -20,7 +20,7 @@ namespace Common
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="seconds"></param>
-        public static void SetCache(string key,string value,int seconds)
+        public static void SetCache(string key,object value,int seconds)
         {
             MemoryCache.Default.Set(key, value, DateTimeOffset.UtcNow.AddSeconds(seconds));
         }
@@ -33,7 +33,7 @@ namespace Common
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <param name="seconds"></param>
-        public static void AddCache(string key, string value, int seconds)
+        public static void AddCache(string key, object value, int seconds)
         {
             MemoryCache.Default.Add(key, value, DateTimeOffset.UtcNow.AddSeconds(seconds));
         }

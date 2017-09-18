@@ -82,7 +82,7 @@ namespace Web
         private void WebSocket()
         {
             var allSockets = new List<IWebSocketConnection>();
-            var server = new WebSocketServer("ws://127.0.0.1:8181");
+            var server = new WebSocketServer("ws://127.0.0.1:9999");
             server.Start(socket =>
             {
                 socket.OnOpen = () =>

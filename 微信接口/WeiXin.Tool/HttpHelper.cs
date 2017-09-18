@@ -68,7 +68,7 @@ namespace WeiXin.Tool
                 {
                     using (System.IO.Stream streamReceive = webResponse.GetResponseStream())
                     {
-                        using (System.IO.StreamReader sr = new System.IO.StreamReader(streamReceive, Encoding.GetEncoding(0)))
+                        using (System.IO.StreamReader sr = new System.IO.StreamReader(streamReceive))
                         {
                             sResult = sr.ReadToEnd();
                         }
@@ -132,7 +132,7 @@ namespace WeiXin.Tool
                 {
                     using (System.IO.Stream streamReceive = webResponse.GetResponseStream())
                     {
-                        using (System.IO.StreamReader sr = new System.IO.StreamReader(streamReceive, Encoding.GetEncoding(0)))
+                        using (System.IO.StreamReader sr = new System.IO.StreamReader(streamReceive))
                         {
                             sResult = sr.ReadToEnd();
                         }
