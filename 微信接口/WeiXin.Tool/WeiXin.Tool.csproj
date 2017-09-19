@@ -48,6 +48,7 @@
     <Compile Include="access_token.cs" />
     <Compile Include="HttpHelper.cs" />
     <Compile Include="MenuHelper.cs" />
+    <Compile Include="TemplateHelper.cs" />
     <Compile Include="UserInfoHelper.cs" />
     <Compile Include="WeChatUserInfo.cs" />
     <Compile Include="XmlHelper.cs" />

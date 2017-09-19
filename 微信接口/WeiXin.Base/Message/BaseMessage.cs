@@ -77,7 +77,9 @@ namespace WeiXin.Base.Message
 
         CLICK,          //自定义菜单事件
 
-        VIEW           //点击菜单跳转链接时的事件推送
+        VIEW,           //点击菜单跳转链接时的事件推送
+
+        TEMPLATESENDJOBFINISH//模板消息推送是否成功的事件
     }
 
 }

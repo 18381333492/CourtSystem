@@ -79,7 +79,6 @@ namespace Web.App_Start.WeiXinMessage
         /// <returns></returns>
         public override string HandleSubscribe(SubscribeEvent message)
         {
-
             Task.Factory.StartNew(() =>
             {
                 /*关注的时候注册用户*/

@@ -63,7 +63,7 @@ namespace WeiXin.Base.Message
         }
 
         /// <summary>
-        /// 
+        /// 处理微信推送的事件
         /// </summary>
         /// <param name="type"></param>
         /// <param name="xmlcontent"></param>
@@ -92,6 +92,9 @@ namespace WeiXin.Base.Message
                     sResult = string.Empty;
                     break;
                 case Event.VIEW:        //点击菜单按钮跳转url           
+                    sResult = string.Empty;
+                    break;
+                case Event.TEMPLATESENDJOBFINISH: //发送模板消息的推送
                     sResult = string.Empty;
                     break;
             }
