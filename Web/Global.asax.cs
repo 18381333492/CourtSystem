@@ -14,6 +14,7 @@ using SystemInterface;
 using Fleck;
 using EFModels.MyModels;
 using Newtonsoft.Json;
+using System.Net.NetworkInformation;
 
 namespace Web
 {
@@ -81,8 +82,9 @@ namespace Web
         /// </summary>
         private void WebSocket()
         {
+            int port = GetPort();
             var allSockets = new List<IWebSocketConnection>();
-            var server = new WebSocketServer("ws://127.0.0.1:9999");
+            var server = new WebSocketServer(string.Format("ws://127.0.0.1:{0}", port));
             server.Start(socket =>
             {
                 socket.OnOpen = () =>
@@ -116,6 +118,48 @@ namespace Web
                 };
             });
         }
+
+
+
+        /// <summary>
+        ///  获取可用的端口号
+        /// </summary>
+        /// <returns></returns>
+        private int GetPort()
+        {
+            List<int> allUsedPorts = GetPortUsed();
+            int port =0;
+            do
+            {
+                port = new Random().Next(5000, 65535);//随机获取一个端口号
+            }
+            while (allUsedPorts.Contains(port));
+            Application["WebScoket_Port"] = port;
+            return port;
+        }
+
+
+        /// <summary>
+        /// 获取操作系统已用的端口号
+        /// </summary>
+        /// <returns></returns>
+        private List<int> GetPortUsed()
+        {
+            //获取本地计算机的网络连接和通信统计数据的信息
+            IPGlobalProperties ipGlobalProperties = IPGlobalProperties.GetIPGlobalProperties();
+            //返回本地计算机上的所有Tcp监听程序
+            IPEndPoint[] ipsTCP = ipGlobalProperties.GetActiveTcpListeners();
+            //返回本地计算机上的所有UDP监听程序
+            IPEndPoint[] ipsUDP = ipGlobalProperties.GetActiveUdpListeners();
+            //返回本地计算机上的Internet协议版本4(IPV4 传输控制协议(TCP)连接的信息。
+            TcpConnectionInformation[] tcpConnInfoArray = ipGlobalProperties.GetActiveTcpConnections();
+            List<int> allPorts = new List<int>();
+            foreach (IPEndPoint ep in ipsTCP) allPorts.Add(ep.Port);
+            foreach (IPEndPoint ep in ipsUDP) allPorts.Add(ep.Port);
+            foreach (TcpConnectionInformation conn in tcpConnInfoArray) allPorts.Add(conn.LocalEndPoint.Port);
+            return allPorts;
+        }
+
        
     }
 

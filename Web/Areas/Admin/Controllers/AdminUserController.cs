@@ -38,6 +38,7 @@ namespace Web.Areas.Admin.Controllers
             var webSite = manageWebSite.GetWebSite();
             if (webSite == null) ViewBag.ICON = string.Empty;
             ViewBag.ICON = webSite.sWebSiteIcon;
+            ViewBag.PORT =HttpContext.Application["WebScoket_Port"];
             return View();
         }
 
