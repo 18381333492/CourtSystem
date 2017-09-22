@@ -35,7 +35,7 @@ namespace Web.App_Start.WeiXinMessage
         public override string HandleText(TextMessage message)
         {
             //匹配关键字
-            var keyWord = DIEntity.GetInstance().GetImpl<IWeChatKeyWord>().GetByKeyWord(message.Content);
+            var keyWord =DIEntity.Instance.GetImpl<IWeChatKeyWord>().GetByKeyWord(message.Content);
             if (keyWord != null)
             {
                 if (keyWord.bIsOpen)
@@ -47,7 +47,7 @@ namespace Web.App_Start.WeiXinMessage
                     else
                     {//回复图文消息
                                     //获取图文借口
-                        var WeChatNewsData = DIEntity.GetInstance().GetImpl<IWeChatNews>().GetNews(keyWord.sWeChatNewsNameId.ToString()) as JObject;
+                        var WeChatNewsData = DIEntity.Instance.GetImpl<IWeChatNews>().GetNews(keyWord.sWeChatNewsNameId.ToString()) as JObject;
                         List<CDELINK_WeChatNews> array = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(WeChatNewsData["newsList"].ToString());
                         //组装数据
                         List<item> Articles = new List<item>();
@@ -82,10 +82,10 @@ namespace Web.App_Start.WeiXinMessage
             Task.Factory.StartNew(() =>
             {
                 /*关注的时候注册用户*/
-                var clientDomin = DIEntity.GetInstance().GetImpl<IClient>();//会员接口的实现
+                var clientDomin = DIEntity.Instance.GetImpl<IClient>();//会员接口的实现
                 if (!clientDomin.IsExistByOpenId(message.FromUserName))
                 {//不存在注册
-                    var weChat = DIEntity.GetInstance().GetImpl<IWeChat>().GetWeChat();
+                    var weChat = DIEntity.Instance.GetImpl<IWeChat>().GetWeChat();
                     access_token token = new access_token(weChat.sAppId, weChat.sAppSecret);
                     //获取用户信息
                     var userInfo = UserInfoHelper.GetUserInfo(message.FromUserName, token.Get());
@@ -115,7 +115,7 @@ namespace Web.App_Start.WeiXinMessage
             });
 
             //获取微信关注设置
-            var WeChatConcern = DIEntity.GetInstance().GetImpl<IWeChatConcern>().Get();
+            var WeChatConcern = DIEntity.Instance.GetImpl<IWeChatConcern>().Get();
             if (WeChatConcern.bIsConcernOn)
             {//关注回复功能开启
                 if (WeChatConcern.iConcernType == 0)
@@ -126,7 +126,7 @@ namespace Web.App_Start.WeiXinMessage
                 else
                 {//回复图文
                  //获取图文借口
-                    var WeChatNewsData = DIEntity.GetInstance().GetImpl<IWeChatNews>().GetNews(WeChatConcern.sWeChatNewsNameId.ToString()) as JObject;
+                    var WeChatNewsData = DIEntity.Instance.GetImpl<IWeChatNews>().GetNews(WeChatConcern.sWeChatNewsNameId.ToString()) as JObject;
                     //数据组装
                     List<item> Articles = new List<item>();
                     List<CDELINK_WeChatNews> array = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(WeChatNewsData["newsList"].ToString());
@@ -157,7 +157,7 @@ namespace Web.App_Start.WeiXinMessage
         /// <returns></returns>
         public override string HandleUnSubscribe(UnSubscribeEvent message)
         {
-            var clientDomin = DIEntity.GetInstance().GetImpl<IClient>();//会员接口的实现
+            var clientDomin = DIEntity.Instance.GetImpl<IClient>();//会员接口的实现
             //取消关注处理事件
             clientDomin.UnSubscribeEditClient(message.FromUserName);
 

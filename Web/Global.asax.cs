@@ -15,6 +15,7 @@ using Fleck;
 using EFModels.MyModels;
 using Newtonsoft.Json;
 using System.Net.NetworkInformation;
+using Logs;
 
 namespace Web
 {
@@ -40,6 +41,7 @@ namespace Web
             //                        60*60*1000);//调用 callback 的时间间隔（以毫秒为单位）
 
             WebSocket();//启动socket服务
+            LogsHelper.init(AppDomain.CurrentDomain.BaseDirectory+ "App_Data\\log4net.xml");
         }
 
         /// <summary>

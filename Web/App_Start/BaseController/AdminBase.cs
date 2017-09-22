@@ -34,7 +34,7 @@ namespace Web.App_Start.BaseController
         /// <returns></returns>
         protected M Resolve<M>()
         {
-            return DIEntity.GetInstance().GetImpl<M>();
+            return DIEntity.Instance.GetImpl<M>();
         }
 
         /// <summary>
@@ -146,12 +146,18 @@ namespace Web.App_Start.BaseController
             filterContext.ExceptionHandled = true;
 
             //记录错误日志
-            Logs.LogHelper.ErrorLog(filterContext.Exception,  filterContext.HttpContext.Request.Url.ToString());
+            var logger = Logs.LogsHelper.Instance.GetLogger("web");
+            logger.Fatal(filterContext.Exception.Message, filterContext.Exception);
 
-            /**统一处理ajax的返回结果**/
-            result.info = filterContext.Exception.Message;
-            filterContext.Result = Content(result.toJson());
-
+            if (filterContext.RequestContext.HttpContext.Request.IsAjaxRequest())
+            {
+                result.info = filterContext.Exception.Message;
+                filterContext.Result = Content(result.toJson());
+            }
+            else
+            {//跳转错误页面
+                
+            }   
         }
     }
 }

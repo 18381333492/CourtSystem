@@ -182,7 +182,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\WeiXin.xml">
+    <Content Include="App_Data\log4net.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Admin\Content\assets\avatars\avatar.png" />
@@ -723,7 +723,6 @@
     <Content Include="Areas\Admin\Content\easyui\themes\metro\validatebox.css" />
     <Content Include="Areas\Admin\Content\easyui\themes\metro\window.css" />
     <Content Include="Areas\Admin\Content\easyui\themes\mobile.css" />
-    <Content Include="App_Data\PayConfig\PayConfig.xml" />
     <Content Include="Areas\Admin\Content\icheck\css\banner.jpg" />
     <Content Include="Areas\Admin\Content\icheck\css\custom.css" />
     <Content Include="Areas\Admin\Content\icheck\css\icheck.png" />
@@ -1335,6 +1334,32 @@
     <Content Include="Areas\Admin\Views\OrdersCount\DataIndex.cshtml" />
     <Content Include="Areas\Admin\Views\Goods\Standard.cshtml" />
     <Content Include="Areas\Admin\Views\GoodsComment\Index.cshtml" />
+    <Content Include="webcodelogin\css\demos.css" />
+    <Content Include="webcodelogin\css\jquery-weui.css" />
+    <Content Include="webcodelogin\css\jquery-weui.min.css" />
+    <Content Include="webcodelogin\css\phone.css" />
+    <Content Include="webcodelogin\css\weui.min.css" />
+    <Content Include="webcodelogin\dist\css\Binding_Phone.css" />
+    <Content Include="webcodelogin\dist\css\jquery-weui.css" />
+    <Content Include="webcodelogin\dist\js\jquery-weui.js" />
+    <Content Include="webcodelogin\dist\js\layer.js" />
+    <Content Include="webcodelogin\dist\lib\jquery-2.1.4.js" />
+    <Content Include="webcodelogin\dist\lib\weui.css" />
+    <Content Include="webcodelogin\dist\lib\weui.min.css" />
+    <Content Include="webcodelogin\js\city-picker.js" />
+    <Content Include="webcodelogin\js\city-picker.min.js" />
+    <Content Include="webcodelogin\js\jquery-3.1.0.min.js" />
+    <Content Include="webcodelogin\js\jquery-weui-tab.js" />
+    <Content Include="webcodelogin\js\jquery-weui.js" />
+    <Content Include="webcodelogin\js\jquery-weui.min.js" />
+    <Content Include="webcodelogin\js\swiper.js" />
+    <Content Include="webcodelogin\js\swiper.min.js" />
+    <Content Include="webcodelogin\lib\fastclick.js" />
+    <Content Include="webcodelogin\lib\jquery-2.1.4.js" />
+    <Content Include="webcodelogin\lib\weui.css" />
+    <Content Include="webcodelogin\lib\weui.min.css" />
+    <Content Include="webcodelogin\lib\zepto.js" />
+    <Content Include="webcodelogin\phone.html" />
     <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Important\commonFun.js" />

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Common;
 using DapperHelper.Reading;
 using EFModels.MyModels;
+using Logs;
 
 namespace DapperHelper
 {
@@ -27,8 +28,7 @@ namespace DapperHelper
             }
             catch (Exception ex)
             {
-                Logs.LogHelper.ErrorLog(ex);
-                return null;
+                throw ex;
             }
         }
 
@@ -39,16 +39,9 @@ namespace DapperHelper
         /// <param name="conn"></param>
         protected void CloseConnect(SqlConnection conn)
         {
-            try
+            if (conn != null && conn.State == ConnectionState.Open)
             {
-                if (conn != null && conn.State == ConnectionState.Open)
-                {
-                    conn.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Logs.LogHelper.ErrorLog(ex);
+                conn.Close();
             }
         }
 
@@ -134,8 +127,7 @@ namespace DapperHelper
             }
             catch (Exception ex)
             {
-               // Logs.GetLog().WriteErrorLog(ex);
-                return default(T);
+                throw ex;
             }
             finally
             {
@@ -162,8 +154,7 @@ namespace DapperHelper
             }
             catch (Exception ex)
             {
-                // Logs.GetLog().WriteErrorLog(ex);
-                return null;
+                throw ex;
             }
             finally
             {

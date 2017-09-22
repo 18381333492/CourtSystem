@@ -34,7 +34,7 @@ namespace Web.Areas.WeiXin.Controllers
                 string nonce = Request["nonce"].ToString();        //随机数
                 string echostr = Request["echostr"].ToString();    //随机字符串
 
-                var weChat=DIEntity.GetInstance().GetImpl<IWeChat>().GetWeChat();
+                var weChat = DIEntity.Instance.GetImpl<IWeChat>().GetWeChat();
                 string token = weChat.sToken;   //获取微信配置token
 
                 string result = Developer.Valiate(signature, timestamp, nonce, echostr, token);

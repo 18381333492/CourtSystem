@@ -80,7 +80,6 @@ namespace Web.HandleProgram
             }
             catch (Exception e)
             {
-                Logs.LogHelper.ErrorLog(e);
                 context.Response.Write(C_Json.toJson(new result()
                 {
                     error = 1,

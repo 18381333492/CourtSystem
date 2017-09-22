@@ -33,7 +33,7 @@ namespace Web.App_Start.BaseController
         /// <returns></returns>
         protected M Resolve<M>()
         {
-            return DIEntity.GetInstance().GetImpl<M>();
+            return DIEntity.Instance.GetImpl<M>();
         }
 
        

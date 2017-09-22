@@ -18,20 +18,26 @@ namespace Unity
         /// 直接用的是代码做映射，如果你要用，
         /// 配置文件在这个项目的Web.config里面
         /// </summary>
-        private UnityConfigurationSection configuration = 
+        private static UnityConfigurationSection configuration = 
                         ConfigurationManager.GetSection(UnityConfigurationSection.SectionName) as UnityConfigurationSection;
 
         //注入容器
         private static UnityContainer container = new UnityContainer();
 
+        private static DIEntity instance = null;
 
         /// <summary>
         /// 获取实例
         /// </summary>
         /// <returns></returns>
-        public static DIEntity GetInstance()
+        public static DIEntity Instance
         {
-            return new DIEntity();
+           get
+            {
+                if (instance == null)
+                     instance = new DIEntity();
+                return instance;
+            }
         }
         /// <summary>
         /// 初始化构造函数

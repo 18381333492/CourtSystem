@@ -34,7 +34,7 @@ namespace Web.App_Start
                 }
                 else
                 {
-                    var manage = DIEntity.GetInstance().GetImpl<IAdminUser>();
+                    var manage = DIEntity.Instance.GetImpl<IAdminUser>();
                     var adminUser = manage.ValidateLogin(sLoginAccout, sPassWord);
                     if (adminUser != null)
                     {
@@ -82,7 +82,7 @@ namespace Web.App_Start
             var result = new Result();
             if (!string.IsNullOrEmpty(openid))
             {
-                var manage = DIEntity.GetInstance().GetImpl<IAdminUser>();
+                var manage = DIEntity.Instance.GetImpl<IAdminUser>();
                 var user=manage.ScanLogin(openid);
                 if (user.iState == 0)
                 {//该账户正在审核中

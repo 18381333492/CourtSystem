@@ -11,9 +11,9 @@ namespace LogicHandlerInterface
     public class BaseBll
     {
         //查询接口
-        protected IReading query = Unity.DIEntity.GetInstance().GetImpl<IReading>();
+        protected IReading query = Unity.DIEntity.Instance.GetImpl<IReading>();
 
         //操作接口
-        protected IWriting excute = Unity.DIEntity.GetInstance().GetImpl<IWriting>();
+        protected IWriting excute = Unity.DIEntity.Instance.GetImpl<IWriting>();
     }
 }
