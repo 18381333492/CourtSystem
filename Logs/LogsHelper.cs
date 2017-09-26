@@ -67,7 +67,6 @@ namespace Logs
 
     }
 
-
     /// <summary>
     /// 日志记录类
     /// </summary>
