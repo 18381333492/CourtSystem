@@ -25,10 +25,26 @@ namespace Web.Areas.Admin.Controllers
         {
             return View();
         }
- 
-        public ActionResult Add()
+
+
+        /// <summary>
+        /// 微信扫码登录
+        /// </summary>
+        /// <returns></returns>
+        [NoLogin]
+        public ActionResult WeChatLogin()
         {
-            return View(manage.GetAllRoleNameList());
+            return View();
+        }
+
+        /// <summary>
+        /// 微信注册后台用户
+        /// </summary>
+        /// <returns></returns>
+        [NoLogin]
+        public ActionResult WeChatRegister()
+        {
+            return View();
         }
 
         [NoLogin]
