@@ -22,24 +22,39 @@
     </div>
 
     <div style="margin-left:5%;margin-right: 5%;margin-top:5%">
-        <a href="javascript:;" class="weui-btn weui-btn_primary">确认</a>
+        <a href="javascript:;" class="weui-btn weui-btn_primary confirm">确认</a>
         <a href="javascript:;" class="weui-btn weui-btn_default">取消</a>
     </div>
+    <input type="hidden" id="OpenId" value="@ViewBag.OpenId" />
 </body>
 </html>
 <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+<script src="~/Scripts/mylib/common.client.js"></script>
 <script type="text/javascript">
-    $(function () {
+    $(function () { 
+        loginSocket.createSocket("ws://127.0.0.1:@ViewBag.PORT");
+        //登录确认
+        $('.confirm').on("click", function () {
+            var sOpenId = $('#OpenId').val();
+            client.ajax.ajaxRequest("/Admin/AdminUser/WeChatLogin", null, function (r) {
+                //登录成功
+                r.info = "@(ViewBag.nickname)登录成功,即将跳转.....";
+                loginSocket.send(r);
+
+            }, function (r) {
+                //登录失败
+                loginSocket.send(r);
+            });
+        });
 
     })
     var loginSocket = (function (obj) { return obj; }(new function () {
-
         var admin = new adminPackage();
         var ws;
         var model =
             {
                 sPriKey: '',
-                sSendPriKey: '',
+                sSendPriKey: '@ViewBag.sSendPriKey',//需要发送消息连接标识
                 IsFirstConnect: false,
                 data: '',
                 toJson: function () {
@@ -73,27 +88,6 @@
                         var res = JSON.parse(message.data);
                         if (res.IsFirstConnect) {//第一次连接
                             model.sPriKey = res.sPriKey;
-                            //生成二维码
-                            var url = "http://www.baidu.com?sSendPriKey=" + model.sPriKey;
-                            $("#qrcode").qrcode({
-                                width: 180, //宽度 
-                                height: 180, //高度 
-                                text: url    //生成二维码的内容
-                            });
-                        }
-                        else {
-                            if (res.data.success) {
-                                //登录成功
-                                $("#qrcode").next().text("登录成功,即将跳转......");
-                                setTimeout(function () {
-                                    admin.routeRegister("Admin", "Home");
-                                    location.href = admin.route("Index");
-                                }, 1000);
-                            }
-                            else {
-                                //登录失败
-                                $("#qrcode").next().text(res.data.info);
-                            }
                         }
                     }
                 };

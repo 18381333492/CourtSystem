@@ -330,8 +330,8 @@ function myStorage() {
 
 /*前端ajax的封装*/
 function ajax() {
-    function ajaxRequest(url, params, callback, er_callback, type, async) {
-        type = type || false;
+    function ajaxRequest(url, params, callback, er_callback, islist, async) {
+        islist = islist || false;
         $.ajax({
             url: url,
             data: params,
@@ -339,10 +339,9 @@ function ajax() {
             dataType: 'json',
             async: (async == null) ? true : async,
             success: function (r) {
-                if (type==false) {//是否加载数据列表类型 
+                if (!islist) {//是否加载数据列表类型 
                     if (r.success) {
                         callback(r);
-                      //  dialog.closeLoading();//关闭遮罩层
                     }
                     else {
                         if (er_callback) {

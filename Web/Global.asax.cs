@@ -13,7 +13,6 @@ using Unity;
 using SystemInterface;
 using Fleck;
 using EFModels.MyModels;
-using Newtonsoft.Json;
 using System.Net.NetworkInformation;
 using Logs;
 
@@ -104,16 +103,16 @@ namespace Web
                 };
                 socket.OnMessage = message =>
                 {
-                    var revices = JsonConvert.DeserializeObject<SocketMode>(message);
+                    var revices =C_Json.Deserialize<SocketMode>(message);
                     if (!string.IsNullOrEmpty(revices.sSendPriKey))
                     {
-                        var sendSocket = allSockets.Where(m => m.ConnectionInfo.Id.ToString() == revices.sSendPriKey).SingleOrDefault();
+                        var sendSocket = allSockets.Where(m => m.ConnectionInfo.Id.ToString()==revices.sSendPriKey).SingleOrDefault();
                         if (sendSocket != null)
                         {
                             sendSocket.Send(new SocketMode()
                             {
                                 sPriKey = sendSocket.ConnectionInfo.Id.ToString(),
-                                data = "success"
+                                data = revices.data,
                             }.toJson());
                         }
                     }

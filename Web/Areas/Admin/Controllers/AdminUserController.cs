@@ -27,25 +27,33 @@ namespace Web.Areas.Admin.Controllers
             return View();
         }
 
-
         /// <summary>
         /// 微信扫码登录
         /// </summary>
         /// <returns></returns>
         [NoLogin]
-        public ActionResult WeChatLogin()
+        public ActionResult WeChatLogin(string sSendPriKey)
         {
-            var weChat = Resolve<IWeChat>().GetWeChat();
-            string sUrl = string.Empty;
-            var WeChatUserInfo = WeChatUserHelper.GetUserByAuthorize(weChat.sAppId, weChat.sAppSecret, out sUrl);
-            if (WeChatUserInfo == null)
+            if (!Request.IsAjaxRequest())
             {
-                return Redirect(sUrl);
+                var weChat = Resolve<IWeChat>().GetWeChat();
+                string sUrl = string.Empty;
+                var WeChatUserInfo = WeChatUserHelper.GetUserByAuthorize(weChat.sAppId, weChat.sAppSecret, out sUrl);
+                if (WeChatUserInfo == null)
+                {
+                    return Redirect(sUrl);
+                }
+                ViewBag.sSendPriKey = sSendPriKey;//需要发送消息WebSocket链接标识
+                ViewBag.headimgurl = WeChatUserInfo.headimgurl;
+                ViewBag.nickname = WeChatUserInfo.nickname;
+                ViewBag.OpenId = WeChatUserInfo.openid;
+                ViewBag.PORT = HttpContext.Application["WebScoket_Port"];
+                return View();
             }
-            ViewBag.headimgurl = WeChatUserInfo.headimgurl;
-            ViewBag.nickname = WeChatUserInfo.nickname;
-            ViewBag.PORT = HttpContext.Application["WebScoket_Port"];
-            return View();
+            else
+            {//登录确认
+                return Content(string.Empty);
+            }
         }
 
 
@@ -139,21 +147,6 @@ namespace Web.Areas.Admin.Controllers
             return Content(manage.PageList(pageInfo, searchText, iState));
         }
 
-
-        /// <summary>
-        /// 编辑后台用户
-        /// </summary>
-        /// <param name="adminUser"></param>
-        public void Update(CDELINK_AdminUser adminUser)
-        {
-            if (!manage.CheckLoginAccout(adminUser.sLoginAccout, adminUser.ID.ToString()))
-            {
-                if (manage.Update(adminUser) > 0)
-                    result.success = true;
-            }
-            else
-                result.info = string.Format("账号：{0}已被注册,请重新输入", adminUser.sLoginAccout);
-        }
 
         /// <summary>
         ///  根据主键ID重置后台用户账户密码
