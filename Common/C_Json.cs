@@ -29,6 +29,26 @@ namespace Common
             }
         }
 
+
+        /// <summary>
+        /// 反序列化为对象T
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="jsonString"></param>
+        /// <returns></returns>
+        public static T Deserialize<T>(string jsonString) where T:class, new()
+        {
+            if (!string.IsNullOrEmpty(jsonString))
+            {
+                return JsonConvert.DeserializeObject<T>(jsonString);
+            }
+            else
+            {
+                return default(T);
+            }
+        }
+
+
         /// <summary>
         /// 反序列化JArray
         /// </summary>
@@ -44,9 +64,16 @@ namespace Common
         /// </summary>
         /// <param name="sJson"></param>
         /// <returns></returns>
-        public static JObject Object(string sJson)
+        public static JObject ParseObject(string sJson)
         {
-            return JObject.Parse(sJson);
+            if (!string.IsNullOrEmpty(sJson))
+            {
+                return JObject.Parse(sJson);
+            }
+            else
+            {
+                return default(JObject);
+            }
         }
 
         /// <summary>

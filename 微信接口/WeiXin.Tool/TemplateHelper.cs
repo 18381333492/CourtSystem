@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
+using Common;
+
 
 namespace WeiXin.Tool
 {
@@ -25,7 +26,7 @@ namespace WeiXin.Tool
             var result=HttpHelper.HttpPost(sUrl, content);
             if (!string.IsNullOrEmpty(result))
             {
-                var ParamData = JObject.Parse(result);
+                var ParamData =C_Json.ParseObject(result);
                 if (ParamData["errcode"].ToString()=="0")
                 {//发送成功
 

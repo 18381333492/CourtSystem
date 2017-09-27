@@ -177,7 +177,7 @@
                         if (res.IsFirstConnect) {//第一次连接
                             model.sPriKey = res.sPriKey;
                             //生成二维码
-                            var url = "http://www.baidu.com?sSendPriKey=" + model.sPriKey;
+                            var url = "http://" + document.domain + "/Admin/AdminUser/WeChatLogin?sSendPriKey=" + model.sPriKey;
                             $("#qrcode").qrcode({
                                 width: 180, //宽度 
                                 height: 180, //高度 

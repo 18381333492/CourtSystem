@@ -11,7 +11,7 @@ namespace WeiXin.Tool
     /// 微信用户基本信息Model
     /// </summary>
     [Serializable]
-    public class WeChatUserInfo
+    public class WeChatUser
     {
 
         /// <summary>

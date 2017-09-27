@@ -39,13 +39,13 @@ namespace SystemModel
             JArray Main = new JArray();
             foreach (var m in parentList)
             {
-                var item = C_Json.Object(C_Json.toJson(m));
+                var item = C_Json.ParseObject(C_Json.toJson(m));
                 JArray array = new JArray();
                 foreach (var n in childList)
                 {
                     if (m.ID.ToString() == n.sParentMenuId)
                     {
-                        var temp = C_Json.Object(C_Json.toJson(n));
+                        var temp = C_Json.ParseObject(C_Json.toJson(n));
                         array.Add(temp);
                     }
                 }

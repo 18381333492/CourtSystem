@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using System.IO;
 using Common;
 
@@ -66,7 +64,7 @@ namespace WeiXin.Tool
             string token = string.Empty;
             string sUrl = string.Format("https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={0}&secret={1}", appid, secret);
             string result = HttpHelper.HttpGet(sUrl);
-            JObject res = JObject.Parse(result);
+            var res = C_Json.ParseObject(result);
             if (res["access_token"] != null)
             {//返回成功
                 C_Cache.SetCache("token_out_time",DateTime.Now.AddSeconds(7000),7000);

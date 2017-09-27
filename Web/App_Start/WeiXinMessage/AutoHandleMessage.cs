@@ -88,7 +88,7 @@ namespace Web.App_Start.WeiXinMessage
                     var weChat = DIEntity.Instance.GetImpl<IWeChat>().GetWeChat();
                     access_token token = new access_token(weChat.sAppId, weChat.sAppSecret);
                     //获取用户信息
-                    var userInfo = UserInfoHelper.GetUserByConcern(message.FromUserName, token.Get());
+                    var userInfo = WeChatUserHelper.GetUserByConcern(message.FromUserName, token.Get());
                     //注册会员
                     if (!string.IsNullOrEmpty(userInfo.openid))
                     {

@@ -10,6 +10,7 @@ using EFModels.MyModels;
 using Web.App_Start;
 using SystemInterface;
 using Common;
+using WeiXin.Tool;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -34,6 +35,16 @@ namespace Web.Areas.Admin.Controllers
         [NoLogin]
         public ActionResult WeChatLogin()
         {
+            var weChat = Resolve<IWeChat>().GetWeChat();
+            string sUrl = string.Empty;
+            var WeChatUserInfo = WeChatUserHelper.GetUserByAuthorize(weChat.sAppId, weChat.sAppSecret, out sUrl);
+            if (WeChatUserInfo == null)
+            {
+                return Redirect(sUrl);
+            }
+            ViewBag.headimgurl = WeChatUserInfo.headimgurl;
+            ViewBag.nickname = WeChatUserInfo.nickname;
+            ViewBag.PORT = HttpContext.Application["WebScoket_Port"];
             return View();
         }
 
@@ -44,7 +55,17 @@ namespace Web.Areas.Admin.Controllers
         [NoLogin]
         public ActionResult WeChatRegister()
         {
+            var weChat = Resolve<IWeChat>().GetWeChat();
+            string sUrl = string.Empty;
+            var WeChatUserInfo=WeChatUserHelper.GetUserByAuthorize(weChat.sAppId,weChat.sAppSecret,out sUrl);
+            if (WeChatUserInfo == null)
+            {
+                return Redirect(sUrl);
+            }
+            ViewBag.headimgurl = WeChatUserInfo.headimgurl;
+            ViewBag.nickname = WeChatUserInfo.nickname;
             return View();
+
         }
 
         [NoLogin]

@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = null;
+    Layout = null;  
 }
 <!DOCTYPE html>
 <html lang="zh-CN">
@@ -13,8 +13,8 @@
 <body ontouchstart style="background-color:#eee">
     <!-- 使用 WeUI -->
     <div style="margin-top:5%;text-align:center">
-        <img src="/Images/2017-07/20170710182137379.jpg" style="height:150px;width: 150px;border-radius: 75px;" />
-        <p style="text-align:center;color:red">欢迎你，阿汤哥</p>
+        <img src="@ViewBag.headimgurl" style="height:150px;width: 150px;border-radius: 75px;" />
+        <p style="text-align:center;color:red">欢迎你，@ViewBag.nickname</p>
     </div>
     <div class="weui-cells weui-cells_form">
         <div class="weui-cell">
