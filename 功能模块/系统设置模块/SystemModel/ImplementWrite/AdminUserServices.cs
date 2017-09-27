@@ -19,10 +19,6 @@ namespace SystemModel
         public override int Insert(CDELINK_AdminUser adminUser)
         {
             adminUser.ID = Guid.NewGuid();
-            adminUser.sPassWord = C_Security.MD5(adminUser.sPassWord);
-            adminUser.iState = 1;
-            adminUser.bIsDeleted = false;
-            adminUser.dInsertTime = DateTime.Now;
             excute.Add<CDELINK_AdminUser>(adminUser);
             return excute.SaveChange();
         }

@@ -48,6 +48,8 @@ namespace Web.Areas.Admin.Controllers
             return View();
         }
 
+
+
         /// <summary>
         /// 微信注册后台用户
         /// </summary>
@@ -55,16 +57,46 @@ namespace Web.Areas.Admin.Controllers
         [NoLogin]
         public ActionResult WeChatRegister()
         {
-            var weChat = Resolve<IWeChat>().GetWeChat();
-            string sUrl = string.Empty;
-            var WeChatUserInfo=WeChatUserHelper.GetUserByAuthorize(weChat.sAppId,weChat.sAppSecret,out sUrl);
-            if (WeChatUserInfo == null)
+            if (!Request.IsAjaxRequest())
             {
-                return Redirect(sUrl);
+                var weChat = Resolve<IWeChat>().GetWeChat();
+                string sUrl = string.Empty;
+                var WeChatUserInfo = WeChatUserHelper.GetUserByAuthorize(weChat.sAppId, weChat.sAppSecret, out sUrl);
+                if (WeChatUserInfo == null)
+                {
+                    return Redirect(sUrl);
+                }
+                Session["WeChatUserInfo"] = WeChatUserInfo;
+                ViewBag.headimgurl = WeChatUserInfo.headimgurl;
+                ViewBag.nickname = WeChatUserInfo.nickname;
+                return View();
             }
-            ViewBag.headimgurl = WeChatUserInfo.headimgurl;
-            ViewBag.nickname = WeChatUserInfo.nickname;
-            return View();
+            else
+            {//POST 请求注册后台管理用户
+                string sAcccount = Request.Form["sAcccount"];
+                string sName = Request.Form["sName"];
+                string sPhone = Request.Form["sPhone"];
+                string sPassWord = Request.Form["sPassWord"];
+                var WeChatUserInfo = Session["WeChatUserInfo"] as WeChatUser;
+                if (manage.Insert(new CDELINK_AdminUser()
+                {
+                    sName = sName,//真实姓名
+                    sPhone = sPhone,//手机号
+                    iState = 0,//审核中
+                    sLoginAccout = sAcccount,
+                    sPassWord = C_Security.MD5(sPassWord),
+                    sOpenId = WeChatUserInfo.openid,
+                    sNick = WeChatUserInfo.nickname,
+                    sHeadPicture = WeChatUserInfo.headimgurl,
+                    sRoleId = string.Empty,
+                    dInsertTime = DateTime.Now,
+                    bIsDeleted = false
+                }) > 0)
+                    result.success = true;
+                else
+                    result.info = "绑定失败!";
+                return Content(result.toJson());
+            }
 
         }
 
@@ -94,7 +126,6 @@ namespace Web.Areas.Admin.Controllers
             return View(adminUser);
         }
 
-
         #endregion
 
         /// <summary>
@@ -109,20 +140,6 @@ namespace Web.Areas.Admin.Controllers
             return Content(manage.PageList(pageInfo, searchText, iState));
         }
 
-        /// <summary>
-        /// 添加后台用户
-        /// </summary>
-        /// <param name="adminUser"></param>
-        public void Insert(CDELINK_AdminUser adminUser)
-        {
-            if (!manage.CheckLoginAccout(adminUser.sLoginAccout))
-            {
-                if (manage.Insert(adminUser) > 0)
-                    result.success = true;
-            }
-            else
-                result.info =string.Format("账号：{0}已被注册,请重新输入", adminUser.sLoginAccout);
-        }
 
         /// <summary>
         /// 编辑后台用户
