@@ -56,7 +56,7 @@ namespace WeiXin.Tool
             string code = HttpContext.Current.Request.QueryString["code"];
             if (string.IsNullOrEmpty(code))
             {//获取网页Code
-                string requestUrl = string.Format("http://{0}{1}", HttpContext.Current.Request.Url.Host, HttpContext.Current.Request.Path);
+                string requestUrl = string.Format("http://{0}{1}", HttpContext.Current.Request.Url.Host, HttpContext.Current.Request.Url.PathAndQuery);
                 string code_url = string.Format(@"https://open.weixin.qq.com/connect/oauth2/authorize?appid={0}&redirect_uri={1}&response_type=code&scope=snsapi_userinfo&state=lk#wechat_redirect",
                        sAppid,
                        HttpUtility.UrlEncode(requestUrl, Encoding.UTF8));
@@ -73,13 +73,13 @@ namespace WeiXin.Tool
                 var resString = HttpHelper.HttpGet(url);
                 var result = C_Json.ParseObject(resString);
                 //获取返回的数据
-                if (!string.IsNullOrEmpty(result["openid"].ToString()))
+                if (result["openid"]!=null)
                 {
                     //通过openid和access_token获取用户信息
                     url = string.Format(@"https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang=zh_CN", result["access_token"], result["openid"]);
                     resString=HttpHelper.HttpGet(url);
                     result = C_Json.ParseObject(resString);
-                    if (!string.IsNullOrEmpty(result["openid"].ToString()))
+                    if (result["openid"] != null)
                         userInfo = C_Json.Deserialize<WeChatUser>(resString);
                     else
                         userInfo.message = result["errcode"] + " " + result["errmsg"];

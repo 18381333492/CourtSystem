@@ -31,8 +31,12 @@
 <script src="~/Scripts/jquery-1.12.4.min.js"></script>
 <script src="~/Scripts/mylib/common.client.js"></script>
 <script type="text/javascript">
-    $(function () { 
-        loginSocket.createSocket("ws://127.0.0.1:@ViewBag.PORT");
+    $(function () {
+
+        setTimeout(function () {
+            loginSocket.createSocket("ws://127.0.0.1:@ViewBag.PORT");
+        }, 1000);
+
         //登录确认
         $('.confirm').on("click", function () {
             var sOpenId = $('#OpenId').val();
@@ -42,6 +46,7 @@
                 loginSocket.send(r);
 
             }, function (r) {
+                alert(r);
                 //登录失败
                 loginSocket.send(r);
             });
@@ -49,7 +54,6 @@
 
     })
     var loginSocket = (function (obj) { return obj; }(new function () {
-        var admin = new adminPackage();
         var ws;
         var model =
             {
@@ -74,12 +78,13 @@
         //创建链接
         function createSocket(url) {
             if (checkBrowser()) {
+                alert("1");
                 ws = new WebSocket(url);
 
                 //链接成功时候执行
                 ws.onopen = function () {
                     model.connect = true;
-                    console.log("连接成功!");
+                    alert("连接成功");
                 }
 
                 //接受消息时执行
@@ -94,16 +99,16 @@
 
                 //链接关闭时候执行
                 ws.onclose = function () {
-                    console.log("连接关闭!");
+                    alert("连接关闭!");
                 }
 
                 //连接失败时候执行
                 ws.onerror = function () {
-                    console.log("连接失败!");
+                    alert("连接失败!");
                 }
             }
             else {
-                $("#qrcode").next().text("该浏览器不支持扫码登录,请升级您的浏览器!");
+                alert("该浏览器不支持WebSocket");
             }
         }
 

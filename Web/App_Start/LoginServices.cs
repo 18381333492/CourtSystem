@@ -6,6 +6,7 @@ using System.Web;
 using SystemInterface;
 using Unity;
 using Web.App_Start.BaseController;
+using WeiXin.Tool;
 
 namespace Web.App_Start
 {
@@ -23,7 +24,7 @@ namespace Web.App_Start
         /// <param name="sPassWord"></param>
         /// <param name="sCode"></param>
         /// <returns></returns>
-        public Result AccountLogin(string sLoginAccout, string sPassWord, string sCode)
+        public static Result AccountLogin(string sLoginAccout, string sPassWord, string sCode)
         {
             var result = new Result();
             if (sCode == HttpContext.Current.Session[SESSION.ImgCode].ToString())
@@ -53,6 +54,7 @@ namespace Web.App_Start
                                 iState = adminUser.iState,
                                 ID = adminUser.ID,
                                 sRoleId = new Guid(adminUser.sRoleId),
+                                sHeadPic = adminUser.sHeadPicture,//头像
                                 bIsSuperMan = false
                             };
                             result.success = true;
@@ -75,34 +77,41 @@ namespace Web.App_Start
         /// <summary>
         /// 微信扫码登录
         /// </summary>
-        /// <param name="openid"></param>
+        /// <param name="userInfo"></param>
         /// <returns></returns>
-        public Result ScanLogin(string openid)
+        public static Result ScanLogin(WeChatUser userInfo)
         {
             var result = new Result();
-            if (!string.IsNullOrEmpty(openid))
+            if (!string.IsNullOrEmpty(userInfo.openid))
             {
                 var manage = DIEntity.Instance.GetImpl<IAdminUser>();
-                var user=manage.ScanLogin(openid);
-                if (user.iState == 0)
-                {//该账户正在审核中
-                    result.info = "该账户在审核中,请联系管理员";
+                var user=manage.ScanLogin(userInfo.openid);
+                if (user != null)
+                {
+                    if (user.iState == 0)
+                    {//该账户正在审核中
+                        result.info = "该账户在审核中,请联系管理员";
+                    }
+                    else
+                    {
+                        var obj = manage.GetMenuAndButtonByRoleId(user.sRoleId);
+                        HttpContext.Current.Session[SESSION.Menu] = obj.menuList;//缓存的二级菜单
+                        HttpContext.Current.Session[SESSION.Button] = obj.buttonList;//缓存的按钮
+                        HttpContext.Current.Session[SESSION.AdminUser] = new UserInfo()
+                        {
+                            sUserName = userInfo.nickname,
+                            iState = user.iState,
+                            ID = user.ID,
+                            sRoleId = new Guid(user.sRoleId),
+                            sHeadPic = userInfo.headimgurl,//微信头像
+                            bIsSuperMan = false
+                        };
+                        result.success = true;
+                    }
                 }
                 else
                 {
-                    var obj = manage.GetMenuAndButtonByRoleId(user.sRoleId);
-                    HttpContext.Current.Session[SESSION.Menu] = obj.menuList;//缓存的二级菜单
-                    HttpContext.Current.Session[SESSION.Button] = obj.buttonList;//缓存的按钮
-                    HttpContext.Current.Session[SESSION.AdminUser] = new UserInfo()
-                    {
-                        sUserName =user.sNick,
-                        iState = user.iState,
-                        ID = user.ID,
-                        sRoleId = new Guid(user.sRoleId),
-                        sHeadPic= user.sHeadPicture,//微信头像
-                        bIsSuperMan = false
-                    };
-                    result.success = true;
+                    result.info = "登录失败[你不是管理员]";
                 }
 
             }
