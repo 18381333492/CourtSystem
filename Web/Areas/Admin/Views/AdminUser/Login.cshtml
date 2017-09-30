@@ -176,6 +176,7 @@
                         var res = JSON.parse(message.data);
                         if (res.IsFirstConnect) {//第一次连接
                             model.sPriKey = res.sPriKey;
+                            console.log(model.sPriKey);
                             //生成二维码
                             var url = "http://" + document.domain + "/Admin/AdminUser/WeChatLogin?sSendPriKey=" + model.sPriKey;
                             $("#qrcode").qrcode({

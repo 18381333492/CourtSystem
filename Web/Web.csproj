@@ -1270,15 +1270,6 @@
     <Content Include="Areas\WeiXin\Views\Shared\_Button.cshtml" />
     <Content Include="Areas\WeiXin\Views\AutoReply\Index.cshtml" />
     <Content Include="HandleProgram\PictureUpload.ashx" />
-    <Content Include="Images\2016-10\20161028141847525.jpg" />
-    <Content Include="Images\2016-10\20161028141922003.jpg" />
-    <Content Include="Images\2016-10\20161028141923126.jpg" />
-    <Content Include="Images\2017-02\20170204154953137.jpg" />
-    <Content Include="Images\2017-02\20170204154957452.jpg" />
-    <Content Include="Images\2017-03\20170323162652038.jpg" />
-    <Content Include="Images\2017-03\20170324094636867.jpg" />
-    <Content Include="Images\2017-04\20170403230101526.jpg" />
-    <Content Include="Images\2017-04\20170428153839929.jpg" />
     <Content Include="Areas\Admin\Content\easyui\themes\material\images\Thumbs.db" />
     <Content Include="Areas\Admin\Views\AdminUser\Index.cshtml" />
     <Content Include="Areas\Admin\Content\assets\avatars\Thumbs.db" />
@@ -1363,7 +1354,7 @@
     <Content Include="webcodelogin\phone.html" />
     <Content Include="Areas\Admin\Views\AdminUser\WeChatRegister.cshtml" />
     <Content Include="Areas\Admin\Views\AdminUser\WeChatLogin.cshtml" />
-    <None Include="Properties\PublishProfiles\怡佳之城.pubxml" />
+    <None Include="Properties\PublishProfiles\微信系统.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Important\commonFun.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />
@@ -1437,6 +1428,7 @@
     <Folder Include="Areas\Pays\Views\Shared\" />
     <Folder Include="ErrorLogs\ApplicationError\" />
     <Folder Include="ErrorLogs\Error\" />
+    <Folder Include="Images\" />
     <Folder Include="Scripts\skins\" />
   </ItemGroup>
   <ItemGroup>
