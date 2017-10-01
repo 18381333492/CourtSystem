@@ -90,7 +90,7 @@ namespace Web.App_Start.WeiXinMessage
                     //获取用户信息
                     var userInfo = WeChatUserHelper.GetUserByConcern(message.FromUserName, token.Get());
                     //注册会员
-                    if (!string.IsNullOrEmpty(userInfo.openid))
+                    if (userInfo.isSuccess)
                     {
                         clientDomin.AddClient(new ES_Client
                         {

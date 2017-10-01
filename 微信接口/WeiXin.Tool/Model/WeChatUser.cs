@@ -85,5 +85,10 @@ namespace WeiXin.Tool
         /// </summary>
         public string message { get; set; }
 
+        /// <summary>
+        /// 用户信息获取成功标识
+        /// </summary>
+        public bool isSuccess { get; set; }
+
     }
 }

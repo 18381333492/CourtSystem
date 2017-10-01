@@ -111,13 +111,13 @@ namespace Web.App_Start
                 }
                 else
                 {
-                    result.info = "登录失败[你不是管理员]";
+                    result.info = "登录失败,你还不是管理员";
                 }
 
             }
             else
             {
-                result.info = "登录失败[缺少参数openid]";
+                result.info = "登录失败,缺少参数";
             }
             return result;
         }

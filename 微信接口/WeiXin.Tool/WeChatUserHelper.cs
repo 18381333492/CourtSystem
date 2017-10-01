@@ -30,15 +30,18 @@ namespace WeiXin.Tool
                 if (result["errcode"] == null)
                 {
                     userInfo = C_Json.Deserialize<WeChatUser>(resString);
+                    userInfo.isSuccess = true;
                 }
                 else
                 {
                     userInfo.message = result["errcode"] + " " + result["errmsg"];
+                    userInfo.isSuccess = false;
                 }
             }
             else
             {//sOpenId或者access_token为空
                 userInfo.message = "sOpenId或者access_token为空";
+                userInfo.isSuccess = false;
             }
             return userInfo;
         }
@@ -53,6 +56,7 @@ namespace WeiXin.Tool
         public static WeChatUser GetUserByAuthorize(string sAppid, string sAppSecret, out string sRedirectUrl)
         {
             sRedirectUrl = string.Empty;
+            var userInfo = new WeChatUser();
             string code = HttpContext.Current.Request.QueryString["code"];
             if (string.IsNullOrEmpty(code))
             {//获取网页Code
@@ -61,11 +65,11 @@ namespace WeiXin.Tool
                        sAppid,
                        HttpUtility.UrlEncode(requestUrl, Encoding.UTF8));
                 sRedirectUrl = code_url;
-                return null;
+                userInfo.isSuccess = false;
+                return userInfo;
             }
             else
             {
-                var userInfo = new WeChatUser();
                 // 通过code换取网页授权access_token
                 string url = string.Format(
                         @"https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code",
@@ -80,12 +84,19 @@ namespace WeiXin.Tool
                     resString=HttpHelper.HttpGet(url);
                     result = C_Json.ParseObject(resString);
                     if (result["openid"] != null)
+                    {
                         userInfo = C_Json.Deserialize<WeChatUser>(resString);
+                        userInfo.isSuccess = true;
+                    }
                     else
+                    {
+                        userInfo.isSuccess = false;
                         userInfo.message = result["errcode"] + " " + result["errmsg"];
+                    }
                 }
                 else
                 {
+                    userInfo.isSuccess = false;
                     userInfo.message = result["errcode"] + " " + result["errmsg"];
                 }
                 return userInfo;

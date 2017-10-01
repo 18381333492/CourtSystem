@@ -101,7 +101,7 @@ namespace Web.Areas.Admin.Controllers
                 var weChat = Resolve<IWeChat>().GetWeChat();
                 string sUrl = string.Empty;
                 var WeChatUserInfo = WeChatUserHelper.GetUserByAuthorize(weChat.sAppId, weChat.sAppSecret, out sUrl);
-                if (WeChatUserInfo == null||!string.IsNullOrEmpty(WeChatUserInfo.message))
+                if (!WeChatUserInfo.isSuccess)
                 {
                     return Redirect(sUrl);
                 }
@@ -133,13 +133,14 @@ namespace Web.Areas.Admin.Controllers
                 var weChat = Resolve<IWeChat>().GetWeChat();
                 string sUrl = string.Empty;
                 var WeChatUserInfo = WeChatUserHelper.GetUserByAuthorize(weChat.sAppId, weChat.sAppSecret, out sUrl);
-                if (WeChatUserInfo == null)
+                if (!WeChatUserInfo.isSuccess)
                 {
                     return Redirect(sUrl);
                 }
                 Session["WeChatUserInfo_Register"] = WeChatUserInfo;
                 ViewBag.headimgurl = WeChatUserInfo.headimgurl;
                 ViewBag.nickname = WeChatUserInfo.nickname;
+
                 return View();
             }
             else
