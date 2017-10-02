@@ -100,16 +100,27 @@ namespace WeiXin.Tool
                 webRequest.Headers.Add("Accept-Encoding", "gzip, deflate");
 
                 HttpWebResponse webResponse = (System.Net.HttpWebResponse)webRequest.GetResponse();
+                string character = webResponse.CharacterSet;//获取响应的字符集;
+                if (character == "ISO-8859-1") character = string.Empty;//iso-8859-1是西欧拉丁语，单字节编码，根本就不支持中文
                 if (webResponse.ContentEncoding.ToLower() == "gzip")//如果使用了GZip则先解压
                 {
                     using (System.IO.Stream streamReceive = webResponse.GetResponseStream())
                     {
-                        using (var zipStream =
-                            new System.IO.Compression.GZipStream(streamReceive, System.IO.Compression.CompressionMode.Decompress))
+                        using (var zipStream =new System.IO.Compression.GZipStream(streamReceive, System.IO.Compression.CompressionMode.Decompress))
                         {
-                            using (StreamReader sr = new System.IO.StreamReader(zipStream, Encoding.GetEncoding(webResponse.CharacterSet)))
+                            if (string.IsNullOrEmpty(character))
                             {
-                                sResult = sr.ReadToEnd();
+                                using (StreamReader sr = new System.IO.StreamReader(zipStream))
+                                {
+                                    sResult = sr.ReadToEnd();
+                                }
+                            }
+                            else
+                            {
+                                using (StreamReader sr = new System.IO.StreamReader(zipStream, Encoding.GetEncoding(webResponse.CharacterSet)))
+                                {
+                                    sResult = sr.ReadToEnd();
+                                }
                             }
                         }
                     }
@@ -118,12 +129,21 @@ namespace WeiXin.Tool
                 {
                     using (System.IO.Stream streamReceive = webResponse.GetResponseStream())
                     {
-                        using (var zipStream =
-                            new System.IO.Compression.DeflateStream(streamReceive, System.IO.Compression.CompressionMode.Decompress))
+                        using (var zipStream =new System.IO.Compression.DeflateStream(streamReceive, System.IO.Compression.CompressionMode.Decompress))
                         {
-                            using (StreamReader sr = new System.IO.StreamReader(zipStream, Encoding.GetEncoding(webResponse.CharacterSet)))
+                            if (string.IsNullOrEmpty(character))
                             {
-                                sResult = sr.ReadToEnd();
+                                using (StreamReader sr = new System.IO.StreamReader(zipStream))
+                                {
+                                    sResult = sr.ReadToEnd();
+                                }
+                            }
+                            else
+                            {
+                                using (StreamReader sr = new System.IO.StreamReader(zipStream, Encoding.GetEncoding(webResponse.CharacterSet)))
+                                {
+                                    sResult = sr.ReadToEnd();
+                                }
                             }
                         }
                     }
@@ -132,9 +152,20 @@ namespace WeiXin.Tool
                 {
                     using (System.IO.Stream streamReceive = webResponse.GetResponseStream())
                     {
-                        using (System.IO.StreamReader sr = new System.IO.StreamReader(streamReceive))
+
+                        if (string.IsNullOrEmpty(character))
                         {
-                            sResult = sr.ReadToEnd();
+                            using (System.IO.StreamReader sr = new System.IO.StreamReader(streamReceive))
+                            {
+                                sResult = sr.ReadToEnd();
+                            }
+                        }
+                        else
+                        {
+                            using (System.IO.StreamReader sr = new System.IO.StreamReader(streamReceive, Encoding.GetEncoding(webResponse.CharacterSet)))
+                            {
+                                sResult = sr.ReadToEnd();
+                            }
                         }
                     }
                 }

@@ -10,6 +10,7 @@ using System.IO;
 using Web.App_Start.BaseController;
 using SystemInterface;
 using EFModels;
+using WeiXin.Tool;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -19,7 +20,14 @@ namespace Web.Areas.Admin.Controllers
         // GET: /Admin/Home/
 
         #region 后台首页相关视图
-
+        
+        [NoLogin]
+        public ActionResult Test()
+        {
+            string cnt = HttpUtility.UrlEncode("的世界观法规和到发给都是dskjfklsfdsfds");
+            var ss= HttpHelper.HttpGet("http://localhost:35084/SmsApi/SendSms.ashx?oid=RS1710011827551061&bid=yy_test&sph=15933118575&rph=18381333492&cnt="+ cnt + "&tout=150&tsp=2017093001713&sign=ab645b695578304f222badbea3073644");
+            return Content(ss);
+        }
 
         public ActionResult Index()
         {

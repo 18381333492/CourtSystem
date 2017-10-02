@@ -14,7 +14,7 @@
 <body ontouchstart style="background-color:#eee">
     <!-- 使用 WeUI -->
     <div style="margin-top:10%;text-align:center">
-        <img class="person" src="@ViewBag.headimgurl" style="height:120px;width: 120px;border-radius: 60px;" />
+        <img class="person" src="@ViewBag.headimgurl" style="height:100px;width: 100px;border-radius: 50px;" />
         <div class="content_img" style="text-align:center"></div>
         <p class="nick" style="text-align:center;color:red">欢迎你，@ViewBag.nickname</p>
         <p class="tip" style="height: 50px;line-height: 25px;font-size: 18px;font-weight: 500;">
@@ -43,7 +43,7 @@
             $('.hide_btn').hide();
             $('.tip').text("已确认登录系统").css({"margin-top": "10px"});
             $('.person').hide();
-            $('.content_img').html('<i class="weui-icon-success weui-icon_msg" style="font-size:120px">');
+            $('.content_img').html('<i class="weui-icon-success weui-icon_msg" style="font-size:100px">');
             
             var sOpenId = $('#OpenId').val();
             client.ajax.ajaxRequest("/Admin/AdminUser/WeChatLogin", null, function (r) {
@@ -63,7 +63,7 @@
             $('.hide_btn').hide();
             $('.tip').text("已取消本次登录").css({ "margin-top": "10px" });
             $('.person').hide();
-            $('.content_img').html('<i class="weui-icon-warn weui-icon_msg" style="font-size:120px"></i>');
+            $('.content_img').html('<i class="weui-icon-warn weui-icon_msg" style="font-size:100px"></i>');
         });
 
     })

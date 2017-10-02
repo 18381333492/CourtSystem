@@ -19,87 +19,96 @@
 <body ontouchstart style="background-color:#eee">
     <!-- 使用 WeUI -->
     <div style="margin-top:5%;text-align:center">
-        <img src="@ViewBag.headimgurl" style="height:120px;width: 120px;border-radius: 60px;" />
+        <img src="@ViewBag.headimgurl" style="height:100px;width: 100px;border-radius: 50px;" />
         <p style="text-align:center;color:red">欢迎你，@ViewBag.nickname</p>
     </div>  
-    <div class="weui-cells weui-cells_form">
-        <div class="weui-cell weui-cell_switch">
-            <div class="weui-cell__bd">绑定登录账户</div>
-            <div class="weui-cell__ft">
-                <input class="weui-switch" type="checkbox">
+    <form id="register">
+        <div class="weui-cells weui-cells_form">
+            <div class="weui-cell weui-cell_switch">
+                <div class="weui-cell__bd">绑定登录账户</div>
+                <div class="weui-cell__ft">
+                    <input class="weui-switch" type="checkbox">
+                </div>
             </div>
-        </div>
-    </div>
-        <div class="weui-cells weui-cells_form register" style="display:none">
-            <form id="register">
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">真实姓名</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" placeholder="真实姓名">
+                    <input class="weui-input" type="text" name="sName" placeholder="真实姓名">
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">手机号码</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="number" placeholder="请输入手机号码">
+                    <input class="weui-input" type="number" name="sPhone" placeholder="请输入手机号码">
                 </div>
             </div>
+        </div>
+        <div class="weui-cells weui-cells_form register" style="display:none">
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">登录账户</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="text" placeholder="请输入账户">
+                    <input class="weui-input" name="sAccount" type="text" placeholder="请输入账户">
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="password" placeholder="请输入密码">
+                    <input class="weui-input" name="sPassWord" type="password" placeholder="请输入密码">
                 </div>
             </div>
             <div class="weui-cell">
                 <div class="weui-cell__hd"><label class="weui-label">确认密码</label></div>
                 <div class="weui-cell__bd">
-                    <input class="weui-input" type="password" placeholder="请再次输入密码">
+                    <input class="weui-input" name="sRePassWord" type="password" placeholder="请再次输入密码">
                 </div>
             </div>
-           </form>
         </div>
-        <div style="margin-left:5%;margin-right: 5%;margin-top:5%">
-            <a href="javascript:;" class="weui-btn weui-btn_primary bing">绑定</a>
-        </div>
+    </form>
+    <div style="margin-left:5%;margin-right: 5%;margin-top:5%">
+        <a  class="weui-btn weui-btn_primary bing">绑定</a>
+    </div>
 </body>
 </html>
 <script src="~/Scripts/mylib/common.client.js"></script>
 <script type="text/javascript">
     $(function () {
-        var isAdd = false;
+        var isBingAccount = false;//是否绑定登录账户信息标识
         $('.weui-switch').change(function () {
             var value = $(this).prop("checked")
             if (value) {
                 $('.register').show();
-                isAdd = true;
+                isBingAccount = true;
             }
             else {
                 $('.register').hide();
-                isAdd = false;
+                isBingAccount = false;
             }
         });
-        //绑定事件
-        $('.bing').on("click", function () {
-            if (isAdd) {
-                //验证表单
-            }
-            else {
-                //不需要验证表单
-             
-            }
-            client.ajax.ajaxRequest("/Admin/AdminUser/WeChatRegister", null, function (r) {
-                //绑定成功
+        try {
+            $('.bing').on("click", function () {
+                var json = client.myform.parseJson($('#register'));
+                if (client.regex.isEmpty(json.sName)) return $.toptip('姓名不能为空!', 1000, 'warning');
+                if (client.regex.isEmpty(json.sPhone)) return $.toptip('手机号不能为空!', 1000, 'warning');
+                if (!client.regex.isPhone(json.sPhone)) return $.toptip('手机号码格式错误!', 1000, 'warning');
+                if (isBingAccount) {
+                    if (client.regex.isEmpty(json.sAccount)) return $.toptip('登录账号不能为空!', 1000, 'warning');
+                    if (client.regex.isEmpty(json.sPassWord)) return $.toptip('密码不能为空!', 1000, 'warning');
+                    if (json.sPassWord.length < 6) return $.toptip('密码长度不能低于6位!', 1000, 'warning');
+                    if (json.sPassWord != json.sRePassWord) return $.toptip('两次密码输入不一致!', 1000, 'warning');
+                }
 
-            }, function (r) {
-                //绑定失败
-                $.toast("绑定失败", "cancel");
+                //client.ajax.ajaxRequest("/Admin/AdminUser/WeChatRegister", null, function (r) {
+                //    //绑定成功
+
+                //}, function (r) {
+                //    //绑定失败
+                //    $.toast("绑定失败", "cancel");
+                //});
             });
-        });
+        } catch (e) {
+            alert(e.message);
+        }
+        //绑定事件
+       
     });
 </script>

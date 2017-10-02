@@ -140,7 +140,6 @@ namespace Web.Areas.Admin.Controllers
                 Session["WeChatUserInfo_Register"] = WeChatUserInfo;
                 ViewBag.headimgurl = WeChatUserInfo.headimgurl;
                 ViewBag.nickname = WeChatUserInfo.nickname;
-
                 return View();
             }
             else

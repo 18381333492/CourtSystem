@@ -4,7 +4,8 @@
 
 window.client = {
     
-    ajax:new ajax(),
+    ajax: new ajax(),
+    myform: new myform(),
     string: new string(),
     regex: new regex(),
     cookie: new cookie(),
@@ -427,5 +428,31 @@ function datetime() {
         format: format,
         GetDaysInMonth:GetDaysInMonth,
         getCurrentMonthFirstDay: getCurrentMonthFirstDay
+    }
+}
+
+/****表单的处理****/
+function myform() {
+
+    /*
+    * 将表单元素序列化成Json对象.
+    * @version 1.0.0
+    * @param   form(要序列化Jquery表单对象)
+    * @return {json}
+    */
+    function parseJson(form) {
+        alert(1);
+        var array=form.serializeArray();
+        var obj = {};
+        for (var i = 0; i < array.length; i++) {
+            var key = array[i]["name"];
+            var value = array[i]["value"];
+            obj[key] = value;
+        }
+        return obj;
+    }
+
+    return {
+        parseJson:parseJson
     }
 }
