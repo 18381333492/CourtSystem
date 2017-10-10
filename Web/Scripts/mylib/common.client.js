@@ -5,7 +5,7 @@
 window.client = {
     
     ajax: new ajax(),
-    myform: new myform(),
+    form: new form(),
     string: new string(),
     regex: new regex(),
     cookie: new cookie(),
@@ -432,7 +432,7 @@ function datetime() {
 }
 
 /****表单的处理****/
-function myform() {
+function form() {
 
     /*
     * 将表单元素序列化成Json对象.

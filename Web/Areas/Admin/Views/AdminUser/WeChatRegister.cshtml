@@ -86,7 +86,7 @@
         });
         try {
             $('.bing').on("click", function () {
-                var json = client.myform.parseJson($('#register'));
+                var json = client.form.parseJson($('#register'));
                 if (client.regex.isEmpty(json.sName)) return $.toptip('姓名不能为空!', 1000, 'warning');
                 if (client.regex.isEmpty(json.sPhone)) return $.toptip('手机号不能为空!', 1000, 'warning');
                 if (!client.regex.isPhone(json.sPhone)) return $.toptip('手机号码格式错误!', 1000, 'warning');
@@ -96,7 +96,6 @@
                     if (json.sPassWord.length < 6) return $.toptip('密码长度不能低于6位!', 1000, 'warning');
                     if (json.sPassWord != json.sRePassWord) return $.toptip('两次密码输入不一致!', 1000, 'warning');
                 }
-
                 //client.ajax.ajaxRequest("/Admin/AdminUser/WeChatRegister", null, function (r) {
                 //    //绑定成功
 
