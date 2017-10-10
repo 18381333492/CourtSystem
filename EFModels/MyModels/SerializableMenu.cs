@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EFModels
 {
     [Serializable]
-    public partial class CDELINK_Menu
+    public partial class ES_Menu
     {
 
     }

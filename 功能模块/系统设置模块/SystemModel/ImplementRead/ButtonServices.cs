@@ -28,8 +28,8 @@ namespace SystemModel
         /// <returns></returns>
         public override string GetList()
         {
-            var menuList = query.QueryList<CDELINK_Menu>(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 ORDER BY iOrder");
-            var buttonList=query.QueryList<CDELINK_Button>(@"SELECT * FROM CDELINK_Button ORDER BY iOrder");
+            var menuList = query.QueryList<ES_Menu>(@"SELECT * FROM ES_Menu WHERE bIsDeleted=0 ORDER BY iOrder");
+            var buttonList=query.QueryList<ES_Button>(@"SELECT * FROM ES_Button ORDER BY iOrder");
 
             //根级菜单
             var FirstMenu = (from m in menuList
@@ -106,9 +106,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="sButtonId"></param>
         /// <returns></returns>
-        public override CDELINK_Button GetById(string sButtonId)
+        public override ES_Button GetById(string sButtonId)
         {
-            var button = query.SingleQuery<CDELINK_Button>(@"SELECT * FROM CDELINK_Button WHERE ID=@ID", new { ID = sButtonId });
+            var button = query.SingleQuery<ES_Button>(@"SELECT * FROM ES_Button WHERE ID=@ID", new { ID = sButtonId });
             return button;
         }
 
@@ -117,9 +117,9 @@ namespace SystemModel
         /// 获取所有的按钮（SuperMan专用通道）
         /// </summary>
         /// <returns></returns>
-        public override List<CDELINK_Button> GetAllButtonList()
+        public override List<ES_Button> GetAllButtonList()
         {
-            return query.QueryList<CDELINK_Button>("SELECT * FROM CDELINK_Button ORDER BY iOrder").ToList();
+            return query.QueryList<ES_Button>("SELECT * FROM ES_Button ORDER BY iOrder").ToList();
         }
     }
 }

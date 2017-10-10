@@ -21,16 +21,16 @@ namespace SystemModel
         /// </summary>
         /// <param name="wechat"></param>
         /// <returns></returns>
-        public override int SetWeChat(CDELINK_WeChat wechat)
+        public override int SetWeChat(ES_WeChat wechat)
         {
-            var tempWeChat = excute.Context.CDELINK_WeChat.AsNoTracking().FirstOrDefault();
+            var tempWeChat = excute.Context.ES_WeChat.AsNoTracking().FirstOrDefault();
             if (tempWeChat == null)
             {
                 wechat.ID =Guid.NewGuid();
-                excute.Add<CDELINK_WeChat>(wechat);
+                excute.Add<ES_WeChat>(wechat);
             }
             else
-                excute.Edit<CDELINK_WeChat>(wechat);
+                excute.Edit<ES_WeChat>(wechat);
             return excute.SaveChange();
         }
 

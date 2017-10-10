@@ -26,13 +26,13 @@ namespace SystemInterface
         /// </summary>
         /// <param name="sButtonId"></param>
         /// <returns></returns>
-        public abstract CDELINK_Button GetById(string sButtonId);
+        public abstract ES_Button GetById(string sButtonId);
 
         /// <summary>
         /// 获取所有的按钮（SuperMan专用通道）
         /// </summary>
         /// <returns></returns>
-        public abstract List<CDELINK_Button> GetAllButtonList();
+        public abstract List<ES_Button> GetAllButtonList();
 
 
         #endregion
@@ -45,7 +45,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public abstract int Insert(CDELINK_Button button);
+        public abstract int Insert(ES_Button button);
 
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public abstract int Update(CDELINK_Button button);
+        public abstract int Update(ES_Button button);
 
 
         /// <summary>

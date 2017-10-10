@@ -29,7 +29,7 @@ namespace SystemInterface
         /// <param name="sUserName">用户名</param>
         /// <param name="sPassWord">登录密码</param>
         /// <returns></returns>
-        public abstract CDELINK_AdminUser ValidateLogin(string sUserName, string sPassWord);
+        public abstract ES_AdminUser ValidateLogin(string sUserName, string sPassWord);
 
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="sOpenId"></param>
         /// <returns></returns>
-        public abstract CDELINK_AdminUser ScanLogin(string sOpenId);
+        public abstract ES_AdminUser ScanLogin(string sOpenId);
 
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="sUserId"></param>
         /// <returns></returns>
-        public abstract CDELINK_AdminUser GetById(string sUserId);
+        public abstract ES_AdminUser GetById(string sUserId);
 
         /// <summary>
         /// 获取所有的角色名称
@@ -81,14 +81,14 @@ namespace SystemInterface
         /// </summary>
         /// <param name="adminUser"></param>
         /// <returns></returns>
-        public abstract int Insert(CDELINK_AdminUser adminUser);
+        public abstract int Insert(ES_AdminUser adminUser);
 
         /// <summary>
         /// 编辑后台用户
         /// </summary>
         /// <param name="adminUser"></param>
         /// <returns></returns>
-        public abstract int Update(CDELINK_AdminUser adminUser);
+        public abstract int Update(ES_AdminUser adminUser);
 
         /// <summary>
         /// 根据主键ID重置后台用户密码

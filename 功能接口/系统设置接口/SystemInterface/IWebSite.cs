@@ -17,7 +17,7 @@ namespace SystemInterface
         /// 获取网站信息
         /// </summary>
         /// <returns></returns>
-        public abstract CDELINK_WebSite GetWebSite();
+        public abstract ES_WebSite GetWebSite();
 
 
         #endregion
@@ -30,7 +30,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="website"></param>
         /// <returns></returns>
-        public abstract int SetWebSite(CDELINK_WebSite website);
+        public abstract int SetWebSite(ES_WebSite website);
 
         #endregion
 

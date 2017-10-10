@@ -16,8 +16,8 @@ namespace EFModels
     {
         public System.Guid ID { get; set; }
         public System.Guid sGoodsId { get; set; }
+        public string sStandardName { get; set; }
         public decimal dPrices { get; set; }
         public System.DateTime dInsertTime { get; set; }
-        public string sStandardName { get; set; }
     }
 }

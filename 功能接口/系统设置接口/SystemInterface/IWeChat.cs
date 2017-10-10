@@ -17,7 +17,7 @@ namespace SystemInterface
         /// 获取微信公众号信息
         /// </summary>
         /// <returns></returns>
-        public abstract CDELINK_WeChat GetWeChat();
+        public abstract ES_WeChat GetWeChat();
 
 
         #endregion
@@ -30,7 +30,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="wechat"></param>
         /// <returns></returns>
-        public abstract int SetWeChat(CDELINK_WeChat wechat);
+        public abstract int SetWeChat(ES_WeChat wechat);
 
 
         #endregion

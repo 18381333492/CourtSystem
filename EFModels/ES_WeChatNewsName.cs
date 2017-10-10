@@ -12,15 +12,12 @@ namespace EFModels
     using System;
     using System.Collections.Generic;
     
-    public partial class CDELINK_WeChatNews
+    public partial class ES_WeChatNewsName
     {
         public System.Guid ID { get; set; }
-        public string sTitle { get; set; }
-        public string sPictureUrl { get; set; }
-        public string sDataUrl { get; set; }
-        public string sContent { get; set; }
-        public string sDescribe { get; set; }
-        public int iOrder { get; set; }
-        public System.Guid sToId { get; set; }
+        public string sWeChatNewsName { get; set; }
+        public System.DateTime dInsertTime { get; set; }
+        public bool bIsDeleted { get; set; }
+        public System.DateTime dUpdateTime { get; set; }
     }
 }

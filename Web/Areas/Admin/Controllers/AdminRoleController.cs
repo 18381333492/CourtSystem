@@ -89,7 +89,7 @@ namespace Web.Areas.Admin.Controllers
         /// 添加角色
         /// </summary>
         /// <param name="adminRole"></param>
-        public void Insert(CDELINK_AdminRole adminRole)
+        public void Insert(ES_AdminRole adminRole)
         {
             if (!manage.CheckRoleName(adminRole.sRoleName))
             {
@@ -103,7 +103,7 @@ namespace Web.Areas.Admin.Controllers
         /// 编辑角色
         /// </summary>
         /// <param name="adminRole"></param>
-        public void Update(CDELINK_AdminRole adminRole)
+        public void Update(ES_AdminRole adminRole)
         {
             if (!manage.CheckRoleName(adminRole.sRoleName, adminRole.ID.ToString()))
             {

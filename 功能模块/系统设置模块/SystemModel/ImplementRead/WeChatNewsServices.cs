@@ -26,15 +26,15 @@ namespace SystemModel
 
             StringBuilder sSql = new StringBuilder();
             if (!string.IsNullOrEmpty(searchText))
-                sSql.AppendFormat(@"select * from CDELINK_WeChatNewsName where bIsDeleted=0
+                sSql.AppendFormat(@"select * from ES_WeChatNewsName where bIsDeleted=0
                                                                and  sWeChatNewsName like '%{0}%'
                                                                  order by dUpdateTime desc", searchText);
             else
-                sSql.Append(@"select * from CDELINK_WeChatNewsName where bIsDeleted=0 order by dUpdateTime desc");
+                sSql.Append(@"select * from ES_WeChatNewsName where bIsDeleted=0 order by dUpdateTime desc");
 
-            var nameList = query.QueryList<CDELINK_WeChatNewsName>(sSql.ToString()).ToList();
+            var nameList = query.QueryList<ES_WeChatNewsName>(sSql.ToString()).ToList();
 
-            var newsList = query.QueryList<CDELINK_WeChatNews>(@"select ID,sTitle,sDescribe,sPictureUrl,iOrder,sToId from CDELINK_WeChatNews order by iOrder");
+            var newsList = query.QueryList<ES_WeChatNews>(@"select ID,sTitle,sDescribe,sPictureUrl,iOrder,sToId from ES_WeChatNews order by iOrder");
 
             JArray array = new JArray();
 
@@ -59,9 +59,9 @@ namespace SystemModel
         public override object GetNews(string sNewsId)
         {
             //获取微信图文信息
-            var weChatNewsName = query.Find<CDELINK_WeChatNewsName>(sNewsId);
+            var weChatNewsName = query.Find<ES_WeChatNewsName>(sNewsId);
             //获取微信详细图文数据列表
-            var newsList = query.QueryList<CDELINK_WeChatNews>(@"select * from CDELINK_WeChatNews where sToId=@sToId order by iOrder",new { sToId= sNewsId });
+            var newsList = query.QueryList<ES_WeChatNews>(@"select * from ES_WeChatNews where sToId=@sToId order by iOrder",new { sToId= sNewsId });
 
             JObject job = new JObject();
             job.Add(new JProperty("ID", weChatNewsName.ID));

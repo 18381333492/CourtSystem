@@ -40,7 +40,7 @@ namespace SystemInterface
         /// <param name="newsName"></param>
         /// <param name="newsData"></param>
         /// <returns></returns>
-        public abstract int Insert(CDELINK_WeChatNewsName newsName, List<CDELINK_WeChatNews> newsData);
+        public abstract int Insert(ES_WeChatNewsName newsName, List<ES_WeChatNews> newsData);
 
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace SystemInterface
         /// <param name="newsName"></param>
         /// <param name="newsData"></param>
         /// <returns></returns>
-        public abstract int Update(CDELINK_WeChatNewsName newsName, List<CDELINK_WeChatNews> newsData);
+        public abstract int Update(ES_WeChatNewsName newsName, List<ES_WeChatNews> newsData);
 
 
         /// <summary>

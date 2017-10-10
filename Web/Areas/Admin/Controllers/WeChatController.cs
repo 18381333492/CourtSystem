@@ -21,7 +21,7 @@ namespace Web.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var wechat = manage.GetWeChat();
-            wechat = wechat == null ? new CDELINK_WeChat() : wechat;
+            wechat = wechat == null ? new ES_WeChat() : wechat;
             return View(wechat);
         }
 
@@ -31,7 +31,7 @@ namespace Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="wechat"></param>
         /// <returns></returns>
-        public void SetWeChat(CDELINK_WeChat wechat)
+        public void SetWeChat(ES_WeChat wechat)
         {
             if (manage.SetWeChat(wechat) > 0)
                 result.success = true;

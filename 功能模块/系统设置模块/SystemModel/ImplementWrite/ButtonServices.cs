@@ -15,10 +15,10 @@ namespace SystemModel
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public override int Insert(CDELINK_Button button)
+        public override int Insert(ES_Button button)
         {
             button.ID = Guid.NewGuid();
-            excute.Add<CDELINK_Button>(button);
+            excute.Add<ES_Button>(button);
             return excute.SaveChange();
         }
 
@@ -28,9 +28,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public override int Update(CDELINK_Button button)
+        public override int Update(ES_Button button)
         {
-            excute.Edit<CDELINK_Button>(button);
+            excute.Edit<ES_Button>(button);
             return excute.SaveChange();
         }
 
@@ -42,7 +42,7 @@ namespace SystemModel
         /// <returns></returns>
         public override int Delete(string sButtonId)
         {
-            return excute.Delete<CDELINK_Button>(sButtonId);
+            return excute.Delete<ES_Button>(sButtonId);
         }
     }
 }

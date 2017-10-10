@@ -22,9 +22,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="sConcernId"></param>
         /// <returns></returns>
-        public override CDELINK_WeChatConcern Get()
+        public override ES_WeChatConcern Get()
         {
-            var item = query.SingleQuery<CDELINK_WeChatConcern>("select * from CDELINK_WeChatConcern");
+            var item = query.SingleQuery<ES_WeChatConcern>("select * from ES_WeChatConcern");
             return item;
         }
 

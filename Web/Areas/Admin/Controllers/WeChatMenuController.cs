@@ -51,7 +51,7 @@ namespace Web.Areas.Admin.Controllers
         /// 添加微信菜单
         /// </summary>
         /// <param name="wechatMenu"></param>
-        public void Insert(CDELINK_WeChatMenu wechatMenu)
+        public void Insert(ES_WeChatMenu wechatMenu)
         {
             if (string.IsNullOrEmpty(wechatMenu.sParentMenuId))
             {//创建一级菜单
@@ -80,7 +80,7 @@ namespace Web.Areas.Admin.Controllers
         /// 编辑微信菜单
         /// </summary>
         /// <param name="wechatMenu"></param>
-        public void Update(CDELINK_WeChatMenu wechatMenu)
+        public void Update(ES_WeChatMenu wechatMenu)
         {
             if (string.IsNullOrEmpty(wechatMenu.sParentMenuId))
             {//编辑一级菜单

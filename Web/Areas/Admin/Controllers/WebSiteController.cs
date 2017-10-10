@@ -21,7 +21,7 @@ namespace Web.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var webSite = manage.GetWebSite();
-            webSite = webSite == null ? new CDELINK_WebSite() : webSite;
+            webSite = webSite == null ? new ES_WebSite() : webSite;
             return View(webSite);
         }
 
@@ -31,7 +31,7 @@ namespace Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="website"></param>
         /// <returns></returns>
-        public void SetWebSite(CDELINK_WebSite website)
+        public void SetWebSite(ES_WebSite website)
         {
             if (manage.SetWebSite(website) > 0)
                 result.success = true;

@@ -18,9 +18,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="sButtonId"></param>
         /// <returns></returns>
-        public override CDELINK_Menu GetById(string sMenuId)
+        public override ES_Menu GetById(string sMenuId)
         {
-            var menu = query.SingleQuery<CDELINK_Menu>(@"SELECT * FROM CDELINK_Menu WHERE ID=@ID", new { ID = sMenuId });
+            var menu = query.SingleQuery<ES_Menu>(@"SELECT * FROM ES_Menu WHERE ID=@ID", new { ID = sMenuId });
             return menu;
         }
 
@@ -30,7 +30,7 @@ namespace SystemModel
         /// <returns></returns>
         public override string List()
         {
-            var menuList = query.QueryList<CDELINK_Menu>(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 ORDER BY iOrder ASC");
+            var menuList = query.QueryList<ES_Menu>(@"SELECT * FROM ES_Menu WHERE bIsDeleted=0 ORDER BY iOrder ASC");
 
             var parentList = menuList.Where(m =>string.IsNullOrEmpty(m.sParentMenuId) == true); //一级菜单
             var childList = menuList.Where(m => string.IsNullOrEmpty(m.sParentMenuId) == false);//二级菜单
@@ -61,8 +61,8 @@ namespace SystemModel
         /// <returns></returns>
         public override object GetAllMenuAndButtonList()
         {
-            var menuList = query.QueryList<CDELINK_Menu>(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 ORDER BY iOrder");
-            var buttonList = query.QueryList<CDELINK_Button>(@"SELECT * FROM CDELINK_Button ORDER BY iOrder");
+            var menuList = query.QueryList<ES_Menu>(@"SELECT * FROM ES_Menu WHERE bIsDeleted=0 ORDER BY iOrder");
+            var buttonList = query.QueryList<ES_Button>(@"SELECT * FROM ES_Button ORDER BY iOrder");
             return new
             {
                 menu = menuList,
@@ -78,7 +78,7 @@ namespace SystemModel
         public override List<Dictionary<string, object>> GetMianMenuList()
         {
             var list = query.QueryList<Dictionary<string, object>>(@"SELECT ID,sMenuName 
-                                                            FROM CDELINK_Menu WHERE bIsDeleted=0 AND sParentMenuId IS NULL ORDER BY iOrder ASC").ToList();
+                                                            FROM ES_Menu WHERE bIsDeleted=0 AND sParentMenuId IS NULL ORDER BY iOrder ASC").ToList();
             var temp = new Dictionary<string, object>();
             temp["ID"] = string.Empty;
             temp["sMenuName"] = "一级菜单";
@@ -96,9 +96,9 @@ namespace SystemModel
         public override bool CheckMenuName(string sMenuName, string sMenuId = null)
         {
             if (string.IsNullOrEmpty(sMenuId))
-                return query.Any(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 AND sMenuName=@sMenuName", new { sMenuName = sMenuName });
+                return query.Any(@"SELECT * FROM ES_Menu WHERE bIsDeleted=0 AND sMenuName=@sMenuName", new { sMenuName = sMenuName });
             else
-                return query.Any(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 AND sMenuName=@sMenuName AND ID!=@ID", new { sMenuName = sMenuName, ID = sMenuId });
+                return query.Any(@"SELECT * FROM ES_Menu WHERE bIsDeleted=0 AND sMenuName=@sMenuName AND ID!=@ID", new { sMenuName = sMenuName, ID = sMenuId });
         }
 
 
@@ -107,10 +107,10 @@ namespace SystemModel
         /// </summary>
         /// <param name="Ids"></param>
         /// <returns></returns>
-        public override List<CDELINK_Menu> GetMainMenuByIds(string Ids)
+        public override List<ES_Menu> GetMainMenuByIds(string Ids)
         {
             if (!string.IsNullOrEmpty(Ids))
-                return query.QueryList<CDELINK_Menu>(string.Format(@"SELECT * FROM CDELINK_Menu WHERE ID IN({0}) AND bIsDeleted=0 ORDER BY iOrder", Ids)).ToList();
+                return query.QueryList<ES_Menu>(string.Format(@"SELECT * FROM ES_Menu WHERE ID IN({0}) AND bIsDeleted=0 ORDER BY iOrder", Ids)).ToList();
             else
                 return null;
         }
@@ -120,9 +120,9 @@ namespace SystemModel
         /// 获取所有的二级菜单（SuperMan专用通道）
         /// </summary>
         /// <returns></returns>
-        public override List<CDELINK_Menu> GetAllChildMenu()
+        public override List<ES_Menu> GetAllChildMenu()
         {
-            return query.QueryList<CDELINK_Menu>(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 AND sParentMenuId IS NOT NULL ORDER BY iOrder").ToList();
+            return query.QueryList<ES_Menu>(@"SELECT * FROM ES_Menu WHERE bIsDeleted=0 AND sParentMenuId IS NOT NULL ORDER BY iOrder").ToList();
         }
     }
 }

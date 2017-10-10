@@ -36,7 +36,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="sWeChatMenuId"></param>
         /// <returns></returns>
-        public abstract CDELINK_WeChatMenu GetMenuById(string sWeChatMenuId);
+        public abstract ES_WeChatMenu GetMenuById(string sWeChatMenuId);
 
         /// <summary>
         /// 检查微信自定义一级菜单不能超过3个
@@ -54,7 +54,7 @@ namespace SystemInterface
         /// 获取所有的微信自定义菜单
         /// </summary>
         /// <returns></returns>
-        public abstract List<CDELINK_WeChatMenu> GetAllList();
+        public abstract List<ES_WeChatMenu> GetAllList();
 
         #endregion
 
@@ -66,14 +66,14 @@ namespace SystemInterface
         /// </summary>
         /// <param name="wechatMenu"></param>
         /// <returns></returns>
-        public abstract int Insert(CDELINK_WeChatMenu wechatMenu);
+        public abstract int Insert(ES_WeChatMenu wechatMenu);
 
         /// <summary>
         /// 编辑微信自定义菜单
         /// </summary>
         /// <param name="wechatMenu"></param>
         /// <returns></returns>
-        public abstract int Update(CDELINK_WeChatMenu wechatMenu);
+        public abstract int Update(ES_WeChatMenu wechatMenu);
 
 
         /// <summary>

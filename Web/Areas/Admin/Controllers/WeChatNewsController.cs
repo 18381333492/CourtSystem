@@ -64,9 +64,9 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="newsName"></param>
         /// <param name="sJsonDataChatNews"></param>
         [ValidateInput(false)]
-        public void Insert(CDELINK_WeChatNewsName newsName,string sJsonDataChatNews)
+        public void Insert(ES_WeChatNewsName newsName,string sJsonDataChatNews)
         {
-            var newsData = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(sJsonDataChatNews);
+            var newsData = JsonConvert.DeserializeObject<List<ES_WeChatNews>>(sJsonDataChatNews);
             if(manage.Insert(newsName, newsData) > 0)
             {
                 result.success = true;
@@ -80,9 +80,9 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="newsName"></param>
         /// <param name="sJsonDataChatNews"></param>
         [ValidateInput(false)]
-        public void Update(CDELINK_WeChatNewsName newsName, string sJsonDataChatNews)
+        public void Update(ES_WeChatNewsName newsName, string sJsonDataChatNews)
         {
-            var newsData = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(sJsonDataChatNews);
+            var newsData = JsonConvert.DeserializeObject<List<ES_WeChatNews>>(sJsonDataChatNews);
             if (manage.Update(newsName, newsData) > 0)
             {
                 result.success = true;

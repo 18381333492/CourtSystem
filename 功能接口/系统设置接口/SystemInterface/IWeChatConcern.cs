@@ -21,7 +21,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="sConcernId"></param>
         /// <returns></returns>
-        public abstract CDELINK_WeChatConcern Get();
+        public abstract ES_WeChatConcern Get();
 
         #endregion
 
@@ -32,7 +32,7 @@ namespace SystemInterface
         /// 保存关注回复设置
         /// </summary>
         /// <param name="Concern"></param>
-        public abstract int KeepWeChatConcern(CDELINK_WeChatConcern Concern);
+        public abstract int KeepWeChatConcern(ES_WeChatConcern Concern);
 
         #endregion
 

@@ -28,7 +28,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="sRoleId"></param>
         /// <returns></returns>
-        public abstract CDELINK_AdminRole GetById(string sRoleId);
+        public abstract ES_AdminRole GetById(string sRoleId);
 
         /// <summary>
         /// 检查是否存在相同的角色名称
@@ -55,14 +55,14 @@ namespace SystemInterface
         /// </summary>
         /// <param name="adminRole"></param>
         /// <returns></returns>
-        public abstract int Insert(CDELINK_AdminRole adminRole);
+        public abstract int Insert(ES_AdminRole adminRole);
 
         /// <summary>
         /// 编辑后台角色
         /// </summary>
         /// <param name="adminRole"></param>
         /// <returns></returns>
-        public abstract int Update(CDELINK_AdminRole adminRole);
+        public abstract int Update(ES_AdminRole adminRole);
 
 
         /// <summary>

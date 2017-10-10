@@ -12,7 +12,7 @@ namespace EFModels
     using System;
     using System.Collections.Generic;
     
-    public partial class CDELINK_WeChat
+    public partial class ES_WeChat
     {
         public System.Guid ID { get; set; }
         public string sWeChatName { get; set; }

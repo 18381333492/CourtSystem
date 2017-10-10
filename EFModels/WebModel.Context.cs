@@ -13,10 +13,10 @@ namespace EFModels
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class CourtEntities : DbContext
+    public partial class Entities : DbContext
     {
-        public CourtEntities()
-            : base("name=CourtEntities")
+        public Entities()
+            : base("name=Entities")
         {
         }
     
@@ -25,24 +25,23 @@ namespace EFModels
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CDELINK_AdminRole> CDELINK_AdminRole { get; set; }
-        public virtual DbSet<CDELINK_AdminUser> CDELINK_AdminUser { get; set; }
-        public virtual DbSet<CDELINK_Button> CDELINK_Button { get; set; }
-        public virtual DbSet<CDELINK_Client> CDELINK_Client { get; set; }
-        public virtual DbSet<CDELINK_Menu> CDELINK_Menu { get; set; }
-        public virtual DbSet<CDELINK_WebSite> CDELINK_WebSite { get; set; }
-        public virtual DbSet<CDELINK_WeChat> CDELINK_WeChat { get; set; }
-        public virtual DbSet<CDELINK_WeChatMenu> CDELINK_WeChatMenu { get; set; }
-        public virtual DbSet<CDELINK_WeChatNews> CDELINK_WeChatNews { get; set; }
-        public virtual DbSet<CDELINK_WeChatNewsName> CDELINK_WeChatNewsName { get; set; }
-        public virtual DbSet<CDELINK_WeChatConcern> CDELINK_WeChatConcern { get; set; }
-        public virtual DbSet<CDELINK_WeChatKeyWord> CDELINK_WeChatKeyWord { get; set; }
+        public virtual DbSet<ES_AdminRole> ES_AdminRole { get; set; }
+        public virtual DbSet<ES_AdminUser> ES_AdminUser { get; set; }
+        public virtual DbSet<ES_Button> ES_Button { get; set; }
         public virtual DbSet<ES_Client> ES_Client { get; set; }
         public virtual DbSet<ES_Goods> ES_Goods { get; set; }
-        public virtual DbSet<ES_Orders> ES_Orders { get; set; }
-        public virtual DbSet<ES_ShopAddress> ES_ShopAddress { get; set; }
-        public virtual DbSet<ES_IntegralRecord> ES_IntegralRecord { get; set; }
         public virtual DbSet<ES_GoodsComment> ES_GoodsComment { get; set; }
         public virtual DbSet<ES_GoodsStandard> ES_GoodsStandard { get; set; }
+        public virtual DbSet<ES_IntegralRecord> ES_IntegralRecord { get; set; }
+        public virtual DbSet<ES_Menu> ES_Menu { get; set; }
+        public virtual DbSet<ES_Orders> ES_Orders { get; set; }
+        public virtual DbSet<ES_ShopAddress> ES_ShopAddress { get; set; }
+        public virtual DbSet<ES_WebSite> ES_WebSite { get; set; }
+        public virtual DbSet<ES_WeChat> ES_WeChat { get; set; }
+        public virtual DbSet<ES_WeChatConcern> ES_WeChatConcern { get; set; }
+        public virtual DbSet<ES_WeChatKeyWord> ES_WeChatKeyWord { get; set; }
+        public virtual DbSet<ES_WeChatMenu> ES_WeChatMenu { get; set; }
+        public virtual DbSet<ES_WeChatNews> ES_WeChatNews { get; set; }
+        public virtual DbSet<ES_WeChatNewsName> ES_WeChatNewsName { get; set; }
     }
 }

@@ -52,40 +52,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CDELINK_AdminRole.cs">
+    <Compile Include="ES_AdminRole.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CDELINK_AdminUser.cs">
+    <Compile Include="ES_AdminUser.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="CDELINK_Button.cs">
-      <DependentUpon>WebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CDELINK_Client.cs">
-      <DependentUpon>WebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CDELINK_Menu.cs">
-      <DependentUpon>WebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CDELINK_WebSite.cs">
-      <DependentUpon>WebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CDELINK_WeChat.cs">
-      <DependentUpon>WebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CDELINK_WeChatConcern.cs">
-      <DependentUpon>WebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CDELINK_WeChatKeyWord.cs">
-      <DependentUpon>WebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CDELINK_WeChatMenu.cs">
-      <DependentUpon>WebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CDELINK_WeChatNews.cs">
-      <DependentUpon>WebModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="CDELINK_WeChatNewsName.cs">
+    <Compile Include="ES_Button.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ES_Client.cs">
@@ -103,10 +76,34 @@
     <Compile Include="ES_IntegralRecord.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ES_Menu.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ES_Orders.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ES_ShopAddress.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ES_WebSite.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ES_WeChat.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ES_WeChatConcern.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ES_WeChatKeyWord.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ES_WeChatMenu.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ES_WeChatNews.cs">
+      <DependentUpon>WebModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ES_WeChatNewsName.cs">
       <DependentUpon>WebModel.tt</DependentUpon>
     </Compile>
     <Compile Include="MyModels\SerializableButton.cs" />

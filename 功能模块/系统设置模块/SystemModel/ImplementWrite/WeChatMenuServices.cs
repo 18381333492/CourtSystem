@@ -20,10 +20,10 @@ namespace SystemModel
         /// </summary>
         /// <param name="wechatMenu"></param>
         /// <returns></returns>
-        public override int Insert(CDELINK_WeChatMenu wechatMenu)
+        public override int Insert(ES_WeChatMenu wechatMenu)
         {
             wechatMenu.ID = Guid.NewGuid();
-            excute.Add<CDELINK_WeChatMenu>(wechatMenu);
+            excute.Add<ES_WeChatMenu>(wechatMenu);
             return excute.SaveChange();
         }
 
@@ -32,9 +32,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="wechatMenu"></param>
         /// <returns></returns>
-        public override int Update(CDELINK_WeChatMenu wechatMenu)
+        public override int Update(ES_WeChatMenu wechatMenu)
         {
-            excute.Edit<CDELINK_WeChatMenu>(wechatMenu);
+            excute.Edit<ES_WeChatMenu>(wechatMenu);
             return excute.SaveChange();
         }
 
@@ -46,7 +46,7 @@ namespace SystemModel
         /// <returns></returns>
         public override int Cancel(string Ids)
         {
-            var res = excute.Cancel<CDELINK_WeChatMenu>(Ids);
+            var res = excute.Cancel<ES_WeChatMenu>(Ids);
             return res;
         }
     }

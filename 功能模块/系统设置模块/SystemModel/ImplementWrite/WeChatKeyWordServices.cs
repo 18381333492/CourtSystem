@@ -20,12 +20,12 @@ namespace SystemModel
         /// </summary>
         /// <param name="keyWord"></param>
         /// <returns></returns>
-        public override int Insert(CDELINK_WeChatKeyWord keyWord)
+        public override int Insert(ES_WeChatKeyWord keyWord)
         {
             keyWord.ID = Guid.NewGuid();
             keyWord.dInsertTime = DateTime.Now;
             keyWord.dUpdateTime = keyWord.dInsertTime;
-            excute.Add<CDELINK_WeChatKeyWord>(keyWord);
+            excute.Add<ES_WeChatKeyWord>(keyWord);
             return excute.SaveChange();
         }
 
@@ -34,10 +34,10 @@ namespace SystemModel
         /// </summary>
         /// <param name="keyWord"></param>
         /// <returns></returns>
-        public override int Update(CDELINK_WeChatKeyWord keyWord)
+        public override int Update(ES_WeChatKeyWord keyWord)
         { 
             keyWord.dUpdateTime = DateTime.Now;
-            excute.Edit<CDELINK_WeChatKeyWord>(keyWord);
+            excute.Edit<ES_WeChatKeyWord>(keyWord);
             return excute.SaveChange();
         }
 
@@ -49,7 +49,7 @@ namespace SystemModel
         /// <returns></returns>
         public override int Cancel(string Ids)
         {
-           return  excute.Delete<CDELINK_WeChatKeyWord>(Ids);
+           return  excute.Delete<ES_WeChatKeyWord>(Ids);
         }
     }
 }

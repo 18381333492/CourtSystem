@@ -14,20 +14,20 @@ namespace EFBaseHelper
     public class WriteManage: IWriting
     {
 
-        public CourtEntities db;
+        public Entities db;
 
         /// <summary>
         /// 初始化构造函数
         /// </summary>
         public WriteManage()
         {
-            db = new CourtEntities();
+            db = new Entities();
         }
 
         /// <summary>
         /// EF上下文
         /// </summary>
-        CourtEntities IWriting.Context
+        Entities IWriting.Context
         {
             get
             {

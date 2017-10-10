@@ -18,14 +18,14 @@ namespace EFModels
         public string sGoodsName { get; set; }
         public int iGoodsType { get; set; }
         public string sGoodsNo { get; set; }
+        public decimal sDisPrices { get; set; }
         public decimal sGoodsPrices { get; set; }
+        public bool IsRateGiving { get; set; }
         public int iCount { get; set; }
         public bool bIsShelves { get; set; }
         public string sOrderHtmlKey { get; set; }
         public System.DateTime dInsertTime { get; set; }
         public bool bIsDeleted { get; set; }
-        public decimal sDisPrices { get; set; }
-        public bool IsRateGiving { get; set; }
         public int iIntegral { get; set; }
         public bool IsRateAdd { get; set; }
         public bool bIsActivity { get; set; }

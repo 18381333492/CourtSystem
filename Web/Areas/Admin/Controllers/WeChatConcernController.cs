@@ -22,7 +22,7 @@ namespace Web.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var m=manage.Get();
-            if (m == null) m = new CDELINK_WeChatConcern();
+            if (m == null) m = new ES_WeChatConcern();
             return View(m);
         }
 
@@ -31,7 +31,7 @@ namespace Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="Concern"></param>
         [ValidateInput(false)]
-        public void Keep(CDELINK_WeChatConcern Concern)
+        public void Keep(ES_WeChatConcern Concern)
         {
             if (manage.KeepWeChatConcern(Concern) > 0)
             {

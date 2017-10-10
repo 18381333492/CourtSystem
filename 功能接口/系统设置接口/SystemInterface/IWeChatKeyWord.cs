@@ -30,14 +30,14 @@ namespace SystemInterface
         /// </summary>
         /// <param name="sWeChatKeyWordId"></param>
         /// <returns></returns>
-        public abstract CDELINK_WeChatKeyWord GetById(string sWeChatKeyWordId);
+        public abstract ES_WeChatKeyWord GetById(string sWeChatKeyWordId);
 
         /// <summary>
         /// 根据关键字查找关键字
         /// </summary>
         /// <param name="sWeChatKeyWord"></param>
         /// <returns></returns>
-        public abstract CDELINK_WeChatKeyWord GetByKeyWord(string sWeChatKeyWord);
+        public abstract ES_WeChatKeyWord GetByKeyWord(string sWeChatKeyWord);
 
         #endregion
 
@@ -48,7 +48,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="keyWord"></param>
         /// <returns></returns>
-        public abstract int Insert(CDELINK_WeChatKeyWord keyWord);
+        public abstract int Insert(ES_WeChatKeyWord keyWord);
 
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="keyWord"></param>
         /// <returns></returns>
-        public abstract int Update(CDELINK_WeChatKeyWord keyWord);
+        public abstract int Update(ES_WeChatKeyWord keyWord);
 
 
 

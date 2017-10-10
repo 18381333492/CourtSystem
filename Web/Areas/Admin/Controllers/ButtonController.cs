@@ -50,7 +50,7 @@ namespace Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public void Insert(CDELINK_Button button)
+        public void Insert(ES_Button button)
         {
             if (manage.Insert(button) > 0)
                 result.success = true;
@@ -62,7 +62,7 @@ namespace Web.Areas.Admin.Controllers
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public void Update(CDELINK_Button button)
+        public void Update(ES_Button button)
         {
             if (manage.Update(button) > 0)
                 result.success = true;

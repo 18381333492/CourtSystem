@@ -48,7 +48,7 @@ namespace Web.App_Start.WeiXinMessage
                     {//回复图文消息
                                     //获取图文借口
                         var WeChatNewsData = DIEntity.Instance.GetImpl<IWeChatNews>().GetNews(keyWord.sWeChatNewsNameId.ToString()) as JObject;
-                        List<CDELINK_WeChatNews> array = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(WeChatNewsData["newsList"].ToString());
+                        List<ES_WeChatNews> array = JsonConvert.DeserializeObject<List<ES_WeChatNews>>(WeChatNewsData["newsList"].ToString());
                         //组装数据
                         List<item> Articles = new List<item>();
                         foreach (var m in array)
@@ -129,7 +129,7 @@ namespace Web.App_Start.WeiXinMessage
                     var WeChatNewsData = DIEntity.Instance.GetImpl<IWeChatNews>().GetNews(WeChatConcern.sWeChatNewsNameId.ToString()) as JObject;
                     //数据组装
                     List<item> Articles = new List<item>();
-                    List<CDELINK_WeChatNews> array = JsonConvert.DeserializeObject<List<CDELINK_WeChatNews>>(WeChatNewsData["newsList"].ToString());
+                    List<ES_WeChatNews> array = JsonConvert.DeserializeObject<List<ES_WeChatNews>>(WeChatNewsData["newsList"].ToString());
                     foreach (var m in array)
                     {
                         Articles.Add(new item()

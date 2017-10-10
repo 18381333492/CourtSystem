@@ -19,7 +19,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="sButtonId"></param>
         /// <returns></returns>
-        public abstract CDELINK_Menu GetById(string sMenuId);
+        public abstract ES_Menu GetById(string sMenuId);
 
 
         /// <summary>
@@ -55,13 +55,13 @@ namespace SystemInterface
         /// </summary>
         /// <param name="Ids"></param>
         /// <returns></returns>
-        public abstract List<CDELINK_Menu> GetMainMenuByIds(string Ids);
+        public abstract List<ES_Menu> GetMainMenuByIds(string Ids);
 
         /// <summary>
         /// 获取所有的二级菜单（SuperMan专用通道）
         /// </summary>
         /// <returns></returns>
-        public abstract List<CDELINK_Menu> GetAllChildMenu();
+        public abstract List<ES_Menu> GetAllChildMenu();
 
 
         #endregion
@@ -74,7 +74,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public abstract int Insert(CDELINK_Menu menu);
+        public abstract int Insert(ES_Menu menu);
 
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace SystemInterface
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public abstract int Update(CDELINK_Menu menu);
+        public abstract int Update(ES_Menu menu);
 
 
         /// <summary>

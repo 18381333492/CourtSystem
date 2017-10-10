@@ -21,16 +21,16 @@ namespace SystemModel
         /// 保存关注回复设置
         /// </summary>
         /// <param name="Concern"></param>
-        public override int KeepWeChatConcern(CDELINK_WeChatConcern Concern)
+        public override int KeepWeChatConcern(ES_WeChatConcern Concern)
         {
-            var item = excute.Context.CDELINK_WeChatConcern.AsNoTracking().FirstOrDefault(m=>m.ID==Concern.ID);
+            var item = excute.Context.ES_WeChatConcern.AsNoTracking().FirstOrDefault(m=>m.ID==Concern.ID);
             if (item == null)
             {//新增
                 Concern.ID = Guid.NewGuid();
-                excute.Add<CDELINK_WeChatConcern>(Concern);
+                excute.Add<ES_WeChatConcern>(Concern);
             }else
             {//编辑
-                excute.Edit<CDELINK_WeChatConcern>(Concern);
+                excute.Edit<ES_WeChatConcern>(Concern);
             }
             return excute.SaveChange();
 

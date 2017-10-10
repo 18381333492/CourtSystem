@@ -12,20 +12,16 @@ namespace EFModels
     using System;
     using System.Collections.Generic;
     
-    public partial class CDELINK_AdminUser
+    public partial class ES_WeChatKeyWord
     {
         public System.Guid ID { get; set; }
-        public string sLoginAccout { get; set; }
-        public string sPassWord { get; set; }
-        public string sPhone { get; set; }
-        public string sName { get; set; }
-        public string sHeadPicture { get; set; }
-        public string sRoleId { get; set; }
+        public string sKeyWordName { get; set; }
+        public int iRePlyType { get; set; }
+        public string sContent { get; set; }
+        public bool bIsOpen { get; set; }
+        public string sWeChatNewsName { get; set; }
+        public Nullable<System.Guid> sWeChatNewsNameId { get; set; }
         public System.DateTime dInsertTime { get; set; }
-        public Nullable<System.DateTime> dLastLoginTime { get; set; }
-        public int iState { get; set; }
-        public bool bIsDeleted { get; set; }
-        public string sNick { get; set; }
-        public string sOpenId { get; set; }
+        public System.DateTime dUpdateTime { get; set; }
     }
 }

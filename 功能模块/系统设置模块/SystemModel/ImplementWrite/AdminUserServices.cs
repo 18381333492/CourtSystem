@@ -16,10 +16,10 @@ namespace SystemModel
         /// </summary>
         /// <param name="adminUser"></param>
         /// <returns></returns>
-        public override int Insert(CDELINK_AdminUser adminUser)
+        public override int Insert(ES_AdminUser adminUser)
         {
             adminUser.ID = Guid.NewGuid();
-            excute.Add<CDELINK_AdminUser>(adminUser);
+            excute.Add<ES_AdminUser>(adminUser);
             return excute.SaveChange();
         }
 
@@ -28,9 +28,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="adminUser"></param>
         /// <returns></returns>
-        public override int Update(CDELINK_AdminUser adminUser)
+        public override int Update(ES_AdminUser adminUser)
         {
-            excute.Edit<CDELINK_AdminUser>(adminUser);
+            excute.Edit<ES_AdminUser>(adminUser);
             return excute.SaveChange();
         }
 
@@ -41,7 +41,7 @@ namespace SystemModel
         /// <param name="Ids"></param>
         public override int Reset(string ID)
         {
-            var adminUser = excute.Context.CDELINK_AdminUser.Find(new Guid(ID));
+            var adminUser = excute.Context.ES_AdminUser.Find(new Guid(ID));
             adminUser.sPassWord = C_Security.MD5("123456");
             return excute.SaveChange();
         }
@@ -53,7 +53,7 @@ namespace SystemModel
         /// <param name="Ids"></param>
         public override int Cancel(string Ids)
         {
-            var res = excute.Cancel<CDELINK_AdminUser>(Ids);
+            var res = excute.Cancel<ES_AdminUser>(Ids);
             return res;
         }
 
@@ -64,7 +64,7 @@ namespace SystemModel
         /// <returns></returns>
         public override int Freeze(string ID)
         {
-            var adminUser = excute.Context.CDELINK_AdminUser.Find(new Guid(ID));
+            var adminUser = excute.Context.ES_AdminUser.Find(new Guid(ID));
             adminUser.iState = adminUser.iState == 1 ? 0 : 1;
             var res= excute.SaveChange();
             return res;

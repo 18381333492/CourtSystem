@@ -118,13 +118,13 @@ namespace Web.App_Start.BaseController
                     var sPath = filterContext.RequestContext.HttpContext.Request.Url.AbsolutePath.ToLower();
                     if (sPath.Contains("index") && !sPath.Contains("home"))
                     {
-                        var menu = (Session[SESSION.Menu] as List<CDELINK_Menu>).FirstOrDefault(m => m.sMenuUrl.ToLower() == sPath);
-                        var buttonList = (Session[SESSION.Button] as List<CDELINK_Button>).
+                        var menu = (Session[SESSION.Menu] as List<ES_Menu>).FirstOrDefault(m => m.sMenuUrl.ToLower() == sPath);
+                        var buttonList = (Session[SESSION.Button] as List<ES_Button>).
                                         Where(m => m.sMenuId == menu.ID.ToString()).OrderBy(m => m.iOrder);
                         var Button_Toolbar = buttonList.Where(m => m.bIsToolbar == true);//导航栏上的按钮
                         var Button_NotToolbar = buttonList.Where(m => m.bIsToolbar == false);//数据栏上的按钮
-                        filterContext.Controller.ViewData["Button_Toolbar"] = Button_Toolbar.Count() > 0 ? Button_Toolbar.ToList() : new List<CDELINK_Button>();
-                        filterContext.Controller.ViewData["Button_NotToolbar"] = buttonList.Count() > 0 ? C_Json.toJson(Button_NotToolbar.ToList()) : C_Json.toJson(new List<CDELINK_Button>());
+                        filterContext.Controller.ViewData["Button_Toolbar"] = Button_Toolbar.Count() > 0 ? Button_Toolbar.ToList() : new List<ES_Button>();
+                        filterContext.Controller.ViewData["Button_NotToolbar"] = buttonList.Count() > 0 ? C_Json.toJson(Button_NotToolbar.ToList()) : C_Json.toJson(new List<ES_Button>());
                     }
                 }
             }

@@ -27,8 +27,8 @@ namespace SystemModel
             pageInfo.order = OrderType.DESC;
             pageInfo.sort = "dInsertTime";
             StringBuilder sSql = new StringBuilder();
-            sSql.Append(@"SELECT A.*,B.sRoleName FROM CDELINK_AdminUser AS A 
-                                        LEFT JOIN CDELINK_AdminRole AS B 
+            sSql.Append(@"SELECT A.*,B.sRoleName FROM ES_AdminUser AS A 
+                                        LEFT JOIN ES_AdminRole AS B 
                                         ON A.sRoleId=B.ID WHERE A.bIsDeleted=0 ");
             if (!string.IsNullOrEmpty(searchText))
             {
@@ -45,9 +45,9 @@ namespace SystemModel
         /// <param name="sUserName">用户名</param>
         /// <param name="sPassWord">登录密码</param>
         /// <returns></returns>
-        public override CDELINK_AdminUser ValidateLogin(string sLoginAccout, string sPassWord)
+        public override ES_AdminUser ValidateLogin(string sLoginAccout, string sPassWord)
         {
-            var user = query.SingleQuery<CDELINK_AdminUser>(@"SELECT * FROM CDELINK_AdminUser 
+            var user = query.SingleQuery<ES_AdminUser>(@"SELECT * FROM ES_AdminUser 
                                                                 WHERE sLoginAccout=@sLoginAccout AND sPassWord=@sPassWord AND bIsDeleted=0", new
             {
                 sLoginAccout = sLoginAccout,
@@ -61,9 +61,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="sOpenId"></param>
         /// <returns></returns>
-        public override CDELINK_AdminUser ScanLogin(string sOpenId)
+        public override ES_AdminUser ScanLogin(string sOpenId)
         {
-            var user = query.SingleQuery<CDELINK_AdminUser>(@"SELECT * FROM CDELINK_AdminUser 
+            var user = query.SingleQuery<ES_AdminUser>(@"SELECT * FROM ES_AdminUser 
                                                                 WHERE sOpenId=@sOpenId AND bIsDeleted=0", new
             {
                 sOpenId = sOpenId
@@ -76,9 +76,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="sUserId"></param>
         /// <returns></returns>
-        public override CDELINK_AdminUser GetById(string sUserId)
+        public override ES_AdminUser GetById(string sUserId)
         {
-            return query.SingleQuery<CDELINK_AdminUser>("SELECT * FROM CDELINK_AdminUser WHERE ID=@ID", new { ID = sUserId });
+            return query.SingleQuery<ES_AdminUser>("SELECT * FROM ES_AdminUser WHERE ID=@ID", new { ID = sUserId });
         }
 
 
@@ -89,7 +89,7 @@ namespace SystemModel
         public override List<Dictionary<string, object>> GetAllRoleNameList()
         {
             return query.QueryList<Dictionary<string, object>>(@"SELECT ID,sRoleName
-                                                    FROM CDELINK_AdminRole ORDER BY dInsertTime").ToList();
+                                                    FROM ES_AdminRole ORDER BY dInsertTime").ToList();
         }
 
 
@@ -102,11 +102,11 @@ namespace SystemModel
         {
             if (string.IsNullOrEmpty(sAdminUserId))
             {
-                return query.Any(string.Format(@"SELECT * FROM CDELINK_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}'", sLoginAccout));
+                return query.Any(string.Format(@"SELECT * FROM ES_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}'", sLoginAccout));
             }
             else
             {
-                return query.Any(string.Format(@"SELECT * FROM CDELINK_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}' AND ID!='{1}'",
+                return query.Any(string.Format(@"SELECT * FROM ES_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}' AND ID!='{1}'",
                     sLoginAccout, sAdminUserId));
             }
         }
@@ -120,7 +120,7 @@ namespace SystemModel
         public override MenuAndButton GetMenuAndButtonByRoleId(string sRoleId)
         {
             MenuAndButton data = new MenuAndButton();
-            var adminRole = query.Find<CDELINK_AdminRole>(sRoleId);
+            var adminRole = query.Find<ES_AdminRole>(sRoleId);
             if (!string.IsNullOrEmpty(adminRole.sPowerIds))
             {
                 var menuIdsArray = adminRole.sPowerIds.Split('|')[0].Split(',').Select(m => { return "'" + m + "'"; });
@@ -129,8 +129,8 @@ namespace SystemModel
                 string menuIds = string.Join(",", menuIdsArray);
                 string buttonIds = string.Join(",", buttonIdsArray);
 
-                data.menuList = query.QueryList<CDELINK_Menu>(string.Format(@"SELECT * FROM CDELINK_Menu WHERE bIsDeleted=0 AND ID IN({0})", menuIds)).ToList();
-                data.buttonList = query.QueryList<CDELINK_Button>(string.Format(@"SELECT * FROM CDELINK_Button WHERE ID IN({0})", buttonIds)).ToList();                
+                data.menuList = query.QueryList<ES_Menu>(string.Format(@"SELECT * FROM ES_Menu WHERE bIsDeleted=0 AND ID IN({0})", menuIds)).ToList();
+                data.buttonList = query.QueryList<ES_Button>(string.Format(@"SELECT * FROM ES_Button WHERE ID IN({0})", buttonIds)).ToList();                
             }
             return data;
         }

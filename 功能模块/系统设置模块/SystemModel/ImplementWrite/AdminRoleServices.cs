@@ -16,11 +16,11 @@ namespace SystemModel
         /// </summary>
         /// <param name="adminRole"></param>
         /// <returns></returns>
-        public override int Insert(CDELINK_AdminRole adminRole)
+        public override int Insert(ES_AdminRole adminRole)
         {
             adminRole.ID = Guid.NewGuid();
             adminRole.dInsertTime = DateTime.Now;
-            excute.Add<CDELINK_AdminRole>(adminRole);
+            excute.Add<ES_AdminRole>(adminRole);
             return excute.SaveChange();
         }
 
@@ -29,9 +29,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="adminRole"></param>
         /// <returns></returns>
-        public override int Update(CDELINK_AdminRole adminRole)
+        public override int Update(ES_AdminRole adminRole)
         {
-            excute.Edit<CDELINK_AdminRole>(adminRole);
+            excute.Edit<ES_AdminRole>(adminRole);
             return excute.SaveChange();
         }
 
@@ -43,7 +43,7 @@ namespace SystemModel
         /// <returns></returns>
         public override int Cancel(string Ids)
         {
-            var res=excute.Delete<CDELINK_AdminRole>(Ids);
+            var res=excute.Delete<ES_AdminRole>(Ids);
             return res;
         }
 
@@ -56,7 +56,7 @@ namespace SystemModel
         /// <param name="sButtonIds"></param>
         public override int SetPower(string sAdminRoleId, string sMenuIds, string sButtonIds)
         {
-            var adminUser = excute.Context.CDELINK_AdminRole.Find(new Guid(sAdminRoleId));
+            var adminUser = excute.Context.ES_AdminRole.Find(new Guid(sAdminRoleId));
             adminUser.sPowerIds = sMenuIds + "|" + sButtonIds;
             return  excute.SaveChange();
         }

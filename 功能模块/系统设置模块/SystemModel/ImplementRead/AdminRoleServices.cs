@@ -26,7 +26,7 @@ namespace SystemModel
             pageInfo.order = OrderType.DESC;
             pageInfo.sort = "dInsertTime";
             StringBuilder sSql = new StringBuilder();
-            sSql.Append("SELECT * FROM CDELINK_AdminRole WHERE 1=1");
+            sSql.Append("SELECT * FROM ES_AdminRole WHERE 1=1");
 
             //条件查询
             if (!string.IsNullOrEmpty(searchText))
@@ -44,9 +44,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="sRoleId"></param>
         /// <returns></returns>
-        public override CDELINK_AdminRole GetById(string sRoleId)
+        public override ES_AdminRole GetById(string sRoleId)
         {
-            return query.Find<CDELINK_AdminRole>(sRoleId);
+            return query.Find<ES_AdminRole>(sRoleId);
         }
 
 
@@ -60,9 +60,9 @@ namespace SystemModel
         {
             var res = false;
             if (string.IsNullOrEmpty(sRoleId))
-                res = query.Any("SELECT * FROM CDELINK_AdminRole WHERE sRoleName=@sRoleName", new { sRoleName = sRoleName });
+                res = query.Any("SELECT * FROM ES_AdminRole WHERE sRoleName=@sRoleName", new { sRoleName = sRoleName });
             else
-                res = query.Any("SELECT * FROM CDELINK_AdminRole WHERE sRoleName=@sRoleName AND ID!=@ID", new { sRoleName = sRoleName, ID = sRoleId });
+                res = query.Any("SELECT * FROM ES_AdminRole WHERE sRoleName=@sRoleName AND ID!=@ID", new { sRoleName = sRoleName, ID = sRoleId });
             return res;
         }
 
@@ -74,7 +74,7 @@ namespace SystemModel
         /// <returns></returns>
         public override bool IsExitAdminUserByRoleId(string Ids)
         {
-            var res = query.Any(string.Format(@"SELECT * FROM CDELINK_AdminUser WHERE sRoleId IN({0}) AND bIsDeleted=0", Ids));
+            var res = query.Any(string.Format(@"SELECT * FROM ES_AdminUser WHERE sRoleId IN({0}) AND bIsDeleted=0", Ids));
             return res;
         }
 

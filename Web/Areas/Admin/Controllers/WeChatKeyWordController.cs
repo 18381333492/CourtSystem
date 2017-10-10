@@ -51,7 +51,7 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="keyWord"></param>
         [ValidateInput(false)]
 
-        public void Insert(CDELINK_WeChatKeyWord keyWord)
+        public void Insert(ES_WeChatKeyWord keyWord)
         {
             if (manage.Insert(keyWord) > 0)
                 result.success = true;
@@ -63,7 +63,7 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="keyWord"></param>
         [ValidateInput(false)]
 
-        public void Update(CDELINK_WeChatKeyWord keyWord)
+        public void Update(ES_WeChatKeyWord keyWord)
         {
             if (manage.Update(keyWord) > 0)
                 result.success = true;

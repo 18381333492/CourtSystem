@@ -12,15 +12,12 @@ namespace EFModels
     using System;
     using System.Collections.Generic;
     
-    public partial class CDELINK_Menu
+    public partial class ES_WebSite
     {
         public System.Guid ID { get; set; }
-        public string sMenuName { get; set; }
-        public string sParentMenuId { get; set; }
-        public System.DateTime dInsertTime { get; set; }
-        public string sMenuUrl { get; set; }
-        public int iOrder { get; set; }
-        public bool bIsDeleted { get; set; }
-        public string sMenuIcon { get; set; }
+        public string sWebSiteName { get; set; }
+        public string sWebSiteIcon { get; set; }
+        public string sCourtName { get; set; }
+        public string sCourtSign { get; set; }
     }
 }

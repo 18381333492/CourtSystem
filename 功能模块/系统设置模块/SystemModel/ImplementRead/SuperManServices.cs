@@ -22,13 +22,13 @@ namespace SystemModel
         /// <param name="sLoginAccout"></param>
         /// <param name="sPassWord"></param>
         /// <returns></returns>
-        public override CDELINK_AdminUser CheckLogin(string sLoginAccout, string sPassWord)
+        public override ES_AdminUser CheckLogin(string sLoginAccout, string sPassWord)
         {
             var connectionStr = C_Config.ReadAppSetting("SuperConnection");
          // connectionStr = C_Security.RSADecrypt(connectionStr);
             query.SetconnectionStr(connectionStr);
 
-            return query.SingleQuery<CDELINK_AdminUser>(@"SELECT * FROM SuperAdmin 
+            return query.SingleQuery<ES_AdminUser>(@"SELECT * FROM SuperAdmin 
                                                                 WHERE sAccount=@sLoginAccout
                                                                 AND sPassword=@sPassWord", new
             {

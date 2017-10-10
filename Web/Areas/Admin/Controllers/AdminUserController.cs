@@ -35,7 +35,7 @@ namespace Web.Areas.Admin.Controllers
         /// <returns></returns>
         public ActionResult PersonCenter()
         {
-            var adminUser = new CDELINK_AdminUser();
+            var adminUser = new ES_AdminUser();
             var sessionUser = SessionAdminUser();
             adminUser = manage.GetById(sessionUser.ID.ToString());
             //根据角色ID获取角色名称
@@ -149,17 +149,17 @@ namespace Web.Areas.Admin.Controllers
                 string sPhone = Request.Form["sPhone"];
                 string sPassWord = Request.Form["sPassWord"];
                 var WeChatUserInfo = Session["WeChatUserInfo_Register"] as WeChatUser;
-                if (manage.Insert(new CDELINK_AdminUser()
+                if (manage.Insert(new ES_AdminUser()
                 {
                     sName = sName,//真实姓名
                     sPhone = sPhone,//手机号
-                    iState = 0,//审核中
+                    iState = 0,//默认禁用
                     sLoginAccout = sAcccount,
                     sPassWord = C_Security.MD5(sPassWord),
                     sOpenId = WeChatUserInfo.openid,
                     sNick = WeChatUserInfo.nickname,
                     sHeadPicture = WeChatUserInfo.headimgurl,
-                    sRoleId = string.Empty,
+                    sRoleId = string.Empty,//默认没有角色
                     dInsertTime = DateTime.Now,
                     bIsDeleted = false
                 }) > 0)

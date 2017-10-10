@@ -12,11 +12,20 @@ namespace EFModels
     using System;
     using System.Collections.Generic;
     
-    public partial class CDELINK_AdminRole
+    public partial class ES_AdminUser
     {
         public System.Guid ID { get; set; }
-        public string sRoleName { get; set; }
+        public string sLoginAccout { get; set; }
+        public string sPassWord { get; set; }
+        public string sPhone { get; set; }
+        public string sName { get; set; }
+        public string sHeadPicture { get; set; }
+        public string sRoleId { get; set; }
         public System.DateTime dInsertTime { get; set; }
-        public string sPowerIds { get; set; }
+        public Nullable<System.DateTime> dLastLoginTime { get; set; }
+        public int iState { get; set; }
+        public bool bIsDeleted { get; set; }
+        public string sNick { get; set; }
+        public string sOpenId { get; set; }
     }
 }

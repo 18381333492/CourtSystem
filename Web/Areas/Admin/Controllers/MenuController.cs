@@ -45,7 +45,7 @@ namespace Web.Areas.Admin.Controllers
         /// 添加菜单
         /// </summary>
         /// <param name="menu"></param>
-        public void Insert(CDELINK_Menu menu)
+        public void Insert(ES_Menu menu)
         {
             if (!manage.CheckMenuName(menu.sMenuName))
             {
@@ -61,7 +61,7 @@ namespace Web.Areas.Admin.Controllers
         /// 编辑菜单
         /// </summary>
         /// <param name="menu"></param>
-        public void Update(CDELINK_Menu menu)
+        public void Update(ES_Menu menu)
         {
             if (!manage.CheckMenuName(menu.sMenuName,menu.ID.ToString()))
             {

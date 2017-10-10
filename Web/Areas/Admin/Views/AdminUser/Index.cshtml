@@ -68,7 +68,16 @@
             pageSize:20,
             loadMsg: "正在加载...",
             columns: [[
-                { field: 'sLoginAccout', title: '账号', align: 'center', sortable: true, width: 100 },
+                { field: 'sOpenId', title: 'OpenId', align: 'center', sortable: true, width: 100 },
+                {
+                    field: 'sHeadPicture', title: '头像', align: 'center', sortable: true, width: 80, formatter: function (value) {
+                        var html = [];
+                        html.push('<img src="' + value + '" style="height:50px;width:50px;border-radius:25px;" />');
+                        return html.join("");
+
+                    }
+                },
+                { field: 'sNick', title: '昵称', align: 'center', sortable: true, width: 80 },
                 { field: 'sName', title: '姓名', align: 'center', sortable: true, width: 80 },
                 { field: 'sPhone', title: '手机号码', align: 'center', sortable: true, width: 120 },
                 { field: 'sRoleName', title: '角色', align: 'center', sortable: true, width: 80 },
@@ -78,7 +87,7 @@
                         else return "<span style='color:red'>冻结</span>";
                     }
                 },
-                { field: 'dInsertTime', title: '添加时间', align: 'center', sortable: true, width: 120 },
+                { field: 'dInsertTime', title: '注册时间', align: 'center', sortable: true, width: 120 },
                 { field: 'dLastLoginTime', title: '上一次登录时间', align: 'center', sortable: true, width: 120 },
                 {
                     field: 'ID', title: '操作', align: 'center', width: 180, formatter: function (value,row) {

@@ -20,9 +20,9 @@ namespace SystemModel
         /// 获取网站信息
         /// </summary>
         /// <returns></returns>
-        public override CDELINK_WebSite GetWebSite()
+        public override ES_WebSite GetWebSite()
         {
-            return query.SingleQuery<CDELINK_WebSite>(@"SELECT * FROM CDELINK_WebSite");
+            return query.SingleQuery<ES_WebSite>(@"SELECT * FROM ES_WebSite");
         }
     }
 }

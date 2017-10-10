@@ -26,8 +26,8 @@ namespace SystemModel
             pageInfo.order = OrderType.DESC;
             pageInfo.sort = "iOrder";
             StringBuilder sSql = new StringBuilder();
-            sSql.Append(@"SELECT A.*,B.sMenuName AS ParentMenuName FROM CDELINK_WeChatMenu AS A 
-                                     LEFT JOIN  CDELINK_WeChatMenu AS B ON A.sParentMenuId=B.ID WHERE A.bIsDeleted=0");
+            sSql.Append(@"SELECT A.*,B.sMenuName AS ParentMenuName FROM ES_WeChatMenu AS A 
+                                     LEFT JOIN  ES_WeChatMenu AS B ON A.sParentMenuId=B.ID WHERE A.bIsDeleted=0");
 
             //条件查询
             if (!string.IsNullOrEmpty(searchText))
@@ -46,7 +46,7 @@ namespace SystemModel
         public override List<Dictionary<string, object>> GetMainMenuList()
         {
             var menulist = query.QueryList<Dictionary<string, object>>(@"SELECT ID,sMenuName 
-                                                                   FROM CDELINK_WeChatMenu WHERE bIsDeleted=0").ToList();
+                                                                   FROM ES_WeChatMenu WHERE bIsDeleted=0").ToList();
             var temp = new Dictionary<string, object>();
             temp["ID"] = string.Empty;
             temp["sMenuName"] = "一级菜单";
@@ -60,9 +60,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="sWeChatMenuId"></param>
         /// <returns></returns>
-        public override CDELINK_WeChatMenu GetMenuById(string sWeChatMenuId)
+        public override ES_WeChatMenu GetMenuById(string sWeChatMenuId)
         {
-            return query.Find<CDELINK_WeChatMenu>(sWeChatMenuId);
+            return query.Find<ES_WeChatMenu>(sWeChatMenuId);
         }
 
 
@@ -75,13 +75,13 @@ namespace SystemModel
             var res = false;
             if (string.IsNullOrEmpty(sWeChatMenuId))
             {
-                var list = query.QueryList<CDELINK_WeChatMenu>(@"SELECT * FROM CDELINK_WeChatMenu WHERE sParentMenuId IS NULL AND bIsDeleted=0");
+                var list = query.QueryList<ES_WeChatMenu>(@"SELECT * FROM ES_WeChatMenu WHERE sParentMenuId IS NULL AND bIsDeleted=0");
                 if (list.Count >= 3)
                     res = true;
             }
             else
             {
-                var list = query.QueryList<CDELINK_WeChatMenu>(@"SELECT * FROM CDELINK_WeChatMenu 
+                var list = query.QueryList<ES_WeChatMenu>(@"SELECT * FROM ES_WeChatMenu 
                                                                     WHERE sParentMenuId IS NULL AND bIsDeleted=0 AND ID!='"+ sWeChatMenuId + "' ");
                 if (list.Count >= 3)
                     res = true;
@@ -99,13 +99,13 @@ namespace SystemModel
             var res = false;
             if (string.IsNullOrEmpty(sWeChatMenuId))
             {
-                var list = query.QueryList<CDELINK_WeChatMenu>(@"SELECT * FROM CDELINK_WeChatMenu WHERE sParentMenuId IS NOT NULL AND bIsDeleted=0");
+                var list = query.QueryList<ES_WeChatMenu>(@"SELECT * FROM ES_WeChatMenu WHERE sParentMenuId IS NOT NULL AND bIsDeleted=0");
                 if (list.Count >= 5)
                     res = true;
             }
             else
             {
-                var list = query.QueryList<CDELINK_WeChatMenu>(@"SELECT * FROM CDELINK_WeChatMenu 
+                var list = query.QueryList<ES_WeChatMenu>(@"SELECT * FROM ES_WeChatMenu 
                                                                              WHERE sParentMenuId IS NOT NULL AND bIsDeleted=0 AND ID!='"+ sWeChatMenuId + "'");
                 if (list.Count >= 5)
                     res = true;
@@ -118,9 +118,9 @@ namespace SystemModel
         /// 获取所有的微信自定义菜单
         /// </summary>
         /// <returns></returns>
-        public override List<CDELINK_WeChatMenu> GetAllList()
+        public override List<ES_WeChatMenu> GetAllList()
         {
-            return query.QueryList<CDELINK_WeChatMenu>("SELECT * FROM CDELINK_WeChatMenu WHERE bIsDeleted=0").ToList();
+            return query.QueryList<ES_WeChatMenu>("SELECT * FROM ES_WeChatMenu WHERE bIsDeleted=0").ToList();
         }
     }
 }

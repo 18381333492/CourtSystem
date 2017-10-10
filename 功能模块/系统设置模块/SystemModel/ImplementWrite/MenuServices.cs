@@ -15,11 +15,11 @@ namespace SystemModel
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public override int Insert(CDELINK_Menu menu)
+        public override int Insert(ES_Menu menu)
         {
             menu.ID = Guid.NewGuid();
             menu.dInsertTime = DateTime.Now;
-            excute.Add<CDELINK_Menu>(menu);
+            excute.Add<ES_Menu>(menu);
             return excute.SaveChange();
         }
 
@@ -29,9 +29,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="button"></param>
         /// <returns></returns>
-        public override int Update(CDELINK_Menu menu)
+        public override int Update(ES_Menu menu)
         {
-            excute.Edit<CDELINK_Menu>(menu);
+            excute.Edit<ES_Menu>(menu);
             return excute.SaveChange();
         }
 
@@ -43,7 +43,7 @@ namespace SystemModel
         /// <returns></returns>
         public override int Cancel(string Ids)
         {
-            var res = excute.Cancel<CDELINK_Menu>(Ids);
+            var res = excute.Cancel<ES_Menu>(Ids);
             return res;
         }
     }

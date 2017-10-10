@@ -9,7 +9,7 @@ namespace EFModels.MyModels
     [Serializable]
     public class MenuAndButton
     {
-        public List<CDELINK_Menu> menuList = new List<CDELINK_Menu>();
-        public List<CDELINK_Button> buttonList = new List<CDELINK_Button>();
+        public List<ES_Menu> menuList = new List<ES_Menu>();
+        public List<ES_Button> buttonList = new List<ES_Button>();
     }
 }

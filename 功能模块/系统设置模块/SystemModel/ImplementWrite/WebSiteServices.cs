@@ -21,16 +21,16 @@ namespace SystemModel
         /// </summary>
         /// <param name="website"></param>
         /// <returns></returns>
-        public override int SetWebSite(CDELINK_WebSite website)
+        public override int SetWebSite(ES_WebSite website)
         {
-            var tempSite = excute.Context.CDELINK_WebSite.AsNoTracking().FirstOrDefault();
+            var tempSite = excute.Context.ES_WebSite.AsNoTracking().FirstOrDefault();
             if (tempSite == null)
             {
                 website.ID =Guid.NewGuid();
-                excute.Add<CDELINK_WebSite>(website);
+                excute.Add<ES_WebSite>(website);
             }
             else
-                excute.Edit<CDELINK_WebSite>(website);
+                excute.Edit<ES_WebSite>(website);
             return excute.SaveChange();
         }
 

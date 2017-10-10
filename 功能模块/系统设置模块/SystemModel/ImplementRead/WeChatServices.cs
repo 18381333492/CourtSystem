@@ -19,9 +19,9 @@ namespace SystemModel
         /// 获取微信公众号信息
         /// </summary>
         /// <returns></returns>
-        public override CDELINK_WeChat GetWeChat()
+        public override ES_WeChat GetWeChat()
         {
-            return query.SingleQuery<CDELINK_WeChat>(@"SELECT * FROM CDELINK_WeChat");
+            return query.SingleQuery<ES_WeChat>(@"SELECT * FROM ES_WeChat");
         }
     }
 }

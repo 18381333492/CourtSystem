@@ -25,7 +25,7 @@ namespace SystemModel
             pageInfo.order = OrderType.DESC;
             pageInfo.sort = "dUpdateTime";
             StringBuilder sSql = new StringBuilder();
-            sSql.Append(@"SELECT * FROM CDELINK_WeChatKeyWord WHERE 1=1");
+            sSql.Append(@"SELECT * FROM ES_WeChatKeyWord WHERE 1=1");
 
             //条件查询
             if (!string.IsNullOrEmpty(searchText))
@@ -42,9 +42,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="sWeChatKeyWordId"></param>
         /// <returns></returns>
-        public override CDELINK_WeChatKeyWord GetById(string sWeChatKeyWordId)
+        public override ES_WeChatKeyWord GetById(string sWeChatKeyWordId)
         {
-            return  query.Find<CDELINK_WeChatKeyWord>(sWeChatKeyWordId);
+            return  query.Find<ES_WeChatKeyWord>(sWeChatKeyWordId);
         }
 
 
@@ -53,9 +53,9 @@ namespace SystemModel
         /// </summary>
         /// <param name="sWeChatKeyWord"></param>
         /// <returns></returns>
-        public override CDELINK_WeChatKeyWord GetByKeyWord(string sWeChatKeyWord)
+        public override ES_WeChatKeyWord GetByKeyWord(string sWeChatKeyWord)
         {
-            return query.SingleQuery<CDELINK_WeChatKeyWord>("select * from CDELINK_WeChatKeyWord where sKeyWordName=@sKeyWordName", new
+            return query.SingleQuery<ES_WeChatKeyWord>("select * from ES_WeChatKeyWord where sKeyWordName=@sKeyWordName", new
             {
                 sKeyWordName = sWeChatKeyWord
             });

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EFModels
 {
     [Serializable]
-    public partial class CDELINK_Button
+    public partial class ES_Button
     {
 
     }

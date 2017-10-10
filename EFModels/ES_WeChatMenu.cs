@@ -12,13 +12,15 @@ namespace EFModels
     using System;
     using System.Collections.Generic;
     
-    public partial class CDELINK_WeChatConcern
+    public partial class ES_WeChatMenu
     {
         public System.Guid ID { get; set; }
-        public bool bIsConcernOn { get; set; }
-        public int iConcernType { get; set; }
-        public string sContent { get; set; }
-        public string sWeChatNewsName { get; set; }
-        public Nullable<System.Guid> sWeChatNewsNameId { get; set; }
+        public string sMenuName { get; set; }
+        public string sUrl { get; set; }
+        public string sParentMenuId { get; set; }
+        public bool bIsDeleted { get; set; }
+        public int iType { get; set; }
+        public int iOrder { get; set; }
+        public string sKey { get; set; }
     }
 }

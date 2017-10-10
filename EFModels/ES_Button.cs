@@ -12,12 +12,14 @@ namespace EFModels
     using System;
     using System.Collections.Generic;
     
-    public partial class CDELINK_WebSite
+    public partial class ES_Button
     {
         public System.Guid ID { get; set; }
-        public string sWebSiteName { get; set; }
-        public string sWebSiteIcon { get; set; }
-        public string sCourtName { get; set; }
-        public string sCourtSign { get; set; }
+        public string sButtonName { get; set; }
+        public string sButtonIcon { get; set; }
+        public string sMenuId { get; set; }
+        public int iOrder { get; set; }
+        public string sButtonSign { get; set; }
+        public bool bIsToolbar { get; set; }
     }
 }

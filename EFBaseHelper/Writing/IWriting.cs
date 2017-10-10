@@ -12,7 +12,7 @@ namespace EFBaseHelper
     /// </summary>
     public interface IWriting
     {
-        CourtEntities Context
+        Entities Context
         {
             get;
         }
