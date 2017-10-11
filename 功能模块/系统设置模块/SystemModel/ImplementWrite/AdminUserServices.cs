@@ -24,25 +24,15 @@ namespace SystemModel
         }
 
         /// <summary>
-        /// 编辑后台用户
+        /// 设置后台用户角色
         /// </summary>
         /// <param name="adminUser"></param>
         /// <returns></returns>
-        public override int Update(ES_AdminUser adminUser)
+        public override int SetRole(Guid ID, string sRoleId)
         {
-            excute.Edit<ES_AdminUser>(adminUser);
-            return excute.SaveChange();
-        }
-
-
-        /// <summary>
-        /// 根据主键ID重置后台用户密码
-        /// </summary>
-        /// <param name="Ids"></param>
-        public override int Reset(string ID)
-        {
-            var adminUser = excute.Context.ES_AdminUser.Find(new Guid(ID));
-            adminUser.sPassWord = C_Security.MD5("123456");
+            var user = excute.Context.ES_AdminUser.AsNoTracking().FirstOrDefault(m => m.ID==ID);
+            user.sRoleId = sRoleId;
+            excute.Edit<ES_AdminUser>(user);
             return excute.SaveChange();
         }
 

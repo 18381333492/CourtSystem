@@ -188,11 +188,15 @@
                         else {
                             if (res.data.success) {
                                 //登录成功
-                                $("#qrcode").next().text("登录成功,即将跳转......");
-                                setTimeout(function () {
-                                    admin.routeRegister("Admin", "Home");
-                                    location.href = admin.route("Index");
-                                },1000);
+                                $("#qrcode").next().text("扫码成功,正在登录......");
+                                admin.routeRegister("Admin", "AdminUser");
+                                admin.Ajax(admin.route("SetSession"), { key: res.data.data }, function (r) {;
+                                    $("#qrcode").next().text("登录成功,即将跳转......");
+                                    setTimeout(function () {
+                                        admin.routeRegister("Admin", "Home");
+                                        location.href = admin.route("Index");
+                                    }, 1000);
+                                });
                             }
                             else {
                                 //登录失败

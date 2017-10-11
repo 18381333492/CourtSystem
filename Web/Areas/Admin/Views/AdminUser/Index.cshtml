@@ -29,31 +29,6 @@
             });
         });
 
-        //新增操作
-        $('.AdminUser_add').on("click", function () {
-            admin.creatModal(admin.route("Add"));
-        });
-
-        //删除操作
-        $('.AdminUser_cancel').on("click", function () {
-            var selected = admin.grid.datagrid('getSelections');
-            if (selected.length > 0) {
-                var array = [];
-                $(selected).each(function () {
-                    array.push(admin.formate("'#'", this.ID));
-                });
-                admin.confirm("确认要删除选择的数据？", function () {
-                    admin.Ajax(admin.route("Cancel"), { Ids: array.join() }, function (r) {
-                        admin.grid.datagrid("reload");
-                        admin.alert("删除成功");
-                    });
-                })
-            }
-            else {
-                admin.alert("请选择一条数据进行操作!");
-            }
-        });
-
         /*!
         * method:数据列表(datagrid)的绑定
         */
@@ -68,7 +43,7 @@
             pageSize:20,
             loadMsg: "正在加载...",
             columns: [[
-                { field: 'sOpenId', title: 'OpenId', align: 'center', sortable: true, width: 100 },
+                { field: 'sOpenId', title: 'OpenId', align: 'center', sortable: true, width: 120 },
                 {
                     field: 'sHeadPicture', title: '头像', align: 'center', sortable: true, width: 80, formatter: function (value) {
                         var html = [];
@@ -78,8 +53,8 @@
                     }
                 },
                 { field: 'sNick', title: '昵称', align: 'center', sortable: true, width: 80 },
-                { field: 'sName', title: '姓名', align: 'center', sortable: true, width: 80 },
-                { field: 'sPhone', title: '手机号码', align: 'center', sortable: true, width: 120 },
+                { field: 'sName', title: '姓名', align: 'center', sortable: true, width: 60 },
+                { field: 'sPhone', title: '手机号码', align: 'center', sortable: true, width: 100},
                 { field: 'sRoleName', title: '角色', align: 'center', sortable: true, width: 80 },
                 {
                     field: 'iState', title: '状态', align: 'center', sortable: true, width: 80, formatter: function (value) {
@@ -104,15 +79,10 @@
             ]],
             onLoadSuccess: function () {
                 //重置密码事件绑定
-                $('.AdminUser_reset').on("click", function (event) {
+                $('.AdminUser_setrole').on("click", function (event) {
                     event.stopPropagation();
                     var ID = $(this).attr("data-id");
-                    admin.confirm("确定要将该账号密码重置成为123456？", function () {
-                        admin.Ajax(admin.route("Reset"), { ID: ID }, function (r) {
-                            admin.grid.datagrid('reload');
-                            admin.alert("操作成功");
-                        });
-                    });
+                    admin.creatModal(admin.route("SetRole")+"?ID="+ID);
                 });
 
                 //冻结事件绑定

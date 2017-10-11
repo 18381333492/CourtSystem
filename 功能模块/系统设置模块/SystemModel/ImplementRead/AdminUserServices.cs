@@ -29,7 +29,7 @@ namespace SystemModel
             StringBuilder sSql = new StringBuilder();
             sSql.Append(@"SELECT A.*,B.sRoleName FROM ES_AdminUser AS A 
                                         LEFT JOIN ES_AdminRole AS B 
-                                        ON A.sRoleId=B.ID WHERE A.bIsDeleted=0 ");
+                                        ON A.sRoleId=cast(B.ID as varchar(40)) WHERE A.bIsDeleted=0 ");
             if (!string.IsNullOrEmpty(searchText))
             {
                 sSql.AppendFormat("AND (A.sPhone LIKE '%{0}%' OR A.sName  LIKE '%{0}%')", searchText);
@@ -70,6 +70,19 @@ namespace SystemModel
             });
             return user;
         }
+
+
+        /// <summary>
+        /// 是否已经绑定微信
+        /// </summary>
+        /// <param name="sOpenId"></param>
+        /// <returns></returns>
+        public override bool IsBingWeChat(string sOpenId)
+        {
+            var ret = query.Any(@"SELECT * FROM ES_AdminUser WHERE sOpenId=@sOpenId AND bIsDeleted=0", new { sOpenId = sOpenId });
+            return ret;
+        }
+
 
         /// <summary>
         /// 根据管理员主键ID获取信息

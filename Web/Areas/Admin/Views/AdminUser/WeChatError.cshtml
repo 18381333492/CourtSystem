@@ -1,0 +1,33 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>绑定用户</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+</head>
+<body ontouchstart style="background-color:#eee">
+    <!-- 使用 WeUI -->
+    <div style="margin-top:10%;text-align:center;">    
+        @if(string.IsNullOrEmpty(Convert.ToString(Model)))
+        {
+            <i class="weui-icon-warn weui-icon_msg" style="font-size:100px"></i>
+            <p class="tip" style="height: 50px;line-height: 25px;font-size: 18px;font-weight: 500;margin-top:10px;">
+                页面失效,请重新进入！
+            </p>
+        }
+        else
+        {
+            <i class="weui-icon-warn weui-icon_msg-primary" style="font-size:100px"></i>
+            <p class="tip" style="height: 50px;line-height: 25px;font-size: 18px;font-weight: 500;margin-top:10px;">
+                你已经绑定过微信！
+            </p>
+        }
+    </div>
+</body>
+</html>

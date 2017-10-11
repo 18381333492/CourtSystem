@@ -56,14 +56,24 @@ namespace Web.Areas.Admin.Controllers
             return Content(manage.PageList(pageInfo, searchText, iState));
         }
 
+        /// <summary>
+        /// 设置角色的页面
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SetRole(string ID)
+        {
+            ViewBag.ID = ID;
+            return View(manage.GetAllRoleNameList());
+        }
 
         /// <summary>
-        ///  根据主键ID重置后台用户账户密码
+        /// 为后台用户设置角色
         /// </summary>
-        /// <param name="adminUser"></param>
-        public void Reset(string ID)
+        /// <param name="ID">用户主键ID</param>
+        /// <param name="sRoleId">角色Value</param>
+        public void SetRoleValue(Guid ID,string sRoleId)
         {
-            if (manage.Reset(ID) > 0)
+            if (manage.SetRole(ID, sRoleId) > 0)
                 result.success = true;
         }
 
@@ -88,7 +98,6 @@ namespace Web.Areas.Admin.Controllers
         }
 
 
-
         /// <summary>
         /// 微信扫码登录
         /// </summary>
@@ -103,12 +112,14 @@ namespace Web.Areas.Admin.Controllers
                 var WeChatUserInfo = WeChatUserHelper.GetUserByAuthorize(weChat.sAppId, weChat.sAppSecret, out sUrl);
                 if (!WeChatUserInfo.isSuccess)
                 {
-                    return Redirect(sUrl);
+                    if (!string.IsNullOrEmpty(sUrl))
+                        return Redirect(sUrl);
+                    else
+                        return View("~/Areas/Admin/Views/AdminUser/WeChatError.cshtml");
                 }
                 ViewBag.sSendPriKey = sSendPriKey;//需要发送消息WebSocket链接标识
                 ViewBag.headimgurl = WeChatUserInfo.headimgurl;
                 ViewBag.nickname = WeChatUserInfo.nickname;
-                ViewBag.OpenId = WeChatUserInfo.openid;
                 ViewBag.PORT = HttpContext.Application["WebScoket_Port"];
                 Session["WeChatUserInfo_Login"] = WeChatUserInfo;
                 return View();
@@ -135,12 +146,22 @@ namespace Web.Areas.Admin.Controllers
                 var WeChatUserInfo = WeChatUserHelper.GetUserByAuthorize(weChat.sAppId, weChat.sAppSecret, out sUrl);
                 if (!WeChatUserInfo.isSuccess)
                 {
-                    return Redirect(sUrl);
+                    if (!string.IsNullOrEmpty(sUrl))
+                        return Redirect(sUrl);
+                    else
+                        return View("~/Areas/Admin/Views/AdminUser/WeChatError.cshtml");
                 }
-                Session["WeChatUserInfo_Register"] = WeChatUserInfo;
-                ViewBag.headimgurl = WeChatUserInfo.headimgurl;
-                ViewBag.nickname = WeChatUserInfo.nickname;
-                return View();
+                if (!manage.IsBingWeChat(WeChatUserInfo.openid))
+                {
+                    Session["WeChatUserInfo_Register"] = WeChatUserInfo;
+                    ViewBag.headimgurl = WeChatUserInfo.headimgurl;
+                    ViewBag.nickname = WeChatUserInfo.nickname;
+                    return View();
+                }
+                else
+                {
+                    return View("~/Areas/Admin/Views/AdminUser/WeChatError.cshtml",1);
+                }
             }
             else
             {//POST 请求注册后台管理用户
@@ -154,8 +175,8 @@ namespace Web.Areas.Admin.Controllers
                     sName = sName,//真实姓名
                     sPhone = sPhone,//手机号
                     iState = 0,//默认禁用
-                    sLoginAccout = sAcccount,
-                    sPassWord = C_Security.MD5(sPassWord),
+                    sLoginAccout = string.IsNullOrEmpty(sAcccount) ? string.Empty : sAcccount,
+                    sPassWord = string.IsNullOrEmpty(sPassWord) ? string.Empty : C_Security.MD5(sPassWord),
                     sOpenId = WeChatUserInfo.openid,
                     sNick = WeChatUserInfo.nickname,
                     sHeadPicture = WeChatUserInfo.headimgurl,
@@ -166,12 +187,14 @@ namespace Web.Areas.Admin.Controllers
                     result.success = true;
                 else
                     result.info = "绑定失败!";
-                return Content(result.toJson());
             }
-
+            return Content(result.toJson());
         }
 
-
+        /// <summary>
+        /// 账号登录
+        /// </summary>
+        /// <returns></returns>
         [NoLogin]
         public ActionResult Login()
         {
@@ -192,6 +215,17 @@ namespace Web.Areas.Admin.Controllers
         public void LoginCheck(string sLoginAccout, string sPassWord, string sCode)
         {
             result = LoginServices.AccountLogin(sLoginAccout, sPassWord, sCode);
+        }
+
+
+        /// <summary>
+        /// 扫码登录成功设置session
+        /// </summary>
+        /// <param name="key">扫码用户的openId</param>
+        [NoLogin]
+        public void SetSession(string key)
+        {
+            result = LoginServices.SetSession(key);
         }
 
 

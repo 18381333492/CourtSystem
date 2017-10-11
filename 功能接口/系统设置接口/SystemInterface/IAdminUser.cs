@@ -41,6 +41,14 @@ namespace SystemInterface
 
 
         /// <summary>
+        /// 是否已经绑定微信
+        /// </summary>
+        /// <param name="sOpenId"></param>
+        /// <returns></returns>
+        public abstract bool IsBingWeChat(string sOpenId);
+
+
+        /// <summary>
         /// 根据管理员主键ID获取信息
         /// </summary>
         /// <param name="sUserId"></param>
@@ -70,7 +78,6 @@ namespace SystemInterface
         public abstract MenuAndButton GetMenuAndButtonByRoleId(string sRoleId);
      
 
-
         #endregion
 
 
@@ -84,17 +91,12 @@ namespace SystemInterface
         public abstract int Insert(ES_AdminUser adminUser);
 
         /// <summary>
-        /// 编辑后台用户
+        /// 设置后台用户角色
         /// </summary>
         /// <param name="adminUser"></param>
         /// <returns></returns>
-        public abstract int Update(ES_AdminUser adminUser);
+        public abstract int SetRole(Guid ID,string sRoleId);
 
-        /// <summary>
-        /// 根据主键ID重置后台用户密码
-        /// </summary>
-        /// <param name="Ids"></param>
-        public abstract int Reset(string ID);
 
         /// <summary>
         /// 根据主键ID集合删除后台用户

@@ -12,12 +12,17 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
 
     <!-- body 最后 -->
-    <script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
     <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
 
 </head>
 <body ontouchstart style="background-color:#eee">
     <!-- 使用 WeUI -->
+    <div style="margin-top:10%;text-align:center;display:none;">
+        <i class="weui-icon-success weui-icon_msg" style="font-size:100px"></i>
+        <p class="tip" style="height: 50px;line-height: 25px;font-size: 18px;font-weight: 500;margin-top:10px;">绑定成功</p>
+    </div>
+    <div class="mybody">
     <div style="margin-top:5%;text-align:center">
         <img src="@ViewBag.headimgurl" style="height:100px;width: 100px;border-radius: 50px;" />
         <p style="text-align:center;color:red">欢迎你，@ViewBag.nickname</p>
@@ -67,6 +72,7 @@
     <div style="margin-left:5%;margin-right: 5%;margin-top:5%">
         <a  class="weui-btn weui-btn_primary bing">绑定</a>
     </div>
+    </div>
 </body>
 </html>
 <script src="~/Scripts/mylib/common.client.js"></script>
@@ -96,13 +102,17 @@
                     if (json.sPassWord.length < 6) return $.toptip('密码长度不能低于6位!', 1000, 'warning');
                     if (json.sPassWord != json.sRePassWord) return $.toptip('两次密码输入不一致!', 1000, 'warning');
                 }
-                //client.ajax.ajaxRequest("/Admin/AdminUser/WeChatRegister", null, function (r) {
-                //    //绑定成功
-
-                //}, function (r) {
-                //    //绑定失败
-                //    $.toast("绑定失败", "cancel");
-                //});
+                $.showLoading("正在绑定..");
+                client.ajax.ajaxRequest("/Admin/AdminUser/WeChatRegister", json, function (r) {
+                    //绑定成功
+                    $.hideLoading();
+                    $('.mybody').hide();
+                    $('.mybody').prev().show();
+                }, function (r) {
+                    //绑定失败
+                    $.hideLoading();
+                    $.toast("绑定失败", "cancel");
+                });
             });
         } catch (e) {
             alert(e.message);

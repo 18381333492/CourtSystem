@@ -441,7 +441,6 @@ function form() {
     * @return {json}
     */
     function parseJson(form) {
-        alert(1);
         var array=form.serializeArray();
         var obj = {};
         for (var i = 0; i < array.length; i++) {

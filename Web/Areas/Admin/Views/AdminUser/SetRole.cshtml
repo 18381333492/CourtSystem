@@ -1,0 +1,66 @@
+﻿
+<!--角色设置视图-->
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header" style="padding:10px;">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">分配角色</h4>
+        </div>
+        <!--主体内容-->
+        <div class="modal-body">
+            <form class="form-horizontal" role="form" id="dataForm">
+                <input type="hidden" name="ID" value="@ViewBag.ID" />
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">选择角色</label>
+                    <div class="col-sm-10">   
+                    <select class="form-control"  name="sRoleId">
+                        @foreach (Dictionary<string,object> m in Model)
+                        {
+                            <option value="@m["ID"]">@m["sRoleName"].ToString()</option>
+                        }
+                    </select>
+                   </div>
+                </div>
+            </form>
+        </div>
+        <!--主体内容-->
+        <div class="modal-footer" style="padding:10px;">
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button id="ok" type="button" class="btn btn-primary">确认提交</button>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var admin = new adminPackage();
+        //注册路由
+        admin.routeRegister("Admin", "AdminUser");
+
+        //提交操作
+        $('#ok').on("click", function () {
+            var bootstrapValidator = admin.form.data('bootstrapValidator');
+            bootstrapValidator.validate();
+            var res = bootstrapValidator.isValid();
+            if (res) {//验证通过
+                admin.button.disabled();
+                admin.Ajax(admin.route("SetRoleValue"), admin.form.serialize(), function (r) {
+                    admin.tip("操作成功");
+                    admin.grid.datagrid('reload');
+                    admin.closeModal();
+                });
+            }
+        });
+
+        //表单验证
+        admin.formValidator(admin.form, {
+            sRoleId: {
+                validators: {
+                    notEmpty: {
+                        message: '角色不能为空'
+                    },
+                }
+            },
+        });
+
+    });
+</script>
