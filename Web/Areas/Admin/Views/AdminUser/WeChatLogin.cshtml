@@ -34,7 +34,7 @@
 <script type="text/javascript">
     $(function () {
 
-        loginSocket.createSocket("ws://127.0.0.1:@ViewBag.PORT");
+        loginSocket.createSocket("ws://@ViewBag.DOMAIN:@ViewBag.PORT");
 
         //登录确认
         $('.confirm').on("click", function () {

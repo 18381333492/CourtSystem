@@ -15,15 +15,24 @@
             <input type="hidden" name="sPassWord" value="@Model.sPassWord" />
             <div class="form-group">
                 <label class="col-sm-2 control-label">头像</label>
-                <div class="col-sm-10">
-                    <div id="sHeadPicture" style="width:100px; height:100px; border-radius:50%; overflow:hidden;border:1px solid #808080"></div>
-                    <input type="hidden" name="sHeadPicture" value="" />
+                <div class="col-sm-10">    
+                    <img class="person" src="@Model.sHeadPicture" style="height:100px;width: 100px;border-radius: 50px;" />
+                    <input type="hidden" name="sHeadPicture" value="@Model.sHeadPicture" />
                 </div>
             </div>
+            @if (!string.IsNullOrEmpty(Model.sLoginAccout))
+            {
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">登录账户</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" disabled  name="sLoginAccout" value="@Model.sLoginAccout">
+                    </div>
+                </div>
+            }
             <div class="form-group">
-                <label class="col-sm-2 control-label">账号</label>
+                <label class="col-sm-2 control-label">昵称</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" placeholder="请输入账号" name="sLoginAccout" value="@Model.sLoginAccout">
+                    <input type="text" class="form-control" placeholder="请输入账号" name="sLoginAccout" disabled value="@Model.sNick">
                 </div>
             </div>
             <div class="form-group">
@@ -45,9 +54,23 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-2 control-label">注册时间</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" disabled="disabled" name="dInsertTime" value="@Model.dInsertTime.ToString("yyyy-MM-dd HH:mm:ss")">
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10" style="text-align:left">
                     <button type="button" class="btn btn-primary" id="ok">保 存</button>
+                   @if (!string.IsNullOrEmpty(Model.sLoginAccout))
+                   {
+                    <button type="button" class="btn btn-danger" id="set">密码修改</button>
+                   }
+                   else
+                   {
+                    <button type="button" class="btn btn-success" id="set">设置登录账户</button>
+                   }
                 </div>
             </div>  
         </form>

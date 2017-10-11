@@ -121,13 +121,15 @@ namespace Web.Areas.Admin.Controllers
                 ViewBag.headimgurl = WeChatUserInfo.headimgurl;
                 ViewBag.nickname = WeChatUserInfo.nickname;
                 ViewBag.PORT = HttpContext.Application["WebScoket_Port"];
+                ViewBag.DOMAIN = C_Config.ReadAppSetting("domain");
                 Session["WeChatUserInfo_Login"] = WeChatUserInfo;
                 return View();
             }
             else
             {//登录确认
                 var WeChatUserInfo= Session["WeChatUserInfo_Login"] as WeChatUser;
-                var result=LoginServices.ScanLogin(WeChatUserInfo);
+                result.data = WeChatUserInfo.openid;
+                result.success = true;
                 return Content(result.toJson());
             }
         }
@@ -200,9 +202,10 @@ namespace Web.Areas.Admin.Controllers
         {
             var manageWebSite = Resolve<IWebSite>();
             var webSite = manageWebSite.GetWebSite();
-            if (webSite == null) ViewBag.ICON = string.Empty;
-            ViewBag.ICON = webSite.sWebSiteIcon;
-            ViewBag.PORT =HttpContext.Application["WebScoket_Port"];
+            if (webSite != null)
+                ViewBag.ICON = webSite.sWebSiteIcon;
+            ViewBag.PORT = HttpContext.Application["WebScoket_Port"];
+            ViewBag.DOMAIN = C_Config.ReadAppSetting("domain");
             return View();
         }
 
@@ -219,13 +222,13 @@ namespace Web.Areas.Admin.Controllers
 
 
         /// <summary>
-        /// 扫码登录成功设置session
+        /// 扫码验证登录
         /// </summary>
         /// <param name="key">扫码用户的openId</param>
         [NoLogin]
-        public void SetSession(string key)
+        public void ScanValiateLogin(string key)
         {
-            result = LoginServices.SetSession(key);
+            result = LoginServices.ScanValiateLogin(key);
         }
 
 

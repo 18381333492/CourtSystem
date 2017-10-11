@@ -133,17 +133,20 @@ namespace SystemModel
         public override MenuAndButton GetMenuAndButtonByRoleId(string sRoleId)
         {
             MenuAndButton data = new MenuAndButton();
-            var adminRole = query.Find<ES_AdminRole>(sRoleId);
-            if (!string.IsNullOrEmpty(adminRole.sPowerIds))
+            if (!string.IsNullOrEmpty(sRoleId))
             {
-                var menuIdsArray = adminRole.sPowerIds.Split('|')[0].Split(',').Select(m => { return "'" + m + "'"; });
-                var buttonIdsArray = adminRole.sPowerIds.Split('|')[1].Split(',').Select(m => { return "'" + m + "'"; });
+                var adminRole = query.Find<ES_AdminRole>(sRoleId);
+                if (!string.IsNullOrEmpty(adminRole.sPowerIds))
+                {
+                    var menuIdsArray = adminRole.sPowerIds.Split('|')[0].Split(',').Select(m => { return "'" + m + "'"; });
+                    var buttonIdsArray = adminRole.sPowerIds.Split('|')[1].Split(',').Select(m => { return "'" + m + "'"; });
 
-                string menuIds = string.Join(",", menuIdsArray);
-                string buttonIds = string.Join(",", buttonIdsArray);
+                    string menuIds = string.Join(",", menuIdsArray);
+                    string buttonIds = string.Join(",", buttonIdsArray);
 
-                data.menuList = query.QueryList<ES_Menu>(string.Format(@"SELECT * FROM ES_Menu WHERE bIsDeleted=0 AND ID IN({0})", menuIds)).ToList();
-                data.buttonList = query.QueryList<ES_Button>(string.Format(@"SELECT * FROM ES_Button WHERE ID IN({0})", buttonIds)).ToList();                
+                    data.menuList = query.QueryList<ES_Menu>(string.Format(@"SELECT * FROM ES_Menu WHERE bIsDeleted=0 AND ID IN({0})", menuIds)).ToList();
+                    data.buttonList = query.QueryList<ES_Button>(string.Format(@"SELECT * FROM ES_Button WHERE ID IN({0})", buttonIds)).ToList();
+                }
             }
             return data;
         }

@@ -75,83 +75,50 @@ namespace Web.App_Start
 
 
         /// <summary>
-        /// 微信扫码登录
+        /// 扫码验证登录
         /// </summary>
-        /// <param name="userInfo"></param>
+        /// <param name="sOpenId"></param>
         /// <returns></returns>
-        public static Result ScanLogin(WeChatUser userInfo)
+        public static Result ScanValiateLogin(string sOpenId)
         {
             var result = new Result();
-            if (!string.IsNullOrEmpty(userInfo.openid))
+            if (!string.IsNullOrEmpty(sOpenId))
             {
                 var manage = DIEntity.Instance.GetImpl<IAdminUser>();
-                var user=manage.ScanLogin(userInfo.openid);
+                var user = manage.ScanLogin(sOpenId);
                 if (user != null)
                 {
-                    if (user.iState == 0)
-                    {//该账户正在审核中
-                        result.info = "该账户被冻结,请联系管理员";
+                    if (user.iState == 1)
+                    {
+                        var obj = manage.GetMenuAndButtonByRoleId(user.sRoleId);
+                        HttpContext.Current.Session[SESSION.Menu] = obj.menuList;//缓存的二级菜单
+                        HttpContext.Current.Session[SESSION.Button] = obj.buttonList;//缓存的按钮
+                        HttpContext.Current.Session[SESSION.AdminUser] = new UserInfo()
+                        {
+                            sUserName = user.sNick,//微信昵称
+                            iState = user.iState,
+                            ID = user.ID,
+                            sRoleId = new Guid(user.sRoleId),
+                            sHeadPic = user.sHeadPicture,//微信头像
+                            bIsSuperMan = false
+                        };
+                        result.success = true;
                     }
                     else
                     {
-                        result.data = userInfo.openid;//返回用户的OpenId
-                        result.success = true;
+                        result.info = "该账户被冻结,请联系管理员";
+                        result.success = false;
                     }
                 }
                 else
                 {
-                    result.info = "登录失败,你还不是管理员";
                     result.success = false;
+                    result.info = "登录失败,你还不是管理员";
                 }
-
             }
             else
             {
                 result.info = "登录失败,缺少参数";
-                result.success = false;
-            }
-            return result;
-        }
-
-
-        /// <summary>
-        /// 扫码登录成功设置session
-        /// </summary>
-        /// <param name="sOpenId"></param>
-        /// <returns></returns>
-        public static Result SetSession(string sOpenId)
-        {
-            var result = new Result();
-            var manage = DIEntity.Instance.GetImpl<IAdminUser>();
-            var user = manage.ScanLogin(sOpenId);
-            if (user != null)
-            {
-                if (user.iState == 1)
-                {
-                    var obj = manage.GetMenuAndButtonByRoleId(user.sRoleId);
-                    HttpContext.Current.Session[SESSION.Menu] = obj.menuList;//缓存的二级菜单
-                    HttpContext.Current.Session[SESSION.Button] = obj.buttonList;//缓存的按钮
-                    HttpContext.Current.Session[SESSION.AdminUser] = new UserInfo()
-                    {
-                        sUserName = user.sNick,//微信昵称
-                        iState = user.iState,
-                        ID = user.ID,
-                        sRoleId = new Guid(user.sRoleId),
-                        sHeadPic = user.sHeadPicture,//微信头像
-                        bIsSuperMan = false
-                    };
-                    result.success = true;
-                }
-                else
-                {
-                    result.info = "该账户被冻结,请联系管理员";
-                    result.success = false;
-                }
-            }
-            else
-            {
-                result.success = false;
-                result.info = "获取用户信息失败";
             }
             return result;
         }
