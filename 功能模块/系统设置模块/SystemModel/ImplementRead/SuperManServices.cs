@@ -22,18 +22,15 @@ namespace SystemModel
         /// <param name="sLoginAccout"></param>
         /// <param name="sPassWord"></param>
         /// <returns></returns>
-        public override ES_AdminUser CheckLogin(string sLoginAccout, string sPassWord)
+        public override Dictionary<string, object> CheckLogin(string sOpenId)
         {
             var connectionStr = C_Config.ReadAppSetting("SuperConnection");
          // connectionStr = C_Security.RSADecrypt(connectionStr);
             query.SetconnectionStr(connectionStr);
 
-            return query.SingleQuery<ES_AdminUser>(@"SELECT * FROM SuperAdmin 
-                                                                WHERE sAccount=@sLoginAccout
-                                                                AND sPassword=@sPassWord", new
+            return query.SingleQuery<Dictionary<string,object>>(@"SELECT * FROM SuperAdmin WHERE sOpenId=@sOpenId", new
             {
-                sLoginAccout = sLoginAccout,
-                sPassWord =C_Security.MD5(sPassWord)
+                sOpenId = sOpenId,   
             });
 
         }

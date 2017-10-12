@@ -8,6 +8,7 @@ using SystemInterface;
 using Web.App_Start;
 using Web.App_Start.BaseController;
 using EFModels;
+using Common;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -27,6 +28,12 @@ namespace Web.Areas.Admin.Controllers
         [NoLogin]
         public ActionResult Login()
         {
+            var manageWebSite = Resolve<IWebSite>();
+            var webSite = manageWebSite.GetWebSite();
+            if (webSite != null)
+                ViewBag.ICON = webSite.sWebSiteIcon;
+            ViewBag.PORT = HttpContext.Application["WebScoket_Port"];
+            ViewBag.DOMAIN = C_Config.ReadAppSetting("domain");
             return View();
         }
 
@@ -36,12 +43,12 @@ namespace Web.Areas.Admin.Controllers
         /// <param name="sLoginAccout"></param>
         /// <param name="sPassWord"></param>
         [NoLogin]
-        public void CheckLogin(string sLoginAccout, string sPassWord)
+        public void CheckLogin(string key)
         {
-            var adminUser = manage.CheckLogin(sLoginAccout, sPassWord);
+            var adminUser = manage.CheckLogin(key);
             if (adminUser==null)
-            {//该用户被冻结
-                result.info = "用户名或密码错误";
+            {
+                result.info = "你还不是管理员!";
             }
             else
             {
@@ -52,9 +59,10 @@ namespace Web.Areas.Admin.Controllers
                 Session[SESSION.Button] = manageButton.GetAllButtonList();//获取所有的按钮
                 Session[SESSION.AdminUser] = new UserInfo()
                 {
-                    sUserName = adminUser.sName,
+                    sUserName = adminUser["sName"].ToString(),
                     iState = 1,//正常
-                    ID = adminUser.ID,
+                    sHeadPic = adminUser["sHeadPicture"].ToString(),
+                    ID =new Guid(adminUser["ID"].ToString()),
                     bIsSuperMan = true //超级管理员
                 };
                 result.success = true;

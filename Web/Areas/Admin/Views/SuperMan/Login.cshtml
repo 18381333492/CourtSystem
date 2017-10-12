@@ -6,72 +6,139 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,minimum-scale=1.0,user-scalable=0" />
     <title>SuperMan</title>
-    <link rel="shortcut icon" href="~/Images/favicon/favicon.png" type="image/x-icon">
-    <link href="~/Areas/Admin/Content/Login/Images/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Areas/Admin/Content/Login/Images/login.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="@ViewBag.ICON" type="image/x-icon">
+    <link href="~/Areas/Admin/Content/bootstrapValidator/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
 </head>
-<body>
-    <header id="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h3>超级管理员登录入口</h3>
-                </div>
-                <div class="col-md-6 xx">
-                    <img src="~/Areas/Admin/Content/Login/Images/qc.png" alt="" class="img-responsive">
-                </div>
-                <div class="col-md-6">
-                    <div class="col-md-8">
-                        <form class="form-horizontal form">
-                            <div class="form-group">
-                                <label for="inputEmail3" class="col-sm-3 control-label">用户名</label>
-                                <div class="input-group col-sm-9">
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                                    <input name="UserName" id="UserName" type="test" class="form-control" placeholder="请输入用户名" required autofocus>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword3" class="col-sm-3 control-label">密&nbsp&nbsp&nbsp码</label>
-                                <div class="input-group col-sm-9">
-                                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                                    <input name="Password" id="Password" type="password" class="form-control" placeholder="请输入密码">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-offset-3 col-sm-10">
-                                    <button type="button" class="btn btn-primary loginUser"> 登 录 </button>
-                                    <button type="reset" class="btn btn-info"> 重 填 </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+<body style="background:url(/Areas/Admin/Content/login/images/back.jpg) no-repeat;background-size:100%;height:100%">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="padding:10px;">
+                <h4 class="modal-title" style="color:red">超级管理员入口</h4>
             </div>
-        </div>
-    </header>
-    <div id="footer">
-        <div class="container">
-          
+            <!--主体内容-->
+            <div class="modal-body" style="height:300px">
+                <form class="form-horizontal" role="form" id="dataForm">
+                    <div class="form-group">
+                        <div class="web_login" style="text-align:center;margin-top:30px;padding-bottom:30px;">
+                            <div id="qrcode" style="margin: auto"></div>
+                            <p style="color:red;margin-top:5px">
+                                微信扫描图中二维码登录
+                            </p>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </body>
 </html>
 <script src="~/Scripts/jquery-1.12.4.min.js"></script>
 <script src="~/Scripts/mylib/common.admin.js"></script>
+<script src="~/Scripts/plug-in/qrcode.min.js"></script>
 <script type="text/javascript">
-    // 登录
-    var admin = new adminPackage();
-    admin.routeRegister("Admin", "SuperMan");
+    $(function () {
+        loginSocket.createSocket("ws://@ViewBag.DOMAIN:@ViewBag.PORT");
+    })
 
-    $('.loginUser').on("click", function () {
-        var UserName = $('#UserName').val();
-        var Password = $('#Password').val();
-        admin.Ajax(admin.route('CheckLogin'), {
-            sLoginAccout: UserName,
-            sPassWord: Password
-        }, function (r) {
-            admin.routeRegister("Admin", "Home");
-            location.href = admin.route("Index");
-        });
-    });
+    var loginSocket = (function (obj) { return obj; }(new function () {
+
+        var admin = new adminPackage();
+        var ws;
+        var model =
+            {
+                sPriKey: '',
+                sSendPriKey: '',
+                IsFirstConnect: false,
+                data: '',
+                toJson: function () {
+                    return JSON.stringify(this);
+                }
+            }
+
+        //检查浏览器是否支持webSocket
+        function checkBrowser() {
+            if (window.WebSocket) {
+                return true;
+            }
+            else
+                return false;
+        }
+
+        //创建链接
+        function createSocket(url) {
+            if (checkBrowser()) {
+                ws = new WebSocket(url);
+
+                //链接成功时候执行
+                ws.onopen = function () {
+                    model.connect = true;
+                    console.log("连接成功!");
+                }
+
+                //接受消息时执行
+                ws.onmessage = function (message) {
+                    if (message.data) {
+                        var res = JSON.parse(message.data);
+                        if (res.IsFirstConnect) {//第一次连接
+                            model.sPriKey = res.sPriKey;
+                            console.log(model.sPriKey);
+                            //生成二维码
+                            var url = "http://" + document.domain + "/Admin/AdminUser/WeChatLogin?sSendPriKey=" + model.sPriKey;
+                            $("#qrcode").qrcode({
+                                width: 180, //宽度
+                                height: 180, //高度
+                                text: url    //生成二维码的内容
+                            });
+                        }
+                        else {
+                            if (res.data.success) {
+                                //登录成功
+                                $("#qrcode").next().text("扫码成功,正在登录......");
+                                admin.routeRegister("Admin", "SuperMan");
+                                admin.Ajax(admin.route("CheckLogin"), { key: res.data.data }, function (r) {
+                                    $("#qrcode").next().text("登录成功,即将跳转......");
+                                    setTimeout(function () {
+                                        admin.routeRegister("Admin", "Home");
+                                        location.href = admin.route("Index");
+                                    }, 1000);
+                                }, function (r) {
+                                    //登录失败
+                                    $("#qrcode").next().text(r.info);
+                                });
+                            }
+                            else {
+                                //登录失败
+                                $("#qrcode").next().text(res.data.info);
+                            }
+                        }
+                    }
+                };
+
+                //链接关闭时候执行
+                ws.onclose = function () {
+                    console.log("连接关闭!");
+                }
+
+                //连接失败时候执行
+                ws.onerror = function () {
+                    console.log("连接失败!");
+                }
+            }
+            else {
+                $("#qrcode").next().text("该浏览器不支持扫码登录,请升级您的浏览器!");
+            }
+        }
+
+        //发送消息
+        function send(data) {
+            model.data = data;
+            var value = model.toJson();
+            ws.send(value);
+        }
+
+        return {
+            createSocket: createSocket,
+            send: send,
+        }
+    }));
 </script>

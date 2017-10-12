@@ -852,6 +852,7 @@
     <Content Include="Areas\Admin\Content\icheck\skins\square\_all.css" />
     <Content Include="Areas\Admin\Content\login\css\login2.css" />
     <Content Include="Areas\Admin\Content\login\images\1.jpg" />
+    <Content Include="Areas\Admin\Content\login\images\back.jpg" />
     <Content Include="Areas\Admin\Content\login\index.html" />
     <Content Include="Areas\Admin\Content\login\js\login.js" />
     <Content Include="Areas\Admin\Content\toolBar.css" />

@@ -17,13 +17,8 @@ namespace SystemInterface
         /// </summary>
         /// <param name="sLoginAccout"></param>
         /// <param name="sPassWord"></param>
-        public abstract ES_AdminUser CheckLogin(string sLoginAccout, string sPassWord);
+        public abstract Dictionary<string, object> CheckLogin(string sOpenId);
 
-        ///// <summary>
-        ///// 网站是否能继续运行
-        ///// </summary>
-        ///// <returns></returns>
-        //public abstract bool IsStartUp();
         #endregion
 
 
