@@ -1322,6 +1322,8 @@
     <Content Include="Areas\Admin\Views\AdminUser\WeChatLogin.cshtml" />
     <Content Include="Areas\Admin\Views\AdminUser\WeChatError.cshtml" />
     <Content Include="Areas\Admin\Views\AdminUser\SetRole.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminUser\Account.cshtml" />
+    <Content Include="Areas\Admin\Views\AdminUser\AlertPwd.cshtml" />
     <None Include="Properties\PublishProfiles\微信系统.pubxml" />
     <None Include="Scripts\jquery-1.12.4.intellisense.js" />
     <Content Include="Scripts\jquery-1.12.4.js" />

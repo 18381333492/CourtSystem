@@ -66,9 +66,8 @@ namespace SystemInterface
         /// 检查登录账号是否重名
         /// </summary>
         /// <param name="sLoginAccout"></param>
-        /// <param name="sAdminUserId"></param>
         /// <returns></returns>
-        public abstract bool CheckLoginAccout(string sLoginAccout, string sAdminUserId = null);
+        public abstract bool CheckLoginAccout(string sLoginAccout);
 
         /// <summary>
         /// 根据用户角色获取相应的菜单和按钮
@@ -97,6 +96,22 @@ namespace SystemInterface
         /// <returns></returns>
         public abstract int SetRole(Guid ID,string sRoleId);
 
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="sPassword"></param>
+        /// <returns></returns>
+        public abstract int AlertPwd(Guid ID, string sPassword);
+
+        /// <summary>
+        /// 设置账户信息
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="sAccount">账户信息</param>
+        /// <param name="sPassword">密码</param>
+        /// <returns></returns>
+        public abstract int SetAccount(Guid ID,string sAccount,string sPassword);
 
         /// <summary>
         /// 根据主键ID集合删除后台用户

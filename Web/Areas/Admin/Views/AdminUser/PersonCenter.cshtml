@@ -63,13 +63,13 @@
                 <label class="col-sm-2 control-label"></label>
                 <div class="col-sm-10" style="text-align:left">
                     <button type="button" class="btn btn-primary" id="ok">保 存</button>
-                   @if (!string.IsNullOrEmpty(Model.sLoginAccout))
+                   @if (string.IsNullOrEmpty(Model.sLoginAccout))
                    {
-                    <button type="button" class="btn btn-danger" id="set">密码修改</button>
+                    <button type="button" class="btn btn-success" id="set">设置登录账户</button>
                    }
                    else
                    {
-                    <button type="button" class="btn btn-success" id="set">设置登录账户</button>
+                    <button type="button" class="btn btn-success" id="alert">修改密码</button>
                    }
                 </div>
             </div>  
@@ -97,6 +97,33 @@
                     admin.alert("编辑成功");
                 });
             }
+        });
+
+
+        //设置账户信息
+        $('#set').on("click", function () {
+            $this = this;
+            $($this).prop("disabled", true);
+            admin.Ajax(admin.route("SendAccountMessage"), null, function (r) {
+                admin.alert("账户设置信息发送成功,请在微信设置账户信息！");
+                $($this).prop("disabled", false);
+            }, function (r) {
+                admin.alert("设置账户信息失败!");
+                $($this).prop("disabled", false);
+            });
+        });
+
+        //修改密码
+        $('#alert').on("click", function () {
+            $this = this;
+            $($this).prop("disabled", true);
+            admin.Ajax(admin.route("SendPwdMessage"), null, function (r) {
+                admin.alert("修改密码消息发送成功,请在微信修改账户密码！");
+                $($this).prop("disabled", false);
+            }, function (r) {
+                admin.alert("修改密码失败!");
+                $($this).prop("disabled", false);
+            });
         });
 
         //表单验证

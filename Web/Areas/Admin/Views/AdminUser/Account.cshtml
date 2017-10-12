@@ -1,0 +1,82 @@
+﻿@{
+    Layout = null;
+}
+@using EFModels;
+@model ES_AdminUser
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>账户信息设置</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+
+    <!-- body 最后 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+
+</head>
+<body ontouchstart style="background-color:#eee">
+    <!-- 使用 WeUI -->
+    <div style="margin-top:10%;text-align:center;display:none;">
+        <i class="weui-icon-success weui-icon_msg" style="font-size:100px"></i>
+        <p class="tip" style="height: 50px;line-height: 25px;font-size: 18px;font-weight: 500;margin-top:10px;">账户设置成功</p>
+    </div>
+    <div class="mybody">
+        <div style="margin-top:5%;text-align:center">
+            <img src="@Model.sHeadPicture" style="height:100px;width: 100px;border-radius: 50px;" />
+            <p style="text-align:center;color:red">@Model.sNick</p>
+        </div>
+        <form id="account">
+            <input type="hidden"  name="ID" value="@Model.ID"/>
+            <div class="weui-cells weui-cells_form register">
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">登录账户</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" name="sAccount" type="text" placeholder="请输入账户">
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" name="sPassWord" type="password" placeholder="请输入密码">
+                    </div>
+                </div>
+                <div class="weui-cell">
+                    <div class="weui-cell__hd"><label class="weui-label">确认密码</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" name="sRePassWord" type="password" placeholder="请再次输入密码">
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div style="margin-left:5%;margin-right: 5%;margin-top:5%">
+            <a class="weui-btn weui-btn_primary bing">绑定</a>
+        </div>
+    </div>
+</body>
+</html>
+<script src="~/Scripts/mylib/common.client.js"></script>
+<script type="text/javascript">
+    $(function () {
+        //设置账户信息
+        $('.bing').on("click", function () {
+            var json = client.form.parseJson($('#account'));
+            if (client.regex.isEmpty(json.sAccount)) return $.toptip('登录账号不能为空!', 1000, 'warning');
+            if (client.regex.isEmpty(json.sPassWord)) return $.toptip('密码不能为空!', 1000, 'warning');
+            if (json.sPassWord.length < 6) return $.toptip('密码长度不能低于6位!', 1000, 'warning');
+            if (json.sPassWord != json.sRePassWord) return $.toptip('两次密码输入不一致!', 1000, 'warning');
+            $.showLoading("正在绑定..");
+            client.ajax.ajaxRequest("/Admin/AdminUser/Account", json, function (r) {
+                $.hideLoading();
+                $('.mybody').hide();
+                $('.mybody').prev().show();
+            }, function (r) {
+                $.hideLoading();
+                $.toast(r.info, "cancel");
+            });
+        });
+    });
+</script>

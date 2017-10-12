@@ -45,12 +45,12 @@
             $('.content_img').html('<i class="weui-icon-success weui-icon_msg" style="font-size:100px">');
             
             client.ajax.ajaxRequest("/Admin/AdminUser/WeChatLogin", null, function (r) {
-                //登录成功
-                r.info = "登录成功,即将跳转.....";
+                //扫码成功
+                r.info = "扫码成功";
                 loginSocket.send(r);
-
             }, function (r) {
-                //登录失败
+                //扫码失败
+                r.info = "扫码失败";
                 loginSocket.send(r);
             });
         });
@@ -95,7 +95,7 @@
                 //链接成功时候执行
                 ws.onopen = function () {
                     model.connect = true;
-                    alert("连接成功");
+                    console.log("连接成功");
                 }
 
                 //接受消息时执行
@@ -110,12 +110,12 @@
 
                 //链接关闭时候执行
                 ws.onclose = function () {
-                    alert("连接关闭!");
+                    console.log("连接关闭");
                 }
 
                 //连接失败时候执行
                 ws.onerror = function () {
-                    alert("连接失败!");
+                    console.log("连接失败!");
                 }
             }
             else {

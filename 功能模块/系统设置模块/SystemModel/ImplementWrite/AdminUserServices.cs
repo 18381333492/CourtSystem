@@ -36,6 +36,36 @@ namespace SystemModel
             return excute.SaveChange();
         }
 
+        /// <summary>
+        /// 修改密码
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="sPassword"></param>
+        /// <returns></returns>
+        public override int AlertPwd(Guid ID, string sPassword)
+        {
+            var user = excute.Context.ES_AdminUser.AsNoTracking().FirstOrDefault(m => m.ID == ID);
+            user.sPassWord = C_Security.MD5(sPassword);
+            excute.Edit<ES_AdminUser>(user);
+            return excute.SaveChange();
+        }
+
+        /// <summary>
+        /// 设置账户信息
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <param name="sAccount">账户信息</param>
+        /// <param name="sPassword">密码</param>
+        /// <returns></returns>
+        public override int SetAccount(Guid ID, string sAccount, string sPassword)
+        {
+            var user = excute.Context.ES_AdminUser.AsNoTracking().FirstOrDefault(m => m.ID == ID);
+            user.sLoginAccout = sAccount;
+            user.sPassWord = C_Security.MD5(sPassword);
+            excute.Edit<ES_AdminUser>(user);
+            return excute.SaveChange();
+        }
+
 
         /// <summary>
         /// 根据主键ID集合删除后台用户

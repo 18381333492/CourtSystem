@@ -111,17 +111,10 @@ namespace SystemModel
         /// </summary>
         /// <param name="sLoginAccout"></param>
         /// <returns></returns>
-        public override bool CheckLoginAccout(string sLoginAccout,string sAdminUserId=null)
+        public override bool CheckLoginAccout(string sLoginAccout)
         {
-            if (string.IsNullOrEmpty(sAdminUserId))
-            {
-                return query.Any(string.Format(@"SELECT * FROM ES_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}'", sLoginAccout));
-            }
-            else
-            {
-                return query.Any(string.Format(@"SELECT * FROM ES_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}' AND ID!='{1}'",
-                    sLoginAccout, sAdminUserId));
-            }
+           var ret=query.Any(string.Format(@"SELECT * FROM ES_AdminUser WHERE bIsDeleted=0 AND sLoginAccout='{0}'", sLoginAccout));
+           return ret;
         }
 
 

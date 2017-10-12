@@ -20,8 +20,9 @@ namespace WeiXin.Tool
         /// <param name="content">发送的内容</param>
         /// <param name="access_token">接口调用凭证</param>
         /// <returns></returns>
-        public static void SendMessage(string content, string access_token)
+        public static bool SendMessage(string content, string access_token)
         {
+            var ret = false;
             string sUrl = string.Format("https://api.weixin.qq.com/cgi-bin/message/template/send?access_token={0}", access_token);
             var result=HttpHelper.HttpPost(sUrl, content);
             if (!string.IsNullOrEmpty(result))
@@ -29,13 +30,10 @@ namespace WeiXin.Tool
                 var ParamData =C_Json.ParseObject(result);
                 if (ParamData["errcode"].ToString()=="0")
                 {//发送成功
-
-                }
-                else
-                {
-
+                    ret = true;
                 }
             }
+            return ret;
         } 
     }
 }

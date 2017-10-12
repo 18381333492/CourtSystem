@@ -190,7 +190,7 @@
                                 //登录成功
                                 $("#qrcode").next().text("扫码成功,正在登录......");
                                 admin.routeRegister("Admin", "AdminUser");
-                                admin.Ajax(admin.route("ScanValiateLogin"), { key: res.data.data }, function (r) {;
+                                admin.Ajax(admin.route("ScanValiateLogin"), { key: res.data.data }, function (r) {
                                     $("#qrcode").next().text("登录成功,即将跳转......");
                                     setTimeout(function () {
                                         admin.routeRegister("Admin", "Home");
@@ -198,7 +198,7 @@
                                     }, 1000);
                                 }, function (r) {
                                     //登录失败
-                                    $("#qrcode").next().text(res.data.info);
+                                    $("#qrcode").next().text(r.info);
                                 });
                             }
                             else {

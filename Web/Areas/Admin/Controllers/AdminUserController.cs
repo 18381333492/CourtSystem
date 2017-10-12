@@ -11,6 +11,7 @@ using Web.App_Start;
 using SystemInterface;
 using Common;
 using WeiXin.Tool;
+using Newtonsoft.Json.Linq;
 
 namespace Web.Areas.Admin.Controllers
 {
@@ -97,6 +98,109 @@ namespace Web.Areas.Admin.Controllers
                 result.success = true;
         }
 
+        /// <summary>
+        /// 修改账户密码
+        /// </summary>
+        /// <returns></returns>
+        [NoLogin]
+        public ActionResult AlertPwd()
+        {
+            if (!Request.IsAjaxRequest())
+            {
+                string ID = Request.QueryString["ID"];
+                return View(manage.GetById(ID));
+            }
+            else
+            {
+                Guid ID = new Guid(Request.Form["ID"]);
+                string sPassWord = Request.Form["sPassWord"];
+                if (manage.AlertPwd(ID, sPassWord) > 0)
+                {
+                    result.success = true;
+                }
+                else
+                    result.info = "操作失败";
+                return Content(result.toJson());
+
+            }
+        }
+
+        /// <summary>
+        /// 发送修改密码模板消息
+        /// </summary>
+        public void SendPwdMessage()
+        {
+            var user = manage.GetById(SessionAdminUser().ID.ToString());
+            string template_id = C_Config.ReadAppSetting("AlertPwdTemplet");
+            JObject job = new JObject();
+            job.Add(new JProperty("touser", user.sOpenId));
+            job.Add(new JProperty("template_id", template_id));
+            job.Add(new JProperty("url", string.Format("http://{0}{1}", Request.Url.Host, C_Config.ReadAppSetting("virtualPath") + "/Admin/AdminUser/AlertPwd?ID=" + user.ID)));
+            JObject childData = new JObject();
+            childData.Add(new JProperty("date", new JObject(new JProperty("value", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")))));
+            childData.Add(new JProperty("user", new JObject(new JProperty("value", user.sName))));
+            job.Add(new JProperty("data", childData));
+            string Content = job.ToString();
+            var weChat = Resolve<IWeChat>().GetWeChat();
+            access_token token = new access_token(weChat.sAppId, weChat.sAppSecret);
+            result.success = TemplateHelper.SendMessage(Content, token.Get());
+        }
+
+
+        /// <summary>
+        /// 设置账户信息
+        /// </summary>
+        /// <returns></returns>
+        [NoLogin]
+        public ActionResult Account()
+        {
+            if (!Request.IsAjaxRequest())
+            {
+                string ID = Request.QueryString["ID"];
+                return View(manage.GetById(ID));
+            }
+            else
+            {
+                Guid ID =new Guid(Request.Form["ID"]);
+                string sAccount = Request.Form["sAccount"];
+                string sPassWord = Request.Form["sPassWord"];
+                if (!manage.CheckLoginAccout(sAccount))
+                {
+                    if (manage.SetAccount(ID, sAccount, sPassWord) > 0)
+                        result.success = true;
+                    else
+                        result.info = "绑定失败!";
+                }
+                else
+                {
+                    result.info = "账户名已被使用";
+                }
+                return Content(result.toJson());
+            }
+        }
+
+
+        /// <summary>
+        /// 发送账户设置模板消息
+        /// </summary>
+        public void SendAccountMessage()
+        {
+            var user=manage.GetById(SessionAdminUser().ID.ToString());
+            string template_id = C_Config.ReadAppSetting("AccountTemplet");
+            JObject job = new JObject();
+            job.Add(new JProperty("touser", user.sOpenId));
+            job.Add(new JProperty("template_id", template_id));
+            job.Add(new JProperty("url", string.Format("http://{0}{1}", Request.Url.Host,C_Config.ReadAppSetting("virtualPath") + "/Admin/AdminUser/Account?ID="+ user.ID)));
+            JObject childData = new JObject();
+            childData.Add(new JProperty("date", new JObject(new JProperty("value", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")))));
+            childData.Add(new JProperty("user", new JObject(new JProperty("value", user.sName))));
+            job.Add(new JProperty("data", childData));
+            string Content = job.ToString();
+            var weChat = Resolve<IWeChat>().GetWeChat();
+            access_token token = new access_token(weChat.sAppId, weChat.sAppSecret);
+            result.success=TemplateHelper.SendMessage(Content, token.Get());
+        }
+
 
         /// <summary>
         /// 微信扫码登录
@@ -133,6 +237,18 @@ namespace Web.Areas.Admin.Controllers
                 return Content(result.toJson());
             }
         }
+
+
+        /// <summary>
+        /// 扫码验证登录
+        /// </summary>
+        /// <param name="key">扫码用户的openId</param>
+        [NoLogin]
+        public void ScanValiateLogin(string key)
+        {
+            result = LoginServices.ScanValiateLogin(key);
+        }
+
 
         /// <summary>
         /// 微信注册后台用户
@@ -218,17 +334,6 @@ namespace Web.Areas.Admin.Controllers
         public void LoginCheck(string sLoginAccout, string sPassWord, string sCode)
         {
             result = LoginServices.AccountLogin(sLoginAccout, sPassWord, sCode);
-        }
-
-
-        /// <summary>
-        /// 扫码验证登录
-        /// </summary>
-        /// <param name="key">扫码用户的openId</param>
-        [NoLogin]
-        public void ScanValiateLogin(string key)
-        {
-            result = LoginServices.ScanValiateLogin(key);
         }
 
 

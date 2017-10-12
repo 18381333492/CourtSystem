@@ -25,17 +25,16 @@ namespace Web.Areas.Mobile.Controllers
         /// </summary>
         public void Send()
         {
-            string openid = "omHVhuM92qR97IBMffkx6smEoZjc1";
-            string template_id = "mS4mZnR0qeB5GShGWhCSt0jeXMAWrr_0lkIwnza9JgE";
+            string openid = "omHVhuM92qR97IBMffkx6smEoZjc";
+            string template_id = "t0JrOTKFmcGIFKXy-6x3OQKkIU0J9vdQjbznRiZlGmc";
             JObject job = new JObject();
 
             job.Add(new JProperty("touser", openid));
             job.Add(new JProperty("template_id", template_id));
+            job.Add(new JProperty("url", "http://www.baidu.com"));
             JObject childData = new JObject();
-            childData.Add(new JProperty("date", new JObject(new JProperty("value", DateTime.Now.ToString("yyyy-MM-dd")))));
-            childData.Add(new JProperty("good", new JObject(new JProperty("value", "测试商品"))));
-            childData.Add(new JProperty("moeny", new JObject(new JProperty("value", "99.00"))));
-            childData.Add(new JProperty("remark", new JObject(new JProperty("value", "还需加油哦!"))));
+            childData.Add(new JProperty("date", new JObject(new JProperty("value", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")))));
+            childData.Add(new JProperty("user", new JObject(new JProperty("value", "汤台"))));
             job.Add(new JProperty("data", childData));
             string Content = job.ToString();
             access_token token = new access_token("wx474f2fdbcbff2dde", "e2d3a16f0c00157e2c2d684759e41389");
