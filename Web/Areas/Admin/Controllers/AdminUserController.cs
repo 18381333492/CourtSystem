@@ -98,6 +98,7 @@ namespace Web.Areas.Admin.Controllers
                 result.success = true;
         }
 
+
         /// <summary>
         /// 修改账户密码
         /// </summary>
@@ -232,6 +233,7 @@ namespace Web.Areas.Admin.Controllers
             else
             {//登录确认
                 var WeChatUserInfo= Session["WeChatUserInfo_Login"] as WeChatUser;
+                LoginServices.SyncUserInfo(WeChatUserInfo);//同步用户信息
                 result.data = WeChatUserInfo.openid;
                 result.success = true;
                 return Content(result.toJson());
@@ -284,6 +286,14 @@ namespace Web.Areas.Admin.Controllers
             else
             {//POST 请求注册后台管理用户
                 string sAcccount = Request.Form["sAcccount"];
+                if (!string.IsNullOrEmpty(sAcccount))
+                {
+                    if (manage.CheckLoginAccout(sAcccount))
+                    {
+                        result.info = "账户名已被使用";
+                        return  Content(result.toJson());
+                    }
+                }
                 string sName = Request.Form["sName"];
                 string sPhone = Request.Form["sPhone"];
                 string sPassWord = Request.Form["sPassWord"];

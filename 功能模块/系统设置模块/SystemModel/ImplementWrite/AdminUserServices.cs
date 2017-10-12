@@ -66,6 +66,17 @@ namespace SystemModel
             return excute.SaveChange();
         }
 
+        /// <summary>
+        /// 扫码登录同步用户信息
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public override int SyncUserInfo(ES_AdminUser user)
+        {
+            excute.Edit<ES_AdminUser>(user);
+            return excute.SaveChange();
+        }
+
 
         /// <summary>
         /// 根据主键ID集合删除后台用户

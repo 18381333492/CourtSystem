@@ -114,6 +114,13 @@ namespace SystemInterface
         public abstract int SetAccount(Guid ID,string sAccount,string sPassword);
 
         /// <summary>
+        /// 扫码登录同步用户信息
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public abstract int SyncUserInfo(ES_AdminUser user);
+
+        /// <summary>
         /// 根据主键ID集合删除后台用户
         /// </summary>
         /// <param name="Ids"></param>

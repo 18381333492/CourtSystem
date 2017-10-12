@@ -1,4 +1,5 @@
 ﻿using EFModels.MyModels;
+using Logs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,7 +56,7 @@ namespace Web.App_Start
                                 ID = adminUser.ID,
                                 sRoleId = new Guid(adminUser.sRoleId),
                                 sHeadPic = adminUser.sHeadPicture,//头像
-                                bIsSuperMan = false
+                                bIsSuperMan = false,
                             };
                             result.success = true;
                         }
@@ -121,6 +122,34 @@ namespace Web.App_Start
                 result.info = "登录失败,缺少参数";
             }
             return result;
+        }
+
+
+        /// <summary>
+        /// 扫码登录同步微信用户信息
+        /// </summary>
+        /// <param name="user"></param>
+        public static void SyncUserInfo(WeChatUser wechatUser)
+        {
+            var manage = DIEntity.Instance.GetImpl<IAdminUser>();
+            var user = manage.ScanLogin(wechatUser.openid);
+            if (user != null&&user.iState==1)
+            {//用户存在且状态正常才会同步信息
+                if(user.sNick!= wechatUser.nickname||user.sHeadPicture!= wechatUser.headimgurl)
+                {//微信昵称和头像发生改变才会同步
+                    var logger=LogsHelper.Instance.GetLogger("Web");
+                    user.sNick = wechatUser.nickname;
+                    user.sHeadPicture = wechatUser.headimgurl;
+                    if (manage.SyncUserInfo(user) > 0)
+                    {//同步成功
+                        logger.Info("扫码登录用户信息同步成功");
+                    }
+                    else
+                    {//同步失败
+                        logger.Info("扫码登录用户信息同步失败");
+                    }
+                }
+            }
         }
     }
 }

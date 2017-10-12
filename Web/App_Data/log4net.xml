@@ -8,7 +8,7 @@
     <!--是否追加到文件,默认为true，通常无需设置-->
     <param name="MaxFileSize" value="10240" />
     <!-- 单个日志文件最大的大小我们可以使用"KB", "MB" 或 "GB"为 MaxFileSize 作为后缀限定大小。默认的文件大小是10MB。-->
-    <param name="MaxSizeRollBackups" value="10MB" />
+    <param name="MaxSizeRollBackups" value="100" />
     <!-- 备份文件的个数-->
     <param name="StaticLogFileName" value="false" />
     <param name="RollingStyle" value="Date" />
