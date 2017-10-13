@@ -1,16 +1,18 @@
-﻿ @{  
-     string[] weekdays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
-     string week = weekdays[Convert.ToInt32(DateTime.Now.DayOfWeek)];
-}
+﻿ 
 @using EFModels.MyModels;
 @model UserInfo
+@{  
+    string[] weekdays = { "星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六" };
+    string week = weekdays[Convert.ToInt32(DateTime.Now.DayOfWeek)];
+    var WebSite = ViewBag.webSite as EFModels.ES_WebSite;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.sWebSiteName</title>
+    <title>@WebSite.sWebSiteName</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> 
-    <link rel="shortcut icon" href="@ViewBag.ICON" type="image/x-icon">
+    <link rel="shortcut icon" href="@WebSite.sWebSiteIcon" type="image/x-icon">
     <!--bootstrap引用-->
     <link href="~/Areas/Admin/Content/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Content/assets/css/font-awesome.min.css" rel="stylesheet" />
@@ -35,7 +37,7 @@
                 <a class="navbar-brand">
                     <small>
                         <i class="icon-leaf"></i>
-                        @ViewBag.sWebSiteName
+                        @WebSite.sWebSiteName
                     </small>
                 </a>
             </div>

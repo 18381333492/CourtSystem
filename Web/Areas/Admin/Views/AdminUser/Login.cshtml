@@ -1,18 +1,22 @@
-﻿<!DOCTYPE html>
+﻿
+
+@using EFModels;
+@model ES_WebSite
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>管理员登录</title>
-    <link rel="shortcut icon" href="@ViewBag.ICON" type="image/x-icon">
+    <title>管理员登录-@Model.sWebSiteName</title>
+    <link rel="shortcut icon" href="@Model.sWebSiteIcon" type="image/x-icon">
     <script src="~/Scripts/jquery-1.12.4.min.js"></script>
     <script src="~/Areas/Admin/Content/assets/js/bootstrap.min.js"></script>
     <link href="~/Areas/Admin/Content/bootstrapValidator/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="~/Areas/Admin/Content/login/css/login2.css" rel="stylesheet" />
 </head>
 <body>
-        <h1>后台登录系统<sup>V2017</sup></h1>
+        <h1>后台登录系统</h1>
         <div class="login" style="margin-top:50px;">
             <div class="header">
                 <div class="switch" id="switch">

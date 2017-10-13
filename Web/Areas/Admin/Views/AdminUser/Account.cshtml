@@ -20,6 +20,8 @@
 </head>
 <body ontouchstart style="background-color:#eee">
     <!-- 使用 WeUI -->
+    @if (string.IsNullOrEmpty(Model.sLoginAccout))
+    {
     <div style="margin-top:10%;text-align:center;display:none;">
         <i class="weui-icon-success weui-icon_msg" style="font-size:100px"></i>
         <p class="tip" style="height: 50px;line-height: 25px;font-size: 18px;font-weight: 500;margin-top:10px;">账户设置成功</p>
@@ -56,6 +58,14 @@
             <a class="weui-btn weui-btn_primary bing">绑定</a>
         </div>
     </div>
+    }
+    else
+    {
+        <div style="margin-top:10%;text-align:center;">
+            <i class="weui-icon-warn weui-icon_msg-primary" style="font-size:100px"></i>
+            <p class="tip" style="height: 50px;line-height: 25px;font-size: 18px;font-weight: 500;margin-top:10px;">账户信息已设置</p>
+        </div>
+    }
 </body>
 </html>
 <script src="~/Scripts/mylib/common.client.js"></script>

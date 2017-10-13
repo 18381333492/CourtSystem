@@ -21,28 +21,11 @@ namespace Web.Areas.Admin.Controllers
 
         #region 后台首页相关视图
         
-        [NoLogin]
-        public ActionResult Test()
-        {
-            string cnt = HttpUtility.UrlEncode("的世界观法规和到发给都是dskjfklsfdsfds");
-            var ss= HttpHelper.HttpGet("http://localhost:35084/SmsApi/SendSms.ashx?oid=RS1710011827551061&bid=yy_test&sph=15933118575&rph=18381333492&cnt="+ cnt + "&tout=150&tsp=2017093001713&sign=ab645b695578304f222badbea3073644");
-            return Content(ss);
-        }
-
         public ActionResult Index()
         {
             var manageWebSite = Resolve<IWebSite>();
             var webSite = manageWebSite.GetWebSite();
-            if (webSite == null)
-            {
-                ViewBag.ICON = string.Empty;
-                ViewBag.sWebSiteName = string.Empty;
-            }
-            else
-            {
-                ViewBag.ICON = webSite.sWebSiteIcon;
-                ViewBag.sWebSiteName = webSite.sWebSiteName;
-            }
+            ViewBag.webSite = webSite;
             return View(Session[SESSION.AdminUser]);
         }
 

@@ -30,11 +30,9 @@ namespace Web.Areas.Admin.Controllers
         {
             var manageWebSite = Resolve<IWebSite>();
             var webSite = manageWebSite.GetWebSite();
-            if (webSite != null)
-                ViewBag.ICON = webSite.sWebSiteIcon;
             ViewBag.PORT = HttpContext.Application["WebScoket_Port"];
             ViewBag.DOMAIN = C_Config.ReadAppSetting("domain");
-            return View();
+            return View(webSite);
         }
 
         /// <summary>
