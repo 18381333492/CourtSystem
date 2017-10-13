@@ -1,0 +1,95 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="zh-CN" style="height:100%">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>账户信息设置</title>
+    <!-- 引入 WeUI -->
+    <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+
+    <!-- body 最后 -->
+    <script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+</head>
+<body ontouchstart style="background-color:#eee;height:100%">
+        <div class="weui-tab">
+            @*<div class="weui-search-bar" id="searchBar">
+                <form class="weui-search-bar__form">
+                    <div class="weui-search-bar__box">
+                        <i class="weui-icon-search"></i>
+                        <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
+                        <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                    </div>
+                    <label class="weui-search-bar__label" id="searchText">
+                        <i class="weui-icon-search"></i>
+                        <span>搜索</span>
+                    </label>
+                </form>
+                <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+            </div>*@
+            <div class="weui-tab__bd">
+                <div id="tab1" class="weui-tab__bd-item weui-tab__bd-item--active">
+                    @*<h1>页面一</h1>
+                                        <h1>页面一</h1>
+                                        <h1>页面一</h1><h1>页面一</h1><h1>页面一</h1><h1>页面一</h1><h1>页面一</h1><h1>页面一</h1><h1>页面一</h1>
+                                        <h1>页面一</h1>
+                                        <h1>页面一</h1>
+                                        <h1>页面一</h1>
+                                        <h1>页面一</h1>
+                                        <h1>页面一</h1><h1>页面一</h1>
+                        <h1>页面一</h1>*@
+                    <h1>页面一</h1>
+                </div>
+                <div id="tab2" class="weui-tab__bd-item">
+                    <h1>页面二</h1>
+                </div>
+                <div id="tab3" class="weui-tab__bd-item">
+                    <h1>页面三</h1>
+                </div>
+                <div id="tab4" class="weui-tab__bd-item">
+                    <h1>页面四</h1>
+                </div>
+            </div>
+
+            <div class="weui-tabbar">
+                <a class="weui-tabbar__item weui-bar__item--on">
+                    <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>
+                    <div class="weui-tabbar__icon">
+                        <img src="./images/icon_nav_button.png" alt="">
+                    </div>
+                    <p class="weui-tabbar__label">首页</p>
+                </a>
+                <a class="weui-tabbar__item">
+                    <div class="weui-tabbar__icon">
+                        <img src="./images/icon_nav_msg.png" alt="">
+                    </div>
+                    <p class="weui-tabbar__label">通讯录</p>
+                </a>
+                <a class="weui-tabbar__item">
+                    <div class="weui-tabbar__icon">
+                        <img src="./images/icon_nav_article.png" alt="">
+                    </div>
+                    <p class="weui-tabbar__label">发现</p>
+                </a>
+                <a class="weui-tabbar__item">
+                    <span class="weui-badge" style="position: absolute;top: -.4em;right: 1em;">8</span>
+                    <div class="weui-tabbar__icon">
+                        <img src="./images/icon_nav_cell.png" alt="">
+                    </div>
+                    <p class="weui-tabbar__label">我</p>
+                </a>
+            </div>
+        </div>
+</body>
+</html>
+<script src="~/Scripts/mylib/common.client.js"></script>
+<script type="text/javascript">
+    $('.weui-tabbar a').on("click", function () {
+        var index = parseInt($(this).index())+1;
+        location.href = "http://localhost:26673/Mobile/Default/Index#tab" + index;
+    });
+</script>
