@@ -6,34 +6,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>账户信息设置</title>
+    <title>首页</title>
     <!-- 引入 WeUI -->
     <link rel="stylesheet" href="//cdn.bootcss.com/weui/1.1.1/style/weui.min.css">
     <link rel="stylesheet" href="//cdn.bootcss.com/jquery-weui/1.0.1/css/jquery-weui.min.css">
+    <link href="~/Areas/Mobile/Content/Swiper/swiper-3.4.2.min.css" rel="stylesheet" />
 
     <!-- body 最后 -->
     <script src="//cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/jquery-weui/1.0.1/js/jquery-weui.min.js"></script>
+    <script src="~/Areas/Mobile/Content/Swiper/swiper-3.4.2.jquery.min.js"></script>
+    <style>
+        .swiper-container img{
+           width:100%;
+           height:100%;
+        }
+    </style>
 </head>
 <body ontouchstart style="background-color:#eee;height:100%">
         <div class="weui-tab">
-            @*<div class="weui-search-bar" id="searchBar">
-                <form class="weui-search-bar__form">
-                    <div class="weui-search-bar__box">
-                        <i class="weui-icon-search"></i>
-                        <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required="">
-                        <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
-                    </div>
-                    <label class="weui-search-bar__label" id="searchText">
-                        <i class="weui-icon-search"></i>
-                        <span>搜索</span>
-                    </label>
-                </form>
-                <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
-            </div>*@
             <div class="weui-tab__bd">
                 <div class="weui-tab__bd-item weui-tab__bd-item--active">
-                    <h1>页面一</h1>
+                    <div class="swiper-container" style="height:200px;">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="~/Areas/Mobile/Content/Shoes/img/61647775-f5d0-4cfe-b84f-96060eb8e2e3.jpg" />
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="~/Areas/Mobile/Content/Shoes/img/8a009458-f5df-407c-95ca-c2ee81bffbc2.jpg" />
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="~/Areas/Mobile/Content/Shoes/img/65bd9fc8-7f5e-4dba-b083-0c05b1bc9b96.jpg" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="weui-tab__bd-item">
                     <h1>页面二</h1>
@@ -79,6 +85,14 @@
 </html>
 <script src="~/Scripts/mylib/common.client.js"></script>
 <script type="text/javascript">
+    var mySwiper = new Swiper('.swiper-container', {
+        speed:500,
+        autoplay: 4000,//可选选项，自动滑动
+        autoplayDisableOnInteraction: false,
+        watchSlidesProgress: true,
+        watchSlidesVisibility:true
+    })
+
     $('.weui-tabbar a').on("click", function () {
         var index = $(this).index();
         $(this).addClass("weui-bar__item--on").siblings().removeClass("weui-bar__item--on");
