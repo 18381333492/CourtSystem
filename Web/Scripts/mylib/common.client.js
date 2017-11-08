@@ -10,7 +10,7 @@ window.client = {
     regex: new regex(),
     cookie: new cookie(),
     datetime:new datetime(),
-    localStorage: new myStorage(),
+    localStorage: new storage(),
 }
 
 window.dialog = function () {
@@ -152,6 +152,7 @@ function regex() {
 
     //是否手机号码格式
     function isPhone(val) {
+        val=replace(/\D/g, '');//去掉所有的空格
         var regex = /^((13[0-9]|14[0-9]|15[0-9]|17[0-9]|18[0-9])\d{8})*$/;
         if (regex.exec(val))
             return true;
@@ -194,14 +195,6 @@ function regex() {
 
 function string(){
 
-    //验证是否为空
-    function isEmpty(val) {
-        val = val.replace(/(^\s*)|(\s*$)/g, "");//去掉前后空格
-        if (val.length == 0)
-            return true;
-        return false;
-    }
-
     /*去掉字符串前后字符*/
     function trim(val,char){
         char=char==undefined?"":char;
@@ -236,7 +229,6 @@ function string(){
 
     /**返回的接口**/
     return {
-        isEmpty:isEmpty,
         trim:trim,
         insert:insert,
         trimSta:trimSta,
@@ -288,7 +280,7 @@ function cookie() {
 }
 
 /****注意：浏览器的localStorage的最大空间只有5M****/
-function myStorage() {
+function storage() {
  
     // 检查浏览器是否支持localStorage
     function isSupport() {
@@ -435,7 +427,7 @@ function datetime() {
 function form() {
 
     /*
-    * 将表单元素序列化成Json对象.
+    * 将表单的值序列化成Json对象.
     * @version 1.0.0
     * @param   form(要序列化Jquery表单对象)
     * @return {json}
@@ -455,3 +447,5 @@ function form() {
         parseJson:parseJson
     }
 }
+
+
