@@ -2,8 +2,7 @@
 
 //全局变量
 
-window.client = {
-    
+window.client = {  
     ajax: new ajax(),
     form: new form(),
     string: new string(),
@@ -310,10 +309,18 @@ function storage() {
         }
     }
 
+    /*移除localStorage*/
+    function removeStorage(name) {
+        if (isSupport() && name) {
+            window.localStorage.removeItem(name);
+        }
+    }
+
           /**返回的接口**/
     return {
         setStorage: setStorage,
-        getStorage:getStorage
+        getStorage: getStorage,
+        removeStorage: removeStorage
     }
 
 }

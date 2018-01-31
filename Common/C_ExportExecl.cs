@@ -44,6 +44,9 @@ namespace Common
             HttpContext.Current.Response.Write(sTableHtml.ToString());
             HttpContext.Current.Response.Flush();
             HttpContext.Current.Response.End();
+
+
+
         }
     }
 }

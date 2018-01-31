@@ -100,4 +100,107 @@
         
         $.ajax()
     })
+
+
+
+
+
+
+
+
+    client.ajax.ajaxRequest("/JSYHServer/server/BookOrder.ashx", {
+        orderInfo: JSON.stringify({
+            businessType: businessType,
+            account: account, //华为生活账号
+            product_name: product_name,
+            mobile: phone, //充值的手机号
+            product_id: productId, //产品编号
+            face: face, //面值
+            price: fee, //售价,
+            card_type: 1, //充值类型 1-话费 2-流量
+            flow_type: flow_type//流量类型
+        })
+    },
+     function (r) {
+
+     });
+</script>
+
+<script type="text/javascript">
+
+    //抽奖函数
+
+    (function ($) {
+        if (!window.Draw) {
+
+            window.Draw = (function (obj) { return obj; })(new function () {
+
+                //ajax请求
+                function request(url, data, callback) {
+                    $.ajax({
+                        url: url,
+                        data: data,
+                        type: 'POST',
+                        dataType: 'json',
+                        async: false,
+                        success: function (r) {
+                            if (callback) callback(r);
+                        }
+                    })
+                }
+
+                //获取当前抽奖信息
+                function GetCurrentInfo() {
+                    var currentInfo;
+                    request('/Home/GetCurrentInfo', null, function (r) {
+                        if (r) {
+                            currentInfo = r;
+                        }
+                        else {
+                            currentInfo.success = false;
+                            currentInfo.info = "抽奖已结束";
+                        }
+                    });
+                    return currentInfo;
+                }
+
+                //获取抽奖滚地名字
+                function GetName() {
+                    var name = "";
+                    request("/Home/GetName", null, function (r) {
+                        name = r;
+                    });
+                    return name;
+                }
+
+                //结束抽奖
+                function EndCurrentDraw(name) {
+                    var state;
+                    request("/Home/EndCurrentDraw", { name: name }, function (r) {
+                        state = r.success;
+                    });
+                    return state;
+                }
+
+                //获取所有的抽奖名单
+                function GetLuckers() {
+                    var list;
+                    request("/Home/GetLuckers", null, function (r) {
+                        list = r.list;
+                    });
+                    return list;
+                }
+
+                return {
+                    GetCurrentInfo: GetCurrentInfo,
+                    GetName: GetName,
+                    EndCurrentDraw: EndCurrentDraw,
+                    GetLuckers: GetLuckers
+                }
+            });
+        }
+        else {
+            console.log("window.Draw已存在");
+        }
+    })(jQuery);
 </script>
