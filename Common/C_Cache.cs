@@ -13,6 +13,11 @@ namespace Common
     public  class C_Cache
     {
 
+
+        public C_Cache()
+        {
+        }
+
         /// <summary>
         /// 设置缓存
         /// 如果设置相同的key的会覆盖原来的值
@@ -46,7 +51,7 @@ namespace Common
         /// <returns></returns>
         public static object GetCache(string key)
         {
-            return  MemoryCache.Default.Get(key);
+            return MemoryCache.Default.Get(key);
         }
 
         /// <summary>

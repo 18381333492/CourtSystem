@@ -203,4 +203,17 @@
             console.log("window.Draw已存在");
         }
     })(jQuery);
+
+    var ss = "a=1321&b=434c=4564";
+    var array = ss.split
+    function GetObjFromString(str) {
+        var array = str.split('&');
+        var obj = {};
+        for (var i = 0; i <= array.length; i++) {
+            var key = array[i].split("=")[0];
+            var value = array[i].split("=")[1];
+            obj[key] = value;
+        }
+        return obj;
+    }
 </script>

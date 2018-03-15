@@ -1,0 +1,112 @@
+﻿<!--<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+
+</body>
+</html>
+<script src="Scripts/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    
+
+
+
+
+    $.ajax({
+        url: 'http://153h79422m.imwork.net/upload.ashx',
+        data: null,
+        type:'POST',
+        success: function (r) {
+            debugger
+        }
+    })
+</script>-->
+<script src="Scripts/jquery.min.js"></script>
+<script src="Scripts/jquery.easyui.min.js"></script>
+<script type="text/javascript">
+    function updataClick() {
+        debugger;
+        //if (!$('input:file[name=picture]').val()) {
+        //    return false;
+        //}
+        var sDirectorieType = $('#sDirectorieType').val(), KeyId = $('#KeyId').val();
+        var defaults = {};
+
+        defaults.url = 'http://153h79422m.imwork.net/upload.ashx';
+        debugger
+        $("#imgUp1").form('submit', {
+            url: defaults.url,//?sDirectorieType=' + sDirectorieType + '&KeyId=' + KeyId,
+            //url: 'http://imgServer.ltgirl.com:9110/upload/picture.ashx',
+            onLoadError: function (r) {
+                debugger 
+            },
+            onLoadSuccess:function(r){
+                debugger
+            },
+            success: function (data,e) {
+                debugger
+                //{"error":0,"url":["/images//20180205112129790.jpg"]}
+                data = JSON.parse(data);
+                if (data.error == 0) {
+                    debugger;
+                    for (var i = 0; i < data.url.length; i++) {
+                        $('#showImg').append("<p>" + data.url[i] + "</p>");
+                    }
+                    $('#__imgPath').val(data.url.join(','));
+                } else {
+                    alert(data.info);
+                }
+            }
+        });
+    }
+</script>
+<style>
+    .img-sh {
+        width: 50px;
+        height: 60px;
+        margin-left: 10px;
+    }
+
+    .hand {
+        padding: 5px 15px;
+    }
+</style>
+<form id="imgUp" enctype="multipart/form-data" method="post" style="padding-right: 30px;">
+    <input type="file" name="picture" multiple="multiple" accept="image/png,image/gif,image/jpeg,image/jpg,image/bmp" />
+</form>
+
+<form id="imgUp1"  method="post" style="padding-right: 30px;">
+    <input type="text" name="picture" value="13213" />
+</form>
+
+<table>
+    <tr height="20">
+        <td width="120" class="textalign_r">
+            图片类型:
+        </td>
+        <td width="300" class="textalign_l">
+            <input class="widthinput" type="text" id="sDirectorieType" maxlength="300" value=""
+                   placeholder="0:活动,1:营业厅,2:营业员" style="width: 138px" />
+        </td>
+    </tr>
+    <tr height="20">
+        <td width="120" class="textalign_r">
+            编号:
+        </td>
+        <td width="300" class="textalign_l">
+            <input class="widthinput" type="text" id="KeyId" placeholder="图片类型对应编号" maxlength="300"
+                   value="" style="width: 138px" />
+        </td>
+    </tr>
+    <tr height="20">
+        <td>
+            <a class="hand general_btn" id="updata" onclick="updataClick()">提交</a>
+        </td>
+    </tr>
+</table>
+<div id="showImg" style="max-width: 100%;">
+</div>

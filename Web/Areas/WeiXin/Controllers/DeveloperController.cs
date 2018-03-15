@@ -12,6 +12,7 @@ using WeiXin.Base.Message;
 using Web.App_Start.WeiXinMessage;
 using Unity;
 using SystemInterface;
+using Web.TencentHelper;
 
 namespace Web.Areas.WeiXin.Controllers
 {
@@ -35,7 +36,7 @@ namespace Web.Areas.WeiXin.Controllers
                 string echostr = Request["echostr"].ToString();    //随机字符串
 
                 var weChat = DIEntity.Instance.GetImpl<IWeChat>().GetWeChat();
-                string token = weChat.sToken;   //获取微信配置token
+                string token = "qx123456";// weChat.sToken;   //获取微信配置token
 
                 string result = Developer.Valiate(signature, timestamp, nonce, echostr, token);
                 Response.Write(result);
@@ -55,11 +56,26 @@ namespace Web.Areas.WeiXin.Controllers
         /// <returns></returns>
         public string HandleMessage(HttpRequestBase request,IBaseAction Action)
         {
+
+            string msg_signature = request["msg_signature"];//签名
+            string timestamp = request["timestamp"];
+            string nonce = request["nonce"];
+
+
             StreamReader sr = new StreamReader(request.InputStream, Encoding.UTF8);
             string requestXmlMessage = sr.ReadToEnd();
 
+           string sToken = "qx123456";
+           string sEncodingAESKey = "yeI2t3XJqT9UcVepTVEvaA1FxmeM2dbisz3nISVyA8H";
+           string sAppID = "wx3cc6bd8aabe82205";
+
+           WXBizMsgCrypt wxcpt =new WXBizMsgCrypt(sToken, sEncodingAESKey, sAppID);
+            string sMsg = "";
+            wxcpt.DecryptMsg(msg_signature, timestamp, nonce, requestXmlMessage, ref sMsg);
+            requestXmlMessage = sMsg;
+
             // 获取微信发送来的消息类型
-            string sMsgType = XmlHelper.getTextByNode(requestXmlMessage, "MsgType");
+            string sMsgType = XmlHelper.getTextByNode(sMsg, "MsgType");
 
             var handle = new HandleMessage(Action);
 
