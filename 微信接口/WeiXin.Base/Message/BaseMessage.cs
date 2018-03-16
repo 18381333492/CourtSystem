@@ -79,7 +79,9 @@ namespace WeiXin.Base.Message
 
         VIEW,           //点击菜单跳转链接时的事件推送
 
-        TEMPLATESENDJOBFINISH//模板消息推送是否成功的事件
+        TEMPLATESENDJOBFINISH,//模板消息推送是否成功的事件
+
+        USER_ENTER_TEMPSESSION//小程序进入会话事件
     }
 
 }

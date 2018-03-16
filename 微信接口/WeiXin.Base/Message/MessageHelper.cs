@@ -21,7 +21,7 @@ namespace WeiXin.Base.Message
         /// </summary>
         /// <param name="message"></param>
         /// <returns></returns>
-        private static string Handle_CDATA(Object message)
+        public static string Handle_CDATA(Object message)
         {
             Type t = message.GetType();
             FieldInfo[] Fileds =t.GetFields();

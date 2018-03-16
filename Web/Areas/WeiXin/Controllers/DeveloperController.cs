@@ -13,6 +13,7 @@ using Web.App_Start.WeiXinMessage;
 using Unity;
 using SystemInterface;
 using Web.TencentHelper;
+using Logs;
 
 namespace Web.Areas.WeiXin.Controllers
 {
@@ -56,6 +57,7 @@ namespace Web.Areas.WeiXin.Controllers
         /// <returns></returns>
         public string HandleMessage(HttpRequestBase request,IBaseAction Action)
         {
+            var logger = LogsHelper.Instance.GetLogger("Web");
 
             string msg_signature = request["msg_signature"];//签名
             string timestamp = request["timestamp"];
@@ -64,6 +66,7 @@ namespace Web.Areas.WeiXin.Controllers
 
             StreamReader sr = new StreamReader(request.InputStream, Encoding.UTF8);
             string requestXmlMessage = sr.ReadToEnd();
+            logger.Info("请求数据:" + requestXmlMessage);
 
            string sToken = "qx123456";
            string sEncodingAESKey = "yeI2t3XJqT9UcVepTVEvaA1FxmeM2dbisz3nISVyA8H";
@@ -74,6 +77,7 @@ namespace Web.Areas.WeiXin.Controllers
             wxcpt.DecryptMsg(msg_signature, timestamp, nonce, requestXmlMessage, ref sMsg);
             requestXmlMessage = sMsg;
 
+            logger.Info("解密后的数据:" + requestXmlMessage);
             // 获取微信发送来的消息类型
             string sMsgType = XmlHelper.getTextByNode(sMsg, "MsgType");
 
@@ -90,7 +94,15 @@ namespace Web.Areas.WeiXin.Controllers
 
                 // 找到对应的消息类型
                 MsgType msgType = (MsgType)Enum.Parse(typeof(MsgType), sMsgType.ToUpper());
-                return handle.ProcessMessage(msgType, requestXmlMessage);
+
+                string result=handle.ProcessMessage(msgType, requestXmlMessage);
+
+                string sEncryptMsg = ""; //xml格式的密文
+                wxcpt.EncryptMsg(result, timestamp, nonce, ref sEncryptMsg);
+              
+                logger.Info("加密前:"+ result);
+                logger.Info("加密前后:"+sEncryptMsg);
+                return sEncryptMsg;
             }
         }
     }

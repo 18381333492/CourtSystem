@@ -34,43 +34,62 @@ namespace Web.App_Start.WeiXinMessage
         /// <returns></returns>
         public override string HandleText(TextMessage message)
         {
-            //匹配关键字
-            var keyWord =DIEntity.Instance.GetImpl<IWeChatKeyWord>().GetByKeyWord(message.Content);
-            if (keyWord != null)
-            {
-                if (keyWord.bIsOpen)
-                {
-                    if (keyWord.iRePlyType == 0)
-                    {//回复问本消息
-                        return MessageHelper.Text(keyWord.sContent, message);
-                    }
-                    else
-                    {//回复图文消息
-                                    //获取图文借口
-                        var WeChatNewsData = DIEntity.Instance.GetImpl<IWeChatNews>().GetNews(keyWord.sWeChatNewsNameId.ToString()) as JObject;
-                        List<ES_WeChatNews> array = JsonConvert.DeserializeObject<List<ES_WeChatNews>>(WeChatNewsData["newsList"].ToString());
-                        //组装数据
-                        List<item> Articles = new List<item>();
-                        foreach (var m in array)
-                        {
-                            Articles.Add(new item()
-                            {
-                                Title = m.sTitle,
-                                Description = m.sDescribe,
-                                PicUrl = m.sPictureUrl,
-                                Url = m.sDataUrl
-                            });
-                        }
-                        return MessageHelper.News(Articles, message);
-                    }
-                }
-                else
-                    return base.HandleText(message);
-            }
-            else
-            {
-                return base.HandleText(message);
-            }
+
+            //SendBaseMessage respone = new SendBaseMessage();
+            //respone.Initialize(message);
+            //respone.ToUserName = "orbIm0X8SgzkLZVA2bDsx-5O57iU";
+            //respone.MsgType = "transfer_customer_service";
+            //string res = MessageHelper.Handle_CDATA(respone);
+
+            string res =string.Format(@"<xml>
+     <ToUserName><![CDATA[{2}]]></ToUserName>
+     <FromUserName><![CDATA[{0}]]></FromUserName>
+     <CreateTime>{1}</CreateTime>
+     <MsgType><![CDATA[transfer_customer_service]]></MsgType>
+     <TransInfo>
+         <KfAccount><![CDATA[kf2004@gh_23eab3447081]]></KfAccount>
+     </TransInfo>
+ </xml>", message.ToUserName,message.CreateTime, message.FromUserName);
+
+
+            return res;
+            ////匹配关键字
+            //var keyWord =DIEntity.Instance.GetImpl<IWeChatKeyWord>().GetByKeyWord(message.Content);
+            //if (keyWord != null)
+            //{
+            //    if (keyWord.bIsOpen)
+            //    {
+            //        if (keyWord.iRePlyType == 0)
+            //        {//回复问本消息
+            //            return MessageHelper.Text(keyWord.sContent, message);
+            //        }
+            //        else
+            //        {//回复图文消息
+            //                        //获取图文借口
+            //            var WeChatNewsData = DIEntity.Instance.GetImpl<IWeChatNews>().GetNews(keyWord.sWeChatNewsNameId.ToString()) as JObject;
+            //            List<ES_WeChatNews> array = JsonConvert.DeserializeObject<List<ES_WeChatNews>>(WeChatNewsData["newsList"].ToString());
+            //            //组装数据
+            //            List<item> Articles = new List<item>();
+            //            foreach (var m in array)
+            //            {
+            //                Articles.Add(new item()
+            //                {
+            //                    Title = m.sTitle,
+            //                    Description = m.sDescribe,
+            //                    PicUrl = m.sPictureUrl,
+            //                    Url = m.sDataUrl
+            //                });
+            //            }
+            //            return MessageHelper.News(Articles, message);
+            //        }
+            //    }
+            //    else
+            //        return base.HandleText(message);
+            //}
+            //else
+            //{
+            //    return base.HandleText(message);
+            //}
         }
 
         /// <summary>

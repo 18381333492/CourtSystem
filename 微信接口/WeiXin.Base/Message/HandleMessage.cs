@@ -97,6 +97,9 @@ namespace WeiXin.Base.Message
                 case Event.TEMPLATESENDJOBFINISH: //发送模板消息的推送
                     sResult = string.Empty;
                     break;
+                case Event.USER_ENTER_TEMPSESSION: //小程序进入会话事件
+                    sResult = string.Empty;
+                    break;
             }
             return sResult;
         }
