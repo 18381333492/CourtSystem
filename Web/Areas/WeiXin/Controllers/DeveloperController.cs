@@ -14,6 +14,8 @@ using Unity;
 using SystemInterface;
 using Web.TencentHelper;
 using Logs;
+using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace Web.Areas.WeiXin.Controllers
 {
@@ -85,9 +87,10 @@ namespace Web.Areas.WeiXin.Controllers
 
             if (sMsgType.ToUpper() == "EVENT")
             {//事件的推送
-                string EventType= XmlHelper.getTextByNode(requestXmlMessage, "Event");//获取事件类型
-                Event eventType = (Event)Enum.Parse(typeof(Event), EventType.ToUpper());
-                return handle.ProcessEvent(eventType, requestXmlMessage);
+                //string EventType= XmlHelper.getTextByNode(requestXmlMessage, "Event");//获取事件类型
+                //Event eventType = (Event)Enum.Parse(typeof(Event), EventType.ToUpper());
+                //return handle.ProcessEvent(eventType, requestXmlMessage);
+                return string.Empty;
             }
             else
             {//消息的推送
@@ -99,7 +102,26 @@ namespace Web.Areas.WeiXin.Controllers
 
                 string sEncryptMsg = ""; //xml格式的密文
                 wxcpt.EncryptMsg(result, timestamp, nonce, ref sEncryptMsg);
-              
+
+
+                //发送模板消息
+              //  Task.Factory.StartNew(() => {
+                    string openId = XmlHelper.getTextByNode(requestXmlMessage, "FromUserName");
+                    string Content= XmlHelper.getTextByNode(requestXmlMessage, "Content");
+                    string template_id = "GRb6qQGo_d1aKNRTcCntQGN2egDH-iNuSs5gOQc06Lg";
+                    JObject job = new JObject();
+                    job.Add(new JProperty("touser", openId));
+                    job.Add(new JProperty("template_id", template_id));
+                    JObject childData = new JObject();
+                    childData.Add(new JProperty("keyword1", new JObject(new JProperty("value", Content))));
+                    childData.Add(new JProperty("keyword2", new JObject(new JProperty("value","请尽快联系用户!"))));
+                    job.Add("data", childData);
+                    string sAppSecret = "456400673dcc637b697f57068462029e";
+                    access_token token = new access_token(sAppID, sAppSecret);
+                    var res=TemplateHelper.SendMessage(job.ToString(), token.Get());
+             //   });
+
+
                 logger.Info("加密前:"+ result);
                 logger.Info("加密前后:"+sEncryptMsg);
                 return sEncryptMsg;
